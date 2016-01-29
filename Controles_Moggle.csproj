@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{63EB1C06-BE20-4A59-B879-C9E52DA53204}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Moggle</RootNamespace>
+    <AssemblyName>Controles_Moggle</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\MonoGame.Framework.Linux.3.4.0.459\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\MonoGame.Framework.Linux.3.4.0.459\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Sdl">
+      <HintPath>..\packages\MonoGame.Framework.Linux.3.4.0.459\lib\net40\Tao.Sdl.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended">
+      <HintPath>..\packages\MonoGame.Extended.0.4.64\lib\MonoGame.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\IScreen.cs" />
+    <Compile Include="Screens\ListaControles.cs" />
+    <Compile Include="Controles\IControl.cs" />
+    <Compile Include="Controles\SBC.cs" />
+    <Compile Include="IO\InputManager.cs" />
+    <Compile Include="Primitivos.cs" />
+    <Compile Include="Screens\Screen.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Controles\Ratón.cs" />
+    <Compile Include="Screens\DialScreen.cs" />
+    <Compile Include="Screens\MostrarListaScreen.cs" />
+    <Compile Include="Controles\Listas\IListaControl.cs" />
+    <Compile Include="Controles\Listas\Lista.cs" />
+    <Compile Include="Controles\Botón.cs" />
+    <Compile Include="Controles\ContenedorBotón.cs" />
+    <Compile Include="Controles\EntradaTexto.cs" />
+    <Compile Include="Controles\Etiqueta.cs" />
+    <Compile Include="Controles\MultiEtiqueta.cs" />
+    <Compile Include="Controles\SBCC.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="OpenTK.dll.config" />
+    <None Include="Tao.Sdl.dll.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Screens\" />
+    <Folder Include="Controles\" />
+    <Folder Include="IO\" />
+    <Folder Include="Controles\Listas\" />
+  </ItemGroup>
+</Project>
