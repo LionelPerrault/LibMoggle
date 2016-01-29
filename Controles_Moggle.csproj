@@ -8,6 +8,8 @@
     <RootNamespace>Moggle</RootNamespace>
     <AssemblyName>Controles_Moggle</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Description>Controles MOnoGame
+Un juego de controles para MonoGame</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
