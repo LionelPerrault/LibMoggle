@@ -66,7 +66,7 @@ namespace Moggle.Screens
 			Batch.End ();
 		}
 
-		public void LoadContent ()
+		public virtual void LoadContent ()
 		{
 			Batch = new SpriteBatch (Juego.GraphicsDevice);
 			foreach (var x in Controles)
@@ -86,13 +86,13 @@ namespace Moggle.Screens
 				x.Update (gameTime);
 		}
 
-		public void UnloadContent ()
+		public virtual void UnloadContent ()
 		{
 			foreach (var x in new List<IControl> (Controles))
 			{
 				x.Dispose ();
 			}
-			InputManager.AlSerActivado -= TeclaPresionada;
+			Escuchando = false; // Evitar fugas de memoria
 		}
 
 		public ContentManager Content

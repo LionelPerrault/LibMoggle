@@ -55,6 +55,14 @@ namespace Moggle.Screens
 			return string.Format ("[{0}]\nAnterior: {1}", GetType (), ScreenBase);
 		}
 
+		public override Color BgColor
+		{
+			get
+			{
+				return Juego.BackgroundColor;
+			}
+		}
+
 		public abstract bool DibujarBase { get; }
 
 		public event Action AlTerminar;

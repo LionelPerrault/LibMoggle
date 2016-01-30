@@ -11,7 +11,7 @@ namespace Moggle
 	public class Game : Microsoft.Xna.Framework.Game
 	,IScreen // Para poder tener controles globales (cursor)
 	{
-		readonly Ratón mouse;
+		protected readonly Ratón Mouse;
 
 		#if FPS
 		readonly Label fpsLabel;
@@ -30,16 +30,16 @@ namespace Moggle
 
 		public SpriteBatch Batch { get; private set; }
 
-		public Game()
+		public Game ()
 		{
-			ControlesUniversales = new ListaControl();
-			graphics = new GraphicsDeviceManager(this);
+			ControlesUniversales = new ListaControl ();
+			graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
 			graphics.IsFullScreen = true;
-			mouse = new Ratón(this);
-			mouse.Include();
+			Mouse = new Ratón (this);
+			Mouse.Include ();
 
-			TargetElapsedTime = TimeSpan.FromMilliseconds(7);
+			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
 
 		}
@@ -50,13 +50,13 @@ namespace Moggle
 		protected override void LoadContent ()
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
-			Batch = new SpriteBatch(GraphicsDevice);
+			Batch = new SpriteBatch (GraphicsDevice);
 			//spriteBatch.DrawString(new SpriteFont)
 
-			CurrentScreen?.LoadContent();
+			CurrentScreen?.LoadContent ();
 			foreach (var x in ControlesUniversales)
 			{
-				x.LoadContent();
+				x.LoadContent ();
 			}
 		}
 
@@ -67,34 +67,34 @@ namespace Moggle
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update (GameTime gameTime)
 		{
-			base.Update(gameTime);
-			CurrentScreen.Update(gameTime);
-			(this as IScreen).Update(gameTime);
+			base.Update (gameTime);
+			CurrentScreen.Update (gameTime);
+			(this as IScreen).Update (gameTime);
 
-			InputManager.Update(gameTime.ElapsedGameTime);
+			InputManager.Update (gameTime.ElapsedGameTime);
 		}
 
 		protected override void OnExiting (object sender, EventArgs args)
 		{
-			base.OnExiting(sender, args);
-			((IScreen)this).UnloadContent();
+			base.OnExiting (sender, args);
+			((IScreen)this).UnloadContent ();
 		}
 
 		protected override void Draw (GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear(BackgroundColor);
+			graphics.GraphicsDevice.Clear (BackgroundColor);
 
-			Batch.Begin();
+			Batch.Begin ();
 
-			CurrentScreen.Dibujar(gameTime);
+			CurrentScreen.Dibujar (gameTime);
 
 			foreach (var x in ControlesUniversales)
 			{
-				x.Dibujar(gameTime);
+				x.Dibujar (gameTime);
 			}
 
 			//mouse.Dibujar (gameTime);
-			Batch.End();
+			Batch.End ();
 
 		}
 
@@ -118,7 +118,7 @@ namespace Moggle
 
 		public SpriteBatch GetNewBatch ()
 		{
-			return new SpriteBatch(GraphicsDevice);
+			return new SpriteBatch (GraphicsDevice);
 		}
 
 		public GraphicsDevice Device
@@ -131,7 +131,7 @@ namespace Moggle
 
 		void IScreen.Dibujar (GameTime gameTime)
 		{
-			Draw(gameTime);
+			Draw (gameTime);
 		}
 
 		ListaControl IScreen.Controles
@@ -149,7 +149,7 @@ namespace Moggle
 		{
 			foreach (var cu in ControlesUniversales)
 			{
-				cu.LoadContent();
+				cu.LoadContent ();
 			}
 		}
 
@@ -157,7 +157,7 @@ namespace Moggle
 		{
 			foreach (var cu in new List<IControl> (ControlesUniversales))
 			{
-				cu.Update(gametime);
+				cu.Update (gametime);
 			}
 		}
 
@@ -165,9 +165,9 @@ namespace Moggle
 		{
 			foreach (var cu in new List<IControl> (ControlesUniversales))
 			{
-				cu.Dispose();
+				cu.Dispose ();
 			}
-			CurrentScreen.UnloadContent();
+			CurrentScreen.UnloadContent ();
 		}
 
 		public DisplayMode GetDisplayMode
@@ -180,7 +180,7 @@ namespace Moggle
 
 		void IScreen.Inicializar ()
 		{
-			Initialize();
+			Initialize ();
 		}
 
 		#endregion
