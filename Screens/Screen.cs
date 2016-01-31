@@ -32,10 +32,20 @@ namespace Moggle.Screens
 			}
 		}
 
+		bool _escuchando;
+
 		public bool Escuchando
 		{
-			set
+			get
 			{
+				return _escuchando;
+			}
+			set
+			{ 
+				// Evitar duplicar subscripción
+				if (value == _escuchando)
+					return;
+				_escuchando = value;
 				if (value)
 					InputManager.AlSerActivado += TeclaPresionada;
 				else
@@ -53,17 +63,37 @@ namespace Moggle.Screens
 			}
 		}
 
+		public void Ejecutar ()
+		{
+			if (Juego.CurrentScreen != null)
+			{
+				Juego.CurrentScreen.Escuchando = false;
+				Juego.CurrentScreen.UnloadContent ();
+			}
+			Juego.CurrentScreen = this;
+			Escuchando = true;
+		}
+
 		public virtual void Dibujar (GameTime gameTime)
 		{
 			//base.Draw (gameTime);
 
 			//var Batch = GetNewBatch ();
 			Batch.Begin ();
+			EntreBatches (gameTime);
+			Batch.End ();
+		}
+
+		/// <summary>
+		/// Se invoca entre Batch.Begin y Batch.End
+		/// </summary>
+		protected virtual void EntreBatches (GameTime gameTime)
+		{
 			foreach (var x in Controles)
 			{
 				x.Dibujar (gameTime);
 			}
-			Batch.End ();
+
 		}
 
 		public virtual void LoadContent ()

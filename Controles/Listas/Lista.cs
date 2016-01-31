@@ -53,7 +53,6 @@ namespace Moggle.Controles.Listas
 			var final = Math.Min (Objetos.Count, inic + MaxVisible);
 			for (int i = inic; i < final; i++)
 			{
-
 				var x = Objetos [i];
 				var strTxt = Stringificación (x.Objeto);
 				if (i == CursorIndex)
@@ -78,11 +77,23 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
+		int _primerVisible;
+
 		/// <summary>
 		/// Devuelve el primer elemento visible en la lista
 		/// </summary>
 		/// <value>The primer visible.</value>
-		protected int PrimerVisible { get; set; }
+		protected int PrimerVisible
+		{
+			get
+			{
+				return _primerVisible;
+			}
+			set
+			{
+				_primerVisible = Math.Max (0, Math.Min (value, Count - MaxVisible));
+			}
+		}
 
 		public List<Entrada> Objetos { get; }
 
@@ -103,27 +114,6 @@ namespace Moggle.Controles.Listas
 			{
 				cursorIndex = Math.Max (Math.Min (Objetos.Count - 1, value), 0);
 				AlMoverCursor?.Invoke ();
-			}
-		}
-
-		public override void Include ()
-		{
-			base.Include ();
-			InputManager.AlSerActivado += InputManager_AlSerActivado;
-		}
-
-		void InputManager_AlSerActivado (Key obj)
-		{
-			if (InterceptarTeclado)
-			{
-				if (obj == AbajoKey)
-					SeleccionaSiguiente ();
-				if (obj == ArribaKey)
-					SeleccionaAnterior ();
-			}
-			else
-			{
-				Console.WriteLine ();
 			}
 		}
 
@@ -173,7 +163,6 @@ namespace Moggle.Controles.Listas
 		{
 			Fuente = null;
 			noTexture = null;
-			InputManager.AlSerActivado -= InputManager_AlSerActivado;
 			base.Dispose ();
 		}
 

@@ -44,7 +44,7 @@ namespace Moggle.Screens
 			#endif
 			Escuchando = false;
 			Juego.CurrentScreen = ScreenBase;
-			Juego.CurrentScreen.Escuchando = true;
+			ScreenBase.Escuchando = true;
 			AlTerminar?.Invoke ();
 
 			UnloadContent ();
@@ -59,7 +59,7 @@ namespace Moggle.Screens
 		{
 			get
 			{
-				return Juego.BackgroundColor;
+				return ScreenBase.BgColor;
 			}
 		}
 
