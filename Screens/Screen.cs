@@ -63,7 +63,7 @@ namespace Moggle.Screens
 			}
 		}
 
-		public void Ejecutar ()
+		public virtual void Ejecutar ()
 		{
 			if (Juego.CurrentScreen != null)
 			{

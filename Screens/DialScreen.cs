@@ -25,7 +25,7 @@ namespace Moggle.Screens
 			base.Dibujar (gameTime);
 		}
 
-		public virtual void Ejecutar ()
+		public override void Ejecutar ()
 		{
 			#if DEBUG
 			System.Diagnostics.Debug.WriteLine ("\n\nEntrando a " + this);
