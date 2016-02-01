@@ -68,7 +68,7 @@ namespace Moggle.Screens
 			if (Juego.CurrentScreen != null)
 			{
 				Juego.CurrentScreen.Escuchando = false;
-				Juego.CurrentScreen.UnloadContent ();
+				//Juego.CurrentScreen.UnloadContent ();
 			}
 			Juego.CurrentScreen = this;
 			Escuchando = true;
