@@ -1,7 +1,7 @@
 ﻿using System;
 using Moggle.Screens;
-using Microsoft.Xna.Framework;
 using OpenTK.Input;
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -28,7 +28,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
-		void Dibujar (GameTime  gameTime);
+		void Dibujar (GameTime gameTime);
 
 		/// <summary>
 		/// Ciclo de la lógica

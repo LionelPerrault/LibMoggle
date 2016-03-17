@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Moggle</id>
+    <version>0.1</version>
+    <title>Controles Moggle</title>
+    <authors>Edgar Carballo</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Un framework para Monogame</description>
+    <copyright></copyright>
+    <dependencies>
+      <dependency id="MonoGame.Extended" version="0.4.64" />
+      <dependency id="MonoGame.Framework.Linux" version="3.5.0.1678" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin/Release/Controles_Moggle.dll" target="lib" />
+  </files>
+</package>
