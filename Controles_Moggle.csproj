@@ -8,7 +8,7 @@
     <RootNamespace>Moggle</RootNamespace>
     <AssemblyName>Controles_Moggle</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <Description>Controles MOnoGame
+    <Description>Controles MonoGame
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
