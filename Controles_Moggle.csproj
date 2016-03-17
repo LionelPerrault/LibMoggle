@@ -10,7 +10,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Description>Controles MOnoGame
 Un juego de controles para MonoGame</Description>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,16 +34,18 @@ Un juego de controles para MonoGame</Description>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\packages\MonoGame.Framework.Linux.3.4.0.459\lib\net40\MonoGame.Framework.dll</HintPath>
+      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\NVorbis.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
-      <HintPath>..\packages\MonoGame.Framework.Linux.3.4.0.459\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.Sdl">
-      <HintPath>..\packages\MonoGame.Framework.Linux.3.4.0.459\lib\net40\Tao.Sdl.dll</HintPath>
+      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>..\packages\MonoGame.Extended.0.4.64\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\MonoGame.Extended.0.4.64\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +72,8 @@ Un juego de controles para MonoGame</Description>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="OpenTK.dll.config" />
-    <None Include="Tao.Sdl.dll.config" />
     <None Include="packages.config" />
+    <None Include="OpenTK.dll.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Screens\" />
@@ -84,6 +86,8 @@ Un juego de controles para MonoGame</Description>
       <Properties>
         <Policies>
           <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName" />
+          <TextStylePolicy TabsToSpaces="False" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" AutoPropertyFormatting="ForceOneLine" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" ArrayInitializerBraceStyle="NextLine" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" AfterDelegateDeclarationParameterComma="True" BeforeSizeOfParentheses="True" BeforeTypeOfParentheses="True" SpacesBeforeArrayDeclarationBrackets="True" MethodCallArgumentWrapping="WrapIfTooLong" MethodDeclarationParameterWrapping="WrapIfTooLong" IndexerDeclarationParameterWrapping="WrapIfTooLong" IndexerArgumentWrapping="WrapIfTooLong" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
         </Policies>
       </Properties>
     </MonoDevelop>
