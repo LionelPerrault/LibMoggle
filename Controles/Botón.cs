@@ -2,6 +2,7 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
@@ -16,7 +17,7 @@ namespace Moggle.Controles
 
 		public Rectangle Bounds { get; set; }
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
 			return Bounds;
 		}
