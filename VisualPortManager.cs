@@ -6,7 +6,7 @@ namespace Moggle
 	/// <summary>
 	/// Convierte puntos linealmente entre dos sistemas de coordenadas.
 	/// </summary>
-	public class ManejadorVP
+	public class VisualPortManager
 	{
 		/// <summary>
 		/// Tamaño

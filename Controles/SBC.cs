@@ -3,6 +3,7 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using OpenTK.Input;
 using Moggle.IO;
+using Moggle.Controles;
 using Moggle.Shape;
 
 namespace Moggle.Controles
