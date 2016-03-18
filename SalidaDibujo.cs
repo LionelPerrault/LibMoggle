@@ -67,7 +67,9 @@ namespace Moggle
 
 		public Rectangle UniversoAVentana (Rectangle rect)
 		{
-			throw new NotImplementedException ();
+			return new Rectangle (
+				UniversoAVentana (rect.Location),
+				(_A * rect.Size.ToVector2 ()).ToPoint ());
 		}
 
 		public Rectangle VentanaAUniverso (Rectangle rect)
