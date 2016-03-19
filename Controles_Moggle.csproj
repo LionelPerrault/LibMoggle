@@ -68,6 +68,9 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\Etiqueta.cs" />
     <Compile Include="Controles\MultiEtiqueta.cs" />
     <Compile Include="Controles\SBCC.cs" />
+    <Compile Include="VisualPortManager.cs" />
+    <Compile Include="Controles\IRelativeControl.cs" />
+    <Compile Include="Controles\SBCRel.cs" />
     <Compile Include="Shape\IShape.cs" />
     <Compile Include="Shape\Rectangle.cs" />
     <Compile Include="Shape\Circle.cs" />
