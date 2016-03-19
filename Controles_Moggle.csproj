@@ -71,6 +71,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\SBCC.cs" />
     <Compile Include="Shape\IShape.cs" />
     <Compile Include="Shape\Rectangle.cs" />
+    <Compile Include="Shape\Circle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

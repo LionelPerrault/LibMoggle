@@ -22,6 +22,6 @@ namespace Moggle.Shape
 		/// <summary>
 		/// Devuelve el rectángulo más pequeño que lo contiene
 		/// </summary>
-		Rectangle GetContainingRectangle ();
+		Microsoft.Xna.Framework.Rectangle GetContainingRectangle ();
 	}
 }

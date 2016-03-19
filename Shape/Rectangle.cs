@@ -165,7 +165,7 @@ namespace Moggle.Shape
 			p.Y <= _y + _dy;
 		}
 
-		public Rectangle GetContainingRectangle ()
+		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
 		{
 			return new Microsoft.Xna.Framework.Rectangle (
 				(int)_x,
