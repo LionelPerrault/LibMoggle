@@ -2,6 +2,7 @@
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
@@ -30,9 +31,11 @@ namespace Moggle.Controles
 
 		public Color Color { get; set; }
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
-			return font.GetStringRectangle (Texto (), Posición.ToVector2 ());
+			return (Moggle.Shape.Rectangle)font.GetStringRectangle (
+				Texto (),
+				Posición.ToVector2 ());
 		}
 
 		public override void LoadContent ()

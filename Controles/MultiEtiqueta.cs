@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended.BitmapFonts;
 using Moggle.Screens;
 using System.Collections.Generic;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
@@ -52,7 +53,12 @@ namespace Moggle.Controles
 
 			public void Dibujar (SpriteBatch bat, Vector2 pos)
 			{
-				bat.Draw (TexturaIcon, new Rectangle (pos.ToPoint (), Tamaño), ColorIcon);
+				bat.Draw (
+					TexturaIcon,
+					new Microsoft.Xna.Framework.Rectangle (
+						pos.ToPoint (),
+						Tamaño),
+					ColorIcon);
 				bat.DrawString (Font, Str, pos + new Vector2 (Tamaño.X, 0), ColorTexto);
 			}
 
@@ -151,7 +157,7 @@ namespace Moggle.Controles
 			índiceActualString = (índiceActualString + NumEntradasMostrar) % Mostrables.Count;
 		}
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
 			int ht;
 			int wd = 0;
@@ -162,7 +168,7 @@ namespace Moggle.Controles
 			{
 				wd = Math.Max (wd, entry.Largo);
 			}
-			return new Rectangle ((int)Pos.X, (int)Pos.Y, wd, ht);
+			return new Shape.Rectangle (Pos.X, Pos.Y, wd, ht);
 		}
 
 		protected override void OnChrono ()

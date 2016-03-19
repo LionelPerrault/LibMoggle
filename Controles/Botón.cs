@@ -2,21 +2,22 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
 	public class Botón : SBC
 	{
-		public Botón (IScreen screen, Rectangle bounds)
+		public Botón (IScreen screen, Moggle.Shape.Rectangle bounds)
 			: base (screen)
 		{
 			Bounds = bounds;
 			Color = Color.White;
 		}
 
-		public Rectangle Bounds { get; set; }
+		public Moggle.Shape.Rectangle Bounds { get; set; }
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
 			return Bounds;
 		}
