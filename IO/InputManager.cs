@@ -20,28 +20,28 @@ namespace Moggle.IO
 		public static void  Update (TimeSpan time)
 		{
 			EstadoAnteriorTeclado = EstadoActualTeclado;
-			EstadoActualTeclado = Keyboard.GetState();
+			EstadoActualTeclado = Keyboard.GetState ();
 
 			EstadoAnteriorMouse = EstadoActualMouse;
-			EstadoActualMouse = Mouse.GetState();
+			EstadoActualMouse = Mouse.GetState ();
 
 			foreach (Key x in Enum.GetValues(typeof(Key)))
 			{
-				if (FuePresionado(x))
+				if (FuePresionado (x))
 				{
-					onSerPresionado(x);
+					onSerPresionado (x);
 					break;
 				}
 			}
 
 			if (PermitirRepeticiones)
-				revisar_repetición(time);
+				revisar_repetición (time);
 		}
 
 		#region Teclado
 
-		public static TimeSpan TiempoRepeticiónInicial = TimeSpan.FromMilliseconds(300);
-		public static TimeSpan TiempoReiteración = TimeSpan.FromMilliseconds(80);
+		public static TimeSpan TiempoRepeticiónInicial = TimeSpan.FromMilliseconds (300);
+		public static TimeSpan TiempoReiteración = TimeSpan.FromMilliseconds (80);
 
 		static TimeSpan contadorActual { get; set; }
 
@@ -59,7 +59,7 @@ namespace Moggle.IO
 
 		static void revisar_repetición (TimeSpan time)
 		{
-			if (EstáPresionado(TeclaRepitiendo))
+			if (EstáPresionado (TeclaRepitiendo))
 			{
 				contadorActual += time;
 				if (estáReiterando)
@@ -67,7 +67,7 @@ namespace Moggle.IO
 					if (contadorActual > TiempoReiteración)
 					{
 						contadorActual = TimeSpan.Zero;
-						AlSerActivado?.Invoke(TeclaRepitiendo);
+						AlSerActivado?.Invoke (TeclaRepitiendo);
 					}
 				}
 				else
@@ -87,8 +87,8 @@ namespace Moggle.IO
 		{
 			TeclaRepitiendo = key;
 			contadorActual = TimeSpan.Zero;
-			AlSerPresionado?.Invoke(key);
-			AlSerActivado?.Invoke(key);
+			AlSerPresionado?.Invoke (key);
+			AlSerActivado?.Invoke (key);
 		}
 
 		/// <summary>
@@ -96,7 +96,7 @@ namespace Moggle.IO
 		/// </summary>
 		public static bool EstáPresionado (Key tecla)
 		{
-			return EstadoActualTeclado.IsKeyDown(tecla);
+			return EstadoActualTeclado.IsKeyDown (tecla);
 		}
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace Moggle.IO
 		/// </summary>
 		public static bool FuePresionado (Key tecla)
 		{
-			return EstáPresionado(tecla) && !EstadoAnteriorTeclado.IsKeyDown(tecla);
+			return EstáPresionado (tecla) && !EstadoAnteriorTeclado.IsKeyDown (tecla);
 		}
 
 		/// <summary>
@@ -123,12 +123,12 @@ namespace Moggle.IO
 
 		public static bool EstáPresionado (MouseButton botón)
 		{
-			return EstadoActualMouse.IsButtonDown(botón);
+			return EstadoActualMouse.IsButtonDown (botón);
 		}
 
 		public static bool FuePresionado (MouseButton botón)
 		{
-			return EstáPresionado(botón) && !EstadoAnteriorMouse.IsButtonDown(botón);
+			return EstáPresionado (botón) && !EstadoAnteriorMouse.IsButtonDown (botón);
 		}
 
 		#endregion

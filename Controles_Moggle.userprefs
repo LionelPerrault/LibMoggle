@@ -1,6 +1,31 @@
-﻿<Properties>
+﻿<Properties StartupItem="test/Test.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="test/Game1.cs">
+    <Files>
+      <File FileName="Game.cs" Line="44" Column="14" />
+      <File FileName="IO/InputManager.cs" Line="20" Column="1" />
+      <File FileName="test/Game1.cs" Line="40" Column="3" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Controles_Moggle" expanded="True">
+            <Node name="Controles_Moggle" expanded="True">
+              <Node name="IO" expanded="True" />
+            </Node>
+            <Node name="Test" expanded="True" selected="True">
+              <Node name="References" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="Controles_Moggle" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
