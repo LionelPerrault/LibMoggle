@@ -43,10 +43,14 @@ namespace Moggle.Controles.Listas
 			// Dibujar el rectángulo
 			var bat = Screen.Batch;
 
-			Primitivos.DrawRectangle (bat, Bounds, Color.White, noTexture);
+			Primitivos.DrawRectangle (
+				bat,
+				Bounds.GetContainingRectangle (),
+				Color.White,
+				noTexture);
 
 			// Background
-			bat.Draw (noTexture, Bounds, ColorBG);
+			bat.Draw (noTexture, Bounds.GetContainingRectangle (), ColorBG);
 
 			// TODO: Que no se me salga el texto.
 			var currY = Bounds.TopLeft;

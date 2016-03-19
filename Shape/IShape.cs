@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Moggle.Shape;
 
 namespace Moggle.Shape
 {
@@ -23,5 +24,40 @@ namespace Moggle.Shape
 		/// Devuelve el rectángulo más pequeño que lo contiene
 		/// </summary>
 		Microsoft.Xna.Framework.Rectangle GetContainingRectangle ();
+
+	}
+
+	public static class Shapes
+	{
+		static IShape NoShape
+		{
+			get
+			{
+				return new Shapeless ();
+			}
+		}
+	}
+
+	class Shapeless : IShape
+	{
+		public bool Contains (Point p)
+		{
+			return false;
+		}
+
+		public IShape MoveBy (Vector2 v)
+		{
+			return new Shapeless ();
+		}
+
+		public IShape Scale (float factor)
+		{
+			return new Shapeless ();
+		}
+
+		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
+		{
+			return Microsoft.Xna.Framework.Rectangle.Empty;
+		}
 	}
 }

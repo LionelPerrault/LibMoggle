@@ -63,7 +63,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\MostrarListaScreen.cs" />
     <Compile Include="Controles\Listas\IListaControl.cs" />
     <Compile Include="Controles\Listas\Lista.cs" />
-    <Compile Include="Controles\Botón.cs" />
     <Compile Include="Controles\ContenedorBotón.cs" />
     <Compile Include="Controles\EntradaTexto.cs" />
     <Compile Include="Controles\Etiqueta.cs" />
@@ -72,6 +71,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Shape\IShape.cs" />
     <Compile Include="Shape\Rectangle.cs" />
     <Compile Include="Shape\Circle.cs" />
+    <Compile Include="Controles\Botón.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

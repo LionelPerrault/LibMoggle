@@ -39,14 +39,14 @@ namespace Moggle.Shape
 
 		#region Casts
 
-		public static implicit operator Microsoft.Xna.Framework.Rectangle (Rectangle rect)
+		public static explicit operator Microsoft.Xna.Framework.Rectangle (Rectangle rect)
 		{
 			return new Microsoft.Xna.Framework.Rectangle (
 				rect.TopLeft.ToPoint (),
 				rect.Size.ToPoint ());
 		}
 
-		public static implicit operator Rectangle (Microsoft.Xna.Framework.Rectangle rect)
+		public static explicit operator Rectangle (Microsoft.Xna.Framework.Rectangle rect)
 		{
 			return new Rectangle (rect.Location, rect.Size);
 		}
