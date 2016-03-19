@@ -55,7 +55,7 @@ namespace Moggle.Controles
 
 		public override IShape GetBounds ()
 		{
-			return new Rectangle (Pos, Tamaño);
+			return new Moggle.Shape.Rectangle (Pos, Tamaño);
 		}
 
 		public override void LoadContent ()
@@ -66,7 +66,7 @@ namespace Moggle.Controles
 		public override void Dibujar (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
-			bat.Draw (Textura, GetBounds (), Color.WhiteSmoke);
+			bat.Draw (Textura, GetBounds ().GetContainingRectangle (), Color.WhiteSmoke);
 		}
 	}
 }

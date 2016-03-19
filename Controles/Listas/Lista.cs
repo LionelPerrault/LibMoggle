@@ -49,7 +49,7 @@ namespace Moggle.Controles.Listas
 			bat.Draw (noTexture, Bounds, ColorBG);
 
 			// TODO: Que no se me salga el texto.
-			var currY = Bounds.Location.ToVector2 ();
+			var currY = Bounds.TopLeft;
 			var inic = PrimerVisible;
 			var final = Math.Min (Objetos.Count, inic + MaxVisible);
 			for (int i = inic; i < final; i++)
@@ -74,7 +74,7 @@ namespace Moggle.Controles.Listas
 		{
 			get
 			{
-				return Bounds.Height / Fuente.LineHeight;
+				return (int)Bounds.Height / Fuente.LineHeight;
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public Color ColorSel { get; set; }
 
-		public Rectangle Bounds { get; set; }
+		public Moggle.Shape.Rectangle Bounds { get; set; }
 
 		public override IShape GetBounds ()
 		{

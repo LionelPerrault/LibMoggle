@@ -17,6 +17,11 @@ namespace Moggle.Shape
 		/// <summary>
 		/// Devuelve una forma que es el resultado de una reescalación
 		/// </summary>
-		IShape Scale (double factor);
+		IShape Scale (float factor);
+
+		/// <summary>
+		/// Devuelve el rectángulo más pequeño que lo contiene
+		/// </summary>
+		Rectangle GetContainingRectangle ();
 	}
 }

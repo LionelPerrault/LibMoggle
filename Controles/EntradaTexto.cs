@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Moggle.Controles;
 using Moggle.Screens;
 using Moggle.IO;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
@@ -47,11 +48,11 @@ namespace Moggle.Controles
 		{
 			get
 			{
-				return Bounds.Location;
+				return Bounds.TopLeft.ToPoint ();
 			}
 			set
 			{
-				Bounds = new Rectangle (value, Bounds.Size);
+				Bounds = new Shape.Rectangle (value, Bounds.Size);
 			}
 		}
 
@@ -69,12 +70,16 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Límites de el control
 		/// </summary>
-		public Rectangle Bounds { get; set; }
+		public Moggle.Shape.Rectangle Bounds { get; set; }
 
 		public override void Dibujar (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
-			Primitivos.DrawRectangle (bat, GetBounds (), ColorContorno, contornoTexture);
+			Primitivos.DrawRectangle (
+				bat,
+				GetBounds ().GetContainingRectangle (),
+				ColorContorno,
+				contornoTexture);
 			bat.DrawString (fontTexture, Texto, Pos.ToVector2 (), ColorTexto);
 		}
 
@@ -107,7 +112,7 @@ namespace Moggle.Controles
 
 		public IDictionary<Key, string> TeclasPermitidas { get; set; }
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
 			return Bounds;
 		}

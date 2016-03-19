@@ -8,14 +8,14 @@ namespace Moggle.Controles
 {
 	public class Botón : SBC
 	{
-		public Botón (IScreen screen, Rectangle bounds)
+		public Botón (IScreen screen, Moggle.Shape.Rectangle bounds)
 			: base (screen)
 		{
 			Bounds = bounds;
 			Color = Color.White;
 		}
 
-		public Rectangle Bounds { get; set; }
+		public Moggle.Shape.Rectangle Bounds { get; set; }
 
 		public override IShape GetBounds ()
 		{

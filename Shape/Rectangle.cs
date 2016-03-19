@@ -9,9 +9,51 @@ namespace Moggle.Shape
 		float _dx;
 		float _dy;
 
-		public Rectangle ()
+		#region ctors
+
+		public Rectangle (Point pos, Vector2 size)
 		{
+			_x = pos.X;
+			_y = pos.Y;
+			_dx = size.X;
+			_dy = size.Y;
 		}
+
+		public Rectangle (Point pos, Point size)
+		{
+			_x = pos.X;
+			_y = pos.Y;
+			_dx = size.X;
+			_dy = size.Y;
+		}
+
+		public Rectangle (float left, float top, float witdh, float height)
+		{
+			_x = left;
+			_y = top;
+			_dx = witdh;
+			_dy = height;
+		}
+
+		#endregion
+
+		#region Casts
+
+		public static implicit operator Microsoft.Xna.Framework.Rectangle (Rectangle rect)
+		{
+			return new Microsoft.Xna.Framework.Rectangle (
+				rect.TopLeft.ToPoint (),
+				rect.Size.ToPoint ());
+		}
+
+		public static implicit operator Rectangle (Microsoft.Xna.Framework.Rectangle rect)
+		{
+			return new Rectangle (rect.Location, rect.Size);
+		}
+
+		#endregion
+
+		#region Props
 
 		public Vector2 TopLeft
 		{
@@ -47,6 +89,58 @@ namespace Moggle.Shape
 			}
 		}
 
+		public float Height
+		{
+			get
+			{
+				return _dy;
+			}
+		}
+
+		public float Witdh
+		{
+			get
+			{
+				return _dx;
+			}
+		}
+
+		public float Left
+		{
+			get
+			{
+				return _x;
+			}
+		}
+
+		public float Right
+		{
+			get
+			{
+				return _x + _dx;
+			}
+		}
+
+		public float Top
+		{
+			get
+			{
+				return _y;
+			}
+		}
+
+		public float Bottom
+		{
+			get
+			{
+				return _y + _dy;
+			}
+		}
+
+		#endregion
+
+		#region IShape
+
 		public IShape MoveBy (Vector2 v)
 		{
 			var ret = new Rectangle ();
@@ -55,7 +149,7 @@ namespace Moggle.Shape
 			return ret;
 		}
 
-		public IShape Scale (double factor)
+		public IShape Scale (float factor)
 		{
 			var ret = new Rectangle ();
 			ret.TopLeft = TopLeft;
@@ -70,5 +164,16 @@ namespace Moggle.Shape
 			_y <= p.Y &&
 			p.Y <= _y + _dy;
 		}
+
+		public Rectangle GetContainingRectangle ()
+		{
+			return new Microsoft.Xna.Framework.Rectangle (
+				(int)_x,
+				(int)_y,
+				(int)_dx,
+				(int)_dy);
+		}
+
+		#endregion
 	}
 }
