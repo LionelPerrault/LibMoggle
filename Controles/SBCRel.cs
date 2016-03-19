@@ -18,7 +18,7 @@ namespace Moggle.Controles
 
 		public override void Dibujar (GameTime gameTime)
 		{
-			var rect = Port.UniversoAVentana (GetBounds ());
+			var rect = Port.UniversoAVentana (GetBounds ().GetContainingRectangle ());
 			DibujarEn (gameTime, rect);
 		}
 
