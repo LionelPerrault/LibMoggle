@@ -10,6 +10,8 @@ namespace Test
 		{
 		}
 
+
+
 		public override Microsoft.Xna.Framework.Color BgColor
 		{
 			get

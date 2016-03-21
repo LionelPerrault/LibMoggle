@@ -21,7 +21,7 @@ namespace Test
 		{
 			Graphics.IsFullScreen = false;
 			CurrentScreen = new Scr (this);
-			Mouse.Exclude ();
+			Mouse.ArchivoTextura = @"cont/void";
 
 			InputManager.AlSerPresionado += InputManager_AlSerPresionado;
 

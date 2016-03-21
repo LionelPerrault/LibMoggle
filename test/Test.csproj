@@ -51,9 +51,12 @@
     <Compile Include="Scr.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Icon.png" />
     <None Include="Content\Content.mgcb" />
     <None Include="packages.config" />
+    <None Include="Content\bin\Windows\*.xnb" />
+    <None Include="Content\cont\*.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="OpenTK.dll.config">
