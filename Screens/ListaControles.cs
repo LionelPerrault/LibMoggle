@@ -3,32 +3,21 @@ using Moggle.Controles;
 
 namespace Moggle.Screens
 {
+	/// <summary>
+	/// Ona lista ordenada de controles según prioridad.
+	/// </summary>
 	public class ListaControl : SortedSet<IControl>
 	{
-		class Comparador : Comparer<IControl>
-		{
-			public override int Compare (IControl x, IControl y)
-			{
-				if (x.Equals (y))
-					return 0;
-				return x.Prioridad < y.Prioridad ? -1 : 1;
-			}
-		}
-
+		/// <summary>
+		/// </summary>
 		public ListaControl ()
-			: base (new Comparador ())
+			: base (Comparer<IControl>.Create ((x, y) => x.Prioridad < y.Prioridad ? -1 : 1))
 		{
 		}
 
-		public new bool Add (IControl control)
-		{
-			foreach (var x in this)
-				if (ReferenceEquals (x, control))
-					System.Console.WriteLine ();
-			var ad = base.Add (control);
-			return ad;
-		}
-
+		/// <summary>
+		/// Clona esta lista como un <see cref="System.Collections.Generic.List{IControl}"/>
+		/// </summary>
 		public List<IControl> Clonar ()
 		{
 			return new List<IControl> (this);

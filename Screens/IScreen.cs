@@ -5,27 +5,30 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Moggle.Screens
 {
+	/// <summary>
+	/// Representa una pantalla con controles visibles al jugador.
+	/// </summary>
 	public interface IScreen
 	{
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		void Dibujar(GameTime gameTime);
+		void Dibujar (GameTime gameTime);
 
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		void LoadContent();
+		void LoadContent ();
 
 		/// <summary>
 		/// Ciclo de la lógica
 		/// </summary>
-		void Update(GameTime gameTime);
+		void Update (GameTime gameTime);
 
 		/// <summary>
 		/// Descargar contenido
 		/// </summary>
-		void UnloadContent();
+		void UnloadContent ();
 
 		/// <summary>
 		/// Color de fondo
@@ -52,14 +55,26 @@ namespace Moggle.Screens
 		/// </summary>
 		SpriteBatch Batch { get; }
 
-		SpriteBatch GetNewBatch();
+		/// <summary>
+		/// Devuelve un nuevo batchd e dibujo.
+		/// </summary>
+		SpriteBatch GetNewBatch ();
 
+		/// <summary>
+		/// Devuelve el modo actual de display gráfico.
+		/// </summary>
 		DisplayMode GetDisplayMode { get; }
 
+		/// <summary>
+		/// Devuelve el controlador gráfico.
+		/// </summary>
 		GraphicsDevice Device { get; }
 
 		#endregion
 
-		void Inicializar();
+		/// <summary>
+		/// Inicializa la pantalla
+		/// </summary>
+		void Inicializar ();
 	}
 }
