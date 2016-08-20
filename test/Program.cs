@@ -8,6 +8,7 @@ using MonoMac.AppKit;
 using MonoMac.Foundation;
 
 
+
 #elif __IOS__
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -21,9 +22,10 @@ namespace Test
 	class Program : UIApplicationDelegate
 	
 
+
 #else
 	static class Program
-	#endif
+#endif
     {
 		private static Game1 game;
 

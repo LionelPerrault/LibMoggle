@@ -90,10 +90,7 @@ namespace Moggle.Screens
 		protected virtual void EntreBatches (GameTime gameTime)
 		{
 			foreach (var x in Controles)
-			{
 				x.Dibujar (gameTime);
-			}
-
 		}
 
 		public virtual void LoadContent ()
