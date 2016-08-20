@@ -44,7 +44,8 @@ namespace Test
 		{
 			// TODO: Add your initialization logic here
 			base.Initialize ();
-				
+
+			CurrentScreen.Inicializar ();
 		}
 
 		/// <summary>
@@ -71,9 +72,7 @@ namespace Test
 			#if !__IOS__
 			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
 			    Keyboard.GetState ().IsKeyDown (Keys.Escape))
-			{
 				Exit ();
-			}
 			#endif
 			// TODO: Add your update logic here			
 			base.Update (gameTime);

@@ -35,6 +35,5 @@ namespace Moggle.Shape
 			var size = new Point (2 * (int)Radius, 2 * (int)Radius);
 			return new Microsoft.Xna.Framework.Rectangle (tl, size);
 		}
-
 	}
 }
