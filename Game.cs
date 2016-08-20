@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moggle
 {
@@ -26,22 +27,35 @@ namespace Moggle
 
 		public IScreen CurrentScreen;
 
-		readonly GraphicsDeviceManager graphics;
+		public readonly GraphicsDeviceManager Graphics;
 
 		public SpriteBatch Batch { get; private set; }
 
 		public Game ()
 		{
 			ControlesUniversales = new ListaControl ();
-			graphics = new GraphicsDeviceManager (this);
+			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
-			graphics.IsFullScreen = true;
+			Graphics.IsFullScreen = true;
 			Mouse = new Ratón (this);
 			Mouse.Include ();
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
+			Task.Run (inputListener);
 			IsFixedTimeStep = false;
 
+		}
+
+		// Analysis disable FunctionNeverReturns
+		static void inputListener ()
+		// Analysis restore FunctionNeverReturns
+		{
+			DateTime lastList = DateTime.Now;
+			while (true)
+			{
+				InputManager.Update (lastList - DateTime.Now);
+				lastList = DateTime.Now;
+			}
 		}
 
 		/// <summary>
@@ -70,8 +84,6 @@ namespace Moggle
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
 			(this as IScreen).Update (gameTime);
-
-			InputManager.Update (gameTime.ElapsedGameTime);
 		}
 
 		protected override void OnExiting (object sender, EventArgs args)
@@ -82,7 +94,7 @@ namespace Moggle
 
 		protected override void Draw (GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear (BackgroundColor);
+			Graphics.GraphicsDevice.Clear (BackgroundColor);
 
 			Batch.Begin ();
 

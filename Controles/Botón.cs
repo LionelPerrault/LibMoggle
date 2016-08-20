@@ -1,25 +1,34 @@
-﻿using System;
-using Moggle.Screens;
-using Microsoft.Xna.Framework;
+﻿using Moggle.Shape;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using System;
 
 namespace Moggle.Controles
 {
 	public class Botón : SBC
 	{
-		public Botón (IScreen screen, Rectangle bounds)
+		public Botón (Moggle.Screens.IScreen screen)
 			: base (screen)
 		{
-			Bounds = bounds;
 			Color = Color.White;
 		}
 
-		public Rectangle Bounds { get; set; }
-
-		public override Rectangle GetBounds ()
+		public Botón (Moggle.Screens.IScreen screen, IShape shape)
+			: this (screen)
 		{
-			return Bounds;
+			Bounds = shape;
 		}
+
+		public Botón (Moggle.Screens.IScreen screen,
+		              Microsoft.Xna.Framework.Rectangle bounds)
+			: this (screen)
+		{
+			Bounds = new Moggle.Shape.Rectangle (bounds.Location, bounds.Size);
+		}
+
+		public bool Habilidato { get; set; }
+
+		public IShape Bounds { get; set; }
 
 		public Texture2D TexturaInstancia { get; protected set; }
 
@@ -29,30 +38,39 @@ namespace Moggle.Controles
 
 		public override void Dibujar (GameTime gameTime)
 		{
-			if (Bounds.Left == 0)
-				Console.WriteLine ();
-			Screen.Batch.Draw (TexturaInstancia, Bounds, Color);
+			Screen.Batch.Draw (
+				TexturaInstancia,
+				Bounds.GetContainingRectangle (),
+				Color);
 		}
 
 		public override void LoadContent ()
 		{
-			Textura = Textura ?? "Rect";
-			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
+			try
+			{
+				TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception ("Error trying to load texture " + Textura, ex);
+			}
 		}
 
 		protected override void Dispose ()
 		{
 			TexturaInstancia = null;
-			Textura = "";
+			Textura = null;
 			base.Dispose ();
 		}
-
-		public bool Habilidato { get; set; }
 
 		public override string ToString ()
 		{
 			return string.Format ("{0}{1}", Habilidato ? "[H]" : "", Textura);
 		}
+
+		public override IShape GetBounds ()
+		{
+			return Bounds;
+		}
 	}
 }
-

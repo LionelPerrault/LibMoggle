@@ -54,7 +54,7 @@ namespace Moggle.Screens
 			: base (game)
 		{
 			ListaComponente = new Lista<TObj> (this);
-			ListaComponente.Bounds = new Rectangle (
+			ListaComponente.Bounds = new Moggle.Shape.Rectangle (
 				0,
 				0,
 				GetDisplayMode.Width,

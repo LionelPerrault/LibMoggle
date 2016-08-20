@@ -2,70 +2,71 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OpenTK.Input;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
 	public class Ratón : SBC
 	{
-		public Ratón(IScreen scr, Point tamaño) : this(scr)
+		public Ratón (IScreen scr, Point tamaño)
+			: this (scr)
 		{
 			Tamaño = tamaño;
 		}
 
-		public Ratón(IScreen screen)
-			: base(screen)
+		public Ratón (IScreen screen)
+			: base (screen)
 		{
-			Tamaño = new Point(20, 20);
+			Tamaño = new Point (20, 20);
 			Prioridad = 1000;
 		}
 
-		public Ratón()
-			: base(null)
+		public Ratón ()
+			: base (null)
 		{
-			Tamaño = new Point(15, 15);
+			Tamaño = new Point (15, 15);
 			Prioridad = 1000;
 		}
 
-		public string ArchivoTextura{ get; set; }
+		public string ArchivoTextura { get; set; }
 
 		public Texture2D Textura { get; protected set; }
 
 		protected override void Dispose ()
 		{
 			Textura = null;
-			base.Dispose();
+			base.Dispose ();
 		}
 
 		public static Point Pos
 		{
 			get
 			{
-				return Microsoft.Xna.Framework.Input.Mouse.GetState().Position;
+				return Microsoft.Xna.Framework.Input.Mouse.GetState ().Position;
 			}
 			set
 			{
-				Mouse.SetPosition(value.X, value.Y);
+				Mouse.SetPosition (value.X, value.Y);
 			}
 		}
 
 
 		public readonly Point Tamaño;
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
-			return new Rectangle(Pos, Tamaño);
+			return new Moggle.Shape.Rectangle (Pos, Tamaño);
 		}
 
 		public override void LoadContent ()
 		{
-			Textura = Screen.Content.Load<Texture2D>(ArchivoTextura);
+			Textura = Screen.Content.Load<Texture2D> (ArchivoTextura);
 		}
 
 		public override void Dibujar (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
-			bat.Draw(Textura, GetBounds(), Color.WhiteSmoke);
+			bat.Draw (Textura, GetBounds ().GetContainingRectangle (), Color.WhiteSmoke);
 		}
 	}
 }
-

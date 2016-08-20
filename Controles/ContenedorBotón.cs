@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
@@ -187,7 +188,10 @@ namespace Moggle.Controles
 
 		public override void Dibujar (GameTime gameTime)
 		{
-			Screen.Batch.Draw (texturaFondo, GetBounds (), BgColor);
+			Screen.Batch.Draw (
+				texturaFondo,
+				GetBounds ().GetContainingRectangle (),
+				BgColor);
 		}
 
 		public override void LoadContent ()
@@ -195,9 +199,9 @@ namespace Moggle.Controles
 			texturaFondo = Screen.Content.Load<Texture2D> ("Rect");
 		}
 
-		public override Rectangle GetBounds ()
+		public override IShape GetBounds ()
 		{
-			return new Rectangle (Posición,
+			return new Moggle.Shape.Rectangle (Posición,
 				new Point (
 					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.X,
 					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Y));
@@ -208,16 +212,16 @@ namespace Moggle.Controles
 			return controles [index];
 		}
 
-		protected Rectangle CalcularPosición (int index)
+		protected Moggle.Shape.Rectangle CalcularPosición (int index)
 		{
-			Rectangle bounds;
-			var bb = GetBounds (); // Cota del contenedor
+			Moggle.Shape.Rectangle bounds;
+			var bb = GetBounds ().GetContainingRectangle (); // Cota del contenedor
 			Point locGrid;
 			int orden = index;
 			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
 				new Point (orden / Filas, orden % Filas) : 
 				new Point (orden % Columnas, orden / Columnas);
-			bounds = new Rectangle (bb.Left + Márgenes.Left + TamañoBotón.X * locGrid.X,
+			bounds = new Moggle.Shape.Rectangle (bb.Left + Márgenes.Left + TamañoBotón.X * locGrid.X,
 				bb.Top + Márgenes.Top + TamañoBotón.Y * locGrid.Y,
 				TamañoBotón.X, TamañoBotón.Y);
 			return bounds;

@@ -3,6 +3,8 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using OpenTK.Input;
 using Moggle.IO;
+using Moggle.Controles;
+using Moggle.Shape;
 
 namespace Moggle.Controles
 {
@@ -13,7 +15,7 @@ namespace Moggle.Controles
 	{
 		public IScreen Screen { get; }
 
-		protected SBC(IScreen screen)
+		protected SBC (IScreen screen)
 		{
 			Screen = screen;
 		}
@@ -22,12 +24,12 @@ namespace Moggle.Controles
 
 		public virtual void Include ()
 		{
-			Screen.Controles.Add(this);
+			Screen.Controles.Add (this);
 		}
 
 		public virtual void Exclude ()
 		{
-			Screen.Controles.Remove(this);
+			Screen.Controles.Remove (this);
 		}
 
 		public virtual void Inicializar ()
@@ -46,10 +48,10 @@ namespace Moggle.Controles
 
 		public virtual void Update (GameTime gameTime)
 		{
-			CheckMouseState(gameTime.ElapsedGameTime);
+			CheckMouseState (gameTime.ElapsedGameTime);
 		}
 
-		public abstract Rectangle GetBounds ();
+		public abstract IShape GetBounds ();
 
 		/// <summary>
 		/// Se ejecuta cada llamada a game.Update 
@@ -58,11 +60,11 @@ namespace Moggle.Controles
 		{
 			if (MouseOver)
 			{
-				if (InputManager.FuePresionado(MouseButton.Left))
-					AlClick?.Invoke();
+				if (InputManager.FuePresionado (MouseButton.Left))
+					AlClick?.Invoke ();
 
-				if (InputManager.FuePresionado(MouseButton.Right))
-					AlClickDerecho?.Invoke();
+				if (InputManager.FuePresionado (MouseButton.Right))
+					AlClickDerecho?.Invoke ();
 
 				TiempoMouseOver += time;
 			}
@@ -76,8 +78,8 @@ namespace Moggle.Controles
 		{
 			get
 			{
-				var state = Microsoft.Xna.Framework.Input.Mouse.GetState();
-				return GetBounds().Contains(state.Position);
+				var state = Microsoft.Xna.Framework.Input.Mouse.GetState ();
+				return GetBounds ().Contains (state.Position);
 			}
 		}
 
@@ -85,7 +87,7 @@ namespace Moggle.Controles
 
 		void IDisposable.Dispose ()
 		{
-			Dispose();
+			Dispose ();
 		}
 
 		/// <summary>
@@ -98,7 +100,7 @@ namespace Moggle.Controles
 		/// collector can reclaim the memory that the <see cref="Moggle.Controles.SBC"/> was occupying.</remarks>
 		protected virtual void Dispose ()
 		{
-			Exclude();
+			Exclude ();
 		}
 
 		public virtual void CatchKey (Key key)
