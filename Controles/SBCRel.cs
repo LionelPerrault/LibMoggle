@@ -9,19 +9,33 @@ namespace Moggle.Controles
 	/// </summary>
 	public abstract class SBCRel : SBC
 	{
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
 		protected SBCRel (IScreen screen)
 			: base (screen)
 		{
 		}
 
+		/// <summary>
+		/// Puerto visual.
+		/// </summary>
 		public VisualPortManager Port;
 
+		/// <summary>
+		/// Dibuja el control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Dibujar (GameTime gameTime)
 		{
 			var rect = Port.UniversoAVentana (GetBounds ().GetContainingRectangle ());
 			DibujarEn (gameTime, rect);
 		}
 
+		/// <summary>
+		/// Determina si el apuntador del ratón está sobre este control.
+		/// </summary>
+		/// <value><c>true</c> if mouse over; otherwise, <c>false</c>.</value>
 		public new bool MouseOver
 		{
 			get

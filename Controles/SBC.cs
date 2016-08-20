@@ -13,25 +13,45 @@ namespace Moggle.Controles
 	/// </summary>
 	public abstract class SBC : IControl
 	{
+		/// <summary>
+		/// Pantalla del control
+		/// </summary>
+		/// <value>The screen.</value>
 		public IScreen Screen { get; }
 
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
 		protected SBC (IScreen screen)
 		{
 			Screen = screen;
 		}
 
+		/// <summary>
+		/// Prioridad de dibujo;
+		/// Mayor prioridad se dibuja en la cima
+		/// </summary>
 		public int Prioridad { get; set; }
 
+		/// <summary>
+		/// Incluir este control en su pantalla
+		/// </summary>
 		public virtual void Include ()
 		{
 			Screen.Controles.Add (this);
 		}
 
+		/// <summary>
+		/// Excluir este control de su pantalla
+		/// </summary>
 		public virtual void Exclude ()
 		{
 			Screen.Controles.Remove (this);
 		}
 
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
+		/// </summary>
 		public virtual void Inicializar ()
 		{
 		}
@@ -46,11 +66,17 @@ namespace Moggle.Controles
 		/// </summary>
 		public abstract void LoadContent ();
 
+		/// <summary>
+		/// Ciclo de la lógica
+		/// </summary>
 		public virtual void Update (GameTime gameTime)
 		{
 			CheckMouseState (gameTime.ElapsedGameTime);
 		}
 
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
 		public abstract IShape GetBounds ();
 
 		/// <summary>
@@ -61,10 +87,10 @@ namespace Moggle.Controles
 			if (MouseOver)
 			{
 				if (InputManager.FuePresionado (MouseButton.Left))
-					AlClick?.Invoke ();
+					AlClick?.Invoke (this, EventArgs.Empty);
 
 				if (InputManager.FuePresionado (MouseButton.Right))
-					AlClickDerecho?.Invoke ();
+					AlClickDerecho?.Invoke (this, EventArgs.Empty);
 
 				TiempoMouseOver += time;
 			}
@@ -74,6 +100,9 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Determina si el apuntador del ratón está sobre este control.
+		/// </summary>
 		public bool MouseOver
 		{
 			get
@@ -83,6 +112,9 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el tiempo en el que el apuntador ha estado sobre este control.
+		/// </summary>
 		public TimeSpan TiempoMouseOver { get; private set; }
 
 		void IDisposable.Dispose ()
@@ -103,11 +135,19 @@ namespace Moggle.Controles
 			Exclude ();
 		}
 
+		/// <summary>
+		/// </summary>
 		public virtual void CatchKey (Key key)
 		{
 		}
 
-		public event Action AlClick;
-		public event Action AlClickDerecho;
+		/// <summary>
+		/// Ocurre cuando se hace click en este control.
+		/// </summary>
+		public event EventHandler AlClick;
+		/// <summary>
+		/// Ucurre cuando se hace click derecho en este control
+		/// </summary>
+		public event EventHandler AlClickDerecho;
 	}
 }

@@ -5,8 +5,15 @@ using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
-	public interface IControl: IDisposable
+	/// <summary>
+	/// Un control en un <see cref="IScreen"/>
+	/// </summary>
+	public interface IControl : IDisposable
 	{
+		/// <summary>
+		/// Pantalla a la que pertenece este control.
+		/// </summary>
+		/// <value>The screen.</value>
 		IScreen Screen { get; }
 
 		/// <summary>
@@ -45,6 +52,10 @@ namespace Moggle.Controles
 		/// </summary>
 		void Inicializar ();
 
+		/// <summary>
+		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
+		/// </summary>
+		/// <param name="key">Tecla presionada por el usuario.</param>
 		void CatchKey (Key key);
 	}
 }

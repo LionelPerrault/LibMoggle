@@ -7,10 +7,19 @@ namespace Moggle.Controles.Listas
 	/// </summary>
 	public interface IListaControl : IControl
 	{
+		/// <summary>
+		/// Devuelve el objeto seleccionado.
+		/// </summary>
 		object Seleccionado { get; }
 
+		/// <summary>
+		/// Establece el cursor en la posición siguiente.
+		/// </summary>
 		void SeleccionaSiguiente ();
 
+		/// <summary>
+		/// Establece el cursor en la posición anterior.
+		/// </summary>
 		void SeleccionaAnterior ();
 	}
 
@@ -19,6 +28,9 @@ namespace Moggle.Controles.Listas
 	/// </summary>
 	public interface IListaControl<T> : IListaControl
 	{
+		/// <summary>
+		/// Devuelve el objeto seleccionado.
+		/// </summary>
 		new T Seleccionado { get; }
 	}
 }

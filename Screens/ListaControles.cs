@@ -5,7 +5,7 @@ namespace Moggle.Screens
 {
 	public class ListaControl : SortedSet<IControl>
 	{
-		class Comparador :Comparer<IControl>
+		class Comparador : Comparer<IControl>
 		{
 			public override int Compare (IControl x, IControl y)
 			{

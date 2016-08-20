@@ -4,24 +4,47 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.IO;
 using OpenTK.Input;
 using Moggle.Shape;
 
 namespace Moggle.Controles.Listas
 {
+	/// <summary>
+	/// <para>
+	/// Un control que muestra una lista genérica de objetos.
+	/// </para>
+	/// <para>
+	/// Interactúa con el teclado.
+	/// </para>
+	/// </summary>
 	public class Lista<TObj> : SBC, IList<TObj>, IListaControl<TObj>
 	{
+		/// <summary>
+		/// Representa una entrada de la lista.
+		/// </summary>
 		public struct Entrada
 		{
+			/// <summary>
+			/// El objeto.
+			/// </summary>
 			public TObj Objeto;
+			/// <summary>
+			/// El color.
+			/// </summary>
 			public Color Color;
 
+			/// <summary>
+			/// </summary>
+			/// <param name="obj">Objeto</param>
 			public Entrada (TObj obj)
 				: this (obj, Color.White)
 			{
 			}
 
+			/// <summary>
+			/// </summary>
+			/// <param name="obj">Objeto</param>
+			/// <param name="color">Color</param>
 			public Entrada (TObj obj, Color color)
 			{
 				Objeto = obj;
@@ -29,6 +52,9 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Pantalla donde está colocado.</param>
 		public Lista (IScreen screen)
 			: base (screen)
 		{
@@ -38,6 +64,10 @@ namespace Moggle.Controles.Listas
 			InterceptarTeclado = true;
 		}
 
+		/// <summary>
+		/// Dibuja la lista.
+		/// </summary>
+		/// <param name="gameTime">Duración del tick</param>
 		public override void Dibujar (GameTime gameTime)
 		{
 			// Dibujar el rectángulo
@@ -100,11 +130,17 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
+		/// <summary>
+		/// Devuelve la lista de objetos
+		/// </summary>
 		public List<Entrada> Objetos { get; }
 
+		/// <summary>
+		/// Devuelve o establece el método para convertir el objeto en <c>string</c>
+		/// </summary>
 		public Func<TObj, string> Stringificación { get; set; }
 
-		int cursorIndex;
+		int _cursorIndex;
 
 		/// <summary>
 		/// El índice del cursor
@@ -113,15 +149,18 @@ namespace Moggle.Controles.Listas
 		{
 			get
 			{
-				return cursorIndex;
+				return _cursorIndex;
 			}
 			set
 			{
-				cursorIndex = Math.Max (Math.Min (Objetos.Count - 1, value), 0);
-				AlMoverCursor?.Invoke ();
+				_cursorIndex = Math.Max (Math.Min (Objetos.Count - 1, value), 0);
+				AlMoverCursor?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el objeto que está seleccionado por el cursor del control mismo.
+		/// </summary>
 		public TObj ObjetoEnCursor
 		{
 			get
@@ -132,6 +171,9 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
+		/// <summary>
+		/// Devuelve o establece la fuente a usar para imprimir el texto.
+		/// </summary>
 		public BitmapFont Fuente { get; set; }
 
 		Texture2D noTexture { get; set; }
@@ -146,8 +188,14 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public Color ColorSel { get; set; }
 
+		/// <summary>
+		/// Devuelve o establece el límite del control
+		/// </summary>
 		public Moggle.Shape.Rectangle Bounds { get; set; }
 
+		/// <summary>
+		/// Devuelve el menor rectángulo que contiene a este control.
+		/// </summary>
 		public override IShape GetBounds ()
 		{
 			return Bounds;
@@ -158,12 +206,18 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public bool InterceptarTeclado { get; set; }
 
+		/// <summary>
+		/// Cargar contenido
+		/// </summary>
 		public override void LoadContent ()
 		{
 			Fuente = Screen.Content.Load<BitmapFont> ("fonts");
 			noTexture = Screen.Content.Load<Texture2D> ("Rect");
 		}
 
+		/// <summary>
+		/// Dispose.
+		/// </summary>
 		protected override void Dispose ()
 		{
 			Fuente = null;
@@ -171,9 +225,21 @@ namespace Moggle.Controles.Listas
 			base.Dispose ();
 		}
 
+		/// <summary>
+		/// Tecla para desplazarse hacia abajo.
+		/// </summary>
+		/// <seealso cref="InterceptarTeclado"/>
 		public Key AbajoKey = Key.Down;
+
+		/// <summary>
+		/// Tecla para desplazarse hacia arriba.
+		/// </summary>
+		/// <seealso cref="InterceptarTeclado"/>
 		public Key ArribaKey = Key.Up;
 
+		/// <summary>
+		/// Catchs the key.
+		/// </summary>
 		public override void CatchKey (Key key)
 		{
 			if (!InterceptarTeclado)
@@ -186,18 +252,27 @@ namespace Moggle.Controles.Listas
 
 		#region IListaControl
 
+		/// <summary>
+		/// Selecciona el siguiente objeto en la lista
+		/// </summary>
 		public void SeleccionaSiguiente ()
 		{
 			if (++CursorIndex >= PrimerVisible + MaxVisible)
 				PrimerVisible++;
 		}
 
+		/// <summary>
+		/// Selecciona el objeto anterior en la lista.
+		/// </summary>
 		public void SeleccionaAnterior ()
 		{
 			if (--CursorIndex < PrimerVisible)
 				PrimerVisible--;
 		}
 
+		/// <summary>
+		/// Devuelve el objeto bajo el cursor.
+		/// </summary>
 		public TObj Seleccionado
 		{
 			get
@@ -233,26 +308,46 @@ namespace Moggle.Controles.Listas
 			throw new NotImplementedException ();
 		}
 
+		/// <summary>
+		/// Agrega un objeto a la lista.
+		/// </summary>
+		/// <param name="item">Objeto</param>
 		public void Add (TObj item)
 		{
 			Add (item, Color.White);
 		}
 
+		/// <summary>
+		/// Agrega un objeto a la lista.
+		/// </summary>
+		/// <param name="item">Objeto</param>
+		/// <param name="color">Color de impresión</param>
 		public void Add (TObj item, Color color)
 		{
 			Add (new Entrada (item, color));
 		}
 
+		/// <summary>
+		/// Agrega un objeto a la lista.
+		/// </summary>
+		/// <param name="entrada">Objeto y color</param>
 		public void Add (Entrada entrada)
 		{
 			Objetos.Add (entrada);
 		}
 
+		/// <summary>
+		/// Vacía los objetos de la lista.
+		/// </summary>
 		public void Clear ()
 		{
 			Objetos.Clear ();
 		}
 
+		/// <summary>
+		/// Determina si un objeto está en la lista
+		/// </summary>
+		/// <param name="item">Objeto</param>
 		public bool Contains (TObj item)
 		{
 			throw new NotImplementedException ();
@@ -263,6 +358,10 @@ namespace Moggle.Controles.Listas
 			throw new NotImplementedException ();
 		}
 
+		/// <summary>
+		/// Elimina un objeto de la lista
+		/// </summary>
+		/// <param name="item">Objeto</param>
 		public bool Remove (TObj item)
 		{
 			throw new NotImplementedException ();
@@ -278,6 +377,10 @@ namespace Moggle.Controles.Listas
 			throw new NotImplementedException ();
 		}
 
+		/// <summary>
+		/// Devuelve la entrada de la lista en base a su índice.
+		/// </summary>
+		/// <param name="index">Índice base cero.</param>
 		public TObj this [int index]
 		{
 			get
@@ -291,6 +394,9 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el número de elementos de la lista.
+		/// </summary>
 		public int Count
 		{
 			get
@@ -299,7 +405,7 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
-		public bool IsReadOnly
+		bool ICollection<TObj>.IsReadOnly
 		{
 			get
 			{
@@ -307,15 +413,15 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
-
-
 		#endregion
 
 		#region Eventos
 
-		public event Action AlMoverCursor;
+		/// <summary>
+		/// Ocurre cuando el cursor cambia de posición
+		/// </summary>
+		public event EventHandler AlMoverCursor;
 
 		#endregion
 	}
 }
-
