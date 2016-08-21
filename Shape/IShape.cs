@@ -3,6 +3,14 @@ using Moggle.Shape;
 
 namespace Moggle.Shape
 {
+	/// <summary>
+	/// <para>
+	/// Representa una forma en 2D.
+	/// </para>
+	/// <para>
+	/// Provee métodos para mover, estalar, pedir rectángulo excrito, y método para saber si contiene un punto dado.
+	/// </para>
+	/// </summary>
 	public interface IShape
 	{
 		/// <summary>
@@ -27,15 +35,15 @@ namespace Moggle.Shape
 
 	}
 
+	/// <summary>
+	/// Shapes.
+	/// </summary>
 	public static class Shapes
 	{
-		static IShape NoShape
-		{
-			get
-			{
-				return new Shapeless ();
-			}
-		}
+		/// <summary>
+		/// Devuelve una <see cref="IShape"/> vacía.
+		/// </summary>
+		public static readonly IShape NoShape = new Shapeless ();
 	}
 
 	class Shapeless : IShape

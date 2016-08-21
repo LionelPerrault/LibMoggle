@@ -46,6 +46,8 @@ namespace Moggle.Screens
 		/// <value>The content.</value>
 		ContentManager Content { get; }
 
+		/// <summary>
+		/// </summary>
 		bool Escuchando { set; }
 
 		#region hardware
