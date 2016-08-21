@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OpenTK.Input;
 using Moggle.Shape;
+using System;
 
 namespace Moggle.Controles
 {
@@ -30,6 +31,20 @@ namespace Moggle.Controles
 
 		public string ArchivoTextura { get; set; }
 
+		/// <summary>
+		/// Devuelve un valor determinando si el ratón está habilitado para esta aplicación.
+		/// </summary>
+		public bool Habilitado
+		{
+			get
+			{
+				return Textura != null || !string.IsNullOrWhiteSpace (ArchivoTextura);
+			}
+		}
+
+		/// <summary>
+		/// Devuelve la textura usada.
+		/// </summary>
 		public Texture2D Textura { get; protected set; }
 
 		protected override void Dispose ()
