@@ -10,46 +10,71 @@ namespace Moggle.Screens
 	/// </summary>
 	public class MostrarListaScreen<TObj> : DialScreen
 	{
+		/// <summary>
+		/// Lo que devuelve cuando se invoca y termina esta pantalla.
+		/// </summary>
 		public struct TipoSalida
 		{
+			/// <summary>
+			/// Tipos de salida
+			/// </summary>
 			public enum EnumTipoSalida
 			{
+				/// <summary>
+				/// Se canceló la pantalla.
+				/// </summary>
 				Cancelación,
+				/// <summary>
+				/// Se aceptó y dio una respuesta.
+				/// </summary>
 				Aceptación
 			}
 
+			/// <summary>
+			/// </summary>
+			/// <param name="tipo">Tipo.</param>
+			/// <param name="selección">Selección.</param>
 			public TipoSalida (EnumTipoSalida tipo, IEnumerable<TObj> selección)
 			{
 				Tipo = tipo;
 				Selección = selección;
 			}
 
+			/// <summary>
+			/// Tipo de salida
+			/// </summary>
 			public EnumTipoSalida Tipo;
+			/// <summary>
+			/// Selección de objetos.
+			/// </summary>
 			public IEnumerable<TObj> Selección;
 		}
 
-		public override bool DibujarBase
-		{
-			get
-			{
-				return true;
-			}
-		}
+		/// <summary>
+		/// La pantalla madre se debe dibujar.
+		/// </summary>
+		public override bool DibujarBase { get { return true; } }
 
+		/// <summary>
+		/// Devuelve o establece el color del fondo de la pantalla.
+		/// </summary>
 		public Color ColorFondo { get; set; }
 
-		public override Color BgColor
-		{
-			get
-			{
-				return ColorFondo;
-			}
-		}
+		/// <summary>
+		/// Devuelve el color de fondo.
+		/// </summary>
+		public override Color BgColor { get { return ColorFondo; } }
 
+		/// <summary>
+		/// Cuando se termina, aquí se almacena la salida del jugador.
+		/// </summary>
 		public TipoSalida Salida { get; private set; }
 
 		const string fontTexture = "UnitNameFont";
 
+		/// <summary>
+		/// </summary>
+		/// <param name="game">Game.</param>
 		public MostrarListaScreen (Game game)
 			: base (game)
 		{
@@ -66,6 +91,10 @@ namespace Moggle.Screens
 			SelecciónActual = new List<TObj> ();
 		}
 
+		/// <summary>
+		/// Cuando se presiona una tecla
+		/// </summary>
+		/// <param name="key">Tecla</param>
 		protected override void TeclaPresionada (Key key)
 		{
 			base.TeclaPresionada (key);
@@ -95,19 +124,24 @@ namespace Moggle.Screens
 			}
 		}
 
-		public TObj ObjetoEnCursor
-		{
-			get
-			{
-				return ListaComponente.Objetos [ListaComponente.CursorIndex].Objeto;
-			}
-		}
+		/// <summary>
+		/// Devuelve el objeto seleccionado.
+		/// </summary>
+		public TObj ObjetoEnCursor { get { return ListaComponente.Objetos [ListaComponente.CursorIndex].Objeto; } }
 
+		/// <summary>
+		/// Agrega un objeto a la lista.
+		/// </summary>
+		/// <param name="t">Objeto</param>
+		/// <param name="color">Color</param>
 		public void Add (TObj t, Color color)
-		{			
+		{
 			ListaComponente.Objetos.Add (new Lista<TObj>.Entrada (t, color));
 		}
 
+		/// <summary>
+		/// Devuelve el control de la pantalla que es el componente.
+		/// </summary>
 		public Lista<TObj> ListaComponente { get; }
 
 		/// <summary>

@@ -9,14 +9,36 @@ namespace Moggle.IO
 	/// </summary>
 	public static class InputManager
 	{
+		/// <summary>
+		/// Devuelve el estado actual del teclado.
+		/// </summary>
 		public static KeyboardState EstadoActualTeclado { get; private set; }
 
+		/// <summary>
+		/// Devuelve el estado tel teclado del tick anterior.
+		/// </summary>
 		public static KeyboardState EstadoAnteriorTeclado { get; private set; }
 
+		/// <summary>
+		/// Devuelve el estado actual del ratón
+		/// </summary>
+		/// <value>The estado actual mouse.</value>
 		public static MouseState EstadoActualMouse { get; private set; }
 
+		/// <summary>
+		/// Devuelve el estado anterior del ratón
+		/// </summary>
+		/// <value>The estado anterior mouse.</value>
 		public static MouseState EstadoAnteriorMouse { get; private set; }
 
+		/// <summary>
+		/// Actualiza el estado de los dispositivos.
+		/// </summary>
+		/// <remarks>
+		/// No es necesario ejecutar esta función.
+		/// El Update de <see cref="Moggle.Game"/> ya lo ejecuta automáticamente.
+		/// </remarks>
+		/// <param name="time">Tiempo transcurrido desde la última actualización</param>
 		public static void  Update (TimeSpan time)
 		{
 			EstadoAnteriorTeclado = EstadoActualTeclado;
@@ -40,15 +62,28 @@ namespace Moggle.IO
 
 		#region Teclado
 
+		/// <summary>
+		/// Tiempo de espera para empezar repetición de teclas
+		/// </summary>
 		public static TimeSpan TiempoRepeticiónInicial = TimeSpan.FromMilliseconds (300);
+		/// <summary>
+		/// Tiempo entre repeticiones de teclas cuando está en modo repetir.
+		/// </summary>
 		public static TimeSpan TiempoReiteración = TimeSpan.FromMilliseconds (80);
 
 		static TimeSpan contadorActual { get; set; }
 
+		/// <summary>
+		/// Devuelve la tecla que está en modo repetir.
+		/// </summary>
+		/// <value>The tecla repitiendo.</value>
 		public static Key TeclaRepitiendo { get; private set; }
 
 		static bool estáReiterando { get; set; }
 
+		/// <summary>
+		/// Devuelve un valor que determina si permite entrar a modo repetición.
+		/// </summary>
 		public static bool PermitirRepeticiones
 		{
 			get
@@ -121,11 +156,19 @@ namespace Moggle.IO
 
 		#region Mouse
 
+		/// <summary>
+		/// Determina si un botón del ratón está presionado
+		/// </summary>
+		/// <param name="botón">Botón.</param>
 		public static bool EstáPresionado (MouseButton botón)
 		{
 			return EstadoActualMouse.IsButtonDown (botón);
 		}
 
+		/// <summary>
+		/// Determina si un botón del ratón acaba de ser presionado.
+		/// </summary>
+		/// <param name="botón">Botón.</param>
 		public static bool FuePresionado (MouseButton botón)
 		{
 			return EstáPresionado (botón) && !EstadoAnteriorMouse.IsButtonDown (botón);

@@ -15,6 +15,9 @@ namespace Moggle.Controles
 	/// </summary>
 	public class EntradaTexto : SBC
 	{
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
 		public EntradaTexto (IScreen screen)
 			: base (screen)
 		{
@@ -35,15 +38,22 @@ namespace Moggle.Controles
 
 		#region Estado
 
+		/// <summary>
+		/// Devuelve o establece el texto visible (editable)
+		/// </summary>
 		public string Texto { get; set; }
 
 		/// <summary>
-		/// Si el control debe responder a el estado del teclado.
+		/// Si el control debe responder al estado del teclado.
 		/// </summary>
 		public bool CatchKeys = true;
 
 		#endregion
 
+		/// <summary>
+		/// Devuelve o establece la posición del control.
+		/// </summary>
+		/// <value>The position.</value>
 		public Point Pos
 		{
 			get
@@ -72,6 +82,10 @@ namespace Moggle.Controles
 		/// </summary>
 		public Moggle.Shape.Rectangle Bounds { get; set; }
 
+		/// <summary>
+		/// Dibuja el control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Dibujar (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
@@ -83,12 +97,19 @@ namespace Moggle.Controles
 			bat.DrawString (fontTexture, Texto, Pos.ToVector2 (), ColorTexto);
 		}
 
+		/// <summary>
+		/// Cargar contenido
+		/// </summary>
 		public override void LoadContent ()
 		{
 			contornoTexture = Screen.Content.Load<Texture2D> ("Rect");
 			fontTexture = Screen.Content.Load<BitmapFont> ("fonts");
 		}
 
+		/// <summary>
+		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
+		/// </summary>
+		/// <param name="key">Tecla presionada por el usuario.</param>
 		public override void CatchKey (Key key)
 		{
 			if (TeclasPermitidas.ContainsKey (key))
@@ -110,8 +131,15 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Devuelve o establece el mapeo entre tecla presionada y el caracter o cadena visible.
+		/// </summary>
 		public IDictionary<Key, string> TeclasPermitidas { get; set; }
 
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
 		public override IShape GetBounds ()
 		{
 			return Bounds;

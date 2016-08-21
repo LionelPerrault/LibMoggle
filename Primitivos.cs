@@ -10,8 +10,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Moggle
 {
+	/// <summary>
+	/// Provee métidos de dibujo primitivos
+	/// </summary>
 	public static class Primitivos
 	{
+		/// <summary>
+		/// Dibuja una línea
+		/// </summary>
+		/// <param name="sb">Batch</param>
+		/// <param name="start">Inicio de la línea</param>
+		/// <param name="end">Final de la línea</param>
+		/// <param name="color">Color.</param>
+		/// <param name="text">Textura</param>
 		public static void DrawLine (SpriteBatch sb,
 		                             Vector2 start,
 		                             Vector2 end,
@@ -23,7 +34,7 @@ namespace Moggle
 			float angle = (float)Math.Atan2 (edge.Y, edge.X);
 
 			sb.Draw (text,
-				start,			         			   
+				start,
 				new Rectangle (
 					(int)start.X,
 					(int)start.Y,
@@ -124,7 +135,7 @@ namespace Moggle
 				return circleCache [circleKey];
 			}
 
-			List<Vector2> vectors = new List<Vector2> ();
+			var vectors = new List<Vector2> ();
 
 			const double max = 2.0 * Math.PI;
 			double step = max / sides;
@@ -161,7 +172,7 @@ namespace Moggle
 		                                float startingAngle,
 		                                float radians)
 		{
-			List<Vector2> points = new List<Vector2> ();
+			var points = new List<Vector2> ();
 			points.AddRange (CreateCircle (radius, sides));
 			points.RemoveAt (points.Count - 1); // remove the last point because it's a duplicate of the first
 
@@ -614,6 +625,13 @@ namespace Moggle
 
 		#region PutPixel
 
+		/// <summary>
+		/// Puts a pixel
+		/// </summary>
+		/// <param name="spriteBatch">Sprite batch.</param>
+		/// <param name="x">The x coordinate.</param>
+		/// <param name="y">The y coordinate.</param>
+		/// <param name="color">Color.</param>
 		public static void PutPixel (this SpriteBatch spriteBatch,
 		                             float x,
 		                             float y,
@@ -622,21 +640,23 @@ namespace Moggle
 			PutPixel (spriteBatch, new Vector2 (x, y), color);
 		}
 
-
+		/// <summary>
+		/// Puts a pixel.
+		/// </summary>
+		/// <param name="spriteBatch">Sprite batch.</param>
+		/// <param name="position">Position.</param>
+		/// <param name="color">Color.</param>
 		public static void PutPixel (this SpriteBatch spriteBatch,
 		                             Vector2 position,
 		                             Color color)
 		{
 			if (pixel == null)
-			{
 				CreateThePixel (spriteBatch);
-			}
 
 			spriteBatch.Draw (pixel, position, color);
 		}
 
 		#endregion
-
 
 		#region DrawCircle
 
@@ -736,7 +756,6 @@ namespace Moggle
 
 		#endregion
 
-
 		#region DrawArc
 
 		/// <summary>
@@ -795,7 +814,5 @@ namespace Moggle
 		}
 
 		#endregion
-
-
 	}
 }

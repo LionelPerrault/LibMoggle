@@ -9,28 +9,54 @@ using System.Threading.Tasks;
 
 namespace Moggle
 {
+	/// <summary>
+	/// Clase global de un juego.
+	/// </summary>
 	public class Game : Microsoft.Xna.Framework.Game
 	,IScreen // Para poder tener controles globales (cursor)
 	{
+		/// <summary>
+		/// Devuelve el control del puntero del ratón.
+		/// </summary>
 		protected readonly Ratón Mouse;
 
 		#if FPS
 		readonly Label fpsLabel;
 		#endif
 
+		/// <summary>
+		/// Establece si está escuchando
+		/// </summary>
 		public bool Escuchando
 		{
+			// Analysis disable ValueParameterNotUsed
 			set{ }
+			// Analysis restore ValueParameterNotUsed
 		}
 
+		/// <summary>
+		/// Devuelve la lista de controles univesales
+		/// </summary>
+		/// <value>The controles universales.</value>
 		public ListaControl ControlesUniversales { get; }
 
+		/// <summary>
+		/// La pantalla mostrada actualmente
+		/// </summary>
 		public IScreen CurrentScreen;
 
+		/// <summary>
+		/// The graphics.
+		/// </summary>
 		public readonly GraphicsDeviceManager Graphics;
 
+		/// <summary>
+		/// Batch de dibujo
+		/// </summary>
 		public SpriteBatch Batch { get; private set; }
 
+		/// <summary>
+		/// </summary>
 		public Game ()
 		{
 			ControlesUniversales = new ListaControl ();
@@ -86,12 +112,21 @@ namespace Moggle
 			(this as IScreen).Update (gameTime);
 		}
 
+		/// <summary>
+		/// Raises the exiting event.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
 		protected override void OnExiting (object sender, EventArgs args)
 		{
 			base.OnExiting (sender, args);
 			((IScreen)this).UnloadContent ();
 		}
 
+		/// <summary>
+		/// Draw the game
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		protected override void Draw (GameTime gameTime)
 		{
 			Graphics.GraphicsDevice.Clear (BackgroundColor);
@@ -110,6 +145,9 @@ namespace Moggle
 
 		}
 
+		/// <summary>
+		/// Gets the color of the background.
+		/// </summary>
 		public Color BackgroundColor
 		{
 			get
@@ -128,11 +166,19 @@ namespace Moggle
 			}
 		}
 
+		/// <summary>
+		/// Devuelve un nuevo batch de dibujo.
+		/// </summary>
+		/// <returns>The new batch.</returns>
 		public SpriteBatch GetNewBatch ()
 		{
 			return new SpriteBatch (GraphicsDevice);
 		}
 
+		/// <summary>
+		/// Devuelve el controlador gráfico.
+		/// </summary>
+		/// <value>The device.</value>
 		public GraphicsDevice Device
 		{
 			get
@@ -182,6 +228,9 @@ namespace Moggle
 			CurrentScreen.UnloadContent ();
 		}
 
+		/// <summary>
+		/// Devuelve el modo actual de display gráfico.
+		/// </summary>
 		public DisplayMode GetDisplayMode
 		{
 			get
@@ -198,4 +247,3 @@ namespace Moggle
 		#endregion
 	}
 }
-
