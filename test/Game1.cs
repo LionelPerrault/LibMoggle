@@ -22,9 +22,9 @@ namespace Test
 			Graphics.IsFullScreen = false;
 			CurrentScreen = new Scr (this);
 			Mouse.ArchivoTextura = @"cont/void";
+			//Mouse.Exclude ();
 
 			InputManager.AlSerPresionado += InputManager_AlSerPresionado;
-
 		}
 
 		void InputManager_AlSerPresionado (OpenTK.Input.Key obj)
