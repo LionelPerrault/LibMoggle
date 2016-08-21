@@ -64,7 +64,6 @@ namespace Moggle
 			Content.RootDirectory = "Content";
 			Graphics.IsFullScreen = true;
 			Mouse = new Ratón (this);
-			Mouse.Include ();
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			Task.Run (inputListener);
@@ -92,6 +91,9 @@ namespace Moggle
 			// Create a new SpriteBatch, which can be used to draw textures.
 			Batch = new SpriteBatch (GraphicsDevice);
 			//spriteBatch.DrawString(new SpriteFont)
+
+			if (Mouse.Habilitado)
+				Mouse.Include ();
 
 			CurrentScreen?.LoadContent ();
 			foreach (var x in ControlesUniversales)
