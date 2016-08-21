@@ -26,6 +26,6 @@ Global
 		{AEE6CA94-826A-4329-9BE3-8C533EF856E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		version = 0.2
+		version = 0.2.1
 	EndGlobalSection
 EndGlobal
