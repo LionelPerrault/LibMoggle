@@ -111,7 +111,7 @@ namespace Moggle
 		{
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
-			(this as IScreen).Update (gameTime);
+			updateControls (gameTime);
 		}
 
 		/// <summary>
@@ -215,10 +215,13 @@ namespace Moggle
 
 		void IScreen.Update (GameTime gametime)
 		{
+			updateControls (gametime);
+		}
+
+		void updateControls (GameTime gametime)
+		{
 			foreach (var cu in new List<IControl> (ControlesUniversales))
-			{
 				cu.Update (gametime);
-			}
 		}
 
 		void IScreen.UnloadContent ()
