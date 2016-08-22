@@ -71,6 +71,14 @@ namespace Moggle
 
 		}
 
+		/// <summary>
+		/// Begins the run.
+		/// </summary>
+		protected override void BeginRun ()
+		{
+			base.BeginRun ();
+			CurrentScreen.Escuchando = true;
+		}
 		// Analysis disable FunctionNeverReturns
 		static void inputListener ()
 		// Analysis restore FunctionNeverReturns
