@@ -51,8 +51,7 @@ namespace Test
 			bt.Include ();
 			base.Inicializar ();
 
-			bt.AlClickIzquierdo += Bt_AlClick;
-			bt.AlClickDerecho += Bt_AlClick;
+			bt.AlClick += Bt_AlClick;
 		}
 
 		protected void Bt_AlClick (object sender, MouseEventArgs e)
