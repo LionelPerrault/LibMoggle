@@ -84,7 +84,7 @@ namespace Moggle
 			base.Initialize ();
 
 			// Listeners
-			KeyListener.KeyTyped += keyPressed;
+			KeyListener.KeyPressed += keyPressed;
 		}
 
 		void keyPressed (object sender, KeyboardEventArgs e)
