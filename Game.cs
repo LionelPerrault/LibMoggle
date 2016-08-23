@@ -72,8 +72,6 @@ namespace Moggle
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
 
-			MouseListener = InputManager.AddListener<MouseListener> ();
-			KeyListener = InputManager.AddListener<KeyboardListener> ();
 		}
 
 		/// <summary>
@@ -83,6 +81,9 @@ namespace Moggle
 			base.Initialize ();
 
 			// Listeners
+			MouseListener = InputManager.AddListener<MouseListener> ();
+			KeyListener = InputManager.AddListener<KeyboardListener> ();
+
 			KeyListener.KeyPressed += keyPressed;
 		}
 
