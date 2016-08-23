@@ -7,6 +7,7 @@ namespace Moggle.IO
 	/// Un controlador que maneja entrada: Teclado y ratón
 	/// Es mejor usarlo por medio de eventos, que capturando el estado actual.
 	/// </summary>
+	[Obsolete]
 	public static class InputManager
 	{
 		/// <summary>
