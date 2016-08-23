@@ -51,7 +51,14 @@ namespace Test
 			bt.Include ();
 			base.Inicializar ();
 
-			bt.AlClick += (sender, e) => Juego.Exit ();
+			bt.AlClickIzquierdo += Bt_AlClick;
+			bt.AlClickDerecho += Bt_AlClick;
+		}
+
+		protected void Bt_AlClick (object sender, MouseEventArgs e)
+		{
+			Debug.WriteLine (sender);
+			Debug.WriteLine (e.Button);
 		}
 
 	}

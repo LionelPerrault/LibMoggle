@@ -1,9 +1,9 @@
 ﻿using System;
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
-using OpenTK.Input;
 using Moggle.Controles;
 using Moggle.Shape;
+using Inputs = MonoGame.Extended.InputListeners;
 using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
@@ -42,12 +42,12 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Excluir este control de su pantalla
+		/// Excluir este control de su pantalla.
+		/// Tener en cuenta que las suscripciones quedarán ahí.
 		/// </summary>
 		public virtual void Exclude ()
 		{
 			Screen.Controles.Remove (this);
-			Screen.Juego.MouseListener.MouseClicked -= check_click;
 		}
 
 		/// <summary>
@@ -56,20 +56,33 @@ namespace Moggle.Controles
 		public virtual void Inicializar ()
 		{
 			Screen.Juego.MouseListener.MouseClicked += check_click;
+			Screen.Juego.MouseListener.MouseDoubleClicked += check_2click;
 		}
 
-		void check_click (object sender,
-		                  MonoGame.Extended.InputListeners.MouseEventArgs e)
+		void check_2click (object sender, Inputs.MouseEventArgs e)
 		{
 			if (GetBounds ().Contains (e.Position))
-			{
-				if (e.Button == MonoGame.Extended.InputListeners.MouseButton.Left)
-					AlClick.Invoke (this, e);
-				else if (e.Button == MonoGame.Extended.InputListeners.MouseButton.Left)
-					AlClickDerecho.Invoke (this, e);
+				OnDoubleClick (e);
+		}
 
-			}
+		void check_click (object sender, MouseEventArgs e)
+		{
+			if (GetBounds ().Contains (e.Position))
+				OnClick (e);
+		}
 
+		/// <summary>
+		/// This control was clicked.
+		/// </summary>
+		protected virtual void OnClick (MouseEventArgs args)
+		{
+		}
+
+		/// <summary>
+		/// This control was double clicked.
+		/// </summary>
+		protected virtual void OnDoubleClick (MouseEventArgs args)
+		{
 		}
 
 		/// <summary>
@@ -128,21 +141,14 @@ namespace Moggle.Controles
 		protected virtual void Dispose ()
 		{
 			Exclude ();
+			Screen.Juego.MouseListener.MouseClicked -= check_click;
 		}
 
 		/// <summary>
 		/// </summary>
-		public virtual void CatchKey (KeyboardEventArgs key)
+		public virtual void CatchKey (Inputs.KeyboardEventArgs key)
 		{
 		}
 
-		/// <summary>
-		/// Ocurre cuando se hace click en este control.
-		/// </summary>
-		public event EventHandler AlClick;
-		/// <summary>
-		/// Ucurre cuando se hace click derecho en este control
-		/// </summary>
-		public event EventHandler AlClickDerecho;
 	}
 }

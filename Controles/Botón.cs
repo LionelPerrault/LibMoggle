@@ -1,7 +1,9 @@
-﻿using Moggle.Shape;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System;
 using Microsoft.Xna.Framework;
-using System;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Shape;
+using Inputs = MonoGame.Extended.InputListeners;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -126,5 +128,37 @@ namespace Moggle.Controles
 		{
 			return Bounds;
 		}
+
+		/// <summary>
+		/// Botón hecho clic.
+		/// </summary>
+		/// <param name="args">Argumentos de ratón.</param>
+		protected override void OnClick (MouseEventArgs args)
+		{
+			AlClick?.Invoke (this, args);
+			switch (args.Button)
+			{
+				case MouseButton.Left:
+					AlClickIzquierdo?.Invoke (this, args);
+					break;
+
+				case MouseButton.Right:
+					AlClickDerecho?.Invoke (this, args);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Ocurre cuando se hace click (cualquiera( en este control.
+		/// </summary>
+		public event EventHandler<MouseEventArgs> AlClick;
+		/// <summary>
+		/// Ocurre cuando se hace click izquierdo en este control.
+		/// </summary>
+		public event EventHandler AlClickIzquierdo;
+		/// <summary>
+		/// Ucurre cuando se hace click derecho en este control
+		/// </summary>
+		public event EventHandler AlClickDerecho;
 	}
 }
