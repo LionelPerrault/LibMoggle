@@ -27,10 +27,13 @@ namespace Moggle
 		/// <summary>
 		/// Establece si está escuchando
 		/// </summary>
-		public bool Escuchando
+		bool IScreen.Escuchando
 		{
 			// Analysis disable ValueParameterNotUsed
-			set{ }
+			set
+			{ 
+				throw new Exception ("Cannot set this value");
+			}
 			// Analysis restore ValueParameterNotUsed
 		}
 
