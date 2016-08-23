@@ -6,6 +6,8 @@ using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework.Graphics;
 using OpenTK.Input;
 using Moggle.Shape;
+using MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Controles.Listas
 {
@@ -229,24 +231,25 @@ namespace Moggle.Controles.Listas
 		/// Tecla para desplazarse hacia abajo.
 		/// </summary>
 		/// <seealso cref="InterceptarTeclado"/>
-		public Key AbajoKey = Key.Down;
+		public Keys AbajoKey = Keys.Down;
 
 		/// <summary>
 		/// Tecla para desplazarse hacia arriba.
 		/// </summary>
 		/// <seealso cref="InterceptarTeclado"/>
-		public Key ArribaKey = Key.Up;
+		public Keys ArribaKey = Keys.Up;
 
 		/// <summary>
 		/// Catchs the key.
 		/// </summary>
-		public override void CatchKey (Key key)
+
+		public override void CatchKey (KeyboardEventArgs key)
 		{
 			if (!InterceptarTeclado)
 				return;
-			if (key == AbajoKey)
+			if (key.Key == AbajoKey)
 				SeleccionaSiguiente ();
-			else if (key == ArribaKey)
+			else if (key.Key == ArribaKey)
 				SeleccionaAnterior ();
 		}
 

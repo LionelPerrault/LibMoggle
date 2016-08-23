@@ -2,9 +2,9 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using OpenTK.Input;
-using Moggle.IO;
 using Moggle.Controles;
 using Moggle.Shape;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -86,11 +86,11 @@ namespace Moggle.Controles
 		{
 			if (MouseOver)
 			{
-				if (InputManager.FuePresionado (MouseButton.Left))
-					AlClick?.Invoke (this, EventArgs.Empty);
+				//if (InputManager.FuePresionado (MouseButton.Left))
+				AlClick?.Invoke (this, EventArgs.Empty);
 
-				if (InputManager.FuePresionado (MouseButton.Right))
-					AlClickDerecho?.Invoke (this, EventArgs.Empty);
+				//if (InputManager.FuePresionado (MouseButton.Right))
+				AlClickDerecho?.Invoke (this, EventArgs.Empty);
 
 				TiempoMouseOver += time;
 			}
@@ -137,7 +137,7 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// </summary>
-		public virtual void CatchKey (Key key)
+		public virtual void CatchKey (KeyboardEventArgs key)
 		{
 		}
 

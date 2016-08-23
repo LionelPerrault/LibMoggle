@@ -45,6 +45,9 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Extended">
+      <HintPath>..\packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />

@@ -1,9 +1,9 @@
-﻿using Moggle.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using Moggle.Controles;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Screens
 {
@@ -38,38 +38,18 @@ namespace Moggle.Screens
 			Controles = new ListaControl ();
 		}
 
+		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
+
+		MouseListener MouseListener{ get { return Juego.MouseListener; } }
+
 		/// <summary>
 		/// Manda la señal de tecla presionada a cada uno de sus controles.
 		/// </summary>
 		/// <param name="key">Key.</param>
-		protected virtual void TeclaPresionada (OpenTK.Input.Key key)
+		public virtual void TeclaPresionada (KeyboardEventArgs key)
 		{
 			foreach (var x in Controles)
 				x.CatchKey (key);
-		}
-
-		bool _escuchando;
-
-		/// <summary>
-		/// Determina si esta pantalla está escuchando a <see cref="InputManager"/>
-		/// </summary>
-		public bool Escuchando
-		{
-			get
-			{
-				return _escuchando;
-			}
-			set
-			{ 
-				// Evitar duplicar subscripción
-				if (value == _escuchando)
-					return;
-				_escuchando = value;
-				if (value)
-					InputManager.AlSerActivado += TeclaPresionada;
-				else
-					InputManager.AlSerActivado -= TeclaPresionada;
-			}
 		}
 
 		/// <summary>
@@ -85,6 +65,10 @@ namespace Moggle.Screens
 		{
 			foreach (var x in Controles)
 				x.Inicializar ();
+
+			// Listeners
+			//KeyListener.KeyPressed += (sender, e) => TeclaPresionada (e);
+
 		}
 
 		/// <summary>
@@ -93,10 +77,7 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void Ejecutar ()
 		{
-			if (Juego.CurrentScreen != null)
-				Juego.CurrentScreen.Escuchando = false;
 			Juego.CurrentScreen = this;
-			Escuchando = true;
 		}
 
 		/// <summary>
@@ -159,7 +140,6 @@ namespace Moggle.Screens
 		{
 			foreach (var x in new List<IControl> (Controles))
 				x.Dispose ();
-			Escuchando = false; // Evitar fugas de memoria
 		}
 
 		/// <summary>

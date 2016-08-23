@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Shape;
+using System.Diagnostics;
+using MonoGame.Extended.InputListeners;
 
 namespace Test
 {
@@ -15,7 +17,17 @@ namespace Test
 			bt.Textura = "cont//void";
 		}
 
-		Botón bt;
+		readonly Botón bt;
+
+		public override void TeclaPresionada (KeyboardEventArgs key)
+		{
+			base.TeclaPresionada (key);
+			Debug.WriteLine (string.Format (
+				"{0}:{1}:{2}",
+				key.Character,
+				key.Key,
+				key.Modifiers));
+		}
 
 		public override Color BgColor
 		{

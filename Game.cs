@@ -3,9 +3,8 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
-using Moggle.IO;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle
 {
@@ -25,19 +24,6 @@ namespace Moggle
 		#endif
 
 		/// <summary>
-		/// Establece si está escuchando
-		/// </summary>
-		bool IScreen.Escuchando
-		{
-			// Analysis disable ValueParameterNotUsed
-			set
-			{ 
-				throw new Exception ("Cannot set this value");
-			}
-			// Analysis restore ValueParameterNotUsed
-		}
-
-		/// <summary>
 		/// Devuelve la lista de controles univesales
 		/// </summary>
 		/// <value>The controles universales.</value>
@@ -52,6 +38,22 @@ namespace Moggle
 		/// The graphics.
 		/// </summary>
 		public readonly GraphicsDeviceManager Graphics;
+
+		/// <summary>
+		/// Gets the input manager.
+		/// </summary>
+		public readonly InputListenerManager InputManager = new InputListenerManager ();
+
+		/// <summary>
+		/// Gets the keyboard listener
+		/// </summary>
+		public KeyboardListener KeyListener { get; protected set; }
+
+		/// <summary>
+		/// Gets the mouse listener
+		/// </summary>
+		/// <value>The mouse listener.</value>
+		public MouseListener MouseListener { get; protected set; }
 
 		/// <summary>
 		/// Batch de dibujo
@@ -69,29 +71,34 @@ namespace Moggle
 			Mouse = new Ratón (this);
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
-			Task.Run (inputListener);
 			IsFixedTimeStep = false;
 
+			MouseListener = InputManager.AddListener<MouseListener> ();
+			KeyListener = InputManager.AddListener<KeyboardListener> ();
 		}
 
 		/// <summary>
-		/// Begins the run.
 		/// </summary>
-		protected override void BeginRun ()
+		protected override void Initialize ()
 		{
-			base.BeginRun ();
-			CurrentScreen.Escuchando = true;
+			base.Initialize ();
+
+			// Listeners
+			KeyListener.KeyTyped += keyPressed;
 		}
-		// Analysis disable FunctionNeverReturns
-		static void inputListener ()
-		// Analysis restore FunctionNeverReturns
+
+		void keyPressed (object sender, KeyboardEventArgs e)
 		{
-			DateTime lastList = DateTime.Now;
-			while (true)
-			{
-				InputManager.Update (lastList - DateTime.Now);
-				lastList = DateTime.Now;
-			}
+			TeclaPresionada (e);
+		}
+
+		/// <summary>
+		/// Manda señal de tecla presionada.
+		/// </summary>
+		/// <param name="key">Tecla señal</param>
+		public void TeclaPresionada (KeyboardEventArgs key)
+		{
+			CurrentScreen?.TeclaPresionada (key);
 		}
 
 		/// <summary>
@@ -123,6 +130,8 @@ namespace Moggle
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
 			updateControls (gameTime);
+
+			InputManager.Update (gameTime);
 		}
 
 		/// <summary>

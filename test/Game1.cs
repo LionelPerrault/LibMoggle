@@ -2,11 +2,7 @@
 using System;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-using Moggle.Screens;
-using Moggle.IO;
 
 #endregion
 
@@ -24,14 +20,12 @@ namespace Test
 			Mouse.ArchivoTextura = @"cont/void";
 			//Mouse.Exclude ();
 
-			InputManager.AlSerPresionado += InputManager_AlSerPresionado;
 		}
 
 		void InputManager_AlSerPresionado (OpenTK.Input.Key obj)
 		{
 			if (obj == OpenTK.Input.Key.Escape)
 				Exit ();
-			InputManager.AlSerPresionado -= InputManager_AlSerPresionado;
 		}
 
 		/// <summary>

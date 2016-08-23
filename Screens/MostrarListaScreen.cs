@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
-using OpenTK.Input;
 using Microsoft.Xna.Framework;
 using Moggle.Controles.Listas;
+using MonoGame.Extended.InputListeners;
+using OpenTK.Input;
+using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Screens
 {
@@ -95,25 +97,25 @@ namespace Moggle.Screens
 		/// Cuando se presiona una tecla
 		/// </summary>
 		/// <param name="key">Tecla</param>
-		protected override void TeclaPresionada (Key key)
+		public override void TeclaPresionada (KeyboardEventArgs key)
 		{
 			base.TeclaPresionada (key);
-			switch (key)
+			switch (key.Key)
 			{
-				case Key.Escape:
+				case Keys.Escape:
 					Salida = new TipoSalida (
 						TipoSalida.EnumTipoSalida.Cancelación,
 						SelecciónActual);
 					Salir ();
 					return;
-				case Key.Space:
+				case Keys.Space:
 					var curObj = ObjetoEnCursor;
 					if (SelecciónActual.Contains (curObj))
 						SelecciónActual.Remove (curObj);
 					else
 						SelecciónActual.Add (curObj);
 					return;
-				case Key.Enter:
+				case Keys.Enter:
 					Salida = new TipoSalida (
 						TipoSalida.EnumTipoSalida.Aceptación,
 						SelecciónActual);
