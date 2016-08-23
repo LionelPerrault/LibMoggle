@@ -67,7 +67,6 @@ namespace Moggle
 			ControlesUniversales = new ListaControl ();
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
-			Graphics.IsFullScreen = true;
 			Mouse = new Ratón (this);
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
