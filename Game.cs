@@ -180,6 +180,8 @@ namespace Moggle
 
 		#region IScreen
 
+		Game IScreen.Juego { get { return this; } }
+
 		Color IScreen.BgColor
 		{
 			get

@@ -50,6 +50,8 @@ namespace Test
 		{
 			bt.Include ();
 			base.Inicializar ();
+
+			bt.AlClick += (sender, e) => Juego.Exit ();
 		}
 
 	}

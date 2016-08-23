@@ -12,6 +12,11 @@ namespace Moggle.Screens
 	public interface IScreen
 	{
 		/// <summary>
+		/// Devuelve el campo Juego.
+		/// </summary>
+		Game Juego { get; }
+
+		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
 		void Dibujar (GameTime gameTime);
