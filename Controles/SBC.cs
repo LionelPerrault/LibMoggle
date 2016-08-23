@@ -1,10 +1,10 @@
 ﻿using System;
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
-using OpenTK.Input;
-using Moggle.IO;
 using Moggle.Controles;
 using Moggle.Shape;
+using Inputs = MonoGame.Extended.InputListeners;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -42,7 +42,8 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Excluir este control de su pantalla
+		/// Excluir este control de su pantalla.
+		/// Tener en cuenta que las suscripciones quedarán ahí.
 		/// </summary>
 		public virtual void Exclude ()
 		{
@@ -53,6 +54,34 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
 		/// </summary>
 		public virtual void Inicializar ()
+		{
+			Screen.Juego.MouseListener.MouseClicked += check_click;
+			Screen.Juego.MouseListener.MouseDoubleClicked += check_2click;
+		}
+
+		void check_2click (object sender, Inputs.MouseEventArgs e)
+		{
+			if (GetBounds ().Contains (e.Position))
+				OnDoubleClick (e);
+		}
+
+		void check_click (object sender, MouseEventArgs e)
+		{
+			if (GetBounds ().Contains (e.Position))
+				OnClick (e);
+		}
+
+		/// <summary>
+		/// This control was clicked.
+		/// </summary>
+		protected virtual void OnClick (MouseEventArgs args)
+		{
+		}
+
+		/// <summary>
+		/// This control was double clicked.
+		/// </summary>
+		protected virtual void OnDoubleClick (MouseEventArgs args)
 		{
 		}
 
@@ -71,7 +100,6 @@ namespace Moggle.Controles
 		/// </summary>
 		public virtual void Update (GameTime gameTime)
 		{
-			CheckMouseState (gameTime.ElapsedGameTime);
 		}
 
 		/// <summary>
@@ -80,29 +108,9 @@ namespace Moggle.Controles
 		public abstract IShape GetBounds ();
 
 		/// <summary>
-		/// Se ejecuta cada llamada a game.Update 
-		/// </summary>
-		public virtual void CheckMouseState (TimeSpan time)
-		{
-			if (MouseOver)
-			{
-				if (InputManager.FuePresionado (MouseButton.Left))
-					AlClick?.Invoke (this, EventArgs.Empty);
-
-				if (InputManager.FuePresionado (MouseButton.Right))
-					AlClickDerecho?.Invoke (this, EventArgs.Empty);
-
-				TiempoMouseOver += time;
-			}
-			else
-			{
-				TiempoMouseOver = TimeSpan.Zero;
-			}
-		}
-
-		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.
 		/// </summary>
+		[Obsolete]
 		public bool MouseOver
 		{
 			get
@@ -133,21 +141,14 @@ namespace Moggle.Controles
 		protected virtual void Dispose ()
 		{
 			Exclude ();
+			Screen.Juego.MouseListener.MouseClicked -= check_click;
 		}
 
 		/// <summary>
 		/// </summary>
-		public virtual void CatchKey (Key key)
+		public virtual void CatchKey (Inputs.KeyboardEventArgs key)
 		{
 		}
 
-		/// <summary>
-		/// Ocurre cuando se hace click en este control.
-		/// </summary>
-		public event EventHandler AlClick;
-		/// <summary>
-		/// Ucurre cuando se hace click derecho en este control
-		/// </summary>
-		public event EventHandler AlClickDerecho;
 	}
 }

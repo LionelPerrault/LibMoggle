@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
-using OpenTK.Input;
-using System.Collections.Generic;
 using Moggle.Controles;
 using Moggle.Screens;
-using Moggle.IO;
 using Moggle.Shape;
+using MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Controles
 {
@@ -23,17 +22,6 @@ namespace Moggle.Controles
 		{
 			Texto = "";
 
-			TeclasPermitidas = new Dictionary<Key, string> ();
-
-			// Construir teclas permitidas
-			for (Key i = Key.A; i <= Key.Z; i++)
-			{
-				TeclasPermitidas.Add (i, i.ToString ());
-			}
-			for (Key i = Key.Number0; i <= Key.Number9; i++)
-			{
-				TeclasPermitidas.Add (i, ((int)i - 109).ToString ());
-			}
 		}
 
 		#region Estado
@@ -110,31 +98,18 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		public override void CatchKey (Key key)
+		public override void CatchKey (KeyboardEventArgs key)
 		{
-			if (TeclasPermitidas.ContainsKey (key))
-			{
-				var tx = TeclasPermitidas [key];
-				if (!InputManager.EstadoActualTeclado.IsKeyDown (Key.ShiftLeft) && !InputManager.EstadoActualTeclado.IsKeyDown (Key.ShiftRight))
-					tx = tx.ToLower ();
-				Texto += tx;
-			}
 
-			if (key == Key.Space)
-			{
-				Texto += " ";
-			}
-			if (key == Key.Back)
+			if (key.Key == Keys.Back)
 			{
 				if (Texto.Length > 0)
 					Texto = Texto.Remove (Texto.Length - 1);
+				return;
 			}
-		}
 
-		/// <summary>
-		/// Devuelve o establece el mapeo entre tecla presionada y el caracter o cadena visible.
-		/// </summary>
-		public IDictionary<Key, string> TeclasPermitidas { get; set; }
+			Texto += key.Character;
+		}
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.

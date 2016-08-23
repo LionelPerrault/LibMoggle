@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Shape;
+using System.Diagnostics;
+using MonoGame.Extended.InputListeners;
 
 namespace Test
 {
@@ -15,7 +17,20 @@ namespace Test
 			bt.Textura = "cont//void";
 		}
 
-		Botón bt;
+		readonly Botón bt;
+
+		public override void TeclaPresionada (KeyboardEventArgs key)
+		{
+			base.TeclaPresionada (key);
+			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+				Juego.Exit ();
+			else
+				Debug.WriteLine (string.Format (
+					"{0}:{1}:{2}",
+					key.Character,
+					key.Key,
+					key.Modifiers));
+		}
 
 		public override Color BgColor
 		{
@@ -35,6 +50,14 @@ namespace Test
 		{
 			bt.Include ();
 			base.Inicializar ();
+
+			bt.AlClick += Bt_AlClick;
+		}
+
+		protected void Bt_AlClick (object sender, MouseEventArgs e)
+		{
+			Debug.WriteLine (sender);
+			Debug.WriteLine (e.Button);
 		}
 
 	}

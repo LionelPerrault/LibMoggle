@@ -48,13 +48,11 @@ namespace Moggle.Screens
 		public override void Ejecutar ()
 		{
 			#if DEBUG
-			System.Diagnostics.Debug.WriteLine ("\n\nEntrando a " + this);
+			System.Diagnostics.Debug.WriteLine ("Entrando a " + this);
 			#endif
-			Juego.CurrentScreen.Escuchando = false;
 			Inicializar ();
 			LoadContent ();
 			Juego.CurrentScreen = this;
-			Escuchando = true;
 		}
 
 		/// <summary>
@@ -66,9 +64,7 @@ namespace Moggle.Screens
 			#if DEBUG
 			System.Diagnostics.Debug.WriteLine ("Entrando a " + ScreenBase);
 			#endif
-			Escuchando = false;
 			Juego.CurrentScreen = ScreenBase;
-			ScreenBase.Escuchando = true;
 			AlTerminar?.Invoke (this, EventArgs.Empty);
 
 			UnloadContent ();

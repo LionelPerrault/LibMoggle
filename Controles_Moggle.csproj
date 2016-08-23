@@ -56,7 +56,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\ListaControles.cs" />
     <Compile Include="Controles\IControl.cs" />
     <Compile Include="Controles\SBC.cs" />
-    <Compile Include="IO\InputManager.cs" />
     <Compile Include="Primitivos.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Game.cs" />
@@ -86,7 +85,6 @@ Un juego de controles para MonoGame</Description>
   <ItemGroup>
     <Folder Include="Screens\" />
     <Folder Include="Controles\" />
-    <Folder Include="IO\" />
     <Folder Include="Controles\Listas\" />
     <Folder Include="Shape\" />
   </ItemGroup>

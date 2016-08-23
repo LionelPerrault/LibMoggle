@@ -2,6 +2,7 @@
 using Moggle.Screens;
 using OpenTK.Input;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -56,6 +57,6 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		void CatchKey (Key key);
+		void CatchKey (KeyboardEventArgs key);
 	}
 }

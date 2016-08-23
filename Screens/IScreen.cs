@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.InputListeners;
 
 
 namespace Moggle.Screens
@@ -10,6 +11,11 @@ namespace Moggle.Screens
 	/// </summary>
 	public interface IScreen
 	{
+		/// <summary>
+		/// Devuelve el campo Juego.
+		/// </summary>
+		Game Juego { get; }
+
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
@@ -46,10 +52,6 @@ namespace Moggle.Screens
 		/// <value>The content.</value>
 		ContentManager Content { get; }
 
-		/// <summary>
-		/// </summary>
-		bool Escuchando { set; }
-
 		#region hardware
 
 		/// <summary>
@@ -78,5 +80,11 @@ namespace Moggle.Screens
 		/// Inicializa la pantalla
 		/// </summary>
 		void Inicializar ();
+
+		/// <summary>
+		/// Manda señal de tecla presionada a esta pantalla
+		/// </summary>
+		/// <param name="key">Tecla de la señal</param>
+		void TeclaPresionada (KeyboardEventArgs key);
 	}
 }
