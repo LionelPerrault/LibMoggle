@@ -22,12 +22,6 @@ namespace Test
 
 		}
 
-		void InputManager_AlSerPresionado (OpenTK.Input.Key obj)
-		{
-			if (obj == OpenTK.Input.Key.Escape)
-				Exit ();
-		}
-
 		/// <summary>
 		/// Allows the game to perform any initialization it needs to before starting to run.
 		/// This is where it can query for any required services and load any non-graphic
@@ -61,14 +55,6 @@ namespace Test
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update (GameTime gameTime)
 		{
-			// For Mobile devices, this logic will close the Game when the Back button is pressed
-			// Exit() is obsolete on iOS
-			#if !__IOS__
-			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-			    Keyboard.GetState ().IsKeyDown (Keys.Escape))
-				Exit ();
-			#endif
-			// TODO: Add your update logic here			
 			base.Update (gameTime);
 		}
 

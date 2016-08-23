@@ -22,11 +22,14 @@ namespace Test
 		public override void TeclaPresionada (KeyboardEventArgs key)
 		{
 			base.TeclaPresionada (key);
-			Debug.WriteLine (string.Format (
-				"{0}:{1}:{2}",
-				key.Character,
-				key.Key,
-				key.Modifiers));
+			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+				Juego.Exit ();
+			else
+				Debug.WriteLine (string.Format (
+					"{0}:{1}:{2}",
+					key.Character,
+					key.Key,
+					key.Modifiers));
 		}
 
 		public override Color BgColor
