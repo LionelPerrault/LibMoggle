@@ -74,7 +74,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			Primitivos.DrawRectangle (
@@ -88,7 +88,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			contornoTexture = Screen.Content.Load<Texture2D> ("Rect");
 			fontTexture = Screen.Content.Load<BitmapFont> ("fonts");

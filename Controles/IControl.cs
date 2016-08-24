@@ -1,31 +1,53 @@
 ﻿using System;
 using Moggle.Screens;
-using OpenTK.Input;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
 	/// <summary>
+	/// Puede recibir una señal de tecla.
+	/// </summary>
+	public interface IKeyCatcher
+	{
+		/// <summary>
+		/// Rebice señal del teclado
+		/// </summary>
+		/// <returns><c>true</c>, si la señal fue aceptada, <c>false</c> otherwise.</returns>
+		/// <param name="key">Señal tecla</param>
+		bool RecibirSeñal (KeyboardEventArgs key);
+	}
+
+	/// <summary>
+	/// Puede ejecutar 
+	/// <see cref="LoadContent"/>
+	/// y 
+	/// <see cref="UnloadContent"/>
+	/// </summary>
+	public interface IComponent : IGameComponent
+	{
+		/// <summary>
+		/// Carga el contenido gráfico.
+		/// </summary>
+		void LoadContent (ContentManager manager);
+
+		/// <summary>
+		/// Desarga el contenido gráfico.
+		/// </summary>
+		void UnloadContent ();
+	}
+
+	/// <summary>
 	/// Un control en un <see cref="IScreen"/>
 	/// </summary>
-	public interface IControl : IDisposable
+	public interface IControl : IDisposable, IComponent
 	{
 		/// <summary>
 		/// Pantalla a la que pertenece este control.
 		/// </summary>
 		/// <value>The screen.</value>
 		IScreen Screen { get; }
-
-		/// <summary>
-		/// Incluir este control en su pantalla
-		/// </summary>
-		void Include ();
-
-		/// <summary>
-		/// Excluir este control de su pantalla
-		/// </summary>
-		void Exclude ();
 
 		/// <summary>
 		/// Prioridad de dibujo;
@@ -42,16 +64,6 @@ namespace Moggle.Controles
 		/// Ciclo de la lógica
 		/// </summary>
 		void Update (GameTime gameTime);
-
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		void LoadContent ();
-
-		/// <summary>
-		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
-		/// </summary>
-		void Inicializar ();
 
 		/// <summary>
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.

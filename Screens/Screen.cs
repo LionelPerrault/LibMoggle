@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using System.Collections.Generic;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Extended;
 
 namespace Moggle.Screens
 {
@@ -21,7 +21,7 @@ namespace Moggle.Screens
 		/// Devuelve la lista de controles
 		/// </summary>
 		/// <value>The controles.</value>
-		public ListaControl Controles { get; }
+		public GameComponentCollection Components { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
@@ -35,7 +35,7 @@ namespace Moggle.Screens
 
 		Screen ()
 		{
-			Controles = new ListaControl ();
+			Components = new GameComponentCollection ();
 		}
 
 		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
@@ -48,8 +48,12 @@ namespace Moggle.Screens
 		/// <param name="key">Key.</param>
 		public virtual void TeclaPresionada (KeyboardEventArgs key)
 		{
-			foreach (var x in Controles)
-				x.CatchKey (key);
+			foreach (var x in Components)
+			{				
+				var keyCatcher = x as IKeyCatcher;
+				if (x != null)
+					keyCatcher.RecibirSeñal (key);
+			}
 		}
 
 		/// <summary>
@@ -61,14 +65,10 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Inicializa sus controles
 		/// </summary>
-		public virtual void Inicializar ()
+		public virtual void Initialize ()
 		{
-			foreach (var x in Controles)
-				x.Inicializar ();
-
-			// Listeners
-			//KeyListener.KeyPressed += (sender, e) => TeclaPresionada (e);
-
+			foreach (var x in Components)
+				x.Initialize ();
 		}
 
 		/// <summary>
@@ -84,7 +84,7 @@ namespace Moggle.Screens
 		/// Dibuja esta pantalla
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public virtual void Dibujar (GameTime gameTime)
+		public virtual void Draw (GameTime gameTime)
 		{
 			//base.Draw (gameTime);
 
@@ -99,8 +99,11 @@ namespace Moggle.Screens
 		/// </summary>
 		protected virtual void EntreBatches (GameTime gameTime)
 		{
-			foreach (var x in Controles)
-				x.Dibujar (gameTime);
+			foreach (var x in Components)
+			{				
+				var draw = x as IDraw;
+				draw?.Draw (gameTime);
+			}
 		}
 
 		/// <summary>
@@ -109,9 +112,10 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void LoadContent ()
 		{
-			Batch = new SpriteBatch (Juego.GraphicsDevice);
-			foreach (var x in Controles)
-				x.LoadContent ();
+			foreach (var x in Components)
+			{
+				(x as IComponent)?.LoadContent (Content);
+			}
 		}
 
 		/// <summary>
@@ -129,8 +133,10 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public virtual void Update (GameTime gameTime)
 		{
-			foreach (var x in new List<IControl> (Controles))
-				x.Update (gameTime);
+			foreach (var x in Components)
+			{
+				(x as IUpdate)?.Update (gameTime);
+			}
 		}
 
 		/// <summary>
@@ -138,8 +144,10 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void UnloadContent ()
 		{
-			foreach (var x in new List<IControl> (Controles))
-				x.Dispose ();
+			foreach (var x in Components)
+			{
+				(x as IComponent)?.UnloadContent ();
+			}
 		}
 
 		/// <summary>

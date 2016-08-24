@@ -9,7 +9,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen
+	public interface IScreen : IGameComponent
 	{
 		/// <summary>
 		/// Devuelve el campo Juego.
@@ -19,7 +19,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		void Dibujar (GameTime gameTime);
+		void Draw (GameTime gameTime);
 
 		/// <summary>
 		/// Cargar contenido
@@ -44,7 +44,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// La lista de controles de esta Screen
 		/// </summary>
-		ListaControl Controles { get; }
+		GameComponentCollection Components { get; }
 
 		/// <summary>
 		/// El manejador de contenido
@@ -75,11 +75,6 @@ namespace Moggle.Screens
 		GraphicsDevice Device { get; }
 
 		#endregion
-
-		/// <summary>
-		/// Inicializa la pantalla
-		/// </summary>
-		void Inicializar ();
 
 		/// <summary>
 		/// Manda señal de tecla presionada a esta pantalla

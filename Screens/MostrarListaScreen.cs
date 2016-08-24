@@ -87,7 +87,6 @@ namespace Moggle.Screens
 				GetDisplayMode.Width,
 				GetDisplayMode.Height);
 			ListaComponente.ColorBG = Color.Blue * 0.4f;
-			ListaComponente.Include ();
 			ListaComponente.Stringificación = x => x.ToString ();
 			ListaComponente.InterceptarTeclado = true;
 			SelecciónActual = new List<TObj> ();

@@ -1,11 +1,12 @@
 ﻿using Moggle.Controles;
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles.Listas
 {
 	/// <summary>
 	/// Representa un control con forma de lista
 	/// </summary>
-	public interface IListaControl : IControl
+	public interface IListaControl : IGameComponent, IDrawable
 	{
 		/// <summary>
 		/// Devuelve el objeto seleccionado.
@@ -22,6 +23,7 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		void SeleccionaAnterior ();
 	}
+
 
 	/// <summary>
 	/// Representa un control con forma de lista

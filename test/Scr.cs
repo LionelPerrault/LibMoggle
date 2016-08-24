@@ -40,17 +40,9 @@ namespace Test
 			}
 		}
 
-		public override void LoadContent ()
+		public override void Initialize ()
 		{
-			bt.LoadContent ();
-			base.LoadContent ();
-		}
-
-		public override void Inicializar ()
-		{
-			bt.Include ();
-			base.Inicializar ();
-
+			base.Initialize ();
 			bt.AlClick += Bt_AlClick;
 		}
 

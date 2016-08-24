@@ -208,7 +208,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			var ht = 0f;
@@ -224,7 +224,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			Font = Screen.Content.Load<BitmapFont> (fontString);
 		}
@@ -232,7 +232,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Controles.MultiEtiqueta"/> object.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
 			Font = null;
 		}
@@ -273,9 +273,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
 		/// </summary>
-		public override void Inicializar ()
+		public override void Initialize ()
 		{
-			base.Inicializar ();
+			base.Initialize ();
 			Mostrables.Clear ();
 		}
 	}

@@ -37,7 +37,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			var txt = Texto ();
@@ -68,7 +68,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			font = Screen.Content.Load<BitmapFont> (UseFont);
 		}
@@ -76,10 +76,10 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Controles.Etiqueta"/> object.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
 			font = null;
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 	}
 }

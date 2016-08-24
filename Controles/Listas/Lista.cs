@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework.Graphics;
-using OpenTK.Input;
 using Moggle.Shape;
 using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
@@ -70,7 +69,7 @@ namespace Moggle.Controles.Listas
 		/// Dibuja la lista.
 		/// </summary>
 		/// <param name="gameTime">Duración del tick</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			// Dibujar el rectángulo
 			var bat = Screen.Batch;
@@ -211,7 +210,7 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			Fuente = Screen.Content.Load<BitmapFont> ("fonts");
 			noTexture = Screen.Content.Load<Texture2D> ("Rect");
@@ -220,11 +219,11 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Dispose.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
 			Fuente = null;
 			noTexture = null;
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 
 		/// <summary>

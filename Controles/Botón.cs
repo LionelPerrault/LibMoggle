@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Shape;
 using Inputs = MonoGame.Extended.InputListeners;
 using MonoGame.Extended.InputListeners;
+using System.Net.Security;
 
 namespace Moggle.Controles
 {
@@ -78,7 +79,7 @@ namespace Moggle.Controles
 		/// Dibuja el botón
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			Screen.Batch.Draw (
 				TexturaInstancia,
@@ -89,7 +90,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			try
 			{
@@ -104,11 +105,10 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Controles.Botón"/> object.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
 			TexturaInstancia = null;
-			Textura = null;
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 
 		/// <summary>

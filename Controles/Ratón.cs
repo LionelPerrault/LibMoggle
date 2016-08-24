@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OpenTK.Input;
 using Moggle.Shape;
-using System;
 
 namespace Moggle.Controles
 {
@@ -16,7 +15,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="scr">Pantalla</param>
 		/// <param name="tamaño">Tamaño del icono del cursor.</param>
-		public Ratón (IScreen scr, Point tamaño)
+		public Ratón (Game scr, Point tamaño)
 			: this (scr)
 		{
 			Tamaño = tamaño;
@@ -25,19 +24,10 @@ namespace Moggle.Controles
 		/// <summary>
 		/// </summary>
 		/// <param name="screen">Screen.</param>
-		public Ratón (IScreen screen)
+		public Ratón (Game screen)
 			: base (screen)
 		{
 			Tamaño = new Point (20, 20);
-			Prioridad = 1000;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Controles.Ratón"/> class.
-		/// </summary>
-		public Ratón ()
-			: base (null)
-		{
 			Prioridad = 1000;
 		}
 
@@ -63,12 +53,13 @@ namespace Moggle.Controles
 		public Texture2D Textura { get; protected set; }
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.Ratón"/> object.
+		/// Shuts down the component.
 		/// </summary>
-		protected override void Dispose ()
+		/// <param name="disposing">If set to <c>true</c> disposing.</param>
+		protected override void Dispose (bool disposing)
 		{
 			Textura = null;
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 
 		/// <summary>
@@ -103,16 +94,16 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
-			Textura = Screen.Content.Load<Texture2D> (ArchivoTextura);
+			Textura = Game.Content.Load<Texture2D> (ArchivoTextura);
 		}
 
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			bat.Draw (Textura, GetBounds ().GetContainingRectangle (), Color.WhiteSmoke);

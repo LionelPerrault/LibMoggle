@@ -12,7 +12,6 @@ namespace Moggle
 	/// Clase global de un juego.
 	/// </summary>
 	public class Game : Microsoft.Xna.Framework.Game
-	,IScreen // Para poder tener controles globales (cursor)
 	{
 		/// <summary>
 		/// Devuelve el control del puntero del ratón.
@@ -22,12 +21,6 @@ namespace Moggle
 		#if FPS
 		readonly Label fpsLabel;
 		#endif
-
-		/// <summary>
-		/// Devuelve la lista de controles univesales
-		/// </summary>
-		/// <value>The controles universales.</value>
-		public ListaControl ControlesUniversales { get; }
 
 		/// <summary>
 		/// La pantalla mostrada actualmente
@@ -64,14 +57,14 @@ namespace Moggle
 		/// </summary>
 		public Game ()
 		{
-			ControlesUniversales = new ListaControl ();
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
-			Mouse = new Ratón (this);
+			//Mouse = new Ratón (this);
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
 
+			Mouse = new Ratón (this);
 		}
 
 		/// <summary>
@@ -106,18 +99,8 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			// Create a new SpriteBatch, which can be used to draw textures.
-			Batch = new SpriteBatch (GraphicsDevice);
-			//spriteBatch.DrawString(new SpriteFont)
-
-			if (Mouse.Habilitado)
-				Mouse.Include ();
-
 			CurrentScreen?.LoadContent ();
-			foreach (var x in ControlesUniversales)
-			{
-				x.LoadContent ();
-			}
+			base.LoadContent ();
 		}
 
 		/// <summary>
@@ -129,7 +112,6 @@ namespace Moggle
 		{
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
-			updateControls (gameTime);
 
 			InputManager.Update (gameTime);
 		}
@@ -146,28 +128,6 @@ namespace Moggle
 		}
 
 		/// <summary>
-		/// Draw the game
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected override void Draw (GameTime gameTime)
-		{
-			Graphics.GraphicsDevice.Clear (BackgroundColor);
-
-			Batch.Begin ();
-
-			CurrentScreen.Dibujar (gameTime);
-
-			foreach (var x in ControlesUniversales)
-			{
-				x.Dibujar (gameTime);
-			}
-
-			//mouse.Dibujar (gameTime);
-			Batch.End ();
-
-		}
-
-		/// <summary>
 		/// Gets the color of the background.
 		/// </summary>
 		public Color BackgroundColor
@@ -179,16 +139,6 @@ namespace Moggle
 		}
 
 		#region IScreen
-
-		Game IScreen.Juego { get { return this; } }
-
-		Color IScreen.BgColor
-		{
-			get
-			{
-				return BackgroundColor;
-			}
-		}
 
 		/// <summary>
 		/// Devuelve un nuevo batch de dibujo.
@@ -211,48 +161,13 @@ namespace Moggle
 			}
 		}
 
-		void IScreen.Dibujar (GameTime gameTime)
-		{
-			Draw (gameTime);
-		}
-
-		ListaControl IScreen.Controles
-		{
-			get
-			{
-				return ControlesUniversales;
-			}
-		}
-
 		/// <summary>
-		/// Carga contenido de controles universales
+		/// Unloads the content.
 		/// </summary>
-		void IScreen.LoadContent ()
+		protected override void UnloadContent ()
 		{
-			foreach (var cu in ControlesUniversales)
-			{
-				cu.LoadContent ();
-			}
-		}
-
-		void IScreen.Update (GameTime gametime)
-		{
-			updateControls (gametime);
-		}
-
-		void updateControls (GameTime gametime)
-		{
-			foreach (var cu in new List<IControl> (ControlesUniversales))
-				cu.Update (gametime);
-		}
-
-		void IScreen.UnloadContent ()
-		{
-			foreach (var cu in new List<IControl> (ControlesUniversales))
-			{
-				cu.Dispose ();
-			}
 			CurrentScreen.UnloadContent ();
+			base.UnloadContent ();
 		}
 
 		/// <summary>
@@ -264,11 +179,6 @@ namespace Moggle
 			{
 				return GraphicsDevice.Adapter.CurrentDisplayMode;
 			}
-		}
-
-		void IScreen.Inicializar ()
-		{
-			Initialize ();
 		}
 
 		#endregion
