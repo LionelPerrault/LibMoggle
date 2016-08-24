@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Shape;
 using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
+using Moggle.Comm;
 
 namespace Moggle.Controles.Listas
 {

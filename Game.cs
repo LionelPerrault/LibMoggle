@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
+using Moggle.Comm;
 
 namespace Moggle
 {
