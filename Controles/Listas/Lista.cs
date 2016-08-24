@@ -18,7 +18,7 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : SBC, IList<TObj>, IListaControl<TObj>
+	public class Lista<TObj> : SBC, IList<TObj>, IListaControl<TObj>, IReceptorTeclado
 	{
 		/// <summary>
 		/// Representa una entrada de la lista.
@@ -242,14 +242,21 @@ namespace Moggle.Controles.Listas
 		/// Catchs the key.
 		/// </summary>
 
-		public override void CatchKey (KeyboardEventArgs key)
+		public bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			if (!InterceptarTeclado)
-				return;
+				return false;
 			if (key.Key == AbajoKey)
+			{
 				SeleccionaSiguiente ();
-			else if (key.Key == ArribaKey)
+				return true;
+			}
+			if (key.Key == ArribaKey)
+			{
 				SeleccionaAnterior ();
+				return true;
+			}
+			return false;
 		}
 
 		#region IListaControl

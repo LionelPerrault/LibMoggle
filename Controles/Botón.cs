@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Shape;
 using Inputs = MonoGame.Extended.InputListeners;
 using MonoGame.Extended.InputListeners;
-using System.Net.Security;
 
 namespace Moggle.Controles
 {
@@ -92,14 +91,7 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			try
-			{
-				TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
-			}
-			catch (Exception ex)
-			{
-				throw new Exception ("Error trying to load texture " + Textura, ex);
-			}
+			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
 		}
 
 		/// <summary>

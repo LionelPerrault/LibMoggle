@@ -19,17 +19,19 @@ namespace Test
 
 		readonly Botón bt;
 
-		public override void TeclaPresionada (KeyboardEventArgs key)
+		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
-			base.TeclaPresionada (key);
 			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+			{
 				Juego.Exit ();
-			else
-				Debug.WriteLine (string.Format (
-					"{0}:{1}:{2}",
-					key.Character,
-					key.Key,
-					key.Modifiers));
+				return true;
+			}
+			Debug.WriteLine (string.Format (
+				"{0}:{1}:{2}",
+				key.Character,
+				key.Key,
+				key.Modifiers));
+			return base.RecibirSeñal (key);
 		}
 
 		public override Color BgColor
@@ -42,6 +44,7 @@ namespace Test
 
 		public override void Initialize ()
 		{
+			Components.Add (bt);
 			base.Initialize ();
 			bt.AlClick += Bt_AlClick;
 		}

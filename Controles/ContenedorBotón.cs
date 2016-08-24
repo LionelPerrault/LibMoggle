@@ -54,7 +54,6 @@ namespace Moggle.Controles
 		public ContenedorBotón (IScreen screen)
 			: base (screen)
 		{
-			Prioridad = -5;
 			controles = new GameComponentCollection ();
 		}
 

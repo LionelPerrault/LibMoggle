@@ -12,17 +12,6 @@ namespace Moggle.Controles
 	/// </summary>
 	public abstract class SBC : DrawableGameComponent, IComponent
 	{
-		void IComponent.LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
-		{
-			LoadContent ();
-		}
-
-		void IComponent.UnloadContent ()
-		{
-			UnloadContent ();
-		}
-
-
 		/// <summary>
 		/// Pantalla del control
 		/// </summary>
@@ -36,7 +25,6 @@ namespace Moggle.Controles
 			: base (screen.Juego)
 		{
 			Screen = screen;
-			Screen.Components.Add (this);
 		}
 
 		/// <summary>
@@ -46,13 +34,23 @@ namespace Moggle.Controles
 			: base (game)
 		{
 			Screen = null;
-			Game.Components.Add (this);
+		}
+
+		void IComponent.LoadContent ()
+		{
+			LoadContent ();
+		}
+
+		void IComponent.UnloadContent ()
+		{
+			UnloadContent ();
 		}
 
 		/// <summary>
 		/// Prioridad de dibujo;
 		/// Mayor prioridad se dibuja en la cima
 		/// </summary>
+		[Obsolete]
 		public int Prioridad { get; set; }
 
 		/// <summary>
@@ -72,6 +70,7 @@ namespace Moggle.Controles
 		public override void Initialize ()
 		{
 			base.Initialize ();
+			LoadContent ();
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
 		}
@@ -131,15 +130,9 @@ namespace Moggle.Controles
 		/// <param name="disposing">If set to <c>true</c> disposing.</param>
 		protected override void Dispose (bool disposing)
 		{
-			Screen.Juego.MouseListener.MouseClicked -= check_click;
+			Game.MouseListener.MouseClicked -= check_click;
+			Game.MouseListener.MouseDoubleClicked -= check_2click;
 			base.Dispose (disposing);
 		}
-
-		/// <summary>
-		/// </summary>
-		public virtual void CatchKey (KeyboardEventArgs key)
-		{
-		}
-
 	}
 }

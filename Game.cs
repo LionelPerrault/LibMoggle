@@ -3,7 +3,6 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
-using System.Collections.Generic;
 using MonoGame.Extended.InputListeners;
 
 namespace Moggle
@@ -11,16 +10,12 @@ namespace Moggle
 	/// <summary>
 	/// Clase global de un juego.
 	/// </summary>
-	public class Game : Microsoft.Xna.Framework.Game
+	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado
 	{
 		/// <summary>
 		/// Devuelve el control del puntero del ratón.
 		/// </summary>
 		protected readonly Ratón Mouse;
-
-		#if FPS
-		readonly Label fpsLabel;
-		#endif
 
 		/// <summary>
 		/// La pantalla mostrada actualmente
@@ -31,11 +26,6 @@ namespace Moggle
 		/// The graphics.
 		/// </summary>
 		public readonly GraphicsDeviceManager Graphics;
-
-		/// <summary>
-		/// Gets the input manager.
-		/// </summary>
-		public readonly InputListenerManager InputManager = new InputListenerManager ();
 
 		/// <summary>
 		/// Gets the keyboard listener
@@ -64,6 +54,7 @@ namespace Moggle
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
 
+
 			Mouse = new Ratón (this);
 		}
 
@@ -71,28 +62,41 @@ namespace Moggle
 		/// </summary>
 		protected override void Initialize ()
 		{
-			base.Initialize ();
 
-			// Listeners
-			MouseListener = InputManager.AddListener<MouseListener> ();
-			KeyListener = InputManager.AddListener<KeyboardListener> ();
+			// Crear los listeners
+			KeyListener = new KeyboardListener ();
+			MouseListener = new MouseListener ();
+
+			Components.Add (new InputListenerComponent (
+				this,
+				KeyListener,
+				MouseListener));
+
+			base.Initialize ();
+			CurrentScreen?.Initialize ();
 
 			KeyListener.KeyPressed += keyPressed;
 		}
 
 		void keyPressed (object sender, KeyboardEventArgs e)
 		{
-			TeclaPresionada (e);
+			MandarSeñal (e);
 		}
 
 		/// <summary>
 		/// Manda señal de tecla presionada.
 		/// </summary>
 		/// <param name="key">Tecla señal</param>
-		public void TeclaPresionada (KeyboardEventArgs key)
+		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			CurrentScreen?.TeclaPresionada (key);
+			CurrentScreen?.RecibirSeñal (key);
 		}
+
+		void IEmisorTeclado.MandarSeñal (KeyboardEventArgs key)
+		{
+			MandarSeñal (key);
+		}
+
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
@@ -112,8 +116,6 @@ namespace Moggle
 		{
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
-
-			InputManager.Update (gameTime);
 		}
 
 		/// <summary>
@@ -124,7 +126,7 @@ namespace Moggle
 		protected override void OnExiting (object sender, EventArgs args)
 		{
 			base.OnExiting (sender, args);
-			((IScreen)this).UnloadContent ();
+			UnloadContent ();
 		}
 
 		/// <summary>
@@ -137,6 +139,17 @@ namespace Moggle
 				return CurrentScreen.BgColor;
 			}
 		}
+
+		/// <summary>
+		/// Draw the game.
+		/// </summary>
+		protected override void Draw (GameTime gameTime)
+		{
+			Device.Clear (BackgroundColor);
+			CurrentScreen?.Draw (gameTime);
+			base.Draw (gameTime);
+		}
+
 
 		#region IScreen
 

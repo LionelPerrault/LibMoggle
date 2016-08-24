@@ -12,7 +12,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Permite entrar un renglón de texto
 	/// </summary>
-	public class EntradaTexto : SBC
+	public class EntradaTexto : SBC, IReceptorTeclado
 	{
 		/// <summary>
 		/// </summary>
@@ -98,17 +98,18 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		public override void CatchKey (KeyboardEventArgs key)
+		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
 		{
 
 			if (key.Key == Keys.Back)
 			{
 				if (Texto.Length > 0)
 					Texto = Texto.Remove (Texto.Length - 1);
-				return;
+				return true;
 			}
 
 			Texto += key.Character;
+			return true;
 		}
 
 		/// <summary>

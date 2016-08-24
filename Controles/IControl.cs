@@ -2,14 +2,13 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Puede recibir una señal de tecla.
 	/// </summary>
-	public interface IKeyCatcher
+	public interface IReceptorTeclado
 	{
 		/// <summary>
 		/// Rebice señal del teclado
@@ -17,6 +16,18 @@ namespace Moggle.Controles
 		/// <returns><c>true</c>, si la señal fue aceptada, <c>false</c> otherwise.</returns>
 		/// <param name="key">Señal tecla</param>
 		bool RecibirSeñal (KeyboardEventArgs key);
+	}
+
+	/// <summary>
+	///puede mandar una señal.
+	/// </summary>
+	public interface IEmisorTeclado
+	{
+		/// <summary>
+		/// Manda señal de tecla presionada a esta pantalla
+		/// </summary>
+		/// <param name="key">Tecla de la señal</param>
+		void MandarSeñal (KeyboardEventArgs key);
 	}
 
 	/// <summary>
@@ -30,7 +41,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		void LoadContent (ContentManager manager);
+		void LoadContent ();
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -48,27 +59,5 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <value>The screen.</value>
 		IScreen Screen { get; }
-
-		/// <summary>
-		/// Prioridad de dibujo;
-		/// Mayor prioridad se dibuja en la cima
-		/// </summary>
-		int Prioridad { get; }
-
-		/// <summary>
-		/// Dibuja el control
-		/// </summary>
-		void Dibujar (GameTime gameTime);
-
-		/// <summary>
-		/// Ciclo de la lógica
-		/// </summary>
-		void Update (GameTime gameTime);
-
-		/// <summary>
-		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
-		/// </summary>
-		/// <param name="key">Tecla presionada por el usuario.</param>
-		void CatchKey (KeyboardEventArgs key);
 	}
 }

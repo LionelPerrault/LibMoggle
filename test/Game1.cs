@@ -19,6 +19,7 @@ namespace Test
 			CurrentScreen = new Scr (this);
 
 			Mouse.ArchivoTextura = @"cont/void";
+			Components.Add (Mouse);
 		}
 	}
 }

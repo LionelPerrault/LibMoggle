@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using Moggle.Controles;
+using System;
 
 namespace Moggle.Screens
 {
 	/// <summary>
 	/// Ona lista ordenada de controles según prioridad.
 	/// </summary>
+	[ObsoleteAttribute]
 	public class ListaControl : SortedSet<IControl>
 	{
 		/// <summary>
 		/// </summary>
 		public ListaControl ()
-			: base (Comparer<IControl>.Create ((x, y) => x.Prioridad < y.Prioridad ? -1 : 1))
 		{
 		}
 

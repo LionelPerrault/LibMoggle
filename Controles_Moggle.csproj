@@ -47,7 +47,7 @@ Un juego de controles para MonoGame</Description>
       <Private>False</Private>
     </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\MonoGame.Extended.0.6.0.0\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

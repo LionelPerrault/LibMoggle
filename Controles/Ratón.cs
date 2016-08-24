@@ -1,5 +1,4 @@
-﻿using Moggle.Screens;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OpenTK.Input;
 using Moggle.Shape;
@@ -13,22 +12,21 @@ namespace Moggle.Controles
 	{
 		/// <summary>
 		/// </summary>
-		/// <param name="scr">Pantalla</param>
+		/// <param name="gm">Pantalla</param>
 		/// <param name="tamaño">Tamaño del icono del cursor.</param>
-		public Ratón (Game scr, Point tamaño)
-			: this (scr)
+		public Ratón (Game gm, Point tamaño)
+			: base (gm)
 		{
 			Tamaño = tamaño;
 		}
 
 		/// <summary>
 		/// </summary>
-		/// <param name="screen">Screen.</param>
-		public Ratón (Game screen)
-			: base (screen)
+		/// <param name="gm">Screen.</param>
+		public Ratón (Game gm)
+			: base (gm)
 		{
 			Tamaño = new Point (20, 20);
-			Prioridad = 1000;
 		}
 
 		/// <summary>
@@ -105,8 +103,10 @@ namespace Moggle.Controles
 		/// <param name="gameTime">Game time.</param>
 		public override void Draw (GameTime gameTime)
 		{
-			var bat = Screen.Batch;
+			var bat = Game.GetNewBatch ();
+			bat.Begin ();
 			bat.Draw (Textura, GetBounds ().GetContainingRectangle (), Color.WhiteSmoke);
+			bat.End ();
 		}
 	}
 }

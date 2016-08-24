@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.InputListeners;
+using Moggle.Controles;
 
 
 namespace Moggle.Screens
@@ -9,7 +10,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen : IGameComponent
+	public interface IScreen : IComponent, IEmisorTeclado, IReceptorTeclado
 	{
 		/// <summary>
 		/// Devuelve el campo Juego.
@@ -22,19 +23,9 @@ namespace Moggle.Screens
 		void Draw (GameTime gameTime);
 
 		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		void LoadContent ();
-
-		/// <summary>
 		/// Ciclo de la lógica
 		/// </summary>
 		void Update (GameTime gameTime);
-
-		/// <summary>
-		/// Descargar contenido
-		/// </summary>
-		void UnloadContent ();
 
 		/// <summary>
 		/// Color de fondo
@@ -42,8 +33,9 @@ namespace Moggle.Screens
 		Color BgColor { get; }
 
 		/// <summary>
-		/// La lista de controles de esta Screen
+		/// Los componentes
 		/// </summary>
+		/// <value>The components.</value>
 		GameComponentCollection Components { get; }
 
 		/// <summary>
@@ -60,11 +52,6 @@ namespace Moggle.Screens
 		SpriteBatch Batch { get; }
 
 		/// <summary>
-		/// Devuelve un nuevo batchd e dibujo.
-		/// </summary>
-		SpriteBatch GetNewBatch ();
-
-		/// <summary>
 		/// Devuelve el modo actual de display gráfico.
 		/// </summary>
 		DisplayMode GetDisplayMode { get; }
@@ -75,11 +62,5 @@ namespace Moggle.Screens
 		GraphicsDevice Device { get; }
 
 		#endregion
-
-		/// <summary>
-		/// Manda señal de tecla presionada a esta pantalla
-		/// </summary>
-		/// <param name="key">Tecla de la señal</param>
-		void TeclaPresionada (KeyboardEventArgs key);
 	}
 }

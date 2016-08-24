@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
-using MonoGame.Extended;
+using System.Linq;
 
 namespace Moggle.Screens
 {
@@ -46,14 +46,21 @@ namespace Moggle.Screens
 		/// Manda la señal de tecla presionada a cada uno de sus controles.
 		/// </summary>
 		/// <param name="key">Key.</param>
-		public virtual void TeclaPresionada (KeyboardEventArgs key)
+		public virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			foreach (var x in Components)
-			{				
-				var keyCatcher = x as IKeyCatcher;
-				if (x != null)
-					keyCatcher.RecibirSeñal (key);
-			}
+			foreach (var x in Components.OfType<IReceptorTeclado> ())
+				x.RecibirSeñal (key);
+		}
+
+		/// <summary>
+		/// Rebice señal del teclado
+		/// </summary>
+		/// <returns>Devuelve <c>true</c> si la señal fue aceptada.</returns>
+		/// <param name="key">Señal tecla</param>
+		public virtual bool RecibirSeñal (KeyboardEventArgs key)
+		{
+			MandarSeñal (key);
+			return true;
 		}
 
 		/// <summary>
@@ -86,9 +93,8 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public virtual void Draw (GameTime gameTime)
 		{
-			//base.Draw (gameTime);
+			Batch = GetNewBatch ();
 
-			//var Batch = GetNewBatch ();
 			Batch.Begin ();
 			EntreBatches (gameTime);
 			Batch.End ();
@@ -99,11 +105,13 @@ namespace Moggle.Screens
 		/// </summary>
 		protected virtual void EntreBatches (GameTime gameTime)
 		{
-			foreach (var x in Components)
-			{				
-				var draw = x as IDraw;
-				draw?.Draw (gameTime);
-			}
+			drawComponents (gameTime);
+		}
+
+		void drawComponents (GameTime gameTime)
+		{
+			foreach (var x in Components.OfType<IDrawable> ())
+				x.Draw (gameTime);
 		}
 
 		/// <summary>
@@ -112,10 +120,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void LoadContent ()
 		{
-			foreach (var x in Components)
-			{
-				(x as IComponent)?.LoadContent (Content);
-			}
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent ();
 		}
 
 		/// <summary>
@@ -133,10 +139,9 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public virtual void Update (GameTime gameTime)
 		{
-			foreach (var x in Components)
-			{
-				(x as IUpdate)?.Update (gameTime);
-			}
+			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
+				if (x.Enabled)
+					x.Update (gameTime);
 		}
 
 		/// <summary>
@@ -144,10 +149,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void UnloadContent ()
 		{
-			foreach (var x in Components)
-			{
-				(x as IComponent)?.UnloadContent ();
-			}
+			foreach (var x in Components.OfType<IComponent> ())
+				x.UnloadContent ();
 		}
 
 		/// <summary>
