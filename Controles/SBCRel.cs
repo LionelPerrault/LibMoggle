@@ -1,12 +1,14 @@
 ﻿using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
+using System;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Representa un SBC, con posición determinada por un VisualPortManager
 	/// </summary>
+	[ObsoleteAttribute ("Usar SBC y una Camera")]
 	public abstract class SBCRel : SBC
 	{
 		/// <summary>
