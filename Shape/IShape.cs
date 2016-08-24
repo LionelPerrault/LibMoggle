@@ -43,11 +43,13 @@ namespace Moggle.Shape
 		/// <summary>
 		/// Devuelve una <see cref="IShape"/> vacía.
 		/// </summary>
-		public static readonly IShape NoShape = new Shapeless ();
+		public static IShape NoShape { get { return Shapeless.NoShape; } }
 	}
 
 	class Shapeless : IShape
 	{
+		public static readonly Shapeless NoShape = new Shapeless ();
+
 		public bool Contains (Point p)
 		{
 			return false;
@@ -55,12 +57,12 @@ namespace Moggle.Shape
 
 		public IShape MoveBy (Vector2 v)
 		{
-			return new Shapeless ();
+			return NoShape;
 		}
 
 		public IShape Scale (float factor)
 		{
-			return new Shapeless ();
+			return NoShape;
 		}
 
 		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
