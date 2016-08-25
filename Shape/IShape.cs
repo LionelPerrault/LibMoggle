@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Moggle.Shape;
+using System;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Shape
 {
@@ -11,6 +13,7 @@ namespace Moggle.Shape
 	/// Provee métodos para mover, estalar, pedir rectángulo excrito, y método para saber si contiene un punto dado.
 	/// </para>
 	/// </summary>
+	[ObsoleteAttribute]
 	public interface IShape
 	{
 		/// <summary>
@@ -32,10 +35,10 @@ namespace Moggle.Shape
 		/// <summary>
 		/// Devuelve una <see cref="IShape"/> vacía.
 		/// </summary>
-		public static IShape NoShape { get { return Shapeless.NoShape; } }
+		public static IShapeF NoShape { get { return Shapeless.NoShape; } }
 	}
 
-	class Shapeless : IShape
+	class Shapeless : IShapeF
 	{
 		public static readonly Shapeless NoShape = new Shapeless ();
 
@@ -44,9 +47,27 @@ namespace Moggle.Shape
 			return false;
 		}
 
-		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
+		public RectangleF GetBoundingRectangle ()
 		{
 			return Microsoft.Xna.Framework.Rectangle.Empty;
 		}
+
+		public bool Contains (float x, float y)
+		{
+			return false;
+		}
+
+		public bool Contains (Vector2 point)
+		{
+			return false;
+		}
+
+		public float Left{ get { return 0; } }
+
+		public float Top{ get { return 0; } }
+
+		public float Right{ get { return 0; } }
+
+		public float Bottom{ get { return 0; } }
 	}
 }
