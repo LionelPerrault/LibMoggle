@@ -1,5 +1,4 @@
 ﻿using Moggle.Screens;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Moggle.Shape;
@@ -55,20 +54,24 @@ namespace Moggle.Controles
 		public ContenedorBotón (IScreen screen)
 			: base (screen)
 		{
-			Prioridad = -5;
-			controles = new List<Botón> (Filas * Columnas);
+			controles = new GameComponentCollection ();
 		}
 
 		/// <summary>
 		/// Lista de botones en el contenedor.
 		/// </summary>
-		List<Botón> controles { get; }
+		GameComponentCollection controles { get; }
 
 		Texture2D texturaFondo;
 		/// <summary>
 		/// Color de fondo.
 		/// </summary>
 		public Color BgColor = Color.DarkBlue;
+
+		/// <summary>
+		/// Nombre de la textura de fondo
+		/// </summary>
+		public string TextureFondo { get; set; }
 
 		int filas = 3;
 		int columnas = 10;
@@ -193,7 +196,6 @@ namespace Moggle.Controles
 			var ret = new Botón (Screen, CalcularPosición (Count));
 			controles.Insert (índice, ret);
 			ret.Habilidato = true;
-			ret.Include ();
 			return ret;
 		}
 
@@ -202,8 +204,6 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Clear ()
 		{
-			foreach (var x in controles)
-				x.Exclude ();
 			controles.Clear ();
 		}
 
@@ -226,7 +226,15 @@ namespace Moggle.Controles
 		public void Remove (Botón control)
 		{
 			controles.Remove (control);
-			control.Exclude ();
+		}
+
+		/// <summary>
+		/// Elimina el botón en un índice dado
+		/// </summary>
+		/// <param name="i">Índice base cero.</param>
+		public void RemoveAt (int i)
+		{
+			controles.RemoveAt (i);
 		}
 
 		/// <summary>
@@ -241,34 +249,11 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Incluir este control y todos sus botones en su pantalla.
-		/// </summary>
-		public override void Include ()
-		{
-			// Incluye a cada botón en Game
-			foreach (var x in controles)
-				x.Include ();
-
-			base.Include ();
-		}
-
-		/// <summary>
-		/// Excluir este control y todos sus botones de su pantalla
-		/// </summary>
-		public override void Exclude ()
-		{
-			// Excluye a cada botón de Game
-			foreach (var x in controles)
-				x.Exclude ();
-			base.Exclude ();
-		}
-
-		/// <summary>
 		/// Dibuja el control.
 		/// Esto por sí solo no dibujará los botones.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			Screen.Batch.Draw (
 				texturaFondo,
@@ -279,9 +264,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
-			texturaFondo = Screen.Content.Load<Texture2D> ("Rect");
+			texturaFondo = Screen.Content.Load<Texture2D> (TextureFondo);
 		}
 
 		/// <summary>
@@ -302,7 +287,7 @@ namespace Moggle.Controles
 		/// <param name="index">Índice base cero del botón.</param>
 		public Botón BotónEnÍndice (int index)
 		{
-			return controles [index];
+			return (Botón)controles [index];
 		}
 
 		/// <summary>
@@ -328,13 +313,10 @@ namespace Moggle.Controles
 		/// Releases all resource used by the <see cref="Moggle.Controles.ContenedorBotón"/> object.
 		/// Libera a este control y a cada uno de sus botones.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
 			texturaFondo = null;
-			foreach (IControl x in controles)
-				x.Dispose ();
-			Clear ();
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 	}
 }

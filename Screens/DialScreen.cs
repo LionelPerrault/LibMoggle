@@ -35,11 +35,11 @@ namespace Moggle.Screens
 		/// Dibuja la pantalla
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			if (DibujarBase)
-				ScreenBase.Dibujar (gameTime);
-			base.Dibujar (gameTime);
+				ScreenBase.Draw (gameTime);
+			base.Draw (gameTime);
 		}
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Moggle.Screens
 			#if DEBUG
 			System.Diagnostics.Debug.WriteLine ("Entrando a " + this);
 			#endif
-			Inicializar ();
+			Initialize ();
 			LoadContent ();
 			Juego.CurrentScreen = this;
 		}

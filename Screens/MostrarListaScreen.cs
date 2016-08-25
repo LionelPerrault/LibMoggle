@@ -87,7 +87,6 @@ namespace Moggle.Screens
 				GetDisplayMode.Width,
 				GetDisplayMode.Height);
 			ListaComponente.ColorBG = Color.Blue * 0.4f;
-			ListaComponente.Include ();
 			ListaComponente.Stringificación = x => x.ToString ();
 			ListaComponente.InterceptarTeclado = true;
 			SelecciónActual = new List<TObj> ();
@@ -97,9 +96,8 @@ namespace Moggle.Screens
 		/// Cuando se presiona una tecla
 		/// </summary>
 		/// <param name="key">Tecla</param>
-		public override void TeclaPresionada (KeyboardEventArgs key)
+		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
-			base.TeclaPresionada (key);
 			switch (key.Key)
 			{
 				case Keys.Escape:
@@ -107,22 +105,22 @@ namespace Moggle.Screens
 						TipoSalida.EnumTipoSalida.Cancelación,
 						SelecciónActual);
 					Salir ();
-					return;
+					return true;
 				case Keys.Space:
 					var curObj = ObjetoEnCursor;
 					if (SelecciónActual.Contains (curObj))
 						SelecciónActual.Remove (curObj);
 					else
 						SelecciónActual.Add (curObj);
-					return;
+					return true;
 				case Keys.Enter:
 					Salida = new TipoSalida (
 						TipoSalida.EnumTipoSalida.Aceptación,
 						SelecciónActual);
 					Salir ();
-					return;
+					return true;
 				default:
-					return;
+					return base.RecibirSeñal (key);
 			}
 		}
 

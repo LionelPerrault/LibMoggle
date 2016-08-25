@@ -3,31 +3,20 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
-using System.Collections.Generic;
 using MonoGame.Extended.InputListeners;
+using Moggle.Comm;
 
 namespace Moggle
 {
 	/// <summary>
 	/// Clase global de un juego.
 	/// </summary>
-	public class Game : Microsoft.Xna.Framework.Game
-	,IScreen // Para poder tener controles globales (cursor)
+	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado
 	{
 		/// <summary>
 		/// Devuelve el control del puntero del ratón.
 		/// </summary>
 		protected readonly Ratón Mouse;
-
-		#if FPS
-		readonly Label fpsLabel;
-		#endif
-
-		/// <summary>
-		/// Devuelve la lista de controles univesales
-		/// </summary>
-		/// <value>The controles universales.</value>
-		public ListaControl ControlesUniversales { get; }
 
 		/// <summary>
 		/// La pantalla mostrada actualmente
@@ -38,11 +27,6 @@ namespace Moggle
 		/// The graphics.
 		/// </summary>
 		public readonly GraphicsDeviceManager Graphics;
-
-		/// <summary>
-		/// Gets the input manager.
-		/// </summary>
-		public readonly InputListenerManager InputManager = new InputListenerManager ();
 
 		/// <summary>
 		/// Gets the keyboard listener
@@ -64,60 +48,64 @@ namespace Moggle
 		/// </summary>
 		public Game ()
 		{
-			ControlesUniversales = new ListaControl ();
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
-			Mouse = new Ratón (this);
+			//Mouse = new Ratón (this);
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
 
+
+			Mouse = new Ratón (this);
 		}
 
 		/// <summary>
 		/// </summary>
 		protected override void Initialize ()
 		{
-			base.Initialize ();
 
-			// Listeners
-			MouseListener = InputManager.AddListener<MouseListener> ();
-			KeyListener = InputManager.AddListener<KeyboardListener> ();
+			// Crear los listeners
+			KeyListener = new KeyboardListener ();
+			MouseListener = new MouseListener ();
+
+			Components.Add (new InputListenerComponent (
+				this,
+				KeyListener,
+				MouseListener));
+
+			base.Initialize ();
+			CurrentScreen?.Initialize ();
 
 			KeyListener.KeyPressed += keyPressed;
 		}
 
 		void keyPressed (object sender, KeyboardEventArgs e)
 		{
-			TeclaPresionada (e);
+			MandarSeñal (e);
 		}
 
 		/// <summary>
 		/// Manda señal de tecla presionada.
 		/// </summary>
 		/// <param name="key">Tecla señal</param>
-		public void TeclaPresionada (KeyboardEventArgs key)
+		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			CurrentScreen?.TeclaPresionada (key);
+			CurrentScreen?.RecibirSeñal (key);
 		}
+
+		void IEmisorTeclado.MandarSeñal (KeyboardEventArgs key)
+		{
+			MandarSeñal (key);
+		}
+
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			// Create a new SpriteBatch, which can be used to draw textures.
-			Batch = new SpriteBatch (GraphicsDevice);
-			//spriteBatch.DrawString(new SpriteFont)
-
-			if (Mouse.Habilitado)
-				Mouse.Include ();
-
 			CurrentScreen?.LoadContent ();
-			foreach (var x in ControlesUniversales)
-			{
-				x.LoadContent ();
-			}
+			base.LoadContent ();
 		}
 
 		/// <summary>
@@ -129,9 +117,6 @@ namespace Moggle
 		{
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
-			updateControls (gameTime);
-
-			InputManager.Update (gameTime);
 		}
 
 		/// <summary>
@@ -142,29 +127,6 @@ namespace Moggle
 		protected override void OnExiting (object sender, EventArgs args)
 		{
 			base.OnExiting (sender, args);
-			((IScreen)this).UnloadContent ();
-		}
-
-		/// <summary>
-		/// Draw the game
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected override void Draw (GameTime gameTime)
-		{
-			Graphics.GraphicsDevice.Clear (BackgroundColor);
-
-			Batch.Begin ();
-
-			CurrentScreen.Dibujar (gameTime);
-
-			foreach (var x in ControlesUniversales)
-			{
-				x.Dibujar (gameTime);
-			}
-
-			//mouse.Dibujar (gameTime);
-			Batch.End ();
-
 		}
 
 		/// <summary>
@@ -178,17 +140,18 @@ namespace Moggle
 			}
 		}
 
-		#region IScreen
-
-		Game IScreen.Juego { get { return this; } }
-
-		Color IScreen.BgColor
+		/// <summary>
+		/// Draw the game.
+		/// </summary>
+		protected override void Draw (GameTime gameTime)
 		{
-			get
-			{
-				return BackgroundColor;
-			}
+			Device.Clear (BackgroundColor);
+			CurrentScreen?.Draw (gameTime);
+			base.Draw (gameTime);
 		}
+
+
+		#region IScreen
 
 		/// <summary>
 		/// Devuelve un nuevo batch de dibujo.
@@ -211,48 +174,13 @@ namespace Moggle
 			}
 		}
 
-		void IScreen.Dibujar (GameTime gameTime)
-		{
-			Draw (gameTime);
-		}
-
-		ListaControl IScreen.Controles
-		{
-			get
-			{
-				return ControlesUniversales;
-			}
-		}
-
 		/// <summary>
-		/// Carga contenido de controles universales
+		/// Unloads the content.
 		/// </summary>
-		void IScreen.LoadContent ()
+		protected override void UnloadContent ()
 		{
-			foreach (var cu in ControlesUniversales)
-			{
-				cu.LoadContent ();
-			}
-		}
-
-		void IScreen.Update (GameTime gametime)
-		{
-			updateControls (gametime);
-		}
-
-		void updateControls (GameTime gametime)
-		{
-			foreach (var cu in new List<IControl> (ControlesUniversales))
-				cu.Update (gametime);
-		}
-
-		void IScreen.UnloadContent ()
-		{
-			foreach (var cu in new List<IControl> (ControlesUniversales))
-			{
-				cu.Dispose ();
-			}
 			CurrentScreen.UnloadContent ();
+			base.UnloadContent ();
 		}
 
 		/// <summary>
@@ -264,11 +192,6 @@ namespace Moggle
 			{
 				return GraphicsDevice.Adapter.CurrentDisplayMode;
 			}
-		}
-
-		void IScreen.Inicializar ()
-		{
-			Initialize ();
 		}
 
 		#endregion

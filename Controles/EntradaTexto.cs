@@ -6,13 +6,14 @@ using Moggle.Screens;
 using Moggle.Shape;
 using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
+using Moggle.Comm;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Permite entrar un renglón de texto
 	/// </summary>
-	public class EntradaTexto : SBC
+	public class EntradaTexto : SBC, IReceptorTeclado
 	{
 		/// <summary>
 		/// </summary>
@@ -74,7 +75,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			Primitivos.DrawRectangle (
@@ -88,7 +89,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			contornoTexture = Screen.Content.Load<Texture2D> ("Rect");
 			fontTexture = Screen.Content.Load<BitmapFont> ("fonts");
@@ -98,17 +99,18 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		public override void CatchKey (KeyboardEventArgs key)
+		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
 		{
 
 			if (key.Key == Keys.Back)
 			{
 				if (Texto.Length > 0)
 					Texto = Texto.Remove (Texto.Length - 1);
-				return;
+				return true;
 			}
 
 			Texto += key.Character;
+			return true;
 		}
 
 		/// <summary>

@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
+using Moggle.Comm;
+using Moggle.Controles;
 
 
 namespace Moggle.Screens
@@ -9,7 +10,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen
+	public interface IScreen : IComponent, IEmisorTeclado, IReceptorTeclado
 	{
 		/// <summary>
 		/// Devuelve el campo Juego.
@@ -19,12 +20,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		void Dibujar (GameTime gameTime);
-
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		void LoadContent ();
+		void Draw (GameTime gameTime);
 
 		/// <summary>
 		/// Ciclo de la lógica
@@ -32,19 +28,15 @@ namespace Moggle.Screens
 		void Update (GameTime gameTime);
 
 		/// <summary>
-		/// Descargar contenido
-		/// </summary>
-		void UnloadContent ();
-
-		/// <summary>
 		/// Color de fondo
 		/// </summary>
 		Color BgColor { get; }
 
 		/// <summary>
-		/// La lista de controles de esta Screen
+		/// Los componentes
 		/// </summary>
-		ListaControl Controles { get; }
+		/// <value>The components.</value>
+		GameComponentCollection Components { get; }
 
 		/// <summary>
 		/// El manejador de contenido
@@ -60,11 +52,6 @@ namespace Moggle.Screens
 		SpriteBatch Batch { get; }
 
 		/// <summary>
-		/// Devuelve un nuevo batchd e dibujo.
-		/// </summary>
-		SpriteBatch GetNewBatch ();
-
-		/// <summary>
 		/// Devuelve el modo actual de display gráfico.
 		/// </summary>
 		DisplayMode GetDisplayMode { get; }
@@ -75,16 +62,5 @@ namespace Moggle.Screens
 		GraphicsDevice Device { get; }
 
 		#endregion
-
-		/// <summary>
-		/// Inicializa la pantalla
-		/// </summary>
-		void Inicializar ();
-
-		/// <summary>
-		/// Manda señal de tecla presionada a esta pantalla
-		/// </summary>
-		/// <param name="key">Tecla de la señal</param>
-		void TeclaPresionada (KeyboardEventArgs key);
 	}
 }

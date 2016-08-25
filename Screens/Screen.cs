@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using System.Collections.Generic;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
+using System.Linq;
+using Moggle.Comm;
 
 namespace Moggle.Screens
 {
@@ -21,7 +22,7 @@ namespace Moggle.Screens
 		/// Devuelve la lista de controles
 		/// </summary>
 		/// <value>The controles.</value>
-		public ListaControl Controles { get; }
+		public GameComponentCollection Components { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
@@ -35,7 +36,7 @@ namespace Moggle.Screens
 
 		Screen ()
 		{
-			Controles = new ListaControl ();
+			Components = new GameComponentCollection ();
 		}
 
 		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
@@ -46,10 +47,21 @@ namespace Moggle.Screens
 		/// Manda la señal de tecla presionada a cada uno de sus controles.
 		/// </summary>
 		/// <param name="key">Key.</param>
-		public virtual void TeclaPresionada (KeyboardEventArgs key)
+		public virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			foreach (var x in Controles)
-				x.CatchKey (key);
+			foreach (var x in Components.OfType<IReceptorTeclado> ())
+				x.RecibirSeñal (key);
+		}
+
+		/// <summary>
+		/// Rebice señal del teclado
+		/// </summary>
+		/// <returns>Devuelve <c>true</c> si la señal fue aceptada.</returns>
+		/// <param name="key">Señal tecla</param>
+		public virtual bool RecibirSeñal (KeyboardEventArgs key)
+		{
+			MandarSeñal (key);
+			return true;
 		}
 
 		/// <summary>
@@ -61,14 +73,10 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Inicializa sus controles
 		/// </summary>
-		public virtual void Inicializar ()
+		public virtual void Initialize ()
 		{
-			foreach (var x in Controles)
-				x.Inicializar ();
-
-			// Listeners
-			//KeyListener.KeyPressed += (sender, e) => TeclaPresionada (e);
-
+			foreach (var x in Components)
+				x.Initialize ();
 		}
 
 		/// <summary>
@@ -84,11 +92,10 @@ namespace Moggle.Screens
 		/// Dibuja esta pantalla
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public virtual void Dibujar (GameTime gameTime)
+		public virtual void Draw (GameTime gameTime)
 		{
-			//base.Draw (gameTime);
+			Batch = GetNewBatch ();
 
-			//var Batch = GetNewBatch ();
 			Batch.Begin ();
 			EntreBatches (gameTime);
 			Batch.End ();
@@ -99,8 +106,13 @@ namespace Moggle.Screens
 		/// </summary>
 		protected virtual void EntreBatches (GameTime gameTime)
 		{
-			foreach (var x in Controles)
-				x.Dibujar (gameTime);
+			drawComponents (gameTime);
+		}
+
+		void drawComponents (GameTime gameTime)
+		{
+			foreach (var x in Components.OfType<IDrawable> ())
+				x.Draw (gameTime);
 		}
 
 		/// <summary>
@@ -109,8 +121,7 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void LoadContent ()
 		{
-			Batch = new SpriteBatch (Juego.GraphicsDevice);
-			foreach (var x in Controles)
+			foreach (var x in Components.OfType<IComponent> ())
 				x.LoadContent ();
 		}
 
@@ -129,8 +140,9 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public virtual void Update (GameTime gameTime)
 		{
-			foreach (var x in new List<IControl> (Controles))
-				x.Update (gameTime);
+			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
+				if (x.Enabled)
+					x.Update (gameTime);
 		}
 
 		/// <summary>
@@ -138,8 +150,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void UnloadContent ()
 		{
-			foreach (var x in new List<IControl> (Controles))
-				x.Dispose ();
+			foreach (var x in Components.OfType<IComponent> ())
+				x.UnloadContent ();
 		}
 
 		/// <summary>

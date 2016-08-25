@@ -4,14 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Shape;
 using Inputs = MonoGame.Extended.InputListeners;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Extended;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Un control que interactúa con los clicks del ratón.
 	/// </summary>
-	public class Botón : SBC
+	public class Botón : SBC, IColorable
 	{
+		#region ctor
+
 		/// <summary>
 		/// Inicaliza un <see cref="Botón"/> rectangular.
 		/// </summary>
@@ -44,6 +47,8 @@ namespace Moggle.Controles
 		{
 			Bounds = new Moggle.Shape.Rectangle (bounds.Location, bounds.Size);
 		}
+
+		#endregion
 
 		/// <summary>
 		/// Devuelve o establece si el botón está habilitado para interacción con el jugador.
@@ -78,7 +83,7 @@ namespace Moggle.Controles
 		/// Dibuja el botón
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			Screen.Batch.Draw (
 				TexturaInstancia,
@@ -89,26 +94,23 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
-			try
-			{
-				TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
-			}
-			catch (Exception ex)
-			{
-				throw new Exception ("Error trying to load texture " + Textura, ex);
-			}
+			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
+		}
+
+		protected override void UnloadContent ()
+		{
+			Textura = null;
+			base.UnloadContent ();
 		}
 
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Controles.Botón"/> object.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
-			TexturaInstancia = null;
-			Textura = null;
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 
 		/// <summary>

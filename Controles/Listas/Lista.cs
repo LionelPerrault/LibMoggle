@@ -4,10 +4,10 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework.Graphics;
-using OpenTK.Input;
 using Moggle.Shape;
 using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
+using Moggle.Comm;
 
 namespace Moggle.Controles.Listas
 {
@@ -19,7 +19,7 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : SBC, IList<TObj>, IListaControl<TObj>
+	public class Lista<TObj> : SBC, IList<TObj>, IListaControl<TObj>, IReceptorTeclado
 	{
 		/// <summary>
 		/// Representa una entrada de la lista.
@@ -70,7 +70,7 @@ namespace Moggle.Controles.Listas
 		/// Dibuja la lista.
 		/// </summary>
 		/// <param name="gameTime">Duración del tick</param>
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			// Dibujar el rectángulo
 			var bat = Screen.Batch;
@@ -211,7 +211,7 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			Fuente = Screen.Content.Load<BitmapFont> ("fonts");
 			noTexture = Screen.Content.Load<Texture2D> ("Rect");
@@ -220,11 +220,11 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Dispose.
 		/// </summary>
-		protected override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
 			Fuente = null;
 			noTexture = null;
-			base.Dispose ();
+			base.Dispose (disposing);
 		}
 
 		/// <summary>
@@ -243,14 +243,21 @@ namespace Moggle.Controles.Listas
 		/// Catchs the key.
 		/// </summary>
 
-		public override void CatchKey (KeyboardEventArgs key)
+		public bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			if (!InterceptarTeclado)
-				return;
+				return false;
 			if (key.Key == AbajoKey)
+			{
 				SeleccionaSiguiente ();
-			else if (key.Key == ArribaKey)
+				return true;
+			}
+			if (key.Key == ArribaKey)
+			{
 				SeleccionaAnterior ();
+				return true;
+			}
+			return false;
 		}
 
 		#region IListaControl
