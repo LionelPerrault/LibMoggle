@@ -3,6 +3,7 @@ using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework;
 using Moggle.Shape;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -58,9 +59,9 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
-			return (Moggle.Shape.Rectangle)font.GetStringRectangle (
+			return (RectangleF)font.GetStringRectangle (
 				Texto (),
 				Posición.ToVector2 ());
 		}

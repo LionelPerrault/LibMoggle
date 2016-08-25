@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Shape;
 using Inputs = MonoGame.Extended.InputListeners;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -30,7 +30,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="shape">Forma del botón</param>
-		public Botón (Moggle.Screens.IScreen screen, IShape shape)
+		public Botón (Moggle.Screens.IScreen screen, IShapeF shape)
 			: this (screen)
 		{
 			Bounds = shape;
@@ -42,10 +42,10 @@ namespace Moggle.Controles
 		/// <param name="screen">Screen.</param>
 		/// <param name="bounds">Límites del rectángulo.</param>
 		public Botón (Moggle.Screens.IScreen screen,
-		              Microsoft.Xna.Framework.Rectangle bounds)
+		              RectangleF bounds)
 			: this (screen)
 		{
-			Bounds = new Moggle.Shape.Rectangle (bounds.Location, bounds.Size);
+			Bounds = new RectangleF (bounds.Location, bounds.Size);
 		}
 
 		#endregion
@@ -60,7 +60,7 @@ namespace Moggle.Controles
 		/// Devuelve o restablece la forma del botón
 		/// </summary>
 		/// <value>The bounds.</value>
-		public IShape Bounds { get; set; }
+		public IShapeF Bounds { get; set; }
 
 		/// <summary>
 		/// Textura del fondo del botón
@@ -85,10 +85,7 @@ namespace Moggle.Controles
 		/// <param name="gameTime">Game time.</param>
 		public override void Draw (GameTime gameTime)
 		{
-			Screen.Batch.Draw (
-				TexturaInstancia,
-				Bounds.GetContainingRectangle (),
-				Color);
+			Screen.Batch.Draw (TexturaInstancia, Bounds, Color);
 		}
 
 		/// <summary>
@@ -129,7 +126,7 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}

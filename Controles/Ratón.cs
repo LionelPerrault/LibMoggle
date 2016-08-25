@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OpenTK.Input;
-using Moggle.Shape;
+using MonoGame.Extended.Shapes;
+using MonoGame.Extended;
 
 namespace Moggle.Controles
 {
@@ -14,7 +15,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="gm">Pantalla</param>
 		/// <param name="tamaño">Tamaño del icono del cursor.</param>
-		public Ratón (Game gm, Point tamaño)
+		public Ratón (Game gm, Size tamaño)
 			: base (gm)
 		{
 			Tamaño = tamaño;
@@ -26,7 +27,7 @@ namespace Moggle.Controles
 		public Ratón (Game gm)
 			: base (gm)
 		{
-			Tamaño = new Point (20, 20);
+			Tamaño = new Size (20, 20);
 		}
 
 		/// <summary>
@@ -79,14 +80,14 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tamaño del apuntador.
 		/// </summary>
-		public readonly Point Tamaño;
+		public readonly Size Tamaño;
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
-			return new Moggle.Shape.Rectangle (Pos, Tamaño);
+			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
 		}
 
 		/// <summary>
@@ -105,7 +106,10 @@ namespace Moggle.Controles
 		{
 			var bat = Game.GetNewBatch ();
 			bat.Begin ();
-			bat.Draw (Textura, GetBounds ().GetContainingRectangle (), Color.WhiteSmoke);
+			bat.Draw (
+				Textura,
+				(Rectangle)GetBounds ().GetBoundingRectangle (),
+				Color.WhiteSmoke);
 			bat.End ();
 		}
 	}
