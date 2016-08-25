@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Moggle.Controles.Listas;
 using MonoGame.Extended.InputListeners;
-using OpenTK.Input;
-using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Screens
 {
@@ -81,7 +81,7 @@ namespace Moggle.Screens
 			: base (game)
 		{
 			ListaComponente = new Lista<TObj> (this);
-			ListaComponente.Bounds = new Moggle.Shape.Rectangle (
+			ListaComponente.Bounds = new RectangleF (
 				0,
 				0,
 				GetDisplayMode.Width,

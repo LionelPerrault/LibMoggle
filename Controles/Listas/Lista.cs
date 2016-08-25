@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Moggle.Screens;
-using MonoGame.Extended.BitmapFonts;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Shape;
-using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
+using Moggle.Screens;
+using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles.Listas
 {
@@ -77,15 +77,15 @@ namespace Moggle.Controles.Listas
 
 			Primitivos.DrawRectangle (
 				bat,
-				Bounds.GetContainingRectangle (),
+				Bounds.GetBoundingRectangle (),
 				Color.White,
 				noTexture);
 
 			// Background
-			bat.Draw (noTexture, Bounds.GetContainingRectangle (), ColorBG);
+			bat.Draw (noTexture, Bounds, ColorBG);
 
 			// TODO: Que no se me salga el texto.
-			var currY = Bounds.TopLeft;
+			var currY = Bounds.Location;
 			var inic = PrimerVisible;
 			var final = Math.Min (Objetos.Count, inic + MaxVisible);
 			for (int i = inic; i < final; i++)
@@ -193,12 +193,12 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Devuelve o establece el límite del control
 		/// </summary>
-		public Moggle.Shape.Rectangle Bounds { get; set; }
+		public RectangleF Bounds { get; set; }
 
 		/// <summary>
 		/// Devuelve el menor rectángulo que contiene a este control.
 		/// </summary>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}

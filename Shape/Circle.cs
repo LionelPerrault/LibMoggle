@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Moggle.Shape
 {
 	/// <summary>
 	/// Representa un círculo
 	/// </summary>
+	[Obsolete]
 	public struct Circle : IShape
 	{
 		/// <summary>

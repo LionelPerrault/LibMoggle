@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle
 {
@@ -65,6 +66,18 @@ namespace Moggle
 			DrawLine (bat, tr, br, color, textura);
 			DrawLine (bat, br, bl, color, textura);
 			DrawLine (bat, bl, tl, color, textura);
+		}
+
+		/// <summary>
+		/// Dibuja un rectángulo en un SpriteBatch
+		/// </summary>
+		public static void DrawRectangle (SpriteBatch bat,
+		                                  RectangleF rect,
+		                                  Color color,
+		                                  Texture2D textura)
+		{
+			DrawRectangle (bat, (Rectangle)rect, color, textura);
+			
 		}
 
 

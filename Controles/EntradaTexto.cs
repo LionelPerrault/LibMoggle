@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.BitmapFonts;
-using Moggle.Controles;
-using Moggle.Screens;
-using Moggle.Shape;
-using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
+using Moggle.Controles;
+using Moggle.Screens;
+using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -43,15 +43,15 @@ namespace Moggle.Controles
 		/// Devuelve o establece la posición del control.
 		/// </summary>
 		/// <value>The position.</value>
-		public Point Pos
+		public Vector2 Pos
 		{
 			get
 			{
-				return Bounds.TopLeft.ToPoint ();
+				return Bounds.Location;
 			}
 			set
 			{
-				Bounds = new Shape.Rectangle (value, Bounds.Size);
+				Bounds = new RectangleF (value, Bounds.Size);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Límites de el control
 		/// </summary>
-		public Moggle.Shape.Rectangle Bounds { get; set; }
+		public RectangleF Bounds { get; set; }
 
 		/// <summary>
 		/// Dibuja el control
@@ -80,10 +80,10 @@ namespace Moggle.Controles
 			var bat = Screen.Batch;
 			Primitivos.DrawRectangle (
 				bat,
-				GetBounds ().GetContainingRectangle (),
+				GetBounds ().GetBoundingRectangle (),
 				ColorContorno,
 				contornoTexture);
-			bat.DrawString (fontTexture, Texto, Pos.ToVector2 (), ColorTexto);
+			bat.DrawString (fontTexture, Texto, Pos, ColorTexto);
 		}
 
 		/// <summary>
@@ -117,7 +117,7 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}

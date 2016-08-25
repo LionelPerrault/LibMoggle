@@ -1,9 +1,9 @@
 ﻿using System;
-using Moggle.Screens;
 using Microsoft.Xna.Framework;
-using Moggle.Shape;
-using Inputs = MonoGame.Extended.InputListeners;
+using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Shapes;
+using Inputs = MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -76,13 +76,13 @@ namespace Moggle.Controles
 
 		void check_2click (object sender, MouseEventArgs e)
 		{
-			if (Enabled && GetBounds ().Contains (e.Position))
+			if (Enabled && GetBounds ().Contains (e.Position.ToVector2 ()))
 				OnDoubleClick (e);
 		}
 
 		void check_click (object sender, MouseEventArgs e)
 		{
-			if (Enabled && GetBounds ().Contains (e.Position))
+			if (Enabled && GetBounds ().Contains (e.Position.ToVector2 ()))
 				OnClick (e);
 		}
 
@@ -103,7 +103,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public abstract IShape GetBounds ();
+		public abstract IShapeF GetBounds ();
 
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.
@@ -114,7 +114,7 @@ namespace Moggle.Controles
 			get
 			{
 				var state = Microsoft.Xna.Framework.Input.Mouse.GetState ();
-				return GetBounds ().Contains (state.Position);
+				return GetBounds ().Contains (state.Position.ToVector2 ());
 			}
 		}
 

@@ -1,9 +1,9 @@
-﻿using Moggle.Screens;
+﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
-using Moggle.Shape;
-using System.Diagnostics;
+using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Shapes;
 
 namespace Test
 {
@@ -12,7 +12,7 @@ namespace Test
 		public Scr (Moggle.Game game)
 			: base (game)
 		{
-			bt = new Botón (this, new Circle (100, new Vector2 (200, 200)));
+			bt = new Botón (this, new CircleF (new Vector2 (200, 200), 100));
 			bt.Color = Color.Green;
 			bt.Textura = "cont//void";
 		}

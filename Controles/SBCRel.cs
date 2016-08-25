@@ -1,7 +1,7 @@
-﻿using Moggle.Screens;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
-using System;
+using Moggle.Screens;
 
 namespace Moggle.Controles
 {
@@ -30,8 +30,9 @@ namespace Moggle.Controles
 		/// <param name="gameTime">Game time.</param>
 		public override void Draw (GameTime gameTime)
 		{
-			var rect = Port.UniversoAVentana (GetBounds ().GetContainingRectangle ());
-			DibujarEn (gameTime, rect);
+			throw new NotImplementedException ();
+			//var rect = Port.UniversoAVentana (GetBounds ().GetBoundingRectangle ());
+			//DibujarEn (gameTime, rect);
 		}
 
 		/// <summary>
@@ -42,8 +43,9 @@ namespace Moggle.Controles
 		{
 			get
 			{
-				var state = Microsoft.Xna.Framework.Input.Mouse.GetState ();
-				return GetBounds ().Contains (Port.UniversoAVentana (state.Position));
+				throw new NotImplementedException ();
+				//var state = Microsoft.Xna.Framework.Input.Mouse.GetState ();
+				//return GetBounds ().Contains (Port.UniversoAVentana (state.Position));
 			}
 		}
 

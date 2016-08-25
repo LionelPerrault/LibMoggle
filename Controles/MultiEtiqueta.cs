@@ -1,10 +1,12 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended.BitmapFonts;
-using Moggle.Screens;
 using System.Collections.Generic;
-using Moggle.Shape;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Screens;
+using MonoGame.Extended;
+using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -247,18 +249,14 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
-			int ht;
-			int wd = 0;
 			// Altura
-			ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;
+			var ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;
 			// Grosor
-			foreach (var entry in Actual)
-			{
-				wd = Math.Max (wd, entry.Largo);
-			}
-			return new Shape.Rectangle (Pos.X, Pos.Y, wd, ht);
+			var wd = Actual.Aggregate (0, (agg, acc) => Math.Max (agg, acc.Largo));
+			
+			return new RectangleF (Pos, new SizeF (wd, ht));
 		}
 
 		/// <summary>

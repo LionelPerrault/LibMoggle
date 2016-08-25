@@ -1,7 +1,8 @@
-﻿using Moggle.Screens;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Moggle.Shape;
+using Moggle.Screens;
+using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -257,7 +258,7 @@ namespace Moggle.Controles
 		{
 			Screen.Batch.Draw (
 				texturaFondo,
-				GetBounds ().GetContainingRectangle (),
+				GetBounds (),
 				BgColor);
 		}
 
@@ -273,10 +274,10 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
-			return new Moggle.Shape.Rectangle (Posición,
-				new Point (
+			return new RectangleF (Posición.ToVector2 (),
+				new SizeF (
 					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.X,
 					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Y));
 		}
@@ -294,16 +295,16 @@ namespace Moggle.Controles
 		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
 		/// </summary>
 		/// <param name="index">Índice del botón.</param>
-		protected Moggle.Shape.Rectangle CalcularPosición (int index)
+		protected RectangleF CalcularPosición (int index)
 		{
-			Moggle.Shape.Rectangle bounds;
-			var bb = GetBounds ().GetContainingRectangle (); // Cota del contenedor
+			RectangleF bounds;
+			var bb = GetBounds ().GetBoundingRectangle ();
 			Point locGrid;
 			int orden = index;
 			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
 				new Point (orden / Filas, orden % Filas) : 
 				new Point (orden % Columnas, orden / Columnas);
-			bounds = new Moggle.Shape.Rectangle (bb.Left + Márgenes.Left + TamañoBotón.X * locGrid.X,
+			bounds = new RectangleF (bb.Left + Márgenes.Left + TamañoBotón.X * locGrid.X,
 				bb.Top + Márgenes.Top + TamañoBotón.Y * locGrid.Y,
 				TamañoBotón.X, TamañoBotón.Y);
 			return bounds;
