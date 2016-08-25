@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Moggle.Shape
 {
 	/// <summary>
 	/// Una forma rectangular.
 	/// </summary>
+	[Obsolete]
 	public struct Rectangle : IShape
 	{
 		float _x;

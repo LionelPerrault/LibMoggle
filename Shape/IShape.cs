@@ -13,7 +13,7 @@ namespace Moggle.Shape
 	/// Provee métodos para mover, estalar, pedir rectángulo excrito, y método para saber si contiene un punto dado.
 	/// </para>
 	/// </summary>
-	[ObsoleteAttribute]
+	[Obsolete]
 	public interface IShape
 	{
 		/// <summary>

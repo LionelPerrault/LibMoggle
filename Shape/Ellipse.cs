@@ -1,12 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using MonoGame.Extended.Shapes;
+using MonoGame.Extended;
 
 namespace Moggle.Shape
 {
 	/// <summary>
 	/// Representa una forma elíptica
 	/// </summary>
-	public struct Ellipse : IShape
+	public struct Ellipse : IShapeF
 	{
 		/// <summary>
 		/// Radio horizontal.
@@ -35,44 +37,52 @@ namespace Moggle.Shape
 		}
 
 		/// <summary>
+		/// Gets the bounding rectangle.
+		/// </summary>
+		/// <returns>The smallest rectangle containing this shape.</returns>
+		public RectangleF GetBoundingRectangle ()
+		{
+			var tl = new Vector2 (Center.X - RadiusX, Center.Y - RadiusY);
+			var size = new SizeF (2 * RadiusX, 2 * RadiusY);
+			return new RectangleF (tl, size);
+		}
+
+		/// <summary>
 		/// Revisa si esta forma contiene un punto dado.
 		/// </summary>
-		/// <param name="p">Punto</param>
-		public bool Contains (Point p)
+		public bool Contains (float x, float y)
 		{
-			var vect = Center - p.ToVector2 ();
-			// TODO Test
+			return Contains (new Vector2 (x, y));
+		}
+
+		/// <summary>
+		/// Revisa si esta forma contiene un punto dado.
+		/// </summary>
+		/// <param name="point">Punto</param>
+		public bool Contains (Vector2 point)
+		{
+			var vect = Center - point;
 			return Math.Pow (RadiusX * vect.X, 2) + Math.Pow (RadiusY * vect.Y, 2) < 1;
 		}
 
 		/// <summary>
-		/// Devuelve una forma que es el resultado de una translación
+		/// Gets the left.
 		/// </summary>
-		/// <param name="v">V.</param>
-		public IShape MoveBy (Vector2 v)
-		{
-			return new Ellipse (RadiusX, RadiusY, Center + v);
-		}
+		public float Left { get { return Center.X - RadiusX; } }
 
 		/// <summary>
-		/// Devuelve una forma que es el resultado de una reescalación
+		/// Gets the top.
 		/// </summary>
-		/// <param name="factor">Factor.</param>
-		public IShape Scale (float factor)
-		{
-			return new Ellipse (RadiusX * factor, RadiusY * factor, Center);
-		}
+		public float Top { get { return Center.Y - RadiusY; } }
 
 		/// <summary>
-		/// Devuelve el rectángulo más pequeño que lo contiene
+		/// Gets the right.
 		/// </summary>
-		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
-		{
-			var tl = new Point (
-				         (int)(Center.X - RadiusX),
-				         (int)(Center.Y - RadiusY));
-			var size = new Point ((int)(2 * RadiusX), (int)(2 * RadiusY));
-			return new Microsoft.Xna.Framework.Rectangle (tl, size);
-		}
+		public float Right { get { return Center.X + RadiusX; } }
+
+		/// <summary>
+		/// Gets the bottom.
+		/// </summary>
+		public float Bottom{ get { return Center.Y + RadiusY; } }
 	}
 }
