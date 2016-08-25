@@ -4,8 +4,14 @@ using Microsoft.Xna.Framework;
 
 namespace Moggle
 {
+	/// <summary>
+	/// Extensiones de SpriteBatch
+	/// </summary>
 	public static class BatchExt
 	{
+		/// <summary>
+		/// Over de Draw
+		/// </summary>
 		public static void Draw (this SpriteBatch bat,
 		                         Texture2D texture,
 		                         RectangleF rectangle,
@@ -14,6 +20,9 @@ namespace Moggle
 			bat.Draw (texture, (Rectangle)rectangle, color);
 		}
 
+		/// <summary>
+		/// Over de Draw
+		/// </summary>
 		public static void Draw (this SpriteBatch bat,
 		                         Texture2D texture,
 		                         IShapeF shape,

@@ -68,6 +68,9 @@ namespace Moggle
 			DrawLine (bat, bl, tl, color, textura);
 		}
 
+		/// <summary>
+		/// Dibuja un rectángulo en un SpriteBatch
+		/// </summary>
 		public static void DrawRectangle (SpriteBatch bat,
 		                                  RectangleF rect,
 		                                  Color color,
