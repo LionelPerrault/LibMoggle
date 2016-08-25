@@ -99,6 +99,9 @@ namespace Moggle.Controles
 			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
 		}
 
+		/// <summary>
+		/// Unloads the content.
+		/// </summary>
 		protected override void UnloadContent ()
 		{
 			Textura = null;
