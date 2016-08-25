@@ -1,7 +1,7 @@
-﻿using Moggle.Screens;
+﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
-using System.Diagnostics;
+using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 

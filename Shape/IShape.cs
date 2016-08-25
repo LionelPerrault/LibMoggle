@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Moggle.Shape;
-using System;
 using MonoGame.Extended.Shapes;
 
 namespace Moggle.Shape
@@ -41,11 +41,6 @@ namespace Moggle.Shape
 	class Shapeless : IShapeF
 	{
 		public static readonly Shapeless NoShape = new Shapeless ();
-
-		public bool Contains (Point p)
-		{
-			return false;
-		}
 
 		public RectangleF GetBoundingRectangle ()
 		{

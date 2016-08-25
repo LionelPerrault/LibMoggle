@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using OpenTK.Input;
-using MonoGame.Extended.Shapes;
 using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
+using OpenTK.Input;
 
 namespace Moggle.Controles
 {

@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using MonoGame.Extended.Shapes;
+﻿using System;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Shape
 {

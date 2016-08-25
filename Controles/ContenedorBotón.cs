@@ -1,9 +1,8 @@
-﻿using Moggle.Screens;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Moggle.Shape;
-using MonoGame.Extended.Shapes;
+using Moggle.Screens;
 using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {

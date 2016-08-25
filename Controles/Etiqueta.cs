@@ -1,8 +1,7 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
-using Microsoft.Xna.Framework;
-using Moggle.Shape;
 using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles

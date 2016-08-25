@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended.BitmapFonts;
-using Moggle.Screens;
 using System.Collections.Generic;
-using Moggle.Shape;
-using MonoGame.Extended.Shapes;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Screens;
 using MonoGame.Extended;
+using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {

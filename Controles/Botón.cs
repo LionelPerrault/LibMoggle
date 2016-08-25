@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Inputs = MonoGame.Extended.InputListeners;
-using MonoGame.Extended.InputListeners;
 using MonoGame.Extended;
+using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using Inputs = MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -103,14 +103,6 @@ namespace Moggle.Controles
 		{
 			Textura = null;
 			base.UnloadContent ();
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.Botón"/> object.
-		/// </summary>
-		protected override void Dispose (bool disposing)
-		{
-			base.Dispose (disposing);
 		}
 
 		/// <summary>

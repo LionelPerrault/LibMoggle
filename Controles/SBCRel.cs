@@ -1,7 +1,7 @@
-﻿using Moggle.Screens;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
-using System;
+using Moggle.Screens;
 
 namespace Moggle.Controles
 {

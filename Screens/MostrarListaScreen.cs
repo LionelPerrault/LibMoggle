@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Moggle.Controles.Listas;
 using MonoGame.Extended.InputListeners;
-using OpenTK.Input;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Shapes;
 
 namespace Moggle.Screens
