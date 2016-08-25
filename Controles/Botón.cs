@@ -4,14 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Shape;
 using Inputs = MonoGame.Extended.InputListeners;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Extended;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Un control que interactúa con los clicks del ratón.
 	/// </summary>
-	public class Botón : SBC
+	public class Botón : SBC, IColorable
 	{
+		#region ctor
+
 		/// <summary>
 		/// Inicaliza un <see cref="Botón"/> rectangular.
 		/// </summary>
@@ -44,6 +47,8 @@ namespace Moggle.Controles
 		{
 			Bounds = new Moggle.Shape.Rectangle (bounds.Location, bounds.Size);
 		}
+
+		#endregion
 
 		/// <summary>
 		/// Devuelve o establece si el botón está habilitado para interacción con el jugador.
@@ -94,12 +99,17 @@ namespace Moggle.Controles
 			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
 		}
 
+		protected override void UnloadContent ()
+		{
+			Textura = null;
+			base.UnloadContent ();
+		}
+
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Controles.Botón"/> object.
 		/// </summary>
 		protected override void Dispose (bool disposing)
 		{
-			TexturaInstancia = null;
 			base.Dispose (disposing);
 		}
 

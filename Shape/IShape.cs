@@ -19,20 +19,9 @@ namespace Moggle.Shape
 		bool Contains (Point p);
 
 		/// <summary>
-		/// Devuelve una forma que es el resultado de una translación
-		/// </summary>
-		IShape MoveBy (Vector2 v);
-
-		/// <summary>
-		/// Devuelve una forma que es el resultado de una reescalación
-		/// </summary>
-		IShape Scale (float factor);
-
-		/// <summary>
 		/// Devuelve el rectángulo más pequeño que lo contiene
 		/// </summary>
 		Microsoft.Xna.Framework.Rectangle GetContainingRectangle ();
-
 	}
 
 	/// <summary>
@@ -53,16 +42,6 @@ namespace Moggle.Shape
 		public bool Contains (Point p)
 		{
 			return false;
-		}
-
-		public IShape MoveBy (Vector2 v)
-		{
-			return NoShape;
-		}
-
-		public IShape Scale (float factor)
-		{
-			return NoShape;
 		}
 
 		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()

@@ -70,20 +70,19 @@ namespace Moggle.Controles
 		public override void Initialize ()
 		{
 			base.Initialize ();
-			LoadContent ();
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
 		}
 
 		void check_2click (object sender, MouseEventArgs e)
 		{
-			if (GetBounds ().Contains (e.Position))
+			if (Enabled && GetBounds ().Contains (e.Position))
 				OnDoubleClick (e);
 		}
 
 		void check_click (object sender, MouseEventArgs e)
 		{
-			if (GetBounds ().Contains (e.Position))
+			if (Enabled && GetBounds ().Contains (e.Position))
 				OnClick (e);
 		}
 
@@ -109,7 +108,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.
 		/// </summary>
-		[Obsolete]
+		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public bool MouseOver
 		{
 			get
@@ -122,6 +121,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tiempo en el que el apuntador ha estado sobre este control.
 		/// </summary>
+		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public TimeSpan TiempoMouseOver { get; private set; }
 
 		/// <summary>

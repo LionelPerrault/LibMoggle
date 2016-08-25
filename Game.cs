@@ -127,7 +127,6 @@ namespace Moggle
 		protected override void OnExiting (object sender, EventArgs args)
 		{
 			base.OnExiting (sender, args);
-			UnloadContent ();
 		}
 
 		/// <summary>
