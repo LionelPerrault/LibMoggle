@@ -119,16 +119,6 @@ namespace Moggle
 			CurrentScreen.Update (gameTime);
 		}
 
-		/// <summary>
-		/// Raises the exiting event.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="args">Arguments.</param>
-		protected override void OnExiting (object sender, EventArgs args)
-		{
-			base.OnExiting (sender, args);
-		}
-
 		#region Component
 
 		void IComponent.LoadContent ()
