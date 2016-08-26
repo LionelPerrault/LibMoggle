@@ -10,7 +10,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen : IComponent, IEmisorTeclado, IReceptorTeclado
+	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IGameComponent>
 	{
 		/// <summary>
 		/// Devuelve el campo Juego.
@@ -31,12 +31,6 @@ namespace Moggle.Screens
 		/// Color de fondo
 		/// </summary>
 		Color BgColor { get; }
-
-		/// <summary>
-		/// Los componentes
-		/// </summary>
-		/// <value>The components.</value>
-		GameComponentCollection Components { get; }
 
 		/// <summary>
 		/// El manejador de contenido
