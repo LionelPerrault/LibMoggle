@@ -18,11 +18,37 @@ namespace Moggle.Screens
 		/// </summary>
 		public Game Juego { get; }
 
+		#region Component container
+
 		/// <summary>
 		/// Devuelve la lista de controles
 		/// </summary>
 		/// <value>The controles.</value>
-		public GameComponentCollection Components { get; }
+		protected GameComponentCollection Components { get; }
+
+		/// <summary>
+		/// Agrega un componente
+		/// </summary>
+		/// <param name="component">Component.</param>
+		public void AddComponent (IGameComponent component)
+		{
+			Components.Add (component);
+		}
+
+		/// <summary>
+		/// Elimina un componente
+		/// </summary>
+		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
+		/// <param name="component">Component.</param>
+		public bool RemoveComponent (IGameComponent component)
+		{
+			return Components.Remove (component);
+		}
+
+		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		{ get { return Components; } }
+
+		#endregion
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
