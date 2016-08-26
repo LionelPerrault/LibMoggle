@@ -54,6 +54,5 @@ namespace Test
 			Debug.WriteLine (sender);
 			Debug.WriteLine (e.Button);
 		}
-
 	}
 }
