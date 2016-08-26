@@ -1,6 +1,5 @@
 ﻿using System;
 using Moggle.Screens;
-using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework;
@@ -18,9 +17,16 @@ namespace Moggle.Controles
 		/// <value>The screen.</value>
 		public IScreen Screen { get { return this.GetScreen (); } }
 
+		/// <summary>
+		/// Gets the game.
+		/// </summary>
+		/// <value>The game.</value>
 		public Game Game { get { return this.GetGame (); } }
 
-
+		/// <summary>
+		/// Gets the container.
+		/// </summary>
+		/// <value>The container.</value>
 		public IComponentContainerComponent<IGameComponent> Container { get; }
 
 		/// <summary>
@@ -31,10 +37,16 @@ namespace Moggle.Controles
 			Container = cont;
 		}
 
+		/// <summary>
+		/// Loads the content.
+		/// </summary>
 		protected virtual void LoadContent ()
 		{
 		}
 
+		/// <summary>
+		/// Unloads the content.
+		/// </summary>
 		protected virtual void UnloadContent ()
 		{
 		}

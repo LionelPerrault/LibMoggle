@@ -82,6 +82,10 @@ namespace Moggle.Controles
 			base.Dispose (disposing);
 		}
 
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
 		}

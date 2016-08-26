@@ -59,6 +59,10 @@ namespace Moggle
 			Mouse = new Ratón (this);
 		}
 
+		/// <summary>
+		/// Gets the container.
+		/// </summary>
+		/// <value>The container.</value>
 		public IComponentContainerComponent<IGameComponent> Container
 		{
 			get

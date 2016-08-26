@@ -93,7 +93,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected virtual void LoadContent ()
+		protected override void LoadContent ()
 		{
 			Textura = Game.Content.Load<Texture2D> (ArchivoTextura);
 		}

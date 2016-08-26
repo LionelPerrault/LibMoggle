@@ -114,6 +114,10 @@ namespace Moggle.Controles
 			return string.Format ("{0}{1}", Habilidato ? "[H]" : "", Textura);
 		}
 
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
 		}

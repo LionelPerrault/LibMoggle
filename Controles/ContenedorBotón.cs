@@ -81,6 +81,10 @@ namespace Moggle.Controles
 		Point posición;
 		TipoOrdenEnum tipoOrden;
 
+		/// <summary>
+		/// Update the control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
 		}

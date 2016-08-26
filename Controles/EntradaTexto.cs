@@ -122,6 +122,10 @@ namespace Moggle.Controles
 			return Bounds;
 		}
 
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
 		}

@@ -65,6 +65,10 @@ namespace Moggle.Controles.Listas
 			InterceptarTeclado = true;
 		}
 
+		/// <summary>
+		/// Updates the list
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
 		}
@@ -214,7 +218,7 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected virtual void LoadContent ()
+		protected override void LoadContent ()
 		{
 			Fuente = Screen.Content.Load<BitmapFont> ("fonts");
 			noTexture = Screen.Content.Load<Texture2D> ("Rect");

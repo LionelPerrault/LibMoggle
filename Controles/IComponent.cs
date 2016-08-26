@@ -1,7 +1,6 @@
-using Microsoft.Xna.Framework;
-using System.Security.Policy;
-using Moggle.Screens;
 using System;
+using Microsoft.Xna.Framework;
+using Moggle.Screens;
 
 namespace Moggle.Controles
 {
@@ -24,12 +23,22 @@ namespace Moggle.Controles
 		/// </summary>
 		void UnloadContent ();
 
+		/// <summary>
+		/// Gets the container.
+		/// </summary>
+		/// <value>The container.</value>
 		IComponentContainerComponent<IGameComponent> Container { get; }
-		//Matrix GetContainerViewMatrix ();
 	}
 
+	/// <summary>
+	/// Component ext.
+	/// </summary>
 	public static class ComponentExt
 	{
+		/// <summary>
+		/// Devuelve el <see cref="IScreen"/> que contiene este control.
+		/// </summary>
+		/// <returns>The screen.</returns>
 		public static IScreen GetScreen (this IComponent comp)
 		{
 			var container = comp.Container;
@@ -39,6 +48,10 @@ namespace Moggle.Controles
 			return scr ?? container.Container.GetScreen ();
 		}
 
+		/// <summary>
+		/// Devuelve el Game de este control
+		/// </summary>
+		/// <returns>The game.</returns>
 		public static Game GetGame (this IComponent comp)
 		{
 			var container = comp.Container;
