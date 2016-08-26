@@ -44,7 +44,7 @@ namespace Test
 
 		public override void Initialize ()
 		{
-			Components.Add (bt);
+			//Components.Add (bt);
 			base.Initialize ();
 			bt.AlClick += Bt_AlClick;
 		}

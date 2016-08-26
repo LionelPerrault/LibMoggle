@@ -14,11 +14,6 @@ namespace Moggle
 	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado, IComponentContainerComponent<IGameComponent>, IComponent
 	{
 		/// <summary>
-		/// Devuelve el control del puntero del ratón.
-		/// </summary>
-		protected readonly Ratón Mouse;
-
-		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
 		public IScreen CurrentScreen;
@@ -54,9 +49,6 @@ namespace Moggle
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
-
-
-			Mouse = new Ratón (this);
 		}
 
 		/// <summary>

@@ -45,7 +45,7 @@ namespace Moggle.Controles
 			if (container == null)
 				throw new Exception ();
 			var scr = container as IScreen;
-			return scr ?? container.Container.GetScreen ();
+			return scr ?? container.GetScreen ();
 		}
 
 		/// <summary>
@@ -57,8 +57,8 @@ namespace Moggle.Controles
 			var container = comp.Container;
 			if (container == null)
 				throw new Exception ();
-			var scr = container as Game;
-			return scr ?? container.Container.GetGame ();
+			var gm = container as Game;
+			return gm ?? container.GetGame ();
 		}
 	}
 }

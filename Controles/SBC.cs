@@ -35,6 +35,7 @@ namespace Moggle.Controles
 		protected SBC (IComponentContainerComponent<IGameComponent> cont)
 		{
 			Container = cont;
+			Container.AddComponent (this);
 		}
 
 		/// <summary>
@@ -73,6 +74,7 @@ namespace Moggle.Controles
 		/// </summary>
 		public virtual void Initialize ()
 		{
+			LoadContent ();
 		}
 
 		/// <summary>
@@ -105,6 +107,8 @@ namespace Moggle.Controles
 		/// <param name="disposing">If set to <c>true</c> disposing.</param>
 		protected virtual void Dispose (bool disposing)
 		{
+			Container.RemoveComponent (this);
+			UnloadContent ();
 		}
 	}
 }

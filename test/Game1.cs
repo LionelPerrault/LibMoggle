@@ -3,6 +3,7 @@ using System;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Moggle.Controles;
 
 #endregion
 
@@ -18,8 +19,8 @@ namespace Test
 			Graphics.IsFullScreen = false;
 			CurrentScreen = new Scr (this);
 
-			Mouse.ArchivoTextura = @"cont/void";
-			Components.Add (Mouse);
+			var ms = new Ratón (this);
+			ms.ArchivoTextura = @"cont/void";
 		}
 	}
 }
