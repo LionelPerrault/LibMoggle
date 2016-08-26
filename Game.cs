@@ -11,13 +11,8 @@ namespace Moggle
 	/// <summary>
 	/// Clase global de un juego.
 	/// </summary>
-	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado
+	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado, IComponentContainerComponent<IGameComponent>, IComponent
 	{
-		/// <summary>
-		/// Devuelve el control del puntero del ratón.
-		/// </summary>
-		protected readonly Ratón Mouse;
-
 		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
@@ -54,9 +49,18 @@ namespace Moggle
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
+		}
 
-
-			Mouse = new Ratón (this);
+		/// <summary>
+		/// Gets the container.
+		/// </summary>
+		/// <value>The container.</value>
+		public IComponentContainerComponent<IGameComponent> Container
+		{
+			get
+			{
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -118,6 +122,56 @@ namespace Moggle
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
 		}
+
+		#region Component
+
+		void IComponent.LoadContent ()
+		{
+			LoadContent ();
+		}
+
+		void IComponent.UnloadContent ()
+		{
+			UnloadContent ();
+		}
+
+		void IGameComponent.Initialize ()
+		{
+			Initialize ();
+		}
+
+		#endregion
+
+		#region Container
+
+		/// <summary>
+		/// Agrega un componente
+		/// </summary>
+		/// <param name="component">Component.</param>
+		public void AddComponent (IGameComponent component)
+		{
+			Components.Add (component);
+		}
+
+		/// <summary>
+		/// Elimina un componente
+		/// </summary>
+		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
+		/// <param name="component">Component.</param>
+		public bool RemoveComponent (IGameComponent component)
+		{
+			return Components.Remove (component);
+		}
+
+		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		{
+			get { return Components; }
+		}
+
+
+
+
+		#endregion
 
 		/// <summary>
 		/// Gets the color of the background.

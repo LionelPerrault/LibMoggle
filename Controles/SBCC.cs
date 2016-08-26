@@ -7,7 +7,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Control cronometrado
 	/// </summary>
-	public abstract class SBCC : SBC
+	public abstract class SBCC : DSBC
 	{
 		/// <summary>
 		/// </summary>
@@ -36,8 +36,6 @@ namespace Moggle.Controles
 		/// <param name="gameTime">Game time.</param>
 		public override void Update (Microsoft.Xna.Framework.GameTime gameTime)
 		{
-			base.Update (gameTime);
-
 			TiempoAcumulado += gameTime.ElapsedGameTime;
 			if (TiempoAcumulado > TiempoEntreCambios)
 			{

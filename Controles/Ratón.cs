@@ -9,7 +9,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Control simple que hace visible al apuntador del ratón.
 	/// </summary>
-	public class Ratón : SBC
+	public class Ratón : DSBC
 	{
 		/// <summary>
 		/// </summary>
@@ -111,6 +111,14 @@ namespace Moggle.Controles
 				(Rectangle)GetBounds ().GetBoundingRectangle (),
 				Color.WhiteSmoke);
 			bat.End ();
+		}
+
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
+		{
 		}
 	}
 }

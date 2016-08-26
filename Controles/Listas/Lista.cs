@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
-using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
@@ -19,7 +18,7 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : SBC, IList<TObj>, IListaControl<TObj>, IReceptorTeclado
+	public class Lista<TObj> : DSBC, IList<TObj>, IListaControl<TObj>, IReceptorTeclado
 	{
 		/// <summary>
 		/// Representa una entrada de la lista.
@@ -56,14 +55,22 @@ namespace Moggle.Controles.Listas
 
 		/// <summary>
 		/// </summary>
-		/// <param name="screen">Pantalla donde está colocado.</param>
-		public Lista (IScreen screen)
-			: base (screen)
+		/// <param name="comp">Container</param>
+		public Lista (IComponentContainerComponent<IGameComponent> comp)
+			: base (comp)
 		{
 			Objetos = new List<Entrada> ();
 			ColorBG = Color.Blue * 0.3f;
 			ColorSel = Color.White * 0.5f;
 			InterceptarTeclado = true;
+		}
+
+		/// <summary>
+		/// Updates the list
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
+		{
 		}
 
 		/// <summary>

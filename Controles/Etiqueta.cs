@@ -9,7 +9,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Es un texto que se muestra en pantalla.
 	/// </summary>
-	public class Etiqueta : SBC
+	public class Etiqueta : DSBC
 	{
 		/// <summary>
 		/// </summary>
@@ -80,6 +80,14 @@ namespace Moggle.Controles
 		{
 			font = null;
 			base.Dispose (disposing);
+		}
+
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
+		{
 		}
 	}
 }
