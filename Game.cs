@@ -120,16 +120,6 @@ namespace Moggle
 		}
 
 		/// <summary>
-		/// Raises the exiting event.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="args">Arguments.</param>
-		protected override void OnExiting (object sender, EventArgs args)
-		{
-			base.OnExiting (sender, args);
-		}
-
-		/// <summary>
 		/// Gets the color of the background.
 		/// </summary>
 		public Color BackgroundColor
