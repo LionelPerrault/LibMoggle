@@ -13,7 +13,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Permite entrar un renglón de texto
 	/// </summary>
-	public class EntradaTexto : SBC, IReceptorTeclado
+	public class EntradaTexto : DSBC, IReceptorTeclado
 	{
 		/// <summary>
 		/// </summary>
@@ -120,6 +120,10 @@ namespace Moggle.Controles
 		public override IShapeF GetBounds ()
 		{
 			return Bounds;
+		}
+
+		public override void Update (GameTime gameTime)
+		{
 		}
 	}
 }

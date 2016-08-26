@@ -11,7 +11,7 @@ namespace Moggle
 	/// <summary>
 	/// Clase global de un juego.
 	/// </summary>
-	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado, IComponentContainerComponent<IGameComponent>
+	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado, IComponentContainerComponent<IGameComponent>, IComponent
 	{
 		/// <summary>
 		/// Devuelve el control del puntero del ratón.
@@ -57,6 +57,14 @@ namespace Moggle
 
 
 			Mouse = new Ratón (this);
+		}
+
+		public IComponentContainerComponent<IGameComponent> Container
+		{
+			get
+			{
+				return null;
+			}
 		}
 
 		/// <summary>

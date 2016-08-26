@@ -9,7 +9,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Un control rectangular que inteligentemente acomoda una lista de botones.
 	/// </summary>
-	public class ContenedorBotón : SBC
+	public class ContenedorBotón : DSBC
 	{
 		/// <summary>
 		/// Tipo de orden lexicográfico para los botones.
@@ -80,6 +80,10 @@ namespace Moggle.Controles
 		Point tamañobotón = new Point (30, 30);
 		Point posición;
 		TipoOrdenEnum tipoOrden;
+
+		public override void Update (GameTime gameTime)
+		{
+		}
 
 		/// <summary>
 		/// Devuelve o establece el tipo de orden en el que se establece la posición

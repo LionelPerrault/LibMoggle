@@ -11,7 +11,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Un control que interactúa con los clicks del ratón.
 	/// </summary>
-	public class Botón : SBC, IColorable
+	public class Botón : DSBC, IColorable
 	{
 		#region ctor
 
@@ -112,6 +112,10 @@ namespace Moggle.Controles
 		public override string ToString ()
 		{
 			return string.Format ("{0}{1}", Habilidato ? "[H]" : "", Textura);
+		}
+
+		public override void Update (GameTime gameTime)
+		{
 		}
 
 		/// <summary>

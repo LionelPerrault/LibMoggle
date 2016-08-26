@@ -65,6 +65,8 @@ namespace Moggle.Screens
 			Components = new GameComponentCollection ();
 		}
 
+		IComponentContainerComponent<IGameComponent> IComponent.Container { get { return Juego; } }
+
 		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
 
 		MouseListener MouseListener{ get { return Juego.MouseListener; } }

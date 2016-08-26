@@ -9,7 +9,7 @@ namespace Moggle.Controles
 	/// Representa un SBC, con posición determinada por un VisualPortManager
 	/// </summary>
 	[ObsoleteAttribute ("Usar SBC y una Camera")]
-	public abstract class SBCRel : SBC
+	public abstract class SBCRel : DSBC
 	{
 		/// <summary>
 		/// </summary>

@@ -1,39 +1,42 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Single buffered control
 	/// </summary>
-	public abstract class SBC : DrawableGameComponent, IComponent
+	public abstract class SBC : IComponent
 	{
 		/// <summary>
 		/// Pantalla del control
 		/// </summary>
 		/// <value>The screen.</value>
-		public IScreen Screen { get; }
+		public IScreen Screen { get { return this.GetScreen (); } }
+
+		public Game Game { get { return this.GetGame (); } }
+
+
+		public IComponentContainerComponent<IGameComponent> Container { get; }
 
 		/// <summary>
 		/// </summary>
-		/// <param name="screen">Screen.</param>
-		protected SBC (IScreen screen)
-			: base (screen.Juego)
+		/// <param name="cont">Container</param>
+		protected SBC (IComponentContainerComponent<IGameComponent> cont)
 		{
-			Screen = screen;
+			Container = cont;
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="game">Game</param>
-		protected SBC (Game game)
-			: base (game)
+		protected virtual void LoadContent ()
 		{
-			Screen = null;
+		}
+
+		protected virtual void UnloadContent ()
+		{
 		}
 
 		void IComponent.LoadContent ()
@@ -54,49 +57,9 @@ namespace Moggle.Controles
 		public int Prioridad { get; set; }
 
 		/// <summary>
-		/// Gets the game.
-		/// </summary>
-		public new Game Game
-		{
-			get
-			{
-				return (Game)(base.Game);
-			}
-		}
-
-		/// <summary>
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
 		/// </summary>
-		public override void Initialize ()
-		{
-			base.Initialize ();
-			Game.MouseListener.MouseClicked += check_click;
-			Game.MouseListener.MouseDoubleClicked += check_2click;
-		}
-
-		void check_2click (object sender, MouseEventArgs e)
-		{
-			if (Enabled && GetBounds ().Contains (e.Position.ToVector2 ()))
-				OnDoubleClick (e);
-		}
-
-		void check_click (object sender, MouseEventArgs e)
-		{
-			if (Enabled && GetBounds ().Contains (e.Position.ToVector2 ()))
-				OnClick (e);
-		}
-
-		/// <summary>
-		/// This control was clicked.
-		/// </summary>
-		protected virtual void OnClick (MouseEventArgs args)
-		{
-		}
-
-		/// <summary>
-		/// This control was double clicked.
-		/// </summary>
-		protected virtual void OnDoubleClick (MouseEventArgs args)
+		public virtual void Initialize ()
 		{
 		}
 
@@ -128,11 +91,8 @@ namespace Moggle.Controles
 		/// Shuts down the component.
 		/// </summary>
 		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected override void Dispose (bool disposing)
+		protected virtual void Dispose (bool disposing)
 		{
-			Game.MouseListener.MouseClicked -= check_click;
-			Game.MouseListener.MouseDoubleClicked -= check_2click;
-			base.Dispose (disposing);
 		}
 	}
 }

@@ -93,7 +93,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent ()
+		protected virtual void LoadContent ()
 		{
 			Textura = Game.Content.Load<Texture2D> (ArchivoTextura);
 		}
@@ -102,7 +102,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		public virtual void Draw (GameTime gameTime)
 		{
 			var bat = Game.GetNewBatch ();
 			bat.Begin ();

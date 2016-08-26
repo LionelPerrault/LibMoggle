@@ -1,7 +1,7 @@
-using System;
-using Moggle.Screens;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.InputListeners;
+using System.Security.Policy;
+using Moggle.Screens;
+using System;
 
 namespace Moggle.Controles
 {
@@ -23,6 +23,29 @@ namespace Moggle.Controles
 		/// Desarga el contenido gráfico.
 		/// </summary>
 		void UnloadContent ();
+
+		IComponentContainerComponent<IGameComponent> Container { get; }
+		//Matrix GetContainerViewMatrix ();
 	}
-	
+
+	public static class ComponentExt
+	{
+		public static IScreen GetScreen (this IComponent comp)
+		{
+			var container = comp.Container;
+			if (container == null)
+				throw new Exception ();
+			var scr = container as IScreen;
+			return scr ?? container.Container.GetScreen ();
+		}
+
+		public static Game GetGame (this IComponent comp)
+		{
+			var container = comp.Container;
+			if (container == null)
+				throw new Exception ();
+			var scr = container as Game;
+			return scr ?? container.Container.GetGame ();
+		}
+	}
 }
