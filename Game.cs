@@ -129,13 +129,41 @@ namespace Moggle
 			base.OnExiting (sender, args);
 		}
 
+		#region Component
+
+		void IComponent.LoadContent ()
+		{
+			LoadContent ();
+		}
+
+		void IComponent.UnloadContent ()
+		{
+			UnloadContent ();
+		}
+
+		void IGameComponent.Initialize ()
+		{
+			Initialize ();
+		}
+
+		#endregion
+
 		#region Container
 
+		/// <summary>
+		/// Agrega un componente
+		/// </summary>
+		/// <param name="component">Component.</param>
 		public void AddComponent (IGameComponent component)
 		{
 			Components.Add (component);
 		}
 
+		/// <summary>
+		/// Elimina un componente
+		/// </summary>
+		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
+		/// <param name="component">Component.</param>
 		public bool RemoveComponent (IGameComponent component)
 		{
 			return Components.Remove (component);
@@ -145,6 +173,9 @@ namespace Moggle
 		{
 			get { return Components; }
 		}
+
+
+
 
 		#endregion
 
