@@ -11,7 +11,7 @@ namespace Moggle
 	/// <summary>
 	/// Clase global de un juego.
 	/// </summary>
-	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado
+	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado, IComponentContainerComponent<IGameComponent>
 	{
 		/// <summary>
 		/// Devuelve el control del puntero del ratón.
@@ -118,6 +118,35 @@ namespace Moggle
 			base.Update (gameTime);
 			CurrentScreen.Update (gameTime);
 		}
+
+		/// <summary>
+		/// Raises the exiting event.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
+		protected override void OnExiting (object sender, EventArgs args)
+		{
+			base.OnExiting (sender, args);
+		}
+
+		#region Container
+
+		public void AddComponent (IGameComponent component)
+		{
+			Components.Add (component);
+		}
+
+		public bool RemoveComponent (IGameComponent component)
+		{
+			return Components.Remove (component);
+		}
+
+		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		{
+			get { return Components; }
+		}
+
+		#endregion
 
 		/// <summary>
 		/// Gets the color of the background.

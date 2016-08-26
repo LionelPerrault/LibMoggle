@@ -12,13 +12,13 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Agrega un componente
 		/// </summary>
-		void Add (TComp component);
+		void AddComponent (TComp component);
 
 		/// <summary>
 		/// Elimina un componente
 		/// </summary>
 		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
-		bool Remove (TComp component);
+		bool RemoveComponent (TComp component);
 
 		/// <summary>
 		/// Enumera las componentes.
