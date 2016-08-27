@@ -5,6 +5,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
+using OpenTK.Audio.OpenAL;
 
 namespace Moggle.Controles
 {
