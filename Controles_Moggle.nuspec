@@ -9,12 +9,13 @@
     <description>Un framework para Monogame</description>
     <copyright></copyright>
     <dependencies>
-      <dependency id="MonoGame.Extended" version="0.5.149" />
       <dependency id="MonoGame.Framework.Linux" version="3.5.0.1678" />
     </dependencies>
   </metadata>
   <files>
     <file src="bin/Release/Controles_Moggle.dll" target="lib" />
+    <file src="bin/Release/MonoGame.Extended.dll" target="lib" />
+    <file src="bin/Release/NVorbis.dll" target="lib" />
     <file src="bin/Release/Controles_Moggle.xml" target="lib" />
   </files>
 </package>
