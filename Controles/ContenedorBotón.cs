@@ -160,7 +160,7 @@ namespace Moggle.Controles
 		{
 			var ret = new InternalBotón (Screen, CalcularPosición (índice));
 			controles.Insert (índice, ret);
-			initializeButton (ret);
+			initializeButton (índice);
 			
 			// desplazar los otros controles
 			for (int i = índice + 1; i < Count; i++)
@@ -175,8 +175,8 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Clear ()
 		{
-			foreach (var x in controles)
-				deinitializeButton (x);
+			for (int i = 0; i < controles.Count; i++)
+				deinitializeButton (i);
 			controles.Clear ();
 		}
 
@@ -233,6 +233,7 @@ namespace Moggle.Controles
 		/// <param name="i">Índice base cero.</param>
 		public void RemoveAt (int i)
 		{
+			deinitializeButton (i);
 			controles.RemoveAt (i);
 		}
 
