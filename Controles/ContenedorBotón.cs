@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Screens;
@@ -16,7 +17,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Lista de botones en el contenedor.
 		/// </summary>
-		GameComponentCollection controles { get; }
+		List<InternalBotón> controles { get; }
 
 		Texture2D texturaFondo;
 		/// <summary>
@@ -157,8 +158,14 @@ namespace Moggle.Controles
 		/// <param name="índice">Índice del botón</param>
 		public Botón Add (int índice)
 		{
-			var ret = new Botón (Screen, CalcularPosición (Count));
+			var ret = new InternalBotón (Screen, CalcularPosición (índice));
 			controles.Insert (índice, ret);
+			initializeButton (ret);
+			
+			// desplazar los otros controles
+			for (int i = índice + 1; i < Count; i++)
+				controles [i].Bounds = CalcularPosición (i);
+			
 			ret.Habilidato = true;
 			return ret;
 		}
@@ -168,7 +175,34 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Clear ()
 		{
+			foreach (var x in controles)
+				deinitializeButton (x);
 			controles.Clear ();
+		}
+
+		void deinitializeButton (int index)
+		{
+			var bt = controles [index];
+			bt.Enabled = false;
+			bt.AlClick -= clickOnAButton;
+		}
+
+		void initializeButton (int index)
+		{
+			var bt = controles [index];
+			bt.Enabled = true;
+			bt.AlClick += clickOnAButton;
+		}
+
+		void clickOnAButton (object sender, MouseEventArgs e)
+		{
+			var index = controles.IndexOf (sender as InternalBotón);
+			AlActivarBotón?.Invoke (
+				this,
+				new ContenedorBotónIndexEventArgs (
+					index,
+					controles [index],
+					e));
 		}
 
 		/// <summary>
@@ -189,7 +223,8 @@ namespace Moggle.Controles
 		/// <param name="control">Botón a eliminar.</param>
 		public void Remove (Botón control)
 		{
-			controles.Remove (control);
+			throw new NotImplementedException ();
+			//controles.Remove (control);
 		}
 
 		/// <summary>
@@ -286,14 +321,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Ocurre cuando un botón es activado
 		/// </summary>
-		public event ContenedorBotónIndexEventArgs AlActivarBotón;
-
-		public class ContenedorBotónIndexEventArgs : EventArgs
-		{
-			public int Index { get; }
-
-			MouseEventArgs mouse;
-		}
+		public event EventHandler< ContenedorBotónIndexEventArgs> AlActivarBotón;
 
 		/// <summary>
 		/// </summary>
@@ -301,9 +329,38 @@ namespace Moggle.Controles
 		public ContenedorBotón (IScreen screen)
 			: base (screen)
 		{
-			controles = new GameComponentCollection ();
+			controles = new List<InternalBotón> ();
 		}
 
+		/// <summary>
+		/// </summary>
+		public class ContenedorBotónIndexEventArgs : EventArgs
+		{
+			/// <summary>
+			/// Gets the index of the pressed button
+			/// </summary>
+			/// <value>The index.</value>
+			public int Index { get; }
+
+			/// <summary>
+			/// Gets the pressed button;
+			/// </summary>
+			public IBotón Botón { get; }
+
+			/// <summary>
+			/// The mouse event args
+			/// </summary>
+			MouseEventArgs mouse;
+
+			internal ContenedorBotónIndexEventArgs (int index,
+			                                        IBotón bt,
+			                                        MouseEventArgs m)
+			{
+				Index = index;
+				Botón = bt;
+				mouse = m;
+			}
+		}
 
 		/// <summary>
 		/// Tipo de orden lexicográfico para los botones.
@@ -318,6 +375,14 @@ namespace Moggle.Controles
 			/// Llena las filas antes que las columnas.
 			/// </summary>
 			FilaPrimero
+		}
+
+		class InternalBotón : Botón
+		{
+			public InternalBotón (IScreen screen, RectangleF bounds)
+				: base (screen, bounds)
+			{
+			}
 		}
 
 		/// <summary>

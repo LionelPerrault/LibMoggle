@@ -11,7 +11,7 @@ namespace Moggle.Controles
 	/// y 
 	/// <see cref="UnloadContent"/>
 	/// </summary>
-	public interface IComponent : IGameComponent
+	public interface IComponent : IGameComponent, IDisposable
 	{
 		/// <summary>
 		/// Carga el contenido gráfico.
