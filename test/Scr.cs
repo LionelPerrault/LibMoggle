@@ -4,7 +4,6 @@ using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Test
 {
@@ -40,6 +39,14 @@ namespace Test
 				bts [i].Textura = "cont//void";
 				bts [i].AlClick += (sender, e) => buttonClicked (e, i);
 			}
+			ct.AlActivarBotón += Ct_AlActivarBotón;
+
+		}
+
+		void Ct_AlActivarBotón (object sender,
+		                        ContenedorBotón.ContenedorBotónIndexEventArgs e)
+		{
+			System.Console.WriteLine ("botón [{0}] click: {1}", e.Index, e.Mouse.Button);
 		}
 
 		static void buttonClicked (MouseEventArgs e, int index)
