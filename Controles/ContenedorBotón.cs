@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Screens;
 using MonoGame.Extended;
+using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
@@ -11,53 +13,6 @@ namespace Moggle.Controles
 	/// </summary>
 	public class ContenedorBotón : DSBC
 	{
-		/// <summary>
-		/// Tipo de orden lexicográfico para los botones.
-		/// </summary>
-		public enum TipoOrdenEnum
-		{
-			/// <summary>
-			/// Llena las columnas antes que las filas.
-			/// </summary>
-			ColumnaPrimero,
-			/// <summary>
-			/// Llena las filas antes que las columnas.
-			/// </summary>
-			FilaPrimero
-		}
-
-		/// <summary>
-		/// Margen.
-		/// </summary>
-		public struct MargenType
-		{
-			/// <summary>
-			/// Margen superior
-			/// </summary>
-			public int Top;
-			/// <summary>
-			/// Margen inferior
-			/// </summary>
-			public int Bot;
-			/// <summary>
-			/// Márgen izquierdo.
-			/// </summary>
-			public int Left;
-			/// <summary>
-			/// Márgen derecho.
-			/// </summary>
-			public int Right;
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		public ContenedorBotón (IScreen screen)
-			: base (screen)
-		{
-			controles = new GameComponentCollection ();
-		}
-
 		/// <summary>
 		/// Lista de botones en el contenedor.
 		/// </summary>
@@ -326,6 +281,66 @@ namespace Moggle.Controles
 		{
 			texturaFondo = null;
 			base.Dispose (disposing);
+		}
+
+		/// <summary>
+		/// Ocurre cuando un botón es activado
+		/// </summary>
+		public event ContenedorBotónIndexEventArgs AlActivarBotón;
+
+		public class ContenedorBotónIndexEventArgs : EventArgs
+		{
+			public int Index { get; }
+
+			MouseEventArgs mouse;
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		public ContenedorBotón (IScreen screen)
+			: base (screen)
+		{
+			controles = new GameComponentCollection ();
+		}
+
+
+		/// <summary>
+		/// Tipo de orden lexicográfico para los botones.
+		/// </summary>
+		public enum TipoOrdenEnum
+		{
+			/// <summary>
+			/// Llena las columnas antes que las filas.
+			/// </summary>
+			ColumnaPrimero,
+			/// <summary>
+			/// Llena las filas antes que las columnas.
+			/// </summary>
+			FilaPrimero
+		}
+
+		/// <summary>
+		/// Margen.
+		/// </summary>
+		public struct MargenType
+		{
+			/// <summary>
+			/// Margen superior
+			/// </summary>
+			public int Top;
+			/// <summary>
+			/// Margen inferior
+			/// </summary>
+			public int Bot;
+			/// <summary>
+			/// Márgen izquierdo.
+			/// </summary>
+			public int Left;
+			/// <summary>
+			/// Márgen derecho.
+			/// </summary>
+			public int Right;
 		}
 	}
 }
