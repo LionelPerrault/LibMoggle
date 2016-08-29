@@ -351,7 +351,7 @@ namespace Moggle.Controles
 			/// <summary>
 			/// The mouse event args
 			/// </summary>
-			MouseEventArgs mouse;
+			public MouseEventArgs Mouse;
 
 			internal ContenedorBotónIndexEventArgs (int index,
 			                                        IBotón bt,
@@ -359,7 +359,7 @@ namespace Moggle.Controles
 			{
 				Index = index;
 				Botón = bt;
-				mouse = m;
+				Mouse = m;
 			}
 		}
 
