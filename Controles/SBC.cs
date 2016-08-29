@@ -1,8 +1,8 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -49,6 +49,18 @@ namespace Moggle.Controles
 		/// Unloads the content.
 		/// </summary>
 		protected virtual void UnloadContent ()
+		{
+		}
+
+		void IDisposable.Dispose ()
+		{
+			Dispose ();
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Controles.SBC"/> object.
+		/// </summary>
+		protected virtual void Dispose ()
 		{
 		}
 

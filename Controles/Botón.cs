@@ -11,44 +11,13 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Un control que interactúa con los clicks del ratón.
 	/// </summary>
-	public class Botón : DSBC, IColorable
+	public class Botón : DSBC, IColorable, IBotón
 	{
-		#region ctor
 
-		/// <summary>
-		/// Inicaliza un <see cref="Botón"/> rectangular.
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		public Botón (Moggle.Screens.IScreen screen)
-			: base (screen)
+		void IDisposable.Dispose ()
 		{
-			Color = Color.White;
+			Textura = null;
 		}
-
-		/// <summary>
-		/// Inicaliza un <see cref="Botón"/> de una forma arbitraria.
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		/// <param name="shape">Forma del botón</param>
-		public Botón (Moggle.Screens.IScreen screen, IShapeF shape)
-			: this (screen)
-		{
-			Bounds = shape;
-		}
-
-		/// <summary>
-		/// Inicaliza un <see cref="Botón"/> rectangular.
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		/// <param name="bounds">Límites del rectángulo.</param>
-		public Botón (Moggle.Screens.IScreen screen,
-		              RectangleF bounds)
-			: this (screen)
-		{
-			Bounds = new RectangleF (bounds.Location, bounds.Size);
-		}
-
-		#endregion
 
 		/// <summary>
 		/// Devuelve o establece si el botón está habilitado para interacción con el jugador.
@@ -162,5 +131,47 @@ namespace Moggle.Controles
 		/// Ucurre cuando se hace click derecho en este control
 		/// </summary>
 		public event EventHandler AlClickDerecho;
+
+		event EventHandler IActivable.AlActivar
+		{add{ AlClickIzquierdo += value;}remove{ AlClickIzquierdo += value;}
+		}
+
+		#region ctor
+
+		/// <summary>
+		/// Inicaliza un <see cref="Botón"/> rectangular.
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		public Botón (Moggle.Screens.IScreen screen)
+			: base (screen)
+		{
+			Color = Color.White;
+		}
+
+		/// <summary>
+		/// Inicaliza un <see cref="Botón"/> de una forma arbitraria.
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		/// <param name="shape">Forma del botón</param>
+		public Botón (Moggle.Screens.IScreen screen, IShapeF shape)
+			: this (screen)
+		{
+			Bounds = shape;
+		}
+
+		/// <summary>
+		/// Inicaliza un <see cref="Botón"/> rectangular.
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		/// <param name="bounds">Límites del rectángulo.</param>
+		public Botón (Moggle.Screens.IScreen screen,
+		              RectangleF bounds)
+			: this (screen)
+		{
+			Bounds = new RectangleF (bounds.Location, bounds.Size);
+		}
+
+		#endregion
+
 	}
 }

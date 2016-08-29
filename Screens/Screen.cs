@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
-using System.Linq;
-using Moggle.Comm;
 
 namespace Moggle.Screens
 {
@@ -13,63 +13,21 @@ namespace Moggle.Screens
 	/// </summary>
 	public abstract class Screen : IScreen
 	{
-		/// <summary>
-		/// Devuelve el juego.
-		/// </summary>
-		public Game Juego { get; }
-
-		#region Component container
-
-		/// <summary>
-		/// Devuelve la lista de controles
-		/// </summary>
-		/// <value>The controles.</value>
-		protected GameComponentCollection Components { get; }
-
-		/// <summary>
-		/// Agrega un componente
-		/// </summary>
-		/// <param name="component">Component.</param>
-		public void AddComponent (IGameComponent component)
-		{
-			Components.Add (component);
-		}
-
-		/// <summary>
-		/// Elimina un componente
-		/// </summary>
-		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
-		/// <param name="component">Component.</param>
-		public bool RemoveComponent (IGameComponent component)
-		{
-			return Components.Remove (component);
-		}
-
-		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
-		{ get { return Components; } }
-
-		#endregion
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
-		/// </summary>
-		/// <param name="game">Game.</param>
-		protected Screen (Game game)
-			: this ()
-		{
-			Juego = game;
-		}
-
-		Screen ()
-		{
-			Components = new GameComponentCollection ();
-		}
-
 		IComponentContainerComponent<IGameComponent> IComponent.Container { get { return Juego; } }
 
 		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
 
 		MouseListener MouseListener{ get { return Juego.MouseListener; } }
+
+		/// <summary>
+		/// Devuelve el juego.
+		/// </summary>
+		public Game Juego { get; }
+
+
+		void System.IDisposable.Dispose ()
+		{
+		}
 
 		/// <summary>
 		/// Manda la señal de tecla presionada a cada uno de sus controles.
@@ -230,5 +188,53 @@ namespace Moggle.Screens
 		{
 			return string.Format ("[{0}]", GetType ());
 		}
+
+		#region Component container
+
+		/// <summary>
+		/// Devuelve la lista de controles
+		/// </summary>
+		/// <value>The controles.</value>
+		protected GameComponentCollection Components { get; }
+
+		/// <summary>
+		/// Agrega un componente
+		/// </summary>
+		/// <param name="component">Component.</param>
+		public void AddComponent (IGameComponent component)
+		{
+			Components.Add (component);
+		}
+
+		/// <summary>
+		/// Elimina un componente
+		/// </summary>
+		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
+		/// <param name="component">Component.</param>
+		public bool RemoveComponent (IGameComponent component)
+		{
+			return Components.Remove (component);
+		}
+
+		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		{ get { return Components; } }
+
+		#endregion
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
+		/// </summary>
+		/// <param name="game">Game.</param>
+		protected Screen (Game game)
+			: this ()
+		{
+			Juego = game;
+		}
+
+		Screen ()
+		{
+			Components = new GameComponentCollection ();
+		}
+
 	}
 }

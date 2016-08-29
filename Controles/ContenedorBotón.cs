@@ -1,7 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Screens;
 using MonoGame.Extended;
+using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
@@ -12,56 +15,9 @@ namespace Moggle.Controles
 	public class ContenedorBotón : DSBC
 	{
 		/// <summary>
-		/// Tipo de orden lexicográfico para los botones.
-		/// </summary>
-		public enum TipoOrdenEnum
-		{
-			/// <summary>
-			/// Llena las columnas antes que las filas.
-			/// </summary>
-			ColumnaPrimero,
-			/// <summary>
-			/// Llena las filas antes que las columnas.
-			/// </summary>
-			FilaPrimero
-		}
-
-		/// <summary>
-		/// Margen.
-		/// </summary>
-		public struct MargenType
-		{
-			/// <summary>
-			/// Margen superior
-			/// </summary>
-			public int Top;
-			/// <summary>
-			/// Margen inferior
-			/// </summary>
-			public int Bot;
-			/// <summary>
-			/// Márgen izquierdo.
-			/// </summary>
-			public int Left;
-			/// <summary>
-			/// Márgen derecho.
-			/// </summary>
-			public int Right;
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		public ContenedorBotón (IScreen screen)
-			: base (screen)
-		{
-			controles = new GameComponentCollection ();
-		}
-
-		/// <summary>
 		/// Lista de botones en el contenedor.
 		/// </summary>
-		GameComponentCollection controles { get; }
+		List<InternalBotón> controles { get; }
 
 		Texture2D texturaFondo;
 		/// <summary>
@@ -202,8 +158,14 @@ namespace Moggle.Controles
 		/// <param name="índice">Índice del botón</param>
 		public Botón Add (int índice)
 		{
-			var ret = new Botón (Screen, CalcularPosición (Count));
+			var ret = new InternalBotón (Screen, CalcularPosición (índice));
 			controles.Insert (índice, ret);
+			initializeButton (índice);
+			
+			// desplazar los otros controles
+			for (int i = índice + 1; i < Count; i++)
+				controles [i].Bounds = CalcularPosición (i);
+			
 			ret.Habilidato = true;
 			return ret;
 		}
@@ -213,7 +175,34 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Clear ()
 		{
+			for (int i = 0; i < controles.Count; i++)
+				deinitializeButton (i);
 			controles.Clear ();
+		}
+
+		void deinitializeButton (int index)
+		{
+			var bt = controles [index];
+			bt.Enabled = false;
+			bt.AlClick -= clickOnAButton;
+		}
+
+		void initializeButton (int index)
+		{
+			var bt = controles [index];
+			bt.Enabled = true;
+			bt.AlClick += clickOnAButton;
+		}
+
+		void clickOnAButton (object sender, MouseEventArgs e)
+		{
+			var index = controles.IndexOf (sender as InternalBotón);
+			AlActivarBotón?.Invoke (
+				this,
+				new ContenedorBotónIndexEventArgs (
+					index,
+					controles [index],
+					e));
 		}
 
 		/// <summary>
@@ -234,7 +223,8 @@ namespace Moggle.Controles
 		/// <param name="control">Botón a eliminar.</param>
 		public void Remove (Botón control)
 		{
-			controles.Remove (control);
+			throw new NotImplementedException ();
+			//controles.Remove (control);
 		}
 
 		/// <summary>
@@ -243,6 +233,7 @@ namespace Moggle.Controles
 		/// <param name="i">Índice base cero.</param>
 		public void RemoveAt (int i)
 		{
+			deinitializeButton (i);
 			controles.RemoveAt (i);
 		}
 
@@ -326,6 +317,96 @@ namespace Moggle.Controles
 		{
 			texturaFondo = null;
 			base.Dispose (disposing);
+		}
+
+		/// <summary>
+		/// Ocurre cuando un botón es activado
+		/// </summary>
+		public event EventHandler< ContenedorBotónIndexEventArgs> AlActivarBotón;
+
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		public ContenedorBotón (IScreen screen)
+			: base (screen)
+		{
+			controles = new List<InternalBotón> ();
+		}
+
+		/// <summary>
+		/// </summary>
+		public class ContenedorBotónIndexEventArgs : EventArgs
+		{
+			/// <summary>
+			/// Gets the index of the pressed button
+			/// </summary>
+			/// <value>The index.</value>
+			public int Index { get; }
+
+			/// <summary>
+			/// Gets the pressed button;
+			/// </summary>
+			public IBotón Botón { get; }
+
+			/// <summary>
+			/// The mouse event args
+			/// </summary>
+			public MouseEventArgs Mouse;
+
+			internal ContenedorBotónIndexEventArgs (int index,
+			                                        IBotón bt,
+			                                        MouseEventArgs m)
+			{
+				Index = index;
+				Botón = bt;
+				Mouse = m;
+			}
+		}
+
+		/// <summary>
+		/// Tipo de orden lexicográfico para los botones.
+		/// </summary>
+		public enum TipoOrdenEnum
+		{
+			/// <summary>
+			/// Llena las columnas antes que las filas.
+			/// </summary>
+			ColumnaPrimero,
+			/// <summary>
+			/// Llena las filas antes que las columnas.
+			/// </summary>
+			FilaPrimero
+		}
+
+		class InternalBotón : Botón
+		{
+			public InternalBotón (IScreen screen, RectangleF bounds)
+				: base (screen, bounds)
+			{
+			}
+		}
+
+		/// <summary>
+		/// Margen.
+		/// </summary>
+		public struct MargenType
+		{
+			/// <summary>
+			/// Margen superior
+			/// </summary>
+			public int Top;
+			/// <summary>
+			/// Margen inferior
+			/// </summary>
+			public int Bot;
+			/// <summary>
+			/// Márgen izquierdo.
+			/// </summary>
+			public int Left;
+			/// <summary>
+			/// Márgen derecho.
+			/// </summary>
+			public int Right;
 		}
 	}
 }

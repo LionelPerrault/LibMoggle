@@ -6,7 +6,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Un control en un <see cref="IScreen"/>
 	/// </summary>
-	public interface IControl : IDisposable, IComponent
+	public interface IControl : IComponent
 	{
 		/// <summary>
 		/// Pantalla a la que pertenece este control.
