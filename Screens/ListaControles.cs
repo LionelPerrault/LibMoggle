@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Moggle.Controles;
-using System;
 
 namespace Moggle.Screens
 {
@@ -10,12 +10,6 @@ namespace Moggle.Screens
 	[ObsoleteAttribute]
 	public class ListaControl : SortedSet<IControl>
 	{
-		/// <summary>
-		/// </summary>
-		public ListaControl ()
-		{
-		}
-
 		/// <summary>
 		/// Clona esta lista como un <see cref="System.Collections.Generic.List{IControl}"/>
 		/// </summary>

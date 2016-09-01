@@ -10,10 +10,16 @@ namespace Moggle.Controles
 	/// </summary>
 	public abstract class DSBC : SBC, IDrawable, IUpdateable
 	{
+		#region Estado
+
 		int _drawOrder;
 		int _updateOrder;
 		bool _visible;
 		bool _enabled;
+
+		#endregion
+
+		#region Dibujo
 
 		/// <summary>
 		/// Dibuja el control.
@@ -37,24 +43,6 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// El orden de update.
-		/// </summary>
-		/// <value>The update order.</value>
-		public int UpdateOrder
-		{
-			get
-			{
-				return _updateOrder;
-			}
-			set
-			{
-				if (_updateOrder != value)
-					UpdateOrderChanged?.Invoke (this, EventArgs.Empty);
-				_updateOrder = value;
-			}
-		}
-
-		/// <summary>
 		/// Determina si el control es visible
 		/// </summary>
 		/// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
@@ -69,6 +57,38 @@ namespace Moggle.Controles
 				if (_visible != value)
 					VisibleChanged?.Invoke (this, EventArgs.Empty);
 				_visible = value;
+			}
+		}
+
+		#endregion
+
+		#region Comportamiento
+
+		/// <summary>
+		/// Inicializa esta instancia
+		/// </summary>
+		public override void Initialize ()
+		{
+			base.Initialize ();
+			Game.MouseListener.MouseClicked += check_click;
+			Game.MouseListener.MouseDoubleClicked += check_2click;
+		}
+
+		/// <summary>
+		/// El orden de update.
+		/// </summary>
+		/// <value>The update order.</value>
+		public int UpdateOrder
+		{
+			get
+			{
+				return _updateOrder;
+			}
+			set
+			{
+				if (_updateOrder != value)
+					UpdateOrderChanged?.Invoke (this, EventArgs.Empty);
+				_updateOrder = value;
 			}
 		}
 
@@ -95,6 +115,24 @@ namespace Moggle.Controles
 		/// </summary>
 		public abstract void Update (GameTime gameTime);
 
+		#endregion
+
+		#region Eventos
+
+		/// <summary>
+		/// This control was clicked.
+		/// </summary>
+		protected virtual void OnClick (MouseEventArgs args)
+		{
+		}
+
+		/// <summary>
+		/// This control was double clicked.
+		/// </summary>
+		protected virtual void OnDoubleClick (MouseEventArgs args)
+		{
+		}
+
 		/// <summary>
 		/// Ocurre al cambiar el orden de dibujo.
 		/// </summary>
@@ -115,26 +153,6 @@ namespace Moggle.Controles
 		/// </summary>
 		public event EventHandler<EventArgs> UpdateOrderChanged;
 
-		/// <summary>
-		/// </summary>
-		/// <param name="cont">Contenedor</param>
-		public DSBC (IComponentContainerComponent<IGameComponent> cont)
-			: base (cont)
-		{
-			Visible = true;
-			Enabled = true;
-		}
-
-		/// <summary>
-		/// Inicializa esta instancia
-		/// </summary>
-		public override void Initialize ()
-		{
-			base.Initialize ();
-			Game.MouseListener.MouseClicked += check_click;
-			Game.MouseListener.MouseDoubleClicked += check_2click;
-		}
-
 		void check_2click (object sender, MouseEventArgs e)
 		{
 			if (Enabled && GetBounds ().Contains (e.Position.ToVector2 ()))
@@ -147,19 +165,9 @@ namespace Moggle.Controles
 				OnClick (e);
 		}
 
-		/// <summary>
-		/// This control was clicked.
-		/// </summary>
-		protected virtual void OnClick (MouseEventArgs args)
-		{
-		}
+		#endregion
 
-		/// <summary>
-		/// This control was double clicked.
-		/// </summary>
-		protected virtual void OnDoubleClick (MouseEventArgs args)
-		{
-		}
+		#region Memoria
 
 		/// <summary>
 		/// Shuts down the component.
@@ -170,6 +178,21 @@ namespace Moggle.Controles
 			Game.MouseListener.MouseClicked -= check_click;
 			Game.MouseListener.MouseDoubleClicked -= check_2click;
 		}
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Contenedor</param>
+		protected DSBC (IComponentContainerComponent<IGameComponent> cont)
+			: base (cont)
+		{
+			Visible = true;
+			Enabled = true;
+		}
+
+		#endregion
 	}
-	
 }

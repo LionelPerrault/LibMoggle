@@ -14,5 +14,4 @@ namespace Moggle.Comm
 		/// <param name="key">Tecla de la señal</param>
 		void MandarSeñal (KeyboardEventArgs key);
 	}
-	
 }

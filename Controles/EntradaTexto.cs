@@ -15,6 +15,8 @@ namespace Moggle.Controles
 	/// </summary>
 	public class EntradaTexto : DSBC, IReceptorTeclado
 	{
+		#region ctor
+
 		/// <summary>
 		/// </summary>
 		/// <param name="screen">Screen.</param>
@@ -24,6 +26,8 @@ namespace Moggle.Controles
 			Texto = "";
 
 		}
+
+		#endregion
 
 		#region Estado
 
@@ -38,6 +42,8 @@ namespace Moggle.Controles
 		public bool CatchKeys = true;
 
 		#endregion
+
+		#region Comportamiento
 
 		/// <summary>
 		/// Devuelve o establece la posición del control.
@@ -63,13 +69,35 @@ namespace Moggle.Controles
 		/// Color del texto
 		/// </summary>
 		public Color ColorTexto = Color.White;
-		Texture2D contornoTexture;
-		BitmapFont fontTexture;
 
 		/// <summary>
 		/// Límites de el control
 		/// </summary>
 		public RectangleF Bounds { get; set; }
+
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
+		public override IShapeF GetBounds ()
+		{
+			return Bounds;
+		}
+
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
+		{
+		}
+
+		#endregion
+
+		#region Dibujo
+
+		Texture2D contornoTexture;
+		BitmapFont fontTexture;
 
 		/// <summary>
 		/// Dibuja el control
@@ -86,6 +114,10 @@ namespace Moggle.Controles
 			bat.DrawString (fontTexture, Texto, Pos, ColorTexto);
 		}
 
+		#endregion
+
+		#region Memoria
+
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
@@ -94,6 +126,19 @@ namespace Moggle.Controles
 			contornoTexture = Screen.Content.Load<Texture2D> ("Rect");
 			fontTexture = Screen.Content.Load<BitmapFont> ("fonts");
 		}
+
+		/// <summary>
+		/// Unloads the content.
+		/// </summary>
+		protected override void UnloadContent ()
+		{
+			contornoTexture = null;
+			fontTexture = null;
+		}
+
+		#endregion
+
+		#region Teclado
 
 		/// <summary>
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
@@ -113,21 +158,6 @@ namespace Moggle.Controles
 			return true;
 		}
 
-		/// <summary>
-		/// Devuelve el límite gráfico del control.
-		/// </summary>
-		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
-		{
-			return Bounds;
-		}
-
-		/// <summary>
-		/// Update lógico
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Update (GameTime gameTime)
-		{
-		}
+		#endregion
 	}
 }

@@ -11,6 +11,8 @@ namespace Moggle.Controles
 	/// </summary>
 	public class Etiqueta : DSBC
 	{
+		#region ctor
+
 		/// <summary>
 		/// </summary>
 		/// <param name="screen">Screen.</param>
@@ -20,29 +22,20 @@ namespace Moggle.Controles
 			Color = Color.White;
 		}
 
+		#endregion
+
+		#region Comportamiento
+
 		/// <summary>
 		/// Devuelve o establece la fuente de texto a usar.
 		/// </summary>
 		/// <value>The use font.</value>
 		public string UseFont { get; set; }
 
-		BitmapFont font;
-
 		/// <summary>
 		/// Una función que determina el texto a mostrar.
 		/// </summary>
 		public Func<string> Texto;
-
-		/// <summary>
-		/// Dibuja el control
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
-		{
-			var bat = Screen.Batch;
-			var txt = Texto ();
-			bat.DrawString (font, txt, Posición.ToVector2 (), Color);
-		}
 
 		/// <summary>
 		/// Devuelve o establece la posición de la etiqueta.
@@ -66,6 +59,35 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
+		{
+		}
+
+		#endregion
+
+		#region Dibujo
+
+		BitmapFont font;
+
+		/// <summary>
+		/// Dibuja el control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Draw (GameTime gameTime)
+		{
+			var bat = Screen.Batch;
+			var txt = Texto ();
+			bat.DrawString (font, txt, Posición.ToVector2 (), Color);
+		}
+
+		#endregion
+
+		#region Memoria
+
+		/// <summary>
 		/// Cargar contenido
 		/// </summary>
 		protected override void LoadContent ()
@@ -82,12 +104,6 @@ namespace Moggle.Controles
 			base.Dispose (disposing);
 		}
 
-		/// <summary>
-		/// Update lógico
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Update (GameTime gameTime)
-		{
-		}
+		#endregion
 	}
 }

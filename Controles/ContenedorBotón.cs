@@ -14,12 +14,74 @@ namespace Moggle.Controles
 	/// </summary>
 	public class ContenedorBotón : DSBC
 	{
+		#region Estado
+
+		int filas = 3;
+		int columnas = 10;
+		MargenType márgenes;
+		Point tamañobotón = new Point (30, 30);
+		Point posición;
+		TipoOrdenEnum tipoOrden;
+
 		/// <summary>
 		/// Lista de botones en el contenedor.
 		/// </summary>
 		List<InternalBotón> controles { get; }
 
+		#endregion
+
+		#region Dibujo
+
+		/// <summary>
+		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
+		/// </summary>
+		/// <param name="index">Índice del botón.</param>
+		protected RectangleF CalcularPosición (int index)
+		{
+			RectangleF bounds;
+			var bb = GetBounds ().GetBoundingRectangle ();
+			Point locGrid;
+			int orden = index;
+			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
+				new Point (orden / Filas, orden % Filas) : 
+				new Point (orden % Columnas, orden / Columnas);
+			bounds = new RectangleF (bb.Left + Márgenes.Left + TamañoBotón.X * locGrid.X,
+				bb.Top + Márgenes.Top + TamañoBotón.Y * locGrid.Y,
+				TamañoBotón.X, TamañoBotón.Y);
+			return bounds;
+		}
+
 		Texture2D texturaFondo;
+
+		/// <summary>
+		/// Dibuja el control.
+		/// Esto por sí solo no dibujará los botones.
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Draw (GameTime gameTime)
+		{
+			Screen.Batch.Draw (
+				texturaFondo,
+				GetBounds (),
+				BgColor);
+		}
+
+		#endregion
+
+		#region Comportamiento
+
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
+		public override IShapeF GetBounds ()
+		{
+			return new RectangleF (Posición.ToVector2 (),
+				new SizeF (
+					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.X,
+					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Y));
+		}
+
 		/// <summary>
 		/// Color de fondo.
 		/// </summary>
@@ -29,13 +91,6 @@ namespace Moggle.Controles
 		/// Nombre de la textura de fondo
 		/// </summary>
 		public string TextureFondo { get; set; }
-
-		int filas = 3;
-		int columnas = 10;
-		MargenType márgenes;
-		Point tamañobotón = new Point (30, 30);
-		Point posición;
-		TipoOrdenEnum tipoOrden;
 
 		/// <summary>
 		/// Update the control
@@ -145,6 +200,36 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Recalcula la posición de cada botón
+		/// </summary>
+		protected void OnRedimensionar ()
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				var bot = botónEnÍndice (i);
+				bot.Bounds = CalcularPosición (i);
+			}
+		}
+
+		#endregion
+
+		#region Contenedor
+
+		InternalBotón botónEnÍndice (int index)
+		{
+			return controles [index];
+		}
+
+		/// <summary>
+		/// Devuelve el botón que está en un índice dado.
+		/// </summary>
+		/// <param name="index">Índice base cero del botón.</param>
+		public IBotón BotónEnÍndice (int index)
+		{
+			return controles [index];
+		}
+
+		/// <summary>
 		/// Agrega un botón al contenedor y lo devuelve.
 		/// </summary>
 		public Botón Add ()
@@ -194,33 +279,11 @@ namespace Moggle.Controles
 			bt.AlClick += clickOnAButton;
 		}
 
-		void clickOnAButton (object sender, MouseEventArgs e)
-		{
-			var index = controles.IndexOf (sender as InternalBotón);
-			AlActivarBotón?.Invoke (
-				this,
-				new ContenedorBotónIndexEventArgs (
-					index,
-					controles [index],
-					e));
-		}
-
-		/// <summary>
-		/// Recalcula la posición de cada botón
-		/// </summary>
-		protected void OnRedimensionar ()
-		{
-			for (int i = 0; i < Count; i++)
-			{
-				var bot = BotónEnÍndice (i);
-				bot.Bounds = CalcularPosición (i);
-			}
-		}
-
 		/// <summary>
 		/// Elimina un botón dado.
 		/// </summary>
 		/// <param name="control">Botón a eliminar.</param>
+		[Obsolete ("Usar RemoveAt")]
 		public void Remove (Botón control)
 		{
 			throw new NotImplementedException ();
@@ -248,66 +311,29 @@ namespace Moggle.Controles
 			}
 		}
 
-		/// <summary>
-		/// Dibuja el control.
-		/// Esto por sí solo no dibujará los botones.
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		#endregion
+
+		#region Evento
+
+		void clickOnAButton (object sender, MouseEventArgs e)
 		{
-			Screen.Batch.Draw (
-				texturaFondo,
-				GetBounds (),
-				BgColor);
+			var index = controles.IndexOf (sender as InternalBotón);
+			AlActivarBotón?.Invoke (
+				this,
+				new ContenedorBotónIndexEventArgs (
+					index,
+					controles [index],
+					e));
 		}
 
 		/// <summary>
-		/// Cargar contenido
+		/// Ocurre cuando un botón es activado
 		/// </summary>
-		protected override void LoadContent ()
-		{
-			texturaFondo = Screen.Content.Load<Texture2D> (TextureFondo);
-		}
+		public event EventHandler< ContenedorBotónIndexEventArgs> AlActivarBotón;
 
-		/// <summary>
-		/// Devuelve el límite gráfico del control.
-		/// </summary>
-		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
-		{
-			return new RectangleF (Posición.ToVector2 (),
-				new SizeF (
-					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.X,
-					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Y));
-		}
+		#endregion
 
-		/// <summary>
-		/// Devuelve el botón que está en un índice dado.
-		/// </summary>
-		/// <param name="index">Índice base cero del botón.</param>
-		public Botón BotónEnÍndice (int index)
-		{
-			return (Botón)controles [index];
-		}
-
-		/// <summary>
-		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
-		/// </summary>
-		/// <param name="index">Índice del botón.</param>
-		protected RectangleF CalcularPosición (int index)
-		{
-			RectangleF bounds;
-			var bb = GetBounds ().GetBoundingRectangle ();
-			Point locGrid;
-			int orden = index;
-			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
-				new Point (orden / Filas, orden % Filas) : 
-				new Point (orden % Columnas, orden / Columnas);
-			bounds = new RectangleF (bb.Left + Márgenes.Left + TamañoBotón.X * locGrid.X,
-				bb.Top + Márgenes.Top + TamañoBotón.Y * locGrid.Y,
-				TamañoBotón.X, TamañoBotón.Y);
-			return bounds;
-		}
+		#region Memoria
 
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Controles.ContenedorBotón"/> object.
@@ -320,9 +346,16 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Ocurre cuando un botón es activado
+		/// Cargar contenido
 		/// </summary>
-		public event EventHandler< ContenedorBotónIndexEventArgs> AlActivarBotón;
+		protected override void LoadContent ()
+		{
+			texturaFondo = Screen.Content.Load<Texture2D> (TextureFondo);
+		}
+
+		#endregion
+
+		#region ctor
 
 		/// <summary>
 		/// </summary>
@@ -332,6 +365,8 @@ namespace Moggle.Controles
 		{
 			controles = new List<InternalBotón> ();
 		}
+
+		#endregion
 
 		/// <summary>
 		/// </summary>

@@ -12,45 +12,12 @@ namespace Moggle.Screens
 	/// </summary>
 	public class MostrarListaScreen<TObj> : DialScreen
 	{
+		#region Comportamiento
+
 		/// <summary>
-		/// Lo que devuelve cuando se invoca y termina esta pantalla.
+		/// Devuelve el objeto seleccionado.
 		/// </summary>
-		public struct TipoSalida
-		{
-			/// <summary>
-			/// Tipos de salida
-			/// </summary>
-			public enum EnumTipoSalida
-			{
-				/// <summary>
-				/// Se canceló la pantalla.
-				/// </summary>
-				Cancelación,
-				/// <summary>
-				/// Se aceptó y dio una respuesta.
-				/// </summary>
-				Aceptación
-			}
-
-			/// <summary>
-			/// </summary>
-			/// <param name="tipo">Tipo.</param>
-			/// <param name="selección">Selección.</param>
-			public TipoSalida (EnumTipoSalida tipo, IEnumerable<TObj> selección)
-			{
-				Tipo = tipo;
-				Selección = selección;
-			}
-
-			/// <summary>
-			/// Tipo de salida
-			/// </summary>
-			public EnumTipoSalida Tipo;
-			/// <summary>
-			/// Selección de objetos.
-			/// </summary>
-			public IEnumerable<TObj> Selección;
-		}
+		public TObj ObjetoEnCursor { get { return ListaComponente.Objetos [ListaComponente.CursorIndex].Objeto; } }
 
 		/// <summary>
 		/// La pantalla madre se debe dibujar.
@@ -72,25 +39,11 @@ namespace Moggle.Screens
 		/// </summary>
 		public TipoSalida Salida { get; private set; }
 
-		const string fontTexture = "UnitNameFont";
+		/// 
 
-		/// <summary>
-		/// </summary>
-		/// <param name="game">Game.</param>
-		public MostrarListaScreen (Game game)
-			: base (game)
-		{
-			ListaComponente = new Lista<TObj> (this);
-			ListaComponente.Bounds = new RectangleF (
-				0,
-				0,
-				GetDisplayMode.Width,
-				GetDisplayMode.Height);
-			ListaComponente.ColorBG = Color.Blue * 0.4f;
-			ListaComponente.Stringificación = x => x.ToString ();
-			ListaComponente.InterceptarTeclado = true;
-			SelecciónActual = new List<TObj> ();
-		}
+		#endregion
+
+		#region Señales
 
 		/// <summary>
 		/// Cuando se presiona una tecla
@@ -124,10 +77,9 @@ namespace Moggle.Screens
 			}
 		}
 
-		/// <summary>
-		/// Devuelve el objeto seleccionado.
-		/// </summary>
-		public TObj ObjetoEnCursor { get { return ListaComponente.Objetos [ListaComponente.CursorIndex].Objeto; } }
+		#endregion
+
+		#region Lista & selección
 
 		/// <summary>
 		/// Agrega un objeto a la lista.
@@ -148,5 +100,69 @@ namespace Moggle.Screens
 		/// Devuelve la lista de los objetos seleccionados hasta el momento
 		/// </summary>
 		public List<TObj> SelecciónActual { get; }
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// </summary>
+		/// <param name="game">Game.</param>
+		public MostrarListaScreen (Game game)
+			: base (game)
+		{
+			ListaComponente = new Lista<TObj> (this);
+			ListaComponente.Bounds = new RectangleF (
+				0,
+				0,
+				GetDisplayMode.Width,
+				GetDisplayMode.Height);
+			ListaComponente.ColorBG = Color.Blue * 0.4f;
+			ListaComponente.Stringificación = x => x.ToString ();
+			ListaComponente.InterceptarTeclado = true;
+			SelecciónActual = new List<TObj> ();
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Lo que devuelve cuando se invoca y termina esta pantalla.
+		/// </summary>
+		public struct TipoSalida
+		{
+			/// <summary>
+			/// Tipos de salida
+			/// </summary>
+			public enum EnumTipoSalida
+			{
+				/// <summary>
+				/// Se canceló la pantalla.
+				/// </summary>
+				Cancelación,
+				/// <summary>
+				/// Se aceptó y dio una respuesta.
+				/// </summary>
+				Aceptación
+			}
+
+			/// <summary>
+			/// Tipo de salida
+			/// </summary>
+			public EnumTipoSalida Tipo;
+			/// <summary>
+			/// Selección de objetos.
+			/// </summary>
+			public IEnumerable<TObj> Selección;
+
+			/// <summary>
+			/// </summary>
+			/// <param name="tipo">Tipo.</param>
+			/// <param name="selección">Selección.</param>
+			public TipoSalida (EnumTipoSalida tipo, IEnumerable<TObj> selección)
+			{
+				Tipo = tipo;
+				Selección = selección;
+			}
+		}
 	}
 }

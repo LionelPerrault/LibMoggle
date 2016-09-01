@@ -13,10 +13,41 @@ namespace Moggle.Controles
 	/// </summary>
 	public class Botón : DSBC, IColorable, IBotón
 	{
+		#region Memoria
 
 		void IDisposable.Dispose ()
 		{
 			Textura = null;
+		}
+
+		#endregion
+
+		#region Comportamiento
+
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Controles.Botón"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Controles.Botón"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format ("{0}{1}", Habilidato ? "[H]" : "", Textura);
+		}
+
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
+		{
+		}
+
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
+		public override IShapeF GetBounds ()
+		{
+			return Bounds;
 		}
 
 		/// <summary>
@@ -48,6 +79,10 @@ namespace Moggle.Controles
 		/// </summary>
 		public string Textura { get; set; }
 
+		#endregion
+
+		#region Dibujo
+
 		/// <summary>
 		/// Dibuja el botón
 		/// </summary>
@@ -56,6 +91,10 @@ namespace Moggle.Controles
 		{
 			Screen.Batch.Draw (TexturaInstancia, Bounds, Color);
 		}
+
+		#endregion
+
+		#region Memoria
 
 		/// <summary>
 		/// Cargar contenido
@@ -74,31 +113,9 @@ namespace Moggle.Controles
 			base.UnloadContent ();
 		}
 
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Controles.Botón"/>.
-		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Controles.Botón"/>.</returns>
-		public override string ToString ()
-		{
-			return string.Format ("{0}{1}", Habilidato ? "[H]" : "", Textura);
-		}
+		#endregion
 
-		/// <summary>
-		/// Update lógico
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Update (GameTime gameTime)
-		{
-		}
-
-		/// <summary>
-		/// Devuelve el límite gráfico del control.
-		/// </summary>
-		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
-		{
-			return Bounds;
-		}
+		#region Eventos
 
 		/// <summary>
 		/// Botón hecho clic.
@@ -136,6 +153,8 @@ namespace Moggle.Controles
 		{add{ AlClickIzquierdo += value;}remove{ AlClickIzquierdo += value;}
 		}
 
+		#endregion
+
 		#region ctor
 
 		/// <summary>
@@ -172,6 +191,5 @@ namespace Moggle.Controles
 		}
 
 		#endregion
-
 	}
 }

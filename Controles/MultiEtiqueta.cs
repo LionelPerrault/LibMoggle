@@ -16,127 +16,8 @@ namespace Moggle.Controles
 	/// </summary>
 	public class MultiEtiqueta : SBCC
 	{
-		/// <summary>
-		/// Una entrada de MultiEtiqueta.
-		/// </summary>
-		public interface IEntry
-		{
-			/// <summary>
-			/// Dibuja la entrada en una posición dada.
-			/// </summary>
-			/// <param name="bat">Batch de dibujo.</param>
-			/// <param name="pos">Posición de dibujo.</param>
-			void Dibujar (SpriteBatch bat, Vector2 pos);
 
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la altura.
-			/// </summary>
-			int Altura { get; }
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la longitud.
-			/// </summary>
-			int Largo { get; }
-		}
-
-		/// <summary>
-		/// Entrada de <see cref="MultiEtiqueta"/> que muestra texto e icono.
-		/// </summary>
-		public class IconTextEntry : IEntry
-		{
-			/// <summary>
-			/// Fuente del texto.
-			/// </summary>
-			public BitmapFont Font;
-			/// <summary>
-			/// Textura del icono.
-			/// </summary>
-			public Texture2D TexturaIcon;
-
-			/// <summary>
-			/// Texto.
-			/// </summary>
-			public string Str;
-			/// <summary>
-			/// Tamaño del icono.
-			/// </summary>
-			public Point Tamaño;
-			/// <summary>
-			/// Color del texto.
-			/// </summary>
-			public Color ColorTexto;
-			/// <summary>
-			/// Color del icono.
-			/// </summary>
-			public Color ColorIcon;
-
-			/// <summary>
-			/// </summary>
-			public IconTextEntry ()
-			{
-			}
-
-			/// <summary>
-			/// </summary>
-			/// <param name="font">Fuente del texto</param>
-			/// <param name="texturaIcon">Textura del icono</param>
-			/// <param name="str">Texto</param>
-			/// <param name="colorTexto">Color del texto.</param>
-			/// <param name="colorIcon">Color del icon.</param>
-			public IconTextEntry (BitmapFont font,
-			                      Texture2D texturaIcon,
-			                      string str,
-			                      Color colorTexto,
-			                      Color colorIcon)
-			{
-				Font = font;
-				TexturaIcon = texturaIcon;
-				Str = str;
-				Tamaño = new Point (Font.LineHeight, 24);
-				ColorTexto = colorTexto;
-				ColorIcon = colorIcon;
-			}
-
-			/// <summary>
-			/// Dibuja la entrada en una posición dada.
-			/// </summary>
-			/// <param name="bat">Batch de dibujo.</param>
-			/// <param name="pos">Posición de dibujo.</param>
-			public void Dibujar (SpriteBatch bat, Vector2 pos)
-			{
-				bat.Draw (
-					TexturaIcon,
-					new Microsoft.Xna.Framework.Rectangle (
-						pos.ToPoint (),
-						Tamaño),
-					ColorIcon);
-				bat.DrawString (Font, Str, pos + new Vector2 (Tamaño.X, 0), ColorTexto);
-			}
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la altura.
-			/// </summary>
-			/// <value>The altura.</value>
-			public int Altura
-			{
-				get
-				{
-					return Math.Max (Font.LineHeight, Tamaño.Y);
-				}
-			}
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la longitud.
-			/// </summary>
-			/// <value>The largo.</value>
-			public int Largo
-			{
-				get
-				{
-					return Tamaño.X + Font.GetStringRectangle (Str, Vector2.Zero).Width;
-				}
-			}
-		}
+		#region ctor
 
 		/// <summary>
 		/// </summary>
@@ -152,14 +33,14 @@ namespace Moggle.Controles
 			EspacioEntreLineas = 4;
 		}
 
+		#endregion
+
+		#region Comportamiento
+
 		/// <summary>
 		/// La lista de objetos.
 		/// </summary>
 		public List<IEntry> Mostrables { get; }
-
-		BitmapFont Font;
-
-		string fontString { get; }
 
 		/// <summary>
 		/// Posición del control
@@ -206,39 +87,6 @@ namespace Moggle.Controles
 			}
 		}
 
-		/// <summary>
-		/// Dibuja el control
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
-		{
-			var bat = Screen.Batch;
-			var ht = 0f;
-			var strs = Actual;
-			for (int i = 0; i < NumEntradasMostrar; i++)
-			{
-				var entry = Actual [i];
-				entry.Dibujar (bat, Pos + new Vector2 (0, ht));
-				ht += entry.Altura + EspacioEntreLineas;
-			}
-		}
-
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		protected override void LoadContent ()
-		{
-			Font = Screen.Content.Load<BitmapFont> (fontString);
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.MultiEtiqueta"/> object.
-		/// </summary>
-		protected override void Dispose (bool disposing)
-		{
-			Font = null;
-		}
-
 		int índiceActualString;
 
 		void StringSiguiente ()
@@ -255,7 +103,7 @@ namespace Moggle.Controles
 			var ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;
 			// Grosor
 			var wd = Actual.Aggregate (0, (agg, acc) => Math.Max (agg, acc.Largo));
-			
+
 			return new RectangleF (Pos, new SizeF (wd, ht));
 		}
 
@@ -275,6 +123,185 @@ namespace Moggle.Controles
 		{
 			base.Initialize ();
 			Mostrables.Clear ();
+		}
+
+		#endregion
+
+		#region Dibujo
+
+		BitmapFont Font;
+
+		string fontString { get; }
+
+		/// <summary>
+		/// Dibuja el control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Draw (GameTime gameTime)
+		{
+			var bat = Screen.Batch;
+			var ht = 0f;
+			var strs = Actual;
+			for (int i = 0; i < NumEntradasMostrar; i++)
+			{
+				var entry = Actual [i];
+				entry.Dibujar (bat, Pos + new Vector2 (0, ht));
+				ht += entry.Altura + EspacioEntreLineas;
+			}
+		}
+
+		#endregion
+
+		#region Memoria
+
+		/// <summary>
+		/// Cargar contenido
+		/// </summary>
+		protected override void LoadContent ()
+		{
+			Font = Screen.Content.Load<BitmapFont> (fontString);
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Controles.MultiEtiqueta"/> object.
+		/// </summary>
+		protected override void Dispose (bool disposing)
+		{
+			Font = null;
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Una entrada de MultiEtiqueta.
+		/// </summary>
+		public interface IEntry
+		{
+			/// <summary>
+			/// Dibuja la entrada en una posición dada.
+			/// </summary>
+			/// <param name="bat">Batch de dibujo.</param>
+			/// <param name="pos">Posición de dibujo.</param>
+			void Dibujar (SpriteBatch bat, Vector2 pos);
+
+			/// <summary>
+			/// Del tamaño de la entrada, devuelve la altura.
+			/// </summary>
+			int Altura { get; }
+
+			/// <summary>
+			/// Del tamaño de la entrada, devuelve la longitud.
+			/// </summary>
+			int Largo { get; }
+		}
+
+		/// <summary>
+		/// Entrada de <see cref="MultiEtiqueta"/> que muestra texto e icono.
+		/// </summary>
+		public class IconTextEntry : IEntry
+		{
+			#region Dibujo
+
+			/// <summary>
+			/// Fuente del texto.
+			/// </summary>
+			public BitmapFont Font;
+			/// <summary>
+			/// Textura del icono.
+			/// </summary>
+			public Texture2D TexturaIcon;
+
+			/// <summary>
+			/// Dibuja la entrada en una posición dada.
+			/// </summary>
+			/// <param name="bat">Batch de dibujo.</param>
+			/// <param name="pos">Posición de dibujo.</param>
+			public void Dibujar (SpriteBatch bat, Vector2 pos)
+			{
+				bat.Draw (
+					TexturaIcon,
+					new Rectangle (pos.ToPoint (), Tamaño),
+					ColorIcon);
+				bat.DrawString (Font, Str, pos + new Vector2 (Tamaño.X, 0), ColorTexto);
+			}
+
+			#endregion
+
+			#region Comportamiento
+
+			/// <summary>
+			/// Texto.
+			/// </summary>
+			public string Str;
+			/// <summary>
+			/// Tamaño del icono.
+			/// </summary>
+			public Point Tamaño;
+			/// <summary>
+			/// Color del texto.
+			/// </summary>
+			public Color ColorTexto;
+			/// <summary>
+			/// Color del icono.
+			/// </summary>
+			public Color ColorIcon;
+
+			/// <summary>
+			/// Del tamaño de la entrada, devuelve la altura.
+			/// </summary>
+			/// <value>The altura.</value>
+			public int Altura
+			{
+				get
+				{
+					return Math.Max (Font.LineHeight, Tamaño.Y);
+				}
+			}
+
+			/// <summary>
+			/// Del tamaño de la entrada, devuelve la longitud.
+			/// </summary>
+			/// <value>The largo.</value>
+			public int Largo
+			{
+				get
+				{
+					return Tamaño.X + Font.GetStringRectangle (Str, Vector2.Zero).Width;
+				}
+			}
+
+			#endregion
+
+			#region ctor
+
+			/// <summary>
+			/// </summary>
+			public IconTextEntry ()
+			{
+			}
+
+			/// <summary>
+			/// </summary>
+			/// <param name="font">Fuente del texto</param>
+			/// <param name="texturaIcon">Textura del icono</param>
+			/// <param name="str">Texto</param>
+			/// <param name="colorTexto">Color del texto.</param>
+			/// <param name="colorIcon">Color del icon.</param>
+			public IconTextEntry (BitmapFont font,
+			                      Texture2D texturaIcon,
+			                      string str,
+			                      Color colorTexto,
+			                      Color colorIcon)
+			{
+				Font = font;
+				TexturaIcon = texturaIcon;
+				Str = str;
+				Tamaño = new Point (Font.LineHeight, 24);
+				ColorTexto = colorTexto;
+				ColorIcon = colorIcon;
+			}
+
+			#endregion
 		}
 	}
 }

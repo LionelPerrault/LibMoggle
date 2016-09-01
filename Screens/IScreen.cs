@@ -12,15 +12,16 @@ namespace Moggle.Screens
 	/// </summary>
 	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IGameComponent>
 	{
-		/// <summary>
-		/// Devuelve el campo Juego.
-		/// </summary>
-		Game Juego { get; }
+		#region Dibujo
 
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
 		void Draw (GameTime gameTime);
+
+		#endregion
+
+		#region Comportamiento
 
 		/// <summary>
 		/// Ciclo de la lógica
@@ -32,11 +33,17 @@ namespace Moggle.Screens
 		/// </summary>
 		Color BgColor { get; }
 
+		#endregion
+
+		#region Memoria
+
 		/// <summary>
 		/// El manejador de contenido
 		/// </summary>
 		/// <value>The content.</value>
 		ContentManager Content { get; }
+
+		#endregion
 
 		#region hardware
 
@@ -54,6 +61,15 @@ namespace Moggle.Screens
 		/// Devuelve el controlador gráfico.
 		/// </summary>
 		GraphicsDevice Device { get; }
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// Devuelve el campo Juego.
+		/// </summary>
+		Game Juego { get; }
 
 		#endregion
 	}

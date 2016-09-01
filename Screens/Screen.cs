@@ -13,21 +13,64 @@ namespace Moggle.Screens
 	/// </summary>
 	public abstract class Screen : IScreen
 	{
+		#region Como componente
+
 		IComponentContainerComponent<IGameComponent> IComponent.Container { get { return Juego; } }
-
-		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
-
-		MouseListener MouseListener{ get { return Juego.MouseListener; } }
 
 		/// <summary>
 		/// Devuelve el juego.
 		/// </summary>
 		public Game Juego { get; }
 
+		#endregion
+
+		#region Listeners
+
+		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
+
+		MouseListener MouseListener{ get { return Juego.MouseListener; } }
+
+		#endregion
+
+		#region Memoria
+
+		/// <summary>
+		/// Cargar contenido de cada control incluido.
+		/// Y también se le pide al controlador gráfico un nuevo Batch.
+		/// </summary>
+		public virtual void LoadContent ()
+		{
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent ();
+		}
 
 		void System.IDisposable.Dispose ()
 		{
 		}
+
+		/// <summary>
+		/// Libera a cada control y deja de escuchar.
+		/// </summary>
+		public virtual void UnloadContent ()
+		{
+			foreach (var x in Components.OfType<IComponent> ())
+				x.UnloadContent ();
+		}
+
+		/// <summary>
+		/// Devuelve el manejador de contenidos del juego.
+		/// </summary>
+		public ContentManager Content
+		{
+			get
+			{
+				return Juego.Content;
+			}
+		}
+
+		#endregion
+
+		#region Señales
 
 		/// <summary>
 		/// Manda la señal de tecla presionada a cada uno de sus controles.
@@ -48,6 +91,19 @@ namespace Moggle.Screens
 		{
 			MandarSeñal (key);
 			return true;
+		}
+
+		#endregion
+
+		#region Comportamiento
+
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format ("[{0}]", GetType ());
 		}
 
 		/// <summary>
@@ -73,6 +129,22 @@ namespace Moggle.Screens
 		{
 			Juego.CurrentScreen = this;
 		}
+
+		/// <summary>
+		/// Ciclo de la lógica de la pantalla.
+		/// Actualiza a cada control.
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public virtual void Update (GameTime gameTime)
+		{
+			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
+				if (x.Enabled)
+					x.Update (gameTime);
+		}
+
+		#endregion
+
+		#region Dibujo
 
 		/// <summary>
 		/// Dibuja esta pantalla
@@ -102,16 +174,6 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
-		/// Cargar contenido de cada control incluido.
-		/// Y también se le pide al controlador gráfico un nuevo Batch.
-		/// </summary>
-		public virtual void LoadContent ()
-		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent ();
-		}
-
-		/// <summary>
 		/// Construye un nuevo Batch de dibujo.
 		/// </summary>
 		public SpriteBatch GetNewBatch ()
@@ -120,41 +182,13 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
-		/// Ciclo de la lógica de la pantalla.
-		/// Actualiza a cada control.
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public virtual void Update (GameTime gameTime)
-		{
-			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
-				if (x.Enabled)
-					x.Update (gameTime);
-		}
-
-		/// <summary>
-		/// Libera a cada control y deja de escuchar.
-		/// </summary>
-		public virtual void UnloadContent ()
-		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.UnloadContent ();
-		}
-
-		/// <summary>
-		/// Devuelve el manejador de contenidos del juego.
-		/// </summary>
-		public ContentManager Content
-		{
-			get
-			{
-				return Juego.Content;
-			}
-		}
-
-		/// <summary>
 		/// Devuelve el batch de dibujo actual.
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
+
+		#endregion
+
+		#region Hardware
 
 		/// <summary>
 		/// Devuelve el modo actual de display gráfico.
@@ -180,14 +214,7 @@ namespace Moggle.Screens
 			}
 		}
 
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.
-		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.</returns>
-		public override string ToString ()
-		{
-			return string.Format ("[{0}]", GetType ());
-		}
+		#endregion
 
 		#region Component container
 
@@ -221,6 +248,8 @@ namespace Moggle.Screens
 
 		#endregion
 
+		#region ctor
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
 		/// </summary>
@@ -236,5 +265,6 @@ namespace Moggle.Screens
 			Components = new GameComponentCollection ();
 		}
 
+		#endregion
 	}
 }

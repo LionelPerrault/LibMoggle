@@ -9,13 +9,7 @@ namespace Moggle.Controles
 	/// </summary>
 	public abstract class SBCC : DSBC
 	{
-		/// <summary>
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		protected SBCC (IScreen screen)
-			: base (screen)
-		{
-		}
+		#region Comportamiento
 
 		/// <summary>
 		/// Devuelve o establece la frecuencia de invocación del control.
@@ -52,10 +46,28 @@ namespace Moggle.Controles
 			AlTick?.Invoke ();
 		}
 
+		#endregion
+
+		#region Eventos
+
 		/// <summary>
 		/// Ocurre cuando cada periodo de invocación.
 		/// </summary>
 		/// <seealso cref="TiempoEntreCambios"/>
 		public event Action AlTick;
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		protected SBCC (IScreen screen)
+			: base (screen)
+		{
+		}
+
+		#endregion
 	}
 }

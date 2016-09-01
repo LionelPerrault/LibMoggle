@@ -8,10 +8,16 @@ namespace Moggle.Screens
 	/// </summary>
 	public abstract class DialScreen : Screen
 	{
+		#region Screen
+
 		/// <summary>
 		/// Pantalla base.
 		/// </summary>
 		protected IScreen ScreenBase { get; }
+
+		#endregion
+
+		#region ctor
 
 		/// <summary>
 		/// </summary>
@@ -31,6 +37,10 @@ namespace Moggle.Screens
 			ScreenBase = baseScreen;
 		}
 
+		#endregion
+
+		#region Dibujo
+
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
@@ -42,14 +52,15 @@ namespace Moggle.Screens
 			base.Draw (gameTime);
 		}
 
+		#endregion
+
+		#region Comportamiento
+
 		/// <summary>
 		/// Ejecuta la pantalla.
 		/// </summary>
 		public override void Ejecutar ()
 		{
-			#if DEBUG
-			System.Diagnostics.Debug.WriteLine ("Entrando a " + this);
-			#endif
 			Initialize ();
 			LoadContent ();
 			Juego.CurrentScreen = this;
@@ -61,9 +72,6 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void Salir ()
 		{
-			#if DEBUG
-			System.Diagnostics.Debug.WriteLine ("Entrando a " + ScreenBase);
-			#endif
 			Juego.CurrentScreen = ScreenBase;
 			AlTerminar?.Invoke (this, EventArgs.Empty);
 
@@ -94,9 +102,15 @@ namespace Moggle.Screens
 		/// </summary>
 		public abstract bool DibujarBase { get; }
 
+		#endregion
+
+		#region Eventos
+
 		/// <summary>
 		/// Ocurre al terminar
 		/// </summary>
 		public event EventHandler AlTerminar;
+
+		#endregion
 	}
 }

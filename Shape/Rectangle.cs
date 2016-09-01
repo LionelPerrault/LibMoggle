@@ -6,58 +6,13 @@ namespace Moggle.Shape
 	/// <summary>
 	/// Una forma rectangular.
 	/// </summary>
-	[Obsolete]
+	[Obsolete ("Usar IShapeF de MonoGame.Extended")]
 	public struct Rectangle : IShape
 	{
 		float _x;
 		float _y;
 		float _dx;
 		float _dy;
-
-		#region ctors
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
-		/// </summary>
-		/// <param name="pos">Posición</param>
-		/// <param name="size">Tamaño</param>
-		public Rectangle (Point pos, Vector2 size)
-		{
-			_x = pos.X;
-			_y = pos.Y;
-			_dx = size.X;
-			_dy = size.Y;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
-		/// </summary>
-		/// <param name="pos">Posición</param>
-		/// <param name="size">tamaño</param>
-		public Rectangle (Point pos, Point size)
-		{
-			_x = pos.X;
-			_y = pos.Y;
-			_dx = size.X;
-			_dy = size.Y;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
-		/// </summary>
-		/// <param name="left">Left.</param>
-		/// <param name="top">Top.</param>
-		/// <param name="witdh">Witdh.</param>
-		/// <param name="height">Height.</param>
-		public Rectangle (float left, float top, float witdh, float height)
-		{
-			_x = left;
-			_y = top;
-			_dx = witdh;
-			_dy = height;
-		}
-
-		#endregion
 
 		#region Casts
 
@@ -204,6 +159,51 @@ namespace Moggle.Shape
 				(int)_y,
 				(int)_dx,
 				(int)_dy);
+		}
+
+		#endregion
+
+		#region ctors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// </summary>
+		/// <param name="pos">Posición</param>
+		/// <param name="size">Tamaño</param>
+		public Rectangle (Point pos, Vector2 size)
+		{
+			_x = pos.X;
+			_y = pos.Y;
+			_dx = size.X;
+			_dy = size.Y;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// </summary>
+		/// <param name="pos">Posición</param>
+		/// <param name="size">tamaño</param>
+		public Rectangle (Point pos, Point size)
+		{
+			_x = pos.X;
+			_y = pos.Y;
+			_dx = size.X;
+			_dy = size.Y;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// </summary>
+		/// <param name="left">Left.</param>
+		/// <param name="top">Top.</param>
+		/// <param name="witdh">Witdh.</param>
+		/// <param name="height">Height.</param>
+		public Rectangle (float left, float top, float witdh, float height)
+		{
+			_x = left;
+			_y = top;
+			_dx = witdh;
+			_dy = height;
 		}
 
 		#endregion
