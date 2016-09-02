@@ -1,33 +1,51 @@
-﻿using Moggle.Screens;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
+using Moggle.Screens;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Representa un SBC, con posición determinada por un VisualPortManager
 	/// </summary>
-	public abstract class SBCRel : SBC
+	[ObsoleteAttribute ("Usar SBC y una Camera")]
+	public abstract class SBCRel : DSBC
 	{
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
 		protected SBCRel (IScreen screen)
 			: base (screen)
 		{
 		}
 
+		/// <summary>
+		/// Puerto visual.
+		/// </summary>
 		public VisualPortManager Port;
 
-		public override void Dibujar (GameTime gameTime)
+		/// <summary>
+		/// Dibuja el control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Draw (GameTime gameTime)
 		{
-			var rect = Port.UniversoAVentana (GetBounds ().GetContainingRectangle ());
-			DibujarEn (gameTime, rect);
+			throw new NotImplementedException ();
+			//var rect = Port.UniversoAVentana (GetBounds ().GetBoundingRectangle ());
+			//DibujarEn (gameTime, rect);
 		}
 
+		/// <summary>
+		/// Determina si el apuntador del ratón está sobre este control.
+		/// </summary>
+		/// <value><c>true</c> if mouse over; otherwise, <c>false</c>.</value>
 		public new bool MouseOver
 		{
 			get
 			{
-				var state = Microsoft.Xna.Framework.Input.Mouse.GetState ();
-				return GetBounds ().Contains (Port.UniversoAVentana (state.Position));
+				throw new NotImplementedException ();
+				//var state = Microsoft.Xna.Framework.Input.Mouse.GetState ();
+				//return GetBounds ().Contains (Port.UniversoAVentana (state.Position));
 			}
 		}
 

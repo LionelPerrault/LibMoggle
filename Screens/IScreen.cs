@@ -1,41 +1,41 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Comm;
+using Moggle.Controles;
 
 
 namespace Moggle.Screens
 {
-	public interface IScreen
+	/// <summary>
+	/// Representa una pantalla con controles visibles al jugador.
+	/// </summary>
+	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IGameComponent>
 	{
+		#region Dibujo
+
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		void Dibujar(GameTime gameTime);
+		void Draw (GameTime gameTime);
 
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		void LoadContent();
+		#endregion
+
+		#region Comportamiento
 
 		/// <summary>
 		/// Ciclo de la lógica
 		/// </summary>
-		void Update(GameTime gameTime);
-
-		/// <summary>
-		/// Descargar contenido
-		/// </summary>
-		void UnloadContent();
+		void Update (GameTime gameTime);
 
 		/// <summary>
 		/// Color de fondo
 		/// </summary>
 		Color BgColor { get; }
 
-		/// <summary>
-		/// La lista de controles de esta Screen
-		/// </summary>
-		ListaControl Controles { get; }
+		#endregion
+
+		#region Memoria
 
 		/// <summary>
 		/// El manejador de contenido
@@ -43,7 +43,7 @@ namespace Moggle.Screens
 		/// <value>The content.</value>
 		ContentManager Content { get; }
 
-		bool Escuchando { set; }
+		#endregion
 
 		#region hardware
 
@@ -52,14 +52,25 @@ namespace Moggle.Screens
 		/// </summary>
 		SpriteBatch Batch { get; }
 
-		SpriteBatch GetNewBatch();
-
+		/// <summary>
+		/// Devuelve el modo actual de display gráfico.
+		/// </summary>
 		DisplayMode GetDisplayMode { get; }
 
+		/// <summary>
+		/// Devuelve el controlador gráfico.
+		/// </summary>
 		GraphicsDevice Device { get; }
 
 		#endregion
 
-		void Inicializar();
+		#region ctor
+
+		/// <summary>
+		/// Devuelve el campo Juego.
+		/// </summary>
+		Game Juego { get; }
+
+		#endregion
 	}
 }

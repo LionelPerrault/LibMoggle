@@ -1,8 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Moggle.Shape;
+using MonoGame.Extended.Shapes;
 
 namespace Moggle.Shape
 {
+	/// <summary>
+	/// <para>
+	/// Representa una forma en 2D.
+	/// </para>
+	/// <para>
+	/// Provee métodos para mover, estalar, pedir rectángulo excrito, y método para saber si contiene un punto dado.
+	/// </para>
+	/// </summary>
+	[Obsolete]
 	public interface IShape
 	{
 		/// <summary>
@@ -11,53 +22,47 @@ namespace Moggle.Shape
 		bool Contains (Point p);
 
 		/// <summary>
-		/// Devuelve una forma que es el resultado de una translación
-		/// </summary>
-		IShape MoveBy (Vector2 v);
-
-		/// <summary>
-		/// Devuelve una forma que es el resultado de una reescalación
-		/// </summary>
-		IShape Scale (float factor);
-
-		/// <summary>
 		/// Devuelve el rectángulo más pequeño que lo contiene
 		/// </summary>
 		Microsoft.Xna.Framework.Rectangle GetContainingRectangle ();
-
 	}
 
+	/// <summary>
+	/// Shapes.
+	/// </summary>
 	public static class Shapes
 	{
-		static IShape NoShape
-		{
-			get
-			{
-				return new Shapeless ();
-			}
-		}
+		/// <summary>
+		/// Devuelve una <see cref="IShape"/> vacía.
+		/// </summary>
+		public static IShapeF NoShape { get { return Shapeless.NoShape; } }
 	}
 
-	class Shapeless : IShape
+	class Shapeless : IShapeF
 	{
-		public bool Contains (Point p)
+		public static readonly Shapeless NoShape = new Shapeless ();
+
+		public RectangleF GetBoundingRectangle ()
+		{
+			return Microsoft.Xna.Framework.Rectangle.Empty;
+		}
+
+		public bool Contains (float x, float y)
 		{
 			return false;
 		}
 
-		public IShape MoveBy (Vector2 v)
+		public bool Contains (Vector2 point)
 		{
-			return new Shapeless ();
+			return false;
 		}
 
-		public IShape Scale (float factor)
-		{
-			return new Shapeless ();
-		}
+		public float Left{ get { return 0; } }
 
-		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
-		{
-			return Microsoft.Xna.Framework.Rectangle.Empty;
-		}
+		public float Top{ get { return 0; } }
+
+		public float Right{ get { return 0; } }
+
+		public float Bottom{ get { return 0; } }
 	}
 }

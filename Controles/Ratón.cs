@@ -1,35 +1,54 @@
-﻿using Moggle.Screens;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
 using OpenTK.Input;
-using Moggle.Shape;
-using System;
 
 namespace Moggle.Controles
 {
-	public class Ratón : SBC
+	/// <summary>
+	/// Control simple que hace visible al apuntador del ratón.
+	/// </summary>
+	public class Ratón : DSBC
 	{
-		public Ratón (IScreen scr, Point tamaño)
-			: this (scr)
-		{
-			Tamaño = tamaño;
-		}
+		#region Dibujo
 
-		public Ratón (IScreen screen)
-			: base (screen)
-		{
-			Tamaño = new Point (20, 20);
-			Prioridad = 1000;
-		}
-
-		public Ratón ()
-			: base (null)
-		{
-			Tamaño = new Point (15, 15);
-			Prioridad = 1000;
-		}
-
+		/// <summary>
+		/// Devuelve o establece el archivo que contiene la textura del ratón.
+		/// </summary>
 		public string ArchivoTextura { get; set; }
+
+		/// <summary>
+		/// Devuelve la textura usada.
+		/// </summary>
+		public Texture2D Textura { get; protected set; }
+
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		public override IShapeF GetBounds ()
+		{
+			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
+		}
+
+		/// <summary>
+		/// Dibuja el control
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Draw (GameTime gameTime)
+		{
+			var bat = Game.GetNewBatch ();
+			bat.Begin ();
+			bat.Draw (
+				Textura,
+				(Rectangle)GetBounds ().GetBoundingRectangle (),
+				Color.WhiteSmoke);
+			bat.End ();
+		}
+
+		#endregion
+
+		#region Comportamiento
 
 		/// <summary>
 		/// Devuelve un valor determinando si el ratón está habilitado para esta aplicación.
@@ -43,16 +62,9 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Devuelve la textura usada.
+		/// Devuelve o establece la posición actual del apuntador del ratón.
 		/// </summary>
-		public Texture2D Textura { get; protected set; }
-
-		protected override void Dispose ()
-		{
-			Textura = null;
-			base.Dispose ();
-		}
-
+		/// <value>The position.</value>
 		public static Point Pos
 		{
 			get
@@ -65,23 +77,72 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el tamaño del apuntador.
+		/// </summary>
+		public readonly Size Tamaño;
 
-		public readonly Point Tamaño;
-
-		public override IShape GetBounds ()
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public override void Update (GameTime gameTime)
 		{
-			return new Moggle.Shape.Rectangle (Pos, Tamaño);
 		}
 
-		public override void LoadContent ()
+		#endregion
+
+		#region Memoria
+
+		/// <summary>
+		/// Shuts down the component.
+		/// </summary>
+		/// <param name="disposing">If set to <c>true</c> disposing.</param>
+		protected override void Dispose (bool disposing)
 		{
-			Textura = Screen.Content.Load<Texture2D> (ArchivoTextura);
+			Textura = null;
+			base.Dispose (disposing);
 		}
 
-		public override void Dibujar (GameTime gameTime)
+		/// <summary>
+		/// Cargar contenido
+		/// </summary>
+		protected override void LoadContent ()
 		{
-			var bat = Screen.Batch;
-			bat.Draw (Textura, GetBounds ().GetContainingRectangle (), Color.WhiteSmoke);
+			Textura = Game.Content.Load<Texture2D> (ArchivoTextura);
 		}
+
+		/// <summary>
+		/// Unloads the content.
+		/// </summary>
+		protected override void UnloadContent ()
+		{
+			Textura = null;
+		}
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// </summary>
+		/// <param name="gm">Pantalla</param>
+		/// <param name="tamaño">Tamaño del icono del cursor.</param>
+		public Ratón (Game gm, Size tamaño)
+			: base (gm)
+		{
+			Tamaño = tamaño;
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="gm">Screen.</param>
+		public Ratón (Game gm)
+			: base (gm)
+		{
+			Tamaño = new Size (20, 20);
+		}
+
+		#endregion
 	}
 }

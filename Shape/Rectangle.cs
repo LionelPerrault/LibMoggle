@@ -1,7 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Shape
 {
+	/// <summary>
+	/// Una forma rectangular.
+	/// </summary>
+	[Obsolete ("Usar IShapeF de MonoGame.Extended")]
 	public struct Rectangle : IShape
 	{
 		float _x;
@@ -9,36 +14,9 @@ namespace Moggle.Shape
 		float _dx;
 		float _dy;
 
-		#region ctors
-
-		public Rectangle (Point pos, Vector2 size)
-		{
-			_x = pos.X;
-			_y = pos.Y;
-			_dx = size.X;
-			_dy = size.Y;
-		}
-
-		public Rectangle (Point pos, Point size)
-		{
-			_x = pos.X;
-			_y = pos.Y;
-			_dx = size.X;
-			_dy = size.Y;
-		}
-
-		public Rectangle (float left, float top, float witdh, float height)
-		{
-			_x = left;
-			_y = top;
-			_dx = witdh;
-			_dy = height;
-		}
-
-		#endregion
-
 		#region Casts
 
+		/// <param name="rect">Rectángulo</param>
 		public static explicit operator Microsoft.Xna.Framework.Rectangle (Rectangle rect)
 		{
 			return new Microsoft.Xna.Framework.Rectangle (
@@ -46,6 +24,7 @@ namespace Moggle.Shape
 				rect.Size.ToPoint ());
 		}
 
+		/// <param name="rect">Rectángulo</param>
 		public static explicit operator Rectangle (Microsoft.Xna.Framework.Rectangle rect)
 		{
 			return new Rectangle (rect.Location, rect.Size);
@@ -55,6 +34,9 @@ namespace Moggle.Shape
 
 		#region Props
 
+		/// <summary>
+		/// Devuelve o establece las coordenadas superior izquierda.
+		/// </summary>
 		public Vector2 TopLeft
 		{
 			get
@@ -68,6 +50,9 @@ namespace Moggle.Shape
 			}
 		}
 
+		/// <summary>
+		/// Devuelve o establece las coordenadas inferior derecha.
+		/// </summary>
 		public Vector2 BottomRight
 		{
 			get
@@ -76,6 +61,9 @@ namespace Moggle.Shape
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el tamaño.
+		/// </summary>
 		public Vector2 Size
 		{
 			get
@@ -89,58 +77,45 @@ namespace Moggle.Shape
 			}
 		}
 
-		public float Height
-		{
-			get
-			{
-				return _dy;
-			}
-		}
+		/// <summary>
+		/// Devuelve la altura.
+		/// </summary>
+		public float Height { get { return _dy; } }
 
-		public float Witdh
-		{
-			get
-			{
-				return _dx;
-			}
-		}
+		/// <summary>
+		/// Devuelve el grosor.
+		/// </summary>
+		public float Witdh { get { return _dx; } }
 
-		public float Left
-		{
-			get
-			{
-				return _x;
-			}
-		}
+		/// <summary>
+		/// Devuelve el punto más izquierdo
+		/// </summary>
+		public float Left { get { return _x; } }
 
-		public float Right
-		{
-			get
-			{
-				return _x + _dx;
-			}
-		}
+		/// <summary>
+		/// Devuelve el punto más derecho
+		/// </summary>
+		public float Right { get { return _x + _dx; } }
 
-		public float Top
-		{
-			get
-			{
-				return _y;
-			}
-		}
+		/// <summary>
+		/// Devuelve el punto más superior.
+		/// </summary>
+		public float Top { get { return _y; } }
 
-		public float Bottom
-		{
-			get
-			{
-				return _y + _dy;
-			}
-		}
+		/// <summary>
+		/// Devuelve el punto más inferior.
+		/// </summary>
+		public float Bottom { get { return _y + _dy; } }
 
 		#endregion
 
 		#region IShape
 
+		/// <summary>
+		/// Devuelve una forma que es el resultado de una translación
+		/// </summary>
+		/// <returns>The by.</returns>
+		/// <param name="v">V.</param>
 		public IShape MoveBy (Vector2 v)
 		{
 			var ret = new Rectangle ();
@@ -149,6 +124,10 @@ namespace Moggle.Shape
 			return ret;
 		}
 
+		/// <summary>
+		/// Devuelve una forma que es el resultado de una reescalación
+		/// </summary>
+		/// <param name="factor">Factor.</param>
 		public IShape Scale (float factor)
 		{
 			var ret = new Rectangle ();
@@ -157,6 +136,10 @@ namespace Moggle.Shape
 			return ret;
 		}
 
+		/// <summary>
+		/// Revisa si esta forma contiene un punto dado.
+		/// </summary>
+		/// <param name="p">Punto</param>
 		public bool Contains (Point p)
 		{
 			return _x <= p.X &&
@@ -165,6 +148,10 @@ namespace Moggle.Shape
 			p.Y <= _y + _dy;
 		}
 
+		/// <summary>
+		/// Devuelve el rectángulo más pequeño que lo contiene
+		/// </summary>
+		/// <returns>The containing rectangle.</returns>
 		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
 		{
 			return new Microsoft.Xna.Framework.Rectangle (
@@ -172,6 +159,51 @@ namespace Moggle.Shape
 				(int)_y,
 				(int)_dx,
 				(int)_dy);
+		}
+
+		#endregion
+
+		#region ctors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// </summary>
+		/// <param name="pos">Posición</param>
+		/// <param name="size">Tamaño</param>
+		public Rectangle (Point pos, Vector2 size)
+		{
+			_x = pos.X;
+			_y = pos.Y;
+			_dx = size.X;
+			_dy = size.Y;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// </summary>
+		/// <param name="pos">Posición</param>
+		/// <param name="size">tamaño</param>
+		public Rectangle (Point pos, Point size)
+		{
+			_x = pos.X;
+			_y = pos.Y;
+			_dx = size.X;
+			_dy = size.Y;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// </summary>
+		/// <param name="left">Left.</param>
+		/// <param name="top">Top.</param>
+		/// <param name="witdh">Witdh.</param>
+		/// <param name="height">Height.</param>
+		public Rectangle (float left, float top, float witdh, float height)
+		{
+			_x = left;
+			_y = top;
+			_dx = witdh;
+			_dy = height;
 		}
 
 		#endregion

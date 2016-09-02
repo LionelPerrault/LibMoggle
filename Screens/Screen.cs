@@ -1,84 +1,159 @@
-﻿using Moggle.IO;
+﻿using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Comm;
 using Moggle.Controles;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Screens
 {
+	/// <summary>
+	/// Implementación común de un <see cref="IScreen"/>
+	/// </summary>
 	public abstract class Screen : IScreen
 	{
+		#region Como componente
+
+		IComponentContainerComponent<IGameComponent> IComponent.Container { get { return Juego; } }
+
+		/// <summary>
+		/// Devuelve el juego.
+		/// </summary>
 		public Game Juego { get; }
 
-		public ListaControl Controles { get; }
+		#endregion
 
-		protected Screen (Game game)
-			: this ()
+		#region Listeners
+
+		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
+
+		MouseListener MouseListener{ get { return Juego.MouseListener; } }
+
+		#endregion
+
+		#region Memoria
+
+		/// <summary>
+		/// Cargar contenido de cada control incluido.
+		/// Y también se le pide al controlador gráfico un nuevo Batch.
+		/// </summary>
+		public virtual void LoadContent ()
 		{
-			Juego = game;
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent ();
 		}
 
-		Screen ()
+		void System.IDisposable.Dispose ()
 		{
-			Controles = new ListaControl ();
 		}
 
-		protected virtual void TeclaPresionada (OpenTK.Input.Key key)
+		/// <summary>
+		/// Libera a cada control y deja de escuchar.
+		/// </summary>
+		public virtual void UnloadContent ()
 		{
-			foreach (var x in Controles)
-			{
-				x.CatchKey (key);
-			}
+			foreach (var x in Components.OfType<IComponent> ())
+				x.UnloadContent ();
 		}
 
-		bool _escuchando;
-
-		public bool Escuchando
+		/// <summary>
+		/// Devuelve el manejador de contenidos del juego.
+		/// </summary>
+		public ContentManager Content
 		{
 			get
 			{
-				return _escuchando;
-			}
-			set
-			{ 
-				// Evitar duplicar subscripción
-				if (value == _escuchando)
-					return;
-				_escuchando = value;
-				if (value)
-					InputManager.AlSerActivado += TeclaPresionada;
-				else
-					InputManager.AlSerActivado -= TeclaPresionada;
+				return Juego.Content;
 			}
 		}
 
+		#endregion
+
+		#region Señales
+
+		/// <summary>
+		/// Manda la señal de tecla presionada a cada uno de sus controles.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		public virtual void MandarSeñal (KeyboardEventArgs key)
+		{
+			foreach (var x in Components.OfType<IReceptorTeclado> ())
+				x.RecibirSeñal (key);
+		}
+
+		/// <summary>
+		/// Rebice señal del teclado
+		/// </summary>
+		/// <returns>Devuelve <c>true</c> si la señal fue aceptada.</returns>
+		/// <param name="key">Señal tecla</param>
+		public virtual bool RecibirSeñal (KeyboardEventArgs key)
+		{
+			MandarSeñal (key);
+			return true;
+		}
+
+		#endregion
+
+		#region Comportamiento
+
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format ("[{0}]", GetType ());
+		}
+
+		/// <summary>
+		/// Devuelve el color de fondo.
+		/// </summary>
+		/// <value>The color of the background.</value>
 		public abstract Color BgColor { get; }
 
-		public virtual void Inicializar ()
+		/// <summary>
+		/// Inicializa sus controles
+		/// </summary>
+		public virtual void Initialize ()
 		{
-			foreach (var x in Controles)
-			{
-				x.Inicializar ();
-			}
+			foreach (var x in Components)
+				x.Initialize ();
 		}
 
+		/// <summary>
+		/// Ejecuta esta pantalla.
+		/// Deja de escuchar a la pantalla anterior y yo comienzo a escuchar.
+		/// </summary>
 		public virtual void Ejecutar ()
 		{
-			if (Juego.CurrentScreen != null)
-			{
-				Juego.CurrentScreen.Escuchando = false;
-				//Juego.CurrentScreen.UnloadContent ();
-			}
 			Juego.CurrentScreen = this;
-			Escuchando = true;
 		}
 
-		public virtual void Dibujar (GameTime gameTime)
+		/// <summary>
+		/// Ciclo de la lógica de la pantalla.
+		/// Actualiza a cada control.
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public virtual void Update (GameTime gameTime)
 		{
-			//base.Draw (gameTime);
+			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
+				if (x.Enabled)
+					x.Update (gameTime);
+		}
 
-			//var Batch = GetNewBatch ();
+		#endregion
+
+		#region Dibujo
+
+		/// <summary>
+		/// Dibuja esta pantalla
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public virtual void Draw (GameTime gameTime)
+		{
+			Batch = GetNewBatch ();
+
 			Batch.Begin ();
 			EntreBatches (gameTime);
 			Batch.End ();
@@ -89,49 +164,36 @@ namespace Moggle.Screens
 		/// </summary>
 		protected virtual void EntreBatches (GameTime gameTime)
 		{
-			foreach (var x in Controles)
-				x.Dibujar (gameTime);
+			drawComponents (gameTime);
 		}
 
-		public virtual void LoadContent ()
+		void drawComponents (GameTime gameTime)
 		{
-			Batch = new SpriteBatch (Juego.GraphicsDevice);
-			foreach (var x in Controles)
-			{
-				x.LoadContent ();
-			}
+			foreach (var x in Components.OfType<IDrawable> ())
+				x.Draw (gameTime);
 		}
 
+		/// <summary>
+		/// Construye un nuevo Batch de dibujo.
+		/// </summary>
 		public SpriteBatch GetNewBatch ()
 		{
 			return Juego.GetNewBatch ();
 		}
 
-		public virtual void Update (GameTime gameTime)
-		{
-			foreach (var x in new List<IControl> (Controles))
-				x.Update (gameTime);
-		}
-
-		public virtual void UnloadContent ()
-		{
-			foreach (var x in new List<IControl> (Controles))
-			{
-				x.Dispose ();
-			}
-			Escuchando = false; // Evitar fugas de memoria
-		}
-
-		public ContentManager Content
-		{
-			get
-			{
-				return Juego.Content;
-			}
-		}
-
+		/// <summary>
+		/// Devuelve el batch de dibujo actual.
+		/// </summary>
 		public SpriteBatch Batch { get; private set; }
 
+		#endregion
+
+		#region Hardware
+
+		/// <summary>
+		/// Devuelve el modo actual de display gráfico.
+		/// </summary>
+		/// <value>The get display mode.</value>
 		public DisplayMode GetDisplayMode
 		{
 			get
@@ -140,6 +202,10 @@ namespace Moggle.Screens
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el controlador gráfico.
+		/// </summary>
+		/// <value>The device.</value>
 		public GraphicsDevice Device
 		{
 			get
@@ -148,10 +214,57 @@ namespace Moggle.Screens
 			}
 		}
 
-		public override string ToString ()
+		#endregion
+
+		#region Component container
+
+		/// <summary>
+		/// Devuelve la lista de controles
+		/// </summary>
+		/// <value>The controles.</value>
+		protected GameComponentCollection Components { get; }
+
+		/// <summary>
+		/// Agrega un componente
+		/// </summary>
+		/// <param name="component">Component.</param>
+		public void AddComponent (IGameComponent component)
 		{
-			return string.Format ("[{0}]", GetType ());
+			Components.Add (component);
 		}
+
+		/// <summary>
+		/// Elimina un componente
+		/// </summary>
+		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
+		/// <param name="component">Component.</param>
+		public bool RemoveComponent (IGameComponent component)
+		{
+			return Components.Remove (component);
+		}
+
+		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		{ get { return Components; } }
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
+		/// </summary>
+		/// <param name="game">Game.</param>
+		protected Screen (Game game)
+			: this ()
+		{
+			Juego = game;
+		}
+
+		Screen ()
+		{
+			Components = new GameComponentCollection ();
+		}
+
+		#endregion
 	}
 }
-

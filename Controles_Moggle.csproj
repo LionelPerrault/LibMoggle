@@ -12,7 +12,7 @@
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>0.2.1</ReleaseVersion>
+    <ReleaseVersion>0.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,14 +23,15 @@ Un juego de controles para MonoGame</Description>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Debug\Controles_Moggle.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Release\Controles_Moggle.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,7 +47,7 @@ Un juego de controles para MonoGame</Description>
       <Private>False</Private>
     </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\MonoGame.Extended.0.6.0.0\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +56,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\ListaControles.cs" />
     <Compile Include="Controles\IControl.cs" />
     <Compile Include="Controles\SBC.cs" />
-    <Compile Include="IO\InputManager.cs" />
     <Compile Include="Primitivos.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Game.cs" />
@@ -70,13 +70,20 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\MultiEtiqueta.cs" />
     <Compile Include="Controles\SBCC.cs" />
     <Compile Include="VisualPortManager.cs" />
-    <Compile Include="Controles\IRelativeControl.cs" />
     <Compile Include="Controles\SBCRel.cs" />
     <Compile Include="Shape\IShape.cs" />
     <Compile Include="Shape\Rectangle.cs" />
     <Compile Include="Shape\Circle.cs" />
     <Compile Include="Controles\Botón.cs" />
     <Compile Include="Shape\Ellipse.cs" />
+    <Compile Include="Controles\IComponent.cs" />
+    <Compile Include="Comm\IEmisorTeclado.cs" />
+    <Compile Include="Comm\IReceptorTeclado.cs" />
+    <Compile Include="BatchExt.cs" />
+    <Compile Include="Controles\IComponentContainerComponent.cs" />
+    <Compile Include="Controles\DSBC.cs" />
+    <Compile Include="Controles\IActivable.cs" />
+    <Compile Include="Controles\IBotón.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -86,9 +93,9 @@ Un juego de controles para MonoGame</Description>
   <ItemGroup>
     <Folder Include="Screens\" />
     <Folder Include="Controles\" />
-    <Folder Include="IO\" />
     <Folder Include="Controles\Listas\" />
     <Folder Include="Shape\" />
+    <Folder Include="Comm\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
