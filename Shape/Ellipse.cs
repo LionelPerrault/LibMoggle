@@ -10,6 +10,8 @@ namespace Moggle.Shape
 	/// </summary>
 	public struct Ellipse : IShapeF
 	{
+		#region Parámetros
+
 		/// <summary>
 		/// Radio horizontal.
 		/// </summary>
@@ -23,18 +25,9 @@ namespace Moggle.Shape
 		/// </summary>
 		public Vector2 Center;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Ellipse"/> struct.
-		/// </summary>
-		/// <param name="radiusX">Radius x.</param>
-		/// <param name="radiusY">Radius y.</param>
-		/// <param name="center">Center.</param>
-		public Ellipse (float radiusX, float radiusY, Vector2 center)
-		{
-			RadiusX = radiusX;
-			RadiusY = radiusY;
-			Center = center;
-		}
+		#endregion
+
+		#region Shape
 
 		/// <summary>
 		/// Gets the bounding rectangle.
@@ -84,5 +77,24 @@ namespace Moggle.Shape
 		/// Gets the bottom.
 		/// </summary>
 		public float Bottom{ get { return Center.Y + RadiusY; } }
+
+		#endregion
+
+		#region ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Shape.Ellipse"/> struct.
+		/// </summary>
+		/// <param name="radiusX">Radius x.</param>
+		/// <param name="radiusY">Radius y.</param>
+		/// <param name="center">Center.</param>
+		public Ellipse (float radiusX, float radiusY, Vector2 center)
+		{
+			RadiusX = radiusX;
+			RadiusY = radiusY;
+			Center = center;
+		}
+
+		#endregion
 	}
 }

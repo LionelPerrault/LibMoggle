@@ -14,5 +14,4 @@ namespace Moggle.Comm
 		/// <param name="key">Señal tecla</param>
 		bool RecibirSeñal (KeyboardEventArgs key);
 	}
-	
 }

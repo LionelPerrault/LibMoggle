@@ -2,7 +2,6 @@
  * Código del paquete
  * https://bitbucket.org/C3/2d-xna-primitives/src/95c26ebe054db4409fd7056b20057671b581dc43/Primitives2D.cs?fileviewer=file-view-default
 */
-
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
