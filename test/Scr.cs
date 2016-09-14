@@ -41,20 +41,31 @@ namespace Test
 			}
 			ct.AlActivarBotón += Ct_AlActivarBotón;
 
+			/* 
+			 * //TODO: Agregar un font.
+			var tx = new EntradaTexto (this);
+			tx.Pos = new Vector2 (50, 50);
+			tx.BgTexture = "cont//void";
+			tx.FontTexture = "fonts";
+			*/
+
+			StrListen = new KeyStringListener (Juego.KeyListener);
 		}
 
-		void Ct_AlActivarBotón (object sender,
-		                        ContenedorBotón.ContenedorBotónIndexEventArgs e)
+		static void Ct_AlActivarBotón (object sender,
+		                               ContenedorBotón.ContenedorBotónIndexEventArgs e)
 		{
 			System.Console.WriteLine ("botón [{0}] click: {1}", e.Index, e.Mouse.Button);
 		}
 
-		static void buttonClicked (MouseEventArgs e, int index)
+		void buttonClicked (MouseEventArgs e, int index)
 		{
 			System.Console.WriteLine ("botón [{0}] click: {1}", e, index);
+			System.Console.WriteLine ("stringActual = {0}", StrListen.CurrentString);
 		}
 
 		readonly Botón bt;
+		readonly KeyStringListener StrListen;
 
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
