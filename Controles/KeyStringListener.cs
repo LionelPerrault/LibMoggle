@@ -11,6 +11,9 @@ namespace Moggle.Controles
 	/// </summary>
 	public class KeyStringListener : IReceptorTeclado, IDisposable
 	{
+		/// <summary>
+		/// Gets or set the current string
+		/// </summary>
 		public string CurrentString
 		{
 			get { return outputBuilder.ToString (); }
@@ -32,6 +35,11 @@ namespace Moggle.Controles
 			return RecibirSeñal (key);
 		}
 
+		/// <summary>
+		/// Rebice señal del teclado
+		/// </summary>
+		/// <returns><c>true</c>, si la señal fue aceptada, <c>false</c> otherwise.</returns>
+		/// <param name="key">Señal tecla</param>
 		protected virtual bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			if (key.Key == Keys.Back)
@@ -50,6 +58,9 @@ namespace Moggle.Controles
 			return key.Modifiers.HasFlag (KeyboardModifiers.Shift);
 		}
 
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Controles.KeyStringListener"/> object.
+		/// </summary>
 		public void Dispose ()
 		{
 			listener.KeyTyped -= event_key_type;
@@ -60,11 +71,16 @@ namespace Moggle.Controles
 			RecibirSeñal (e);
 		}
 
+		/// <summary>
+		/// </summary>
 		public KeyStringListener ()
 		{
 			outputBuilder = new StringBuilder ();
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="listen">Keyboard listener</param>
 		public KeyStringListener (KeyboardListener listen)
 		{
 			if (listen == null)
@@ -73,6 +89,5 @@ namespace Moggle.Controles
 
 			listen.KeyTyped += event_key_type;
 		}
-
 	}
 }
