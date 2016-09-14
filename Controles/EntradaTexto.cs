@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
@@ -34,7 +33,11 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve o establece el texto visible (editable)
 		/// </summary>
-		public string Texto { get; set; }
+		public string Texto
+		{
+			get { return StringListen.CurrentString; }
+			set { StringListen.CurrentString = value; }
+		}
 
 		/// <summary>
 		/// Si el control debe responder al estado del teclado.
@@ -140,22 +143,15 @@ namespace Moggle.Controles
 
 		#region Teclado
 
+		KeyStringListener StringListen { get; }
+
 		/// <summary>
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
 		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
 		{
-
-			if (key.Key == Keys.Back)
-			{
-				if (Texto.Length > 0)
-					Texto = Texto.Remove (Texto.Length - 1);
-				return true;
-			}
-
-			Texto += key.Character;
-			return true;
+			return StringListen.RecibirSeñal (key);
 		}
 
 		#endregion

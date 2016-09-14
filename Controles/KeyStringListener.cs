@@ -40,7 +40,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <returns><c>true</c>, si la señal fue aceptada, <c>false</c> otherwise.</returns>
 		/// <param name="key">Señal tecla</param>
-		protected virtual bool RecibirSeñal (KeyboardEventArgs key)
+		public virtual bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			if (key.Key == Keys.Back)
 			{
