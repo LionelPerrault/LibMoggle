@@ -85,6 +85,7 @@ namespace Moggle.Controles
 		{
 			if (listen == null)
 				throw new ArgumentNullException ("listen");
+			outputBuilder = new StringBuilder ();
 			listener = listen;
 
 			listen.KeyTyped += event_key_type;
