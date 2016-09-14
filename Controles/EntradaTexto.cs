@@ -22,8 +22,7 @@ namespace Moggle.Controles
 		public EntradaTexto (IScreen screen)
 			: base (screen)
 		{
-			Texto = "";
-
+			StringListen = new KeyStringListener ();
 		}
 
 		#endregion
@@ -43,6 +42,10 @@ namespace Moggle.Controles
 		/// Si el control debe responder al estado del teclado.
 		/// </summary>
 		public bool CatchKeys = true;
+
+		public string BgTexture { get; set; }
+
+		public string FontTexture { get; set; }
 
 		#endregion
 
@@ -126,8 +129,8 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			contornoTexture = Screen.Content.Load<Texture2D> ("Rect");
-			fontTexture = Screen.Content.Load<BitmapFont> ("fonts");
+			contornoTexture = Screen.Content.Load<Texture2D> (BgTexture);
+			fontTexture = Screen.Content.Load<BitmapFont> (FontTexture);
 		}
 
 		/// <summary>
