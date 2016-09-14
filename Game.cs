@@ -49,6 +49,16 @@ namespace Moggle
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
+
+			// Crear los listeners
+			KeyListener = new KeyboardListener ();
+			MouseListener = new MouseListener ();
+
+			Components.Add (new InputListenerComponent (
+				this,
+				KeyListener,
+				MouseListener));
+			
 		}
 
 		/// <summary>
@@ -67,17 +77,9 @@ namespace Moggle
 		/// </summary>
 		protected override void Initialize ()
 		{
-
-			// Crear los listeners
-			KeyListener = new KeyboardListener ();
-			MouseListener = new MouseListener ();
-
-			Components.Add (new InputListenerComponent (
-				this,
-				KeyListener,
-				MouseListener));
-
 			base.Initialize ();
+
+
 			CurrentScreen?.Initialize ();
 
 			KeyListener.KeyPressed += keyPressed;

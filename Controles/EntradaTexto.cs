@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
@@ -23,8 +22,7 @@ namespace Moggle.Controles
 		public EntradaTexto (IScreen screen)
 			: base (screen)
 		{
-			Texto = "";
-
+			StringListen = new KeyStringListener ();
 		}
 
 		#endregion
@@ -34,12 +32,20 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve o establece el texto visible (editable)
 		/// </summary>
-		public string Texto { get; set; }
+		public string Texto
+		{
+			get { return StringListen.CurrentString; }
+			set { StringListen.CurrentString = value; }
+		}
 
 		/// <summary>
 		/// Si el control debe responder al estado del teclado.
 		/// </summary>
 		public bool CatchKeys = true;
+
+		public string BgTexture { get; set; }
+
+		public string FontTexture { get; set; }
 
 		#endregion
 
@@ -123,8 +129,8 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			contornoTexture = Screen.Content.Load<Texture2D> ("Rect");
-			fontTexture = Screen.Content.Load<BitmapFont> ("fonts");
+			contornoTexture = Screen.Content.Load<Texture2D> (BgTexture);
+			fontTexture = Screen.Content.Load<BitmapFont> (FontTexture);
 		}
 
 		/// <summary>
@@ -140,22 +146,15 @@ namespace Moggle.Controles
 
 		#region Teclado
 
+		KeyStringListener StringListen { get; }
+
 		/// <summary>
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
 		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
 		{
-
-			if (key.Key == Keys.Back)
-			{
-				if (Texto.Length > 0)
-					Texto = Texto.Remove (Texto.Length - 1);
-				return true;
-			}
-
-			Texto += key.Character;
-			return true;
+			return StringListen.RecibirSeñal (key);
 		}
 
 		#endregion
