@@ -43,8 +43,16 @@ namespace Moggle.Controles
 		/// </summary>
 		public bool CatchKeys = true;
 
+		/// <summary>
+		/// Gets or sets the background texture.
+		/// </summary>
+		/// <value>The background texture.</value>
 		public string BgTexture { get; set; }
 
+		/// <summary>
+		/// Gets or sets the font texture.
+		/// </summary>
+		/// <value>The font texture.</value>
 		public string FontTexture { get; set; }
 
 		#endregion
