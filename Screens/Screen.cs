@@ -41,7 +41,13 @@ namespace Moggle.Screens
 		public virtual void LoadContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent ();
+				x.LoadContent (Content);
+		}
+
+		void IComponent.LoadContent (ContentManager manager)
+		{
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (manager);
 		}
 
 		void System.IDisposable.Dispose ()

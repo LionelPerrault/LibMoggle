@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
 using Moggle.Comm;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle
 {
@@ -110,7 +111,7 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			CurrentScreen?.LoadContent ();
+			CurrentScreen?.LoadContent (Content);
 			base.LoadContent ();
 		}
 
@@ -127,7 +128,7 @@ namespace Moggle
 
 		#region Component
 
-		void IComponent.LoadContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
 			LoadContent ();
 		}
