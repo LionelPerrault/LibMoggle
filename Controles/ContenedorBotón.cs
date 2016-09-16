@@ -6,6 +6,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -348,9 +349,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
-			texturaFondo = Screen.Content.Load<Texture2D> (TextureFondo);
+			texturaFondo = manager.Load<Texture2D> (TextureFondo);
 		}
 
 		#endregion

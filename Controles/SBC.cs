@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -41,7 +42,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		protected virtual void LoadContent ()
+		protected virtual void LoadContent (ContentManager manager)
 		{
 		}
 
@@ -64,9 +65,9 @@ namespace Moggle.Controles
 		{
 		}
 
-		void IComponent.LoadContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			LoadContent ();
+			LoadContent (manager);
 		}
 
 		void IComponent.UnloadContent ()
@@ -82,11 +83,11 @@ namespace Moggle.Controles
 		public int Prioridad { get; set; }
 
 		/// <summary>
-		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
 		public virtual void Initialize ()
 		{
-			LoadContent ();
 		}
 
 		/// <summary>

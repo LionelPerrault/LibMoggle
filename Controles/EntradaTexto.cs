@@ -6,6 +6,7 @@ using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -135,10 +136,10 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
-			contornoTexture = Screen.Content.Load<Texture2D> (BgTexture);
-			fontTexture = Screen.Content.Load<BitmapFont> (FontTexture);
+			contornoTexture = manager.Load<Texture2D> (BgTexture);
+			fontTexture = manager.Load<BitmapFont> (FontTexture);
 		}
 
 		/// <summary>
