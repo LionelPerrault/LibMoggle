@@ -1,11 +1,12 @@
 ﻿using System;
-using Moggle.Screens;
+using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controles;
-using MonoGame.Extended.InputListeners;
-using Moggle.Comm;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Comm;
+using Moggle.Controles;
+using Moggle.Screens;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle
 {
@@ -78,11 +79,13 @@ namespace Moggle
 		/// </summary>
 		protected override void Initialize ()
 		{
-			base.Initialize ();
-
+			foreach (var x in Components)
+				x.Initialize ();
 
 			CurrentScreen?.Initialize ();
 
+			base.Initialize ();
+			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
 		}
 
@@ -111,8 +114,10 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (Content);
+
 			CurrentScreen?.LoadContent (Content);
-			base.LoadContent ();
 		}
 
 		/// <summary>
