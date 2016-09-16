@@ -14,13 +14,14 @@ namespace Test
 	/// </summary>
 	public class Game1 : Moggle.Game
 	{
-		public Game1 ()
+		protected override void Initialize ()
 		{
-			Graphics.IsFullScreen = false;
 			CurrentScreen = new Scr (this);
-
+			Graphics.IsFullScreen = false;
+			//CurrentScreen.Initialize ();
 			var ms = new Ratón (this);
 			ms.ArchivoTextura = @"cont/void";
+			base.Initialize ();
 		}
 	}
 }

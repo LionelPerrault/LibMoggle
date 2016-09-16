@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -90,9 +91,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
-			font = Screen.Content.Load<BitmapFont> (UseFont);
+			font = manager.Load<BitmapFont> (UseFont);
 		}
 
 		/// <summary>
