@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
-using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
@@ -373,22 +372,32 @@ namespace Moggle.Controles.Listas
 		}
 
 		/// <summary>
-		/// Elimina un objeto de la lista
+		/// Elimina la primera aparición de un objeto en la lista.
 		/// </summary>
-		/// <param name="item">Objeto</param>
 		public bool Remove (TObj item)
 		{
-			throw new NotImplementedException ();
+			var comparer = EqualityComparer<TObj>.Default;
+			foreach (var i in Objetos)
+			{
+				if (comparer.Equals (i.Objeto, item))
+				{
+					Objetos.Remove (i);
+					return true;
+				}
+			}
+			return false;
 		}
 
 		IEnumerator<TObj> IEnumerable<TObj>.GetEnumerator ()
 		{
-			throw new NotImplementedException ();
+			foreach (var i in Objetos)
+				yield return i.Objeto;
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
 		{
-			throw new NotImplementedException ();
+			foreach (var i in Objetos)
+				yield return i.Objeto;
 		}
 
 		/// <summary>
