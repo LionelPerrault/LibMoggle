@@ -24,11 +24,6 @@ namespace Moggle.Controles
 		/// </summary>
 		void UnloadContent ();
 
-		/// <summary>
-		/// Gets the container.
-		/// </summary>
-		/// <value>The container.</value>
-		IComponentContainerComponent<IGameComponent> Container { get; }
 	}
 
 	/// <summary>

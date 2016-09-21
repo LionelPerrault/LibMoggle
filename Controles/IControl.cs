@@ -12,5 +12,11 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <value>The screen.</value>
 		IScreen Screen { get; }
+
+		/// <summary>
+		/// Gets the container of the control.
+		/// This could be the Screen or Game itself.
+		/// </summary>
+		IComponentContainerComponent<IControl> Container { get; }
 	}
 }
