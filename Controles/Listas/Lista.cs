@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles.Listas
 {
@@ -52,18 +53,6 @@ namespace Moggle.Controles.Listas
 				Objeto = obj;
 				Color = color;
 			}
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="comp">Container</param>
-		public Lista (IComponentContainerComponent<IGameComponent> comp)
-			: base (comp)
-		{
-			Objetos = new List<Entrada> ();
-			ColorBG = Color.Blue * 0.3f;
-			ColorSel = Color.White * 0.5f;
-			InterceptarTeclado = true;
 		}
 
 		/// <summary>
@@ -313,17 +302,18 @@ namespace Moggle.Controles.Listas
 
 		int IList<TObj>.IndexOf (TObj item)
 		{
-			throw new NotImplementedException ();
+			var comparer = EqualityComparer<TObj>.Default;
+			return Objetos.FindIndex (z => comparer.Equals (z.Objeto, item));
 		}
 
 		void IList<TObj>.Insert (int index, TObj item)
 		{
-			throw new NotImplementedException ();
+			Objetos.Insert (index, new Entrada (item));
 		}
 
 		void IList<TObj>.RemoveAt (int index)
 		{
-			throw new NotImplementedException ();
+			Objetos.RemoveAt (index);
 		}
 
 		/// <summary>
@@ -368,31 +358,46 @@ namespace Moggle.Controles.Listas
 		/// <param name="item">Objeto</param>
 		public bool Contains (TObj item)
 		{
-			throw new NotImplementedException ();
+			var comparer = EqualityComparer<TObj>.Default;
+			return Objetos.Any (z => comparer.Equals (item, z.Objeto));
 		}
 
 		void ICollection<TObj>.CopyTo (TObj [] array, int arrayIndex)
 		{
-			throw new NotImplementedException ();
+			if (array.Length < arrayIndex + Count)
+				throw new IndexOutOfRangeException ("Cannot copy the collection into the array.");
+			
+			for (int i = 0; i < Objetos.Count - 1; i++)
+				array [i + arrayIndex] = Objetos [i].Objeto;
 		}
 
 		/// <summary>
-		/// Elimina un objeto de la lista
+		/// Elimina la primera aparición de un objeto en la lista.
 		/// </summary>
-		/// <param name="item">Objeto</param>
 		public bool Remove (TObj item)
 		{
-			throw new NotImplementedException ();
+			var comparer = EqualityComparer<TObj>.Default;
+			foreach (var i in Objetos)
+			{
+				if (comparer.Equals (i.Objeto, item))
+				{
+					Objetos.Remove (i);
+					return true;
+				}
+			}
+			return false;
 		}
 
 		IEnumerator<TObj> IEnumerable<TObj>.GetEnumerator ()
 		{
-			throw new NotImplementedException ();
+			foreach (var i in Objetos)
+				yield return i.Objeto;
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
 		{
-			throw new NotImplementedException ();
+			foreach (var i in Objetos)
+				yield return i.Objeto;
 		}
 
 		/// <summary>
@@ -441,5 +446,18 @@ namespace Moggle.Controles.Listas
 		public event EventHandler AlMoverCursor;
 
 		#endregion
+
+		/// <summary>
+		/// </summary>
+		/// <param name="comp">Container</param>
+		public Lista (IComponentContainerComponent<IGameComponent> comp)
+			: base (comp)
+		{
+			Objetos = new List<Entrada> ();
+			ColorBG = Color.Blue * 0.3f;
+			ColorSel = Color.White * 0.5f;
+			InterceptarTeclado = true;
+		}
+
 	}
 }
