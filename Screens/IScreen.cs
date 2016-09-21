@@ -10,7 +10,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IGameComponent>
+	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IControl>
 	{
 		#region Dibujo
 

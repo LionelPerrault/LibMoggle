@@ -35,26 +35,28 @@ namespace Moggle.Controles
 		/// Devuelve el <see cref="IScreen"/> que contiene este control.
 		/// </summary>
 		/// <returns>The screen.</returns>
-		public static IScreen GetScreen (this IComponent comp)
+		public static IScreen GetScreen (this IControl comp)
 		{
 			var container = comp.Container;
 			if (container == null)
 				throw new Exception ();
 			var scr = container as IScreen;
-			return scr ?? container.GetScreen ();
+			// TODO: nullcheck
+			return scr ?? (container as IControl).GetScreen ();
 		}
 
 		/// <summary>
 		/// Devuelve el Game de este control
 		/// </summary>
 		/// <returns>The game.</returns>
-		public static Game GetGame (this IComponent comp)
+		public static Game GetGame (this IControl comp)
 		{
 			var container = comp.Container;
 			if (container == null)
 				throw new Exception ();
 			var gm = container as Game;
-			return gm ?? container.GetGame ();
+			// TODO: nullcheck
+			return gm ?? (container as IControl).GetGame ();
 		}
 	}
 }

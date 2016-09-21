@@ -186,7 +186,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// </summary>
 		/// <param name="cont">Contenedor</param>
-		protected DSBC (IComponentContainerComponent<IGameComponent> cont)
+		protected DSBC (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{
 			Visible = true;
