@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
+using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
-using MonoGame.Extended;
 
 namespace Moggle.Controles.Listas
 {
@@ -308,12 +309,12 @@ namespace Moggle.Controles.Listas
 
 		void IList<TObj>.Insert (int index, TObj item)
 		{
-			throw new NotImplementedException ();
+			Objetos.Insert (index, new Entrada (item));
 		}
 
 		void IList<TObj>.RemoveAt (int index)
 		{
-			throw new NotImplementedException ();
+			Objetos.RemoveAt (index);
 		}
 
 		/// <summary>
@@ -358,12 +359,17 @@ namespace Moggle.Controles.Listas
 		/// <param name="item">Objeto</param>
 		public bool Contains (TObj item)
 		{
-			throw new NotImplementedException ();
+			var comparer = EqualityComparer<TObj>.Default;
+			return Objetos.Any (z => comparer.Equals (item, z.Objeto));
 		}
 
 		void ICollection<TObj>.CopyTo (TObj [] array, int arrayIndex)
 		{
-			throw new NotImplementedException ();
+			if (array.Length < arrayIndex + Count)
+				throw new IndexOutOfRangeException ("Cannot copy the collection into the array.");
+			
+			for (int i = 0; i < Objetos.Count - 1; i++)
+				array [i + arrayIndex] = Objetos [i].Objeto;
 		}
 
 		/// <summary>
