@@ -450,7 +450,7 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// </summary>
 		/// <param name="comp">Container</param>
-		public Lista (IComponentContainerComponent<IGameComponent> comp)
+		public Lista (IComponentContainerComponent<IControl> comp)
 			: base (comp)
 		{
 			Objetos = new List<Entrada> ();

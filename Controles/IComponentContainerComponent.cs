@@ -7,7 +7,7 @@ namespace Moggle.Controles
 	/// Representa un objeto que contiene Componentes de algún tipo.
 	/// </summary>
 	public interface IComponentContainerComponent<TComp> : IComponent
-		where TComp : IGameComponent
+		where TComp : IControl
 	{
 		/// <summary>
 		/// Agrega un componente
