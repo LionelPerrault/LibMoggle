@@ -8,6 +8,7 @@ using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Microsoft.Xna.Framework.Content;
+using MonoGame.Extended;
 
 namespace Moggle.Controles.Listas
 {
@@ -52,18 +53,6 @@ namespace Moggle.Controles.Listas
 				Objeto = obj;
 				Color = color;
 			}
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="comp">Container</param>
-		public Lista (IComponentContainerComponent<IGameComponent> comp)
-			: base (comp)
-		{
-			Objetos = new List<Entrada> ();
-			ColorBG = Color.Blue * 0.3f;
-			ColorSel = Color.White * 0.5f;
-			InterceptarTeclado = true;
 		}
 
 		/// <summary>
@@ -313,7 +302,8 @@ namespace Moggle.Controles.Listas
 
 		int IList<TObj>.IndexOf (TObj item)
 		{
-			throw new NotImplementedException ();
+			var comparer = EqualityComparer<TObj>.Default;
+			return Objetos.FindIndex (z => comparer.Equals (z.Objeto, item));
 		}
 
 		void IList<TObj>.Insert (int index, TObj item)
@@ -441,5 +431,18 @@ namespace Moggle.Controles.Listas
 		public event EventHandler AlMoverCursor;
 
 		#endregion
+
+		/// <summary>
+		/// </summary>
+		/// <param name="comp">Container</param>
+		public Lista (IComponentContainerComponent<IGameComponent> comp)
+			: base (comp)
+		{
+			Objetos = new List<Entrada> ();
+			ColorBG = Color.Blue * 0.3f;
+			ColorSel = Color.White * 0.5f;
+			InterceptarTeclado = true;
+		}
+
 	}
 }
