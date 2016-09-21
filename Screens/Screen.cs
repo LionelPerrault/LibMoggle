@@ -23,6 +23,18 @@ namespace Moggle.Screens
 
 		#endregion
 
+		#region Control
+
+		IComponentContainerComponent<IControl> IControl.Container
+		{
+			get
+			{
+				return Juego;
+			}
+		}
+
+		#endregion
+
 		#region Listeners
 
 		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }

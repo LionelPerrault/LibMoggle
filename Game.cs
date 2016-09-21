@@ -25,12 +25,6 @@ namespace Moggle
 		public IScreen CurrentScreen;
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <value>The screen.</value>
-		IScreen IControl.Screen { get { return null; } }
-
-		/// <summary>
 		/// The graphics.
 		/// </summary>
 		public readonly GraphicsDeviceManager Graphics;
