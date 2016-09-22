@@ -49,6 +49,8 @@ namespace Moggle.Controles
 		/// </summary>
 		public SelectionManager<T> Selection { get; }
 
+		public Color SelectionColor { get; set; }
+
 		#endregion
 
 		#region Dibujo
@@ -64,6 +66,11 @@ namespace Moggle.Controles
 			{
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, FocusedColor);
+			}
+			if (Selection.IsSelected (Objetos [index]))
+			{
+				var rect = CalcularPosición (index);
+				bat.Draw (TexturaFondo, rect, SelectionColor);
 			}
 			base.DrawObject (bat, index);
 		}
@@ -203,6 +210,7 @@ namespace Moggle.Controles
 			: base (cont)
 		{
 			FocusedColor = Color.Yellow * 0.7f;
+			SelectionColor = Color.Red * 0.65f;
 			InitialCooldown = TimeSpan.FromMilliseconds (100);
 			Selection = new SelectionManager<T> (Objetos);
 		}
