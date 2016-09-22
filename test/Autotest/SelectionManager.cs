@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using Moggle.Controles;
+using NUnit.Framework;
 
 namespace Test
 {
