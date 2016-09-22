@@ -47,10 +47,13 @@ namespace Moggle.Controles
 
 		void setDefaultSelection ()
 		{
-			// TODO: throws error if the selectable objects is empty.
 			_selectedItems.Clear ();
 			if (!AllowEmpty)
+			{
+				if (!_completeItems.Any ())
+					throw new InvalidOperationException ("Not allowed state: !AllowEmpty & EmṕtySelectableList.");
 				Select (_completeItems.First ());
+			}
 		}
 
 		/// <summary>
