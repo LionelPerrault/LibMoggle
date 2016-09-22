@@ -248,6 +248,29 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Devuelve el número de objetos
+		/// </summary>
+		public int Count { get { return Objetos.Count; } }
+
+		/// <summary>
+		/// This control was clicked.
+		/// </summary>
+		/// <param name="args">Arguments.</param>
+		protected override void OnClick (MonoGame.Extended.InputListeners.MouseEventArgs args)
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				var act = Objetos [i] as IActivable;
+				if (act != null)
+				{
+					var rect = CalcularPosición (i);
+					if (rect.Contains (args.Position))
+						act.Activar ();
+				}
+			}
+		}
+
+		/// <summary>
 		/// Representa el orden en el que se enlistan los objetos
 		/// </summary>
 		public enum TipoOrdenEnum
@@ -294,6 +317,9 @@ namespace Moggle.Controles
 			Add (newItem);
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
 		public ContenedorImg (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{

@@ -138,6 +138,11 @@ namespace Moggle.Controles
 			}
 		}
 
+		void IActivable.Activar ()
+		{
+			AlClickIzquierdo?.Invoke (this, EventArgs.Empty);
+		}
+
 		/// <summary>
 		/// Ocurre cuando se hace click (cualquiera( en este control.
 		/// </summary>
@@ -152,7 +157,9 @@ namespace Moggle.Controles
 		public event EventHandler AlClickDerecho;
 
 		event EventHandler IActivable.AlActivar
-		{add{ AlClickIzquierdo += value;}remove{ AlClickIzquierdo += value;}
+		{
+			add{ AlClickIzquierdo += value;}
+			remove{ AlClickIzquierdo += value;}
 		}
 
 		#endregion
