@@ -37,9 +37,25 @@ namespace Moggle.Controles
 			_selectedItems.Remove (item);
 		}
 
+		/// <summary>
+		/// Devuelve un valor que determina si un objeto dado está seleccionado
+		/// </summary>
+		/// <param name="item">Item.</param>
 		public bool IsSelected (T item)
 		{
 			return _selectedItems.Contains (item);
+		}
+
+		/// <summary>
+		/// Alterna la selección de un objeto dado
+		/// </summary>
+		/// <param name="item">Item.</param>
+		public void ToggleSelection (T item)
+		{
+			if (IsSelected (item))
+				Deselect (item);
+			else
+				Select (item);
 		}
 
 		/// <summary>
