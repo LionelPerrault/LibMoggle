@@ -27,7 +27,7 @@ namespace Moggle.Controles
 
 		bool _allowEmptySelection;
 
-		public bool AllowEmptySelection
+		public bool AllowEmpty
 		{
 			get{ return _allowEmptySelection; }
 			set
@@ -41,8 +41,8 @@ namespace Moggle.Controles
 		void setDefaultSelection ()
 		{
 			// TODO: throws error if the selectable objects is empty.
-			ClearSelection ();
-			if (!AllowEmptySelection)
+			_selectedItems.Clear ();
+			if (!AllowEmpty)
 				Select (_completeItems.First ());
 		}
 
@@ -56,7 +56,7 @@ namespace Moggle.Controles
 
 		public void ClearSelection ()
 		{
-			_selectedItems.Clear ();
+			setDefaultSelection ();
 		}
 
 		/// <summary>
@@ -66,9 +66,12 @@ namespace Moggle.Controles
 		{
 			if (!_completeItems.Contains (item))
 				throw new InvalidOperationException ("No se puede agregar un objeto no existente.");
+
+			if (IsSelected (item))
+				return;
 			
 			if (!AllowMultiple)
-				ClearSelection ();
+				_selectedItems.Clear ();
 			
 			_selectedItems.Add (item);
 		}
@@ -81,8 +84,8 @@ namespace Moggle.Controles
 			// Do not remove if this is the only selected item
 			// and it is not allowed to be empty
 			if (_selectedItems.Count == 1 &&
-			    !AllowEmptySelection &&
-			    (item == _selectedItems [0]))
+			    !AllowEmpty &&
+			    (item.Equals (_selectedItems [0])))
 				_selectedItems.Remove (item);
 		}
 
