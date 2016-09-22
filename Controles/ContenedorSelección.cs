@@ -1,9 +1,6 @@
-using System.Collections.Generic;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
-using System;
 
 namespace Moggle.Controles
 {
