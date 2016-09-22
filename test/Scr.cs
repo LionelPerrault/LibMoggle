@@ -16,30 +16,37 @@ namespace Test
 			bt.Color = Color.Green;
 			bt.Textura = "cont//void";
 
-			var ct = new ContenedorBotón (this)
+			var ct = new ContenedorImg (this)
 			{
-				Columnas = 2,
-				Filas = 2,
-				TextureFondo = "cont//void",
-				Márgenes = new ContenedorBotón.MargenType
+				GridSize = new MonoGame.Extended.Size (2, 2),
+				TextureFondoName = "cont//void",
+				Márgenes = new MargenType
 				{
 					Top = 3,
 					Left = 3,
 					Right = 3,
 					Bot = 3
 				},
-				BgColor = Color.Gray * 0.3f
+				BgColor = Color.Gray * 0.3f,
+				TamañoBotón = new MonoGame.Extended.Size (12, 12),
+				Posición = new Point (5, 5)
 			};
 			const int numBot = 3;
-			var bts = new Botón[numBot];
+			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{
-				bts [i] = ct.Add ();
-				bts [i].Color = Color.OrangeRed;
-				bts [i].Textura = "cont//void";
-				bts [i].AlClick += (sender, e) => buttonClicked (e, i);
+				bts [i] = new FlyingSprite
+				{
+					Color = Color.PaleVioletRed * 0.8f,
+					TextureName = "cont//void"
+				};
+
+				bts [i].LoadContent (Content);
+
+				ct.Add (bts [i]);
+				//bts [i].AlClick += (sender, e) => buttonClicked (e, i);
 			}
-			ct.AlActivarBotón += Ct_AlActivarBotón;
+			//ct.AlActivarBotón += Ct_AlActivarBotón;
 
 			/* 
 			 * //TODO: Agregar un font.
@@ -50,12 +57,6 @@ namespace Test
 			*/
 
 			StrListen = new KeyStringListener (Juego.KeyListener);
-		}
-
-		static void Ct_AlActivarBotón (object sender,
-		                               ContenedorBotón.ContenedorBotónIndexEventArgs e)
-		{
-			System.Console.WriteLine ("botón [{0}] click: {1}", e.Index, e.Mouse.Button);
 		}
 
 		void buttonClicked (MouseEventArgs e, int index)
