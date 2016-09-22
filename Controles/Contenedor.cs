@@ -122,8 +122,6 @@ namespace Moggle.Controles
 		/// </summary>
 		public override void Update (GameTime gameTime)
 		{
-			// TODO: debería revisar clicks en sus objetos
-			//throw new NotImplementedException ();
 		}
 
 		/// <summary>

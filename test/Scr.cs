@@ -18,7 +18,7 @@ namespace Test
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
 			{
-				GridSize = new MonoGame.Extended.Size (2, 2),
+				GridSize = new MonoGame.Extended.Size (4, 4),
 				TextureFondoName = "cont//void",
 				Márgenes = new MargenType
 				{
@@ -32,7 +32,7 @@ namespace Test
 				Posición = new Point (5, 5)
 			};
 			AddComponent (ct);
-			const int numBot = 3;
+			const int numBot = 13;
 			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{

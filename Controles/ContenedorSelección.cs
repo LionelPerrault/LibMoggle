@@ -1,10 +1,14 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Comm;
+using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
-	public class ContenedorSelección<T> : Contenedor<T>
+	public class ContenedorSelección<T> : Contenedor<T>, IReceptorTeclado
 		where T : IDibujable
 	{
 		int _selectedIndex;
@@ -33,10 +37,86 @@ namespace Moggle.Controles
 			base.DrawObject (bat, index);
 		}
 
+		public Keys UpKey = Keys.Up;
+		public Keys DownKey = Keys.Down;
+		public Keys LeftKey = Keys.Left;
+		public Keys RightKey = Keys.Right;
+		public Keys EnterKey = Keys.Enter;
+
+		public TimeSpan InitialCooldown { get; set; }
+
+		TimeSpan cooldown;
+
+		bool isCoolingDown { get { return cooldown > TimeSpan.Zero; } }
+
+		public bool RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		{
+			if (isCoolingDown)
+				return false;
+			cooldown = InitialCooldown;
+			Debug.WriteLine (key.Key);
+			if (key.Key == UpKey)
+			{
+				if (TipoOrden == TipoOrdenEnum.ColumnaPrimero)
+					SelectedIndex--;
+				else
+					SelectedIndex -= Columnas;
+				return true;
+			}
+			if (key.Key == DownKey)
+			{
+				if (TipoOrden == TipoOrdenEnum.ColumnaPrimero)
+					SelectedIndex++;
+				else
+					SelectedIndex += Columnas;
+				return true;
+			}
+			if (key.Key == LeftKey)
+			{
+				if (TipoOrden == TipoOrdenEnum.FilaPrimero)
+					SelectedIndex--;
+				else
+					SelectedIndex -= Columnas;
+				return true;
+			}
+			if (key.Key == RightKey)
+			{
+				if (TipoOrden == TipoOrdenEnum.FilaPrimero)
+					SelectedIndex++;
+				else
+					SelectedIndex += Columnas;
+				return true;
+			}
+			if (key.Key == EnterKey)
+			{
+				Activar (key);
+				return true;
+			}
+			return false;
+		}
+
+		protected void Activar (EventArgs args)
+		{
+			Debug.WriteLine ("Contenedor activado, con índice {0}", SelectedIndex);
+			Activado?.Invoke (this, args);
+		}
+
+		public override void Update (GameTime gameTime)
+		{
+			if (isCoolingDown)
+			{
+				cooldown -= gameTime.ElapsedGameTime;
+				Debug.WriteLineIf (!isCoolingDown, "Keyboard cooldown over.");
+			}
+		}
+
+		public event EventHandler Activado;
+
 		public ContenedorSelección (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{
-			SelectedColor = Color.Yellow * 0.4f;
+			SelectedColor = Color.Yellow * 0.7f;
+			InitialCooldown = TimeSpan.FromMilliseconds (100);
 		}
 	}
 	
