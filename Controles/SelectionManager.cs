@@ -8,7 +8,7 @@ namespace Moggle.Controles
 	/// </summary>
 	public class SelectionManager<T>
 	{
-		readonly List<T> _items;
+		readonly List<T> _selectedItems;
 		readonly ICollection<T> _completeItems;
 
 		/// <summary>
@@ -16,7 +16,7 @@ namespace Moggle.Controles
 		/// </summary>
 		public List<T> GetSelection ()
 		{
-			return new List<T> (_items);
+			return new List<T> (_selectedItems);
 		}
 
 		/// <summary>
@@ -26,7 +26,7 @@ namespace Moggle.Controles
 		{
 			if (!_completeItems.Contains (item))
 				throw new InvalidOperationException ("No se puede agregar un objeto no existente.");
-			_items.Add (item);
+			_selectedItems.Add (item);
 		}
 
 		/// <summary>
@@ -34,7 +34,12 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Deselect (T item)
 		{
-			_items.Remove (item);
+			_selectedItems.Remove (item);
+		}
+
+		public bool IsSelected (T item)
+		{
+			return _selectedItems.Contains (item);
 		}
 
 		/// <summary>
@@ -42,7 +47,7 @@ namespace Moggle.Controles
 		/// <param name="items">A collection to link this manager</param>
 		public SelectionManager (ICollection<T> items)
 		{
-			_items = new List<T> ();
+			_selectedItems = new List<T> ();
 			_completeItems = items;
 		}
 	}
