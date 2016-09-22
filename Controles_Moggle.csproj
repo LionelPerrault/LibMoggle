@@ -88,6 +88,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\IDibujable.cs" />
     <Compile Include="Controles\FlyingSprite.cs" />
     <Compile Include="Controles\ContenedorImg.cs" />
+    <Compile Include="Controles\ContenedorSelección.cs" />
     <Compile Include="Controles\Contenedor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
