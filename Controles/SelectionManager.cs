@@ -83,10 +83,12 @@ namespace Moggle.Controles
 		{
 			// Do not remove if this is the only selected item
 			// and it is not allowed to be empty
-			if (_selectedItems.Count == 1 &&
-			    !AllowEmpty &&
-			    (item.Equals (_selectedItems [0])))
-				_selectedItems.Remove (item);
+			if (_selectedItems.Count == 0)
+				return;
+			if (_selectedItems.Count == 1 && !AllowEmpty && item.Equals (_selectedItems [0]))
+				return;
+			
+			_selectedItems.Remove (item);
 		}
 
 		/// <summary>

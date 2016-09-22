@@ -63,5 +63,49 @@ namespace Test
 			Assert.True (Selector.IsSelected (1));
 			Assert.AreEqual (2, Selector.GetSelection ().Count);
 		}
+
+	
+		[Test]
+		public void TestDeselect ()
+		{
+			Selector.AllowEmpty = false;
+			Selector.AllowMultiple = false;
+			Assert.AreEqual (1, Selector.GetSelection ().Count);
+			Selector.Select (0);
+			Selector.Select (1);
+			Selector.Deselect (0);
+			Assert.True (Selector.IsSelected (1));
+			Assert.AreEqual (1, Selector.GetSelection ().Count);
+
+			Selector.AllowEmpty = true;
+			Selector.AllowMultiple = false;
+			Selector.ClearSelection ();
+			Assert.AreEqual (0, Selector.GetSelection ().Count);
+			Selector.Select (0);
+			Selector.Select (1);
+			Selector.Deselect (0);
+			Assert.True (Selector.IsSelected (1));
+			Assert.AreEqual (1, Selector.GetSelection ().Count);
+
+			Selector.AllowEmpty = false;
+			Selector.AllowMultiple = true;
+			Selector.ClearSelection ();
+			Assert.AreEqual (1, Selector.GetSelection ().Count);
+			Selector.Select (0);
+			Selector.Select (1);
+			Selector.Deselect (0);
+			Assert.True (Selector.IsSelected (1));
+			Assert.AreEqual (1, Selector.GetSelection ().Count);
+
+			Selector.AllowEmpty = true;
+			Selector.AllowMultiple = true;
+			Selector.ClearSelection ();
+			Assert.AreEqual (0, Selector.GetSelection ().Count);
+			Selector.Select (0);
+			Selector.Select (1);
+			Selector.Deselect (0);
+			Assert.True (Selector.IsSelected (1));
+			Assert.AreEqual (1, Selector.GetSelection ().Count);
+		}
 	}
 }
