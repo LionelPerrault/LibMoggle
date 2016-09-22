@@ -14,6 +14,9 @@ namespace Moggle.Controles
 
 		bool _allowMultiple;
 
+		/// <summary>
+		/// Gets or set a value indicating if multiple selectin is possible
+		/// </summary>
 		public bool AllowMultiple
 		{
 			get{ return _allowMultiple; }
@@ -27,6 +30,10 @@ namespace Moggle.Controles
 
 		bool _allowEmptySelection;
 
+		/// <summary>
+		/// Gets or set a value indicating if empty selection is possible 
+		/// </summary>
+		/// <value><c>true</c> if allow empty; otherwise, <c>false</c>.</value>
 		public bool AllowEmpty
 		{
 			get{ return _allowEmptySelection; }
@@ -54,6 +61,10 @@ namespace Moggle.Controles
 			return new List<T> (_selectedItems);
 		}
 
+		/// <summary>
+		/// Sets the selection to the default state 
+		/// (empty if it is possible, or first-element selection if not)
+		/// </summary>
 		public void ClearSelection ()
 		{
 			setDefaultSelection ();

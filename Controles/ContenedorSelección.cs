@@ -49,6 +49,9 @@ namespace Moggle.Controles
 		/// </summary>
 		public SelectionManager<T> Selection { get; }
 
+		/// <summary>
+		/// Gets or set a value indicating the color of the selection
+		/// </summary>
 		public Color SelectionColor { get; set; }
 
 		#endregion
