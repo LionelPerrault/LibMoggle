@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
@@ -7,188 +9,28 @@ using MonoGame.Extended.Shapes;
 namespace Moggle.Controles
 {
 	/// <summary>
-	/// Representa un contenedor de objetos
+	/// Margen.
 	/// </summary>
-	public class Contenedor<T> : DSBC
-		where T : IDibujable
+	public struct MargenType
 	{
 		/// <summary>
-		/// Devuelve o establece la lista de objetos
+		/// Margen superior
 		/// </summary>
-		protected List<T> Objetos { get; set; }
-
+		public int Top;
 		/// <summary>
-		/// Add the specified item.
+		/// Margen inferior
 		/// </summary>
-		/// <param name="item">Item.</param>
-		public void Add (T item)
-		{
-			Objetos.Add (item);
-		}
-
+		public int Bot;
 		/// <summary>
-		/// El tipo de orden
+		/// Márgen izquierdo.
 		/// </summary>
-		public TipoOrdenEnum TipoOrden;
-
+		public int Left;
 		/// <summary>
-		/// Devuelve o establece la posición del control.
+		/// Márgen derecho.
 		/// </summary>
-		public Point Posición { get; set; }
-
-		/// <summary>
-		/// Color de fondo.
-		/// </summary>
-		public Color BgColor = Color.DarkBlue;
-
-		/// <summary>
-		/// Nombre de la textura de fondo
-		/// </summary>
-		public string TextureFondoName { get; set; }
-
-		/// <summary>
-		/// Devuelve la textura de fondo cargada.
-		/// </summary>
-		/// <value>The textura fondo.</value>
-		public Texture2D TexturaFondo { get; private set; }
-
-		/// <summary>
-		/// Devuelve o establece el tamaño de los botones.
-		/// </summary>
-		/// <value>The tamaño botón.</value>
-		public Size TamañoBotón { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el número de objetos que pueden existir visiblemente en el control
-		/// </summary>
-		public Size GridSize { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el márgen de los botones respecto a ellos mismos y al contenedor.
-		/// </summary>
-		/// <value>The márgenes.</value>
-		public MargenType Márgenes { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el número de columnas que puede contener.
-		/// </summary>
-		public int Columnas { get { return GridSize.Width; } }
-
-		/// <summary>
-		/// Devuelve o establece el número de filas que puede contener.
-		/// </summary>
-		public int Filas { get { return GridSize.Height; } }
-
-		/// <summary>
-		/// Devuelve el objeto que está en un índice dado.
-		/// </summary>
-		/// <param name="index">Índice base cero del botón.</param>
-		public T BotónEnÍndice (int index)
-		{
-			return Objetos [index];
-		}
-
-		/// <summary>
-		/// Dibuja el control.
-		/// </summary>
-		public override void Draw (GameTime gameTime)
-		{
-			var bat = Screen.Batch;
-			for (int i = 0; i < Objetos.Count; i++)
-			{
-				var item = Objetos [i];
-				item.Draw (bat, CalcularPosición (i));
-			}
-		}
-
-		/// <summary>
-		/// Devuelve el límite gráfico del control.
-		/// </summary>
-		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
-		{
-			return new RectangleF (Posición.ToVector2 (),
-				new SizeF (
-					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.Width,
-					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Height));
-		}
-
-		/// <summary>
-		/// Update lógico
-		/// </summary>
-		public override void Update (GameTime gameTime)
-		{
-			// TODO: debería revisar clicks en sus objetos
-			//throw new NotImplementedException ();
-		}
-
-		/// <summary>
-		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
-		/// </summary>
-		/// <param name="index">Índice del objeto.</param>
-		protected Rectangle CalcularPosición (int index)
-		{
-			Rectangle bounds;
-			Point locGrid;
-			int orden = index;
-			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
-				new Point (orden / Filas, orden % Filas) : 
-				new Point (orden % Columnas, orden / Columnas);
-			bounds = new Rectangle (Posición.X + Márgenes.Left + TamañoBotón.Width * locGrid.X,
-				Posición.Y + Márgenes.Top + TamañoBotón.Height * locGrid.Y,
-				TamañoBotón.Width, TamañoBotón.Height);
-			return bounds;
-		}
-
-		/// <summary>
-		/// Devuelve el número de objetos
-		/// </summary>
-		public int Count { get { return Objetos.Count; } }
-
-		/// <summary>
-		/// This control was clicked.
-		/// </summary>
-		/// <param name="args">Arguments.</param>
-		protected override void OnClick (MonoGame.Extended.InputListeners.MouseEventArgs args)
-		{
-			for (int i = 0; i < Count; i++)
-			{
-				var act = Objetos [i] as IActivable;
-				if (act != null)
-				{
-					var rect = CalcularPosición (i);
-					if (rect.Contains (args.Position))
-						act.Activar ();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Representa el orden en el que se enlistan los objetos
-		/// </summary>
-		public enum TipoOrdenEnum
-		{
-			/// <summary>
-			/// Llena las columnas antes que las filas.
-			/// </summary>
-			ColumnaPrimero,
-			/// <summary>
-			/// Llena las filas antes que las columnas.
-			/// </summary>
-			FilaPrimero
-		}
-
-
-		/// <summary>
-		/// </summary>
-		/// <param name="cont">Container</param>
-		public Contenedor (IComponentContainerComponent<IControl> cont)
-			: base (cont)
-		{
-			Objetos = new List<T> ();
-		}
-		
+		public int Right;
 	}
+
 	/*
 
 	/// <summary>
@@ -221,7 +63,6 @@ namespace Moggle.Controles
 		}
 
 		#endregion
-
 
 		#region Contenedor
 
@@ -411,7 +252,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Tipo de orden lexicográfico para los botones.
 		/// </summary>
-
 
 	}
 

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
@@ -7,188 +9,74 @@ using MonoGame.Extended.Shapes;
 namespace Moggle.Controles
 {
 	/// <summary>
-	/// Representa un contenedor de objetos
+	/// Representa un sprite sin posición
 	/// </summary>
-	public class Contenedor<T> : DSBC
-		where T : IDibujable
+	public class FlyingSprite : IDibujable, IColorable, IComponent
 	{
 		/// <summary>
-		/// Devuelve o establece la lista de objetos
+		/// Dibuja el sprite en algún rectángulo
 		/// </summary>
-		protected List<T> Objetos { get; set; }
-
-		/// <summary>
-		/// Add the specified item.
-		/// </summary>
-		/// <param name="item">Item.</param>
-		public void Add (T item)
+		/// <param name="bat">Batch</param>
+		/// <param name="rect">Rectángulo de dibujo</param>
+		public void Draw (SpriteBatch bat, Rectangle rect)
 		{
-			Objetos.Add (item);
+			bat.Draw (Texture, rect, Color);
 		}
 
 		/// <summary>
-		/// El tipo de orden
+		/// Carga el contenido gráfico.
 		/// </summary>
-		public TipoOrdenEnum TipoOrden;
-
-		/// <summary>
-		/// Devuelve o establece la posición del control.
-		/// </summary>
-		public Point Posición { get; set; }
-
-		/// <summary>
-		/// Color de fondo.
-		/// </summary>
-		public Color BgColor = Color.DarkBlue;
-
-		/// <summary>
-		/// Nombre de la textura de fondo
-		/// </summary>
-		public string TextureFondoName { get; set; }
-
-		/// <summary>
-		/// Devuelve la textura de fondo cargada.
-		/// </summary>
-		/// <value>The textura fondo.</value>
-		public Texture2D TexturaFondo { get; private set; }
-
-		/// <summary>
-		/// Devuelve o establece el tamaño de los botones.
-		/// </summary>
-		/// <value>The tamaño botón.</value>
-		public Size TamañoBotón { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el número de objetos que pueden existir visiblemente en el control
-		/// </summary>
-		public Size GridSize { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el márgen de los botones respecto a ellos mismos y al contenedor.
-		/// </summary>
-		/// <value>The márgenes.</value>
-		public MargenType Márgenes { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el número de columnas que puede contener.
-		/// </summary>
-		public int Columnas { get { return GridSize.Width; } }
-
-		/// <summary>
-		/// Devuelve o establece el número de filas que puede contener.
-		/// </summary>
-		public int Filas { get { return GridSize.Height; } }
-
-		/// <summary>
-		/// Devuelve el objeto que está en un índice dado.
-		/// </summary>
-		/// <param name="index">Índice base cero del botón.</param>
-		public T BotónEnÍndice (int index)
+		/// <param name="manager">Manager.</param>
+		public void LoadContent (ContentManager manager)
 		{
-			return Objetos [index];
+			Texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
-		/// Dibuja el control.
+		/// Desarga el contenido gráfico.
 		/// </summary>
-		public override void Draw (GameTime gameTime)
+		public void UnloadContent ()
 		{
-			var bat = Screen.Batch;
-			for (int i = 0; i < Objetos.Count; i++)
-			{
-				var item = Objetos [i];
-				item.Draw (bat, CalcularPosición (i));
-			}
 		}
 
 		/// <summary>
-		/// Devuelve el límite gráfico del control.
+		/// Releases all resource used by the <see cref="Moggle.Controles.FlyingSprite"/> object.
 		/// </summary>
-		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Controles.FlyingSprite"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.FlyingSprite"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.FlyingSprite"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.FlyingSprite"/> was occupying.</remarks>
+		public void Dispose ()
 		{
-			return new RectangleF (Posición.ToVector2 (),
-				new SizeF (
-					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.Width,
-					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Height));
+			UnloadContent ();
 		}
 
 		/// <summary>
-		/// Update lógico
+		/// Initialize this instance.
 		/// </summary>
-		public override void Update (GameTime gameTime)
+		public void Initialize ()
 		{
-			// TODO: debería revisar clicks en sus objetos
-			//throw new NotImplementedException ();
 		}
 
 		/// <summary>
-		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
+		/// Gets the texture.
 		/// </summary>
-		/// <param name="index">Índice del objeto.</param>
-		protected Rectangle CalcularPosición (int index)
-		{
-			Rectangle bounds;
-			Point locGrid;
-			int orden = index;
-			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
-				new Point (orden / Filas, orden % Filas) : 
-				new Point (orden % Columnas, orden / Columnas);
-			bounds = new Rectangle (Posición.X + Márgenes.Left + TamañoBotón.Width * locGrid.X,
-				Posición.Y + Márgenes.Top + TamañoBotón.Height * locGrid.Y,
-				TamañoBotón.Width, TamañoBotón.Height);
-			return bounds;
-		}
+		/// <value>The texture.</value>
+		public Texture2D Texture { get; private set; }
 
 		/// <summary>
-		/// Devuelve el número de objetos
+		/// Gets or sets the name of the texture.
 		/// </summary>
-		public int Count { get { return Objetos.Count; } }
+		/// <value>The name of the texture.</value>
+		public string TextureName { get; set; }
 
 		/// <summary>
-		/// This control was clicked.
+		/// Gets or sets the color.
 		/// </summary>
-		/// <param name="args">Arguments.</param>
-		protected override void OnClick (MonoGame.Extended.InputListeners.MouseEventArgs args)
-		{
-			for (int i = 0; i < Count; i++)
-			{
-				var act = Objetos [i] as IActivable;
-				if (act != null)
-				{
-					var rect = CalcularPosición (i);
-					if (rect.Contains (args.Position))
-						act.Activar ();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Representa el orden en el que se enlistan los objetos
-		/// </summary>
-		public enum TipoOrdenEnum
-		{
-			/// <summary>
-			/// Llena las columnas antes que las filas.
-			/// </summary>
-			ColumnaPrimero,
-			/// <summary>
-			/// Llena las filas antes que las columnas.
-			/// </summary>
-			FilaPrimero
-		}
-
-
-		/// <summary>
-		/// </summary>
-		/// <param name="cont">Container</param>
-		public Contenedor (IComponentContainerComponent<IControl> cont)
-			: base (cont)
-		{
-			Objetos = new List<T> ();
-		}
-		
+		/// <value>The color.</value>
+		public Color Color { get; set; }
 	}
+
 	/*
 
 	/// <summary>
@@ -221,7 +109,6 @@ namespace Moggle.Controles
 		}
 
 		#endregion
-
 
 		#region Contenedor
 
@@ -411,7 +298,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Tipo de orden lexicográfico para los botones.
 		/// </summary>
-
 
 	}
 
