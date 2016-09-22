@@ -100,6 +100,11 @@ namespace Moggle.Controles
 				DrawObject (bat, i);
 		}
 
+		/// <summary>
+		/// Dibuja el objeto de un índice dado
+		/// </summary>
+		/// <param name="bat">Sprite batch</param>
+		/// <param name="index">Índice del objeto a dibujar</param>
 		protected virtual void DrawObject (SpriteBatch bat, int index)
 		{
 			var item = Objetos [index];
@@ -182,6 +187,10 @@ namespace Moggle.Controles
 			FilaPrimero
 		}
 
+		/// <summary>
+		/// Loads the content.
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
