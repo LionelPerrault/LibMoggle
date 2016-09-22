@@ -13,6 +13,8 @@ namespace Moggle.Controles
 	public class ContenedorSelección<T> : Contenedor<T>, IReceptorTeclado
 		where T : IDibujable
 	{
+		#region Selección y enfoque
+
 		int _focusIndex;
 
 		/// <summary>
@@ -31,10 +33,30 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Devuelve el objeto enfocado
+		/// </summary>
+		/// <value>The focused item.</value>
+		public T FocusedItem { get { return Objetos [FocusedIndex]; } }
+
+		/// <summary>
 		/// Devuelve o establece el color que se usará para resaltar objeto enfocado
 		/// </summary>
 		/// <value>The color of the selected.</value>
 		public Color FocusedColor { get; set; }
+
+		/// <summary>
+		/// Devuelve la selección
+		/// </summary>
+		public SelectionManager<T> Selection { get; }
+
+		/// <summary>
+		/// Gets or set a value indicating the color of the selection
+		/// </summary>
+		public Color SelectionColor { get; set; }
+
+		#endregion
+
+		#region Dibujo
 
 		/// <summary>
 		/// Dibuja el objeto de un índice dado
@@ -48,11 +70,17 @@ namespace Moggle.Controles
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, FocusedColor);
 			}
+			if (Selection.IsSelected (Objetos [index]))
+			{
+				var rect = CalcularPosición (index);
+				bat.Draw (TexturaFondo, rect, SelectionColor);
+			}
 			base.DrawObject (bat, index);
 		}
 
+		#endregion
 
-		#region Teclas
+		#region Teclas y teclado
 
 		/// <summary>
 		/// Tecla enfoque arriba
@@ -74,8 +102,10 @@ namespace Moggle.Controles
 		/// Tecla activación
 		/// </summary>
 		public Keys EnterKey = Keys.Enter;
-
-		#endregion
+		/// <summary>
+		/// Tecla para alternar selección
+		/// </summary>
+		public Keys SelectKey = Keys.Space;
 
 		/// <summary>
 		/// Devuelve o establece el tiempo de repetición de tecla presionada
@@ -130,8 +160,16 @@ namespace Moggle.Controles
 				Activar (key);
 				return true;
 			}
+			if (key.Key == SelectKey)
+			{
+				Selection.ToggleSelection (FocusedItem);
+			}
 			return false;
 		}
+
+		#endregion
+
+		#region Comportamiento
 
 		/// <summary>
 		/// Ejecuta el evento <see cref="Activado"/>
@@ -155,10 +193,18 @@ namespace Moggle.Controles
 			}
 		}
 
+		#endregion
+
+		#region Eventos
+
 		/// <summary>
 		/// Ocurre cuando un control es activado
 		/// </summary>
 		public event EventHandler Activado;
+
+		#endregion
+
+		#region ctor
 
 		/// <summary>
 		/// </summary>
@@ -167,7 +213,11 @@ namespace Moggle.Controles
 			: base (cont)
 		{
 			FocusedColor = Color.Yellow * 0.7f;
+			SelectionColor = Color.Red * 0.65f;
 			InitialCooldown = TimeSpan.FromMilliseconds (100);
+			Selection = new SelectionManager<T> (Objetos);
 		}
+
+		#endregion
 	}
 }
