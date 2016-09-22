@@ -1,10 +1,9 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Comm;
 using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
-using MonoGame.Extended.InputListeners;
+using Moggle.Comm;
 
 namespace Moggle.Controles
 {
