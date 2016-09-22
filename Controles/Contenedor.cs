@@ -96,10 +96,13 @@ namespace Moggle.Controles
 			var bat = Screen.Batch;
 			bat.Draw (TexturaFondo, GetBounds ().GetBoundingRectangle (), BgColor);
 			for (int i = 0; i < Objetos.Count; i++)
-			{
-				var item = Objetos [i];
-				item.Draw (bat, CalcularPosición (i));
-			}
+				DrawObject (bat, i);
+		}
+
+		protected virtual void DrawObject (SpriteBatch bat, int index)
+		{
+			var item = Objetos [index];
+			item.Draw (bat, CalcularPosición (index));
 		}
 
 		/// <summary>
@@ -179,6 +182,10 @@ namespace Moggle.Controles
 			FilaPrimero
 		}
 
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+			TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
+		}
 
 		/// <summary>
 		/// </summary>
