@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Moggle.Controles
 {
@@ -11,12 +12,51 @@ namespace Moggle.Controles
 		readonly List<T> _selectedItems;
 		readonly ICollection<T> _completeItems;
 
+		bool _allowMultiple;
+
+		public bool AllowMultiple
+		{
+			get{ return _allowMultiple; }
+			set
+			{
+				_allowMultiple = value;
+				if (!value)
+					setDefaultSelection ();
+			}
+		}
+
+		bool _allowEmptySelection;
+
+		public bool AllowEmptySelection
+		{
+			get{ return _allowEmptySelection; }
+			set
+			{
+				_allowEmptySelection = value;
+				if (!value)
+					setDefaultSelection ();
+			}
+		}
+
+		void setDefaultSelection ()
+		{
+			// TODO: throws error if the selectable objects is empty.
+			ClearSelection ();
+			if (!AllowEmptySelection)
+				Select (_completeItems.First ());
+		}
+
 		/// <summary>
 		/// Gets the current selection
 		/// </summary>
 		public List<T> GetSelection ()
 		{
 			return new List<T> (_selectedItems);
+		}
+
+		public void ClearSelection ()
+		{
+			_selectedItems.Clear ();
 		}
 
 		/// <summary>
@@ -26,6 +66,10 @@ namespace Moggle.Controles
 		{
 			if (!_completeItems.Contains (item))
 				throw new InvalidOperationException ("No se puede agregar un objeto no existente.");
+			
+			if (!AllowMultiple)
+				ClearSelection ();
+			
 			_selectedItems.Add (item);
 		}
 
@@ -34,7 +78,12 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Deselect (T item)
 		{
-			_selectedItems.Remove (item);
+			// Do not remove if this is the only selected item
+			// and it is not allowed to be empty
+			if (_selectedItems.Count == 1 &&
+			    !AllowEmptySelection &&
+			    (item == _selectedItems [0]))
+				_selectedItems.Remove (item);
 		}
 
 		/// <summary>
@@ -65,6 +114,7 @@ namespace Moggle.Controles
 		{
 			_selectedItems = new List<T> ();
 			_completeItems = items;
+			_allowMultiple = true;
 		}
 	}
 }
