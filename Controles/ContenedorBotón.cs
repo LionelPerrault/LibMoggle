@@ -94,6 +94,7 @@ namespace Moggle.Controles
 		public override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
+			bat.Draw (TexturaFondo, GetBounds ().GetBoundingRectangle (), BgColor);
 			for (int i = 0; i < Objetos.Count; i++)
 			{
 				var item = Objetos [i];
