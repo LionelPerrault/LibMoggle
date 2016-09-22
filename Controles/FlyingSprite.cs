@@ -2,13 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using System;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Representa un sprite sin posición
 	/// </summary>
-	public class FlyingSprite : IDibujable, IColorable, IComponent
+	public class FlyingSprite : IDibujable, IColorable, IComponent, IActivable
 	{
 		/// <summary>
 		/// Dibuja el sprite en algún rectángulo
@@ -53,6 +54,13 @@ namespace Moggle.Controles
 		/// </summary>
 		public void Initialize ()
 		{
+		}
+
+		public event EventHandler AlActivar;
+
+		public void Activar ()
+		{
+			AlActivar?.Invoke (this, EventArgs.Empty);
 		}
 
 		/// <summary>

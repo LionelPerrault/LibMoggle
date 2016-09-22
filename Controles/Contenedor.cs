@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
+using System.Diagnostics;
 
 namespace Moggle.Controles
 {
@@ -153,6 +154,7 @@ namespace Moggle.Controles
 		/// <param name="args">Arguments.</param>
 		protected override void OnClick (MonoGame.Extended.InputListeners.MouseEventArgs args)
 		{
+			Debug.WriteLine ("Click on container");
 			for (int i = 0; i < Count; i++)
 			{
 				var act = Objetos [i] as IActivable;
