@@ -1,8 +1,0 @@
-En 0.4
-======
-+ KeyStringListener:
-	Un control que, con ayuda de un KeyboardListener convierte las teclas presionadas por el usuario y las convierte en un 'string'
-* EntradaTexto: ahora usa KeyStringListener
-* IComponent:
-	LoadContent ahora requiere el ContentManager como argumento.
-	Screen.LoadContent usa el ContentManager que le provee Juego
