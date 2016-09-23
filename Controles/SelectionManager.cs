@@ -71,6 +71,7 @@ namespace Moggle.Controles
 		public void ClearSelection ()
 		{
 			setDefaultSelection ();
+			InvokeChanged ();
 		}
 
 		/// <summary>
@@ -88,6 +89,7 @@ namespace Moggle.Controles
 				_selectedItems.Clear ();
 			
 			_selectedItems.Add (item);
+			InvokeChanged ();
 		}
 
 		/// <summary>
@@ -103,6 +105,7 @@ namespace Moggle.Controles
 				return;
 			
 			_selectedItems.Remove (item);
+			InvokeChanged ();
 		}
 
 		/// <summary>
@@ -125,6 +128,32 @@ namespace Moggle.Controles
 			else
 				Select (item);
 		}
+
+		#region Events
+
+		/// <summary>
+		/// Invokes the event CambioSeleción
+		/// </summary>
+		/// <param name="args">Arguments.</param>
+		protected void InvokeChanged (EventArgs args)
+		{
+			Changed?.Invoke (this, args);
+		}
+
+		/// <summary>
+		/// Invokes the event CambioSeleción
+		/// </summary>
+		protected void InvokeChanged ()
+		{
+			InvokeChanged (EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Occurs when the selection has changed
+		/// </summary>
+		public event EventHandler Changed;
+
+		#endregion
 
 		/// <summary>
 		/// </summary>
