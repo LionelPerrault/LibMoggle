@@ -1,7 +1,10 @@
 #build
 [Oo]bj/
 [Bb]in/
+
 packages/
 TestResults/
-*.userprefs
 doc/*
+
+*.userprefs
+*.usertasks

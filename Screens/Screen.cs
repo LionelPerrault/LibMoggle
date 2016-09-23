@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
+using System.Collections.Generic;
 
 namespace Moggle.Screens
 {
@@ -15,12 +16,22 @@ namespace Moggle.Screens
 	{
 		#region Como componente
 
-		IComponentContainerComponent<IGameComponent> IComponent.Container { get { return Juego; } }
-
 		/// <summary>
 		/// Devuelve el juego.
 		/// </summary>
 		public Game Juego { get; }
+
+		#endregion
+
+		#region Control
+
+		IComponentContainerComponent<IControl> IControl.Container
+		{
+			get
+			{
+				return Juego;
+			}
+		}
 
 		#endregion
 
@@ -228,13 +239,13 @@ namespace Moggle.Screens
 		/// Devuelve la lista de controles
 		/// </summary>
 		/// <value>The controles.</value>
-		protected GameComponentCollection Components { get; }
+		protected List<IControl> Components { get; }
 
 		/// <summary>
 		/// Agrega un componente
 		/// </summary>
 		/// <param name="component">Component.</param>
-		public void AddComponent (IGameComponent component)
+		public void AddComponent (IControl component)
 		{
 			Components.Add (component);
 		}
@@ -244,12 +255,12 @@ namespace Moggle.Screens
 		/// </summary>
 		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
 		/// <param name="component">Component.</param>
-		public bool RemoveComponent (IGameComponent component)
+		public bool RemoveComponent (IControl component)
 		{
 			return Components.Remove (component);
 		}
 
-		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		IEnumerable<IControl> IComponentContainerComponent<IControl>.Components
 		{ get { return Components; } }
 
 		#endregion
@@ -268,7 +279,7 @@ namespace Moggle.Screens
 
 		Screen ()
 		{
-			Components = new GameComponentCollection ();
+			Components = new List<IControl> ();
 		}
 
 		#endregion

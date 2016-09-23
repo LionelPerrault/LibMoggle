@@ -10,7 +10,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Single buffered control
 	/// </summary>
-	public abstract class SBC : IComponent
+	public abstract class SBC : IControl
 	{
 		/// <summary>
 		/// Pantalla del control
@@ -28,12 +28,12 @@ namespace Moggle.Controles
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
-		public IComponentContainerComponent<IGameComponent> Container { get; }
+		public IComponentContainerComponent<IControl> Container { get; }
 
 		/// <summary>
 		/// </summary>
 		/// <param name="cont">Container</param>
-		protected SBC (IComponentContainerComponent<IGameComponent> cont)
+		protected SBC (IComponentContainerComponent<IControl> cont)
 		{
 			Container = cont;
 			Container.AddComponent (this);

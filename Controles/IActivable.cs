@@ -8,6 +8,11 @@ namespace Moggle.Controles
 	public interface IActivable
 	{
 		/// <summary>
+		/// Manda señal de activación
+		/// </summary>
+		void Activar ();
+
+		/// <summary>
 		/// Ocurre cuando se activa.
 		/// </summary>
 		event EventHandler AlActivar;

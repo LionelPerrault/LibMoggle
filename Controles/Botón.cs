@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
-using System.Net.Mime;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -138,6 +137,11 @@ namespace Moggle.Controles
 			}
 		}
 
+		void IActivable.Activar ()
+		{
+			AlClickIzquierdo?.Invoke (this, EventArgs.Empty);
+		}
+
 		/// <summary>
 		/// Ocurre cuando se hace click (cualquiera( en este control.
 		/// </summary>
@@ -152,7 +156,9 @@ namespace Moggle.Controles
 		public event EventHandler AlClickDerecho;
 
 		event EventHandler IActivable.AlActivar
-		{add{ AlClickIzquierdo += value;}remove{ AlClickIzquierdo += value;}
+		{
+			add{ AlClickIzquierdo += value;}
+			remove{ AlClickIzquierdo += value;}
 		}
 
 		#endregion

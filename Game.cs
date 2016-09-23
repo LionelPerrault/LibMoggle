@@ -13,7 +13,11 @@ namespace Moggle
 	/// <summary>
 	/// Clase global de un juego.
 	/// </summary>
-	public class Game : Microsoft.Xna.Framework.Game, IEmisorTeclado, IComponentContainerComponent<IGameComponent>, IComponent
+	public class Game :
+	Microsoft.Xna.Framework.Game, 
+	IEmisorTeclado, 
+	IComponentContainerComponent<IControl>, 
+	IControl
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente
@@ -67,7 +71,7 @@ namespace Moggle
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
-		public IComponentContainerComponent<IGameComponent> Container
+		public IComponentContainerComponent<IControl> Container
 		{
 			get
 			{
@@ -156,7 +160,7 @@ namespace Moggle
 		/// Agrega un componente
 		/// </summary>
 		/// <param name="component">Component.</param>
-		public void AddComponent (IGameComponent component)
+		public void AddComponent (IControl component)
 		{
 			Components.Add (component);
 		}
@@ -166,14 +170,14 @@ namespace Moggle
 		/// </summary>
 		/// <returns><c>true</c> si se eliminó el componente especificado.</returns>
 		/// <param name="component">Component.</param>
-		public bool RemoveComponent (IGameComponent component)
+		public bool RemoveComponent (IControl component)
 		{
 			return Components.Remove (component);
 		}
 
-		System.Collections.Generic.IEnumerable<IGameComponent> IComponentContainerComponent<IGameComponent>.Components
+		System.Collections.Generic.IEnumerable<IControl> IComponentContainerComponent<IControl>.Components
 		{
-			get { return Components; }
+			get { return Components.OfType<IControl> (); }
 		}
 
 
