@@ -1,9 +1,14 @@
+Lo nuevo
+========
+
+La lista de cambios
+
 En 0.6
-======
+------
 + Evento de cambio de selección en SelectorManager
 
 En 0.5
-======
+------
 + Lista, como IList, queda totalmente implementado
 + IComponent no requiere devolver un objeto contenedor, en cambio IControl sí; y IComponentContainerComponent requiere un IControl como dependencia SBC ahora implemente IControl en lugar de IComponent
 + IDibujable es un objeto que puede ser dibujado dado un rectángulo salida y un SpriteBatch
@@ -16,7 +21,7 @@ En 0.5
 
 
 En 0.4
-======
+------
 + KeyStringListener:
 	Un control que, con ayuda de un KeyboardListener convierte las teclas presionadas por el usuario y las convierte en un 'string'
 * EntradaTexto: ahora usa KeyStringListener
