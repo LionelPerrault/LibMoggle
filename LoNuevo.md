@@ -1,3 +1,7 @@
+En 0.6
+======
++ Evento de cambio de selección en SelectorManager
+
 En 0.5
 ======
 + Lista, como IList, queda totalmente implementado
