@@ -18,11 +18,34 @@ namespace Test
 			var i = r.Next (4, 1000);
 			Selectable = new List<int> (i);
 			for (int j = 0; j < i; j++)
-			{
 				Selectable.Add (j);
-			}
 
 			Selector = new SelectionManager<int> (Selectable);
+		}
+
+		[Test]
+		public void TestEvents ()
+		{
+			Selector.AllowEmpty = true;
+			Selector.AllowMultiple = true;
+			var count = 0;
+			Selector.Changed += delegate(object sender, EventArgs e)
+			{
+				count++;
+				Console.WriteLine ("{0}\t{1}\nNew selection", e, sender);
+				foreach (var x in Selector.GetSelection ())
+					Console.Write (x + " | ");
+			};
+
+			Assert.AreEqual (0, count);
+			Selector.Select (0);
+			Assert.AreEqual (1, count);
+			Selector.Select (1);
+			Assert.AreEqual (2, count);
+			Selector.Deselect (0);
+			Assert.AreEqual (3, count);
+			Selector.ClearSelection ();
+			Assert.AreEqual (4, count);
 		}
 
 		[Test]
