@@ -66,10 +66,10 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// Inicializa esta instancia
+		/// Se suscribe a eventos del ratón
 		/// </summary>
 		public override void Initialize ()
 		{
-			base.Initialize ();
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
 		}
