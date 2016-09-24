@@ -20,7 +20,7 @@ namespace Test
 			{
 				GridSize = new MonoGame.Extended.Size (4, 4),
 				TextureFondoName = "cont//void",
-				Márgenes = new MargenType
+				MargenExterno = new MargenType
 				{
 					Top = 3,
 					Left = 3,

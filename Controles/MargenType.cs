@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -22,5 +23,18 @@ namespace Moggle.Controles
 		/// Márgen derecho.
 		/// </summary>
 		public int Right;
+
+		/// <summary>
+		/// Devuelve un nuevo rectángulo que representa otro rectándulo dado, quitándole estos maŕgenes
+		/// </summary>
+		public Rectangle ExtractMargin (Rectangle rectangle)
+		{
+			return new Rectangle (
+				rectangle.Left + Left,
+				rectangle.Top + Top,
+				Left + Right,
+				Top + Bot
+			);
+		}
 	}
 }
