@@ -1,7 +1,12 @@
 Lo nuevo
 ========
-
 La lista de cambios
+
+En 0.7
+------
++ Selección en ContenedorSelección es opcional
++ Agregar espacio interno en Contenedor
++ No construir nuevo Batch en cada iteración de Screen.Draw; almacenar el mismo u usarlo de sólo-lectura
 
 En 0.6
 ------

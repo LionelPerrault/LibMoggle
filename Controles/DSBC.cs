@@ -1,7 +1,7 @@
 using System;
-using Inputs = MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.InputListeners;
+using Inputs = MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
