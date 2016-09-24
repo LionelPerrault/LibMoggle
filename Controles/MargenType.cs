@@ -32,8 +32,8 @@ namespace Moggle.Controles
 			return new Rectangle (
 				rectangle.Left + Left,
 				rectangle.Top + Top,
-				Left + Right,
-				Top + Bot
+				rectangle.Width - Left - Right,
+				rectangle.Height - Top - Bot
 			);
 		}
 	}
