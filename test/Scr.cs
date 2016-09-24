@@ -29,7 +29,8 @@ namespace Test
 				},
 				BgColor = Color.Gray * 0.3f,
 				TamañoBotón = new MonoGame.Extended.Size (12, 12),
-				Posición = new Point (5, 5)
+				Posición = new Point (5, 5),
+				SelectionEnabled = false
 			};
 			AddComponent (ct);
 			const int numBot = 13;
@@ -94,7 +95,6 @@ namespace Test
 
 		public override void Initialize ()
 		{
-			//Components.Add (bt);
 			base.Initialize ();
 			bt.AlClick += Bt_AlClick;
 		}
