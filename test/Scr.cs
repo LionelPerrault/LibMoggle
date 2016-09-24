@@ -20,17 +20,24 @@ namespace Test
 			{
 				GridSize = new MonoGame.Extended.Size (4, 4),
 				TextureFondoName = "cont//void",
-				Márgenes = new MargenType
+				MargenExterno = new MargenType
 				{
 					Top = 3,
 					Left = 3,
 					Right = 3,
 					Bot = 3
 				},
+				MargenInterno = new MargenType
+				{
+					Top = 1,
+					Left = 1,
+					Right = 1,
+					Bot = 2
+				},
 				BgColor = Color.Gray * 0.3f,
 				TamañoBotón = new MonoGame.Extended.Size (12, 12),
 				Posición = new Point (5, 5),
-				SelectionEnabled = false
+				SelectionEnabled = true
 			};
 			AddComponent (ct);
 			const int numBot = 13;
