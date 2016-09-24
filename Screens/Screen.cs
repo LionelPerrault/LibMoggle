@@ -136,6 +136,8 @@ namespace Moggle.Screens
 		{
 			foreach (var x in Components)
 				x.Initialize ();
+
+			Batch = Juego.GetNewBatch ();
 		}
 
 		/// <summary>
@@ -169,8 +171,6 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public virtual void Draw (GameTime gameTime)
 		{
-			Batch = GetNewBatch ();
-
 			Batch.Begin ();
 			EntreBatches (gameTime);
 			Batch.End ();
