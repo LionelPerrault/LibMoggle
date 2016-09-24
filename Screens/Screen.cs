@@ -1,11 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
-using System.Collections.Generic;
 
 namespace Moggle.Screens
 {
@@ -136,6 +136,8 @@ namespace Moggle.Screens
 		{
 			foreach (var x in Components)
 				x.Initialize ();
+
+			Batch = Juego.GetNewBatch ();
 		}
 
 		/// <summary>
@@ -169,8 +171,6 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public virtual void Draw (GameTime gameTime)
 		{
-			Batch = GetNewBatch ();
-
 			Batch.Begin ();
 			EntreBatches (gameTime);
 			Batch.End ();

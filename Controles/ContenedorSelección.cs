@@ -70,7 +70,7 @@ namespace Moggle.Controles
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, FocusedColor);
 			}
-			if (Selection.IsSelected (Objetos [index]))
+			if (SelectionEnabled && Selection.IsSelected (Objetos [index]))
 			{
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, SelectionColor);
@@ -160,7 +160,7 @@ namespace Moggle.Controles
 				Activar (key);
 				return true;
 			}
-			if (key.Key == SelectKey)
+			if (SelectionEnabled && key.Key == SelectKey)
 			{
 				Selection.ToggleSelection (FocusedItem);
 			}
@@ -192,6 +192,11 @@ namespace Moggle.Controles
 				Debug.WriteLineIf (!isCoolingDown, "Keyboard cooldown over.");
 			}
 		}
+
+		/// <summary>
+		/// Gets or sets a value indicating if selection system is enabled
+		/// </summary>
+		public bool SelectionEnabled { get; set; }
 
 		#endregion
 

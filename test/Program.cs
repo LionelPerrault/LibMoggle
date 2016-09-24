@@ -9,6 +9,7 @@ using MonoMac.Foundation;
 
 
 
+
 #elif __IOS__
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -21,6 +22,7 @@ namespace Test
 	[Register("AppDelegate")]
 	class Program : UIApplicationDelegate
 	
+
 
 
 #else
@@ -55,6 +57,7 @@ namespace Test
 			#else
 			RunGame ();
 			#endif
+			Environment.Exit (0);
 		}
 
 		#if __IOS__

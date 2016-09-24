@@ -68,7 +68,13 @@ namespace Moggle.Controles
 		/// Devuelve o establece el márgen de los botones respecto a ellos mismos y al contenedor.
 		/// </summary>
 		/// <value>The márgenes.</value>
-		public MargenType Márgenes { get; set; }
+		public MargenType MargenExterno { get; set; }
+
+		/// <summary>
+		/// Devuelve o establece los márgenes internos de cada item
+		/// </summary>
+		/// <value>The margen interno.</value>
+		public MargenType MargenInterno { get; set; }
 
 		/// <summary>
 		/// Devuelve o establece el número de columnas que puede contener.
@@ -108,7 +114,7 @@ namespace Moggle.Controles
 		protected virtual void DrawObject (SpriteBatch bat, int index)
 		{
 			var item = Objetos [index];
-			item.Draw (bat, CalcularPosición (index));
+			item.Draw (bat, CalcularRectánguloObjeto (index));
 		}
 
 		/// <summary>
@@ -119,8 +125,8 @@ namespace Moggle.Controles
 		{
 			return new RectangleF (Posición.ToVector2 (),
 				new SizeF (
-					Márgenes.Left + Márgenes.Right + Columnas * TamañoBotón.Width,
-					Márgenes.Top + Márgenes.Bot + Filas * TamañoBotón.Height));
+					MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
+					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
 		}
 
 		/// <summary>
@@ -132,6 +138,17 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
+		/// Toma en cuenta los maŕgenes
+		/// </summary>
+		/// <param name="index">Índice del objeto.</param>
+		protected Rectangle CalcularRectánguloObjeto (int index)
+		{
+			return MargenInterno.ExtractMargin (CalcularPosición (index));
+		}
+
+		/// <summary>
+		/// Calcula y devuelve el rectángulo de posición de el botón de un índice dado.
+		/// Ignora márgenes
 		/// </summary>
 		/// <param name="index">Índice del objeto.</param>
 		protected Rectangle CalcularPosición (int index)
@@ -142,8 +159,8 @@ namespace Moggle.Controles
 			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
 				new Point (orden / Filas, orden % Filas) : 
 				new Point (orden % Columnas, orden / Columnas);
-			bounds = new Rectangle (Posición.X + Márgenes.Left + TamañoBotón.Width * locGrid.X,
-				Posición.Y + Márgenes.Top + TamañoBotón.Height * locGrid.Y,
+			bounds = new Rectangle (Posición.X + MargenExterno.Left + TamañoBotón.Width * locGrid.X,
+				Posición.Y + MargenExterno.Top + TamañoBotón.Height * locGrid.Y,
 				TamañoBotón.Width, TamañoBotón.Height);
 			return bounds;
 		}
@@ -165,7 +182,7 @@ namespace Moggle.Controles
 				var act = Objetos [i] as IActivable;
 				if (act != null)
 				{
-					var rect = CalcularPosición (i);
+					var rect = CalcularRectánguloObjeto (i);
 					if (rect.Contains (args.Position))
 						act.Activar ();
 				}
