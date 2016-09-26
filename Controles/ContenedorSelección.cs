@@ -70,7 +70,7 @@ namespace Moggle.Controles
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, FocusedColor);
 			}
-			if (SelectionEnabled && Selection.IsSelected (Objetos [index]))
+			if (Selection.IsSelected (Objetos [index]))
 			{
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, SelectionColor);
