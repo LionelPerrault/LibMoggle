@@ -91,6 +91,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\ContenedorSelección.cs" />
     <Compile Include="Controles\Contenedor.cs" />
     <Compile Include="Controles\SelectionManager.cs" />
+    <Compile Include="BibliotecaContenido.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
