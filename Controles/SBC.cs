@@ -90,6 +90,10 @@ namespace Moggle.Controles
 		[Obsolete]
 		public int Prioridad { get; set; }
 
+		/// <summary>
+		/// Gets a value indicating whether this control is initialized.
+		/// </summary>
+		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
 		public bool IsInitialized { get; private set; }
 
 		/// <summary>

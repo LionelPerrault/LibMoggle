@@ -66,6 +66,10 @@ namespace Moggle.Screens
 			InitializeContent (manager);
 		}
 
+		/// <summary>
+		/// Tell its components to get the content from the library
+		/// </summary>
+		/// <param name="manager">The content library</param>
 		protected virtual void InitializeContent (BibliotecaContenido manager)
 		{
 			foreach (var c in Components.OfType<IComponent> ())

@@ -6,10 +6,7 @@ namespace Moggle.Controles
 {
 
 	/// <summary>
-	/// Puede ejecutar 
-	/// <see cref="LoadContent"/>
-	/// y 
-	/// <see cref="UnloadContent"/>
+	/// Representa un objeto de juego que necesita cargar contenido de una <see cref="BibliotecaContenido"/>
 	/// </summary>
 	public interface IComponent : IGameComponent, IDisposable
 	{

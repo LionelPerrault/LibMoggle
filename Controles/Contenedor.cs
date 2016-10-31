@@ -49,6 +49,10 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Elimina un objeto del contenedor
+		/// </summary>
+		/// <param name="item">Objeto a eliminar</param>
 		public bool Remove (T item)
 		{
 			return Objetos.Remove (item);
@@ -242,6 +246,10 @@ namespace Moggle.Controles
 				c.AddContent (manager);
 		}
 
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenido</param>
 		protected override void InitializeContent (BibliotecaContenido manager)
 		{
 			TexturaFondo = manager.GetContent<Texture2D> (TextureFondoName);
@@ -249,6 +257,10 @@ namespace Moggle.Controles
 				c.InitializeContent (manager);
 		}
 
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
 		public override void Initialize ()
 		{
 			foreach (var c in Objetos.OfType<IGameComponent> ())

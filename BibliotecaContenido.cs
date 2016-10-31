@@ -63,6 +63,11 @@ namespace Moggle
 			return ret;
 		}
 
+		/// <summary>
+		/// Agrega contenido a la biblioteca
+		/// </summary>
+		/// <param name="name">Nombre único del contenido</param>
+		/// <param name="content">Objeto de contenido</param>
 		public void AddContent (string name, object content)
 		{
 			var newCont = tryAddContent (name, null);
@@ -118,6 +123,9 @@ namespace Moggle
 			return content.Contenido;
 		}
 
+		/// <summary>
+		/// Elimina todo contenido de esta biblioteca, pero no lo libera de memoria
+		/// </summary>
 		public void ClearAll ()
 		{
 			_contenido.Clear ();

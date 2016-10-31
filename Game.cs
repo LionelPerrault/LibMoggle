@@ -44,6 +44,9 @@ namespace Moggle
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
 
+		/// <summary>
+		/// Gets the content library
+		/// </summary>
 		public BibliotecaContenido Contenido { get; }
 
 		/// <summary>
@@ -153,6 +156,10 @@ namespace Moggle
 
 		#region Component
 
+		/// <summary>
+		/// Tell the components and the current screen to get the content from the library
+		/// </summary>
+		/// <param name="manager">Content library</param>
 		protected virtual void InitializeContent (BibliotecaContenido manager)
 		{
 			foreach (var x in Components.OfType<IComponent> ())

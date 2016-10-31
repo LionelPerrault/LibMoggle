@@ -95,6 +95,10 @@ namespace Moggle.Controles
 			manager.AddContent (UseFont);
 		}
 
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenidos</param>
 		protected override void InitializeContent (BibliotecaContenido manager)
 		{
 			font = manager.GetContent<BitmapFont> (UseFont);
