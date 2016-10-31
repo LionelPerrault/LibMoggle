@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
@@ -76,7 +75,7 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// Devuelve o establece el nombre de la textura.
-		/// Si se establece, <see cref="LoadContent"/> cargará la <see cref="TexturaInstancia"/>
+		/// Si se establece, <see cref="InitializeContent"/> cargará la <see cref="TexturaInstancia"/>
 		/// </summary>
 		public string Textura { get; set; }
 

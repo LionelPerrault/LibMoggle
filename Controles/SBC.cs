@@ -1,9 +1,7 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {

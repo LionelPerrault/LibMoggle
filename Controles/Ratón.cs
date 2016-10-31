@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using OpenTK.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -12,8 +11,6 @@ namespace Moggle.Controles
 	/// </summary>
 	public class Ratón : DSBC
 	{
-		const string mouseTexture = "mouse texture";
-
 		#region Dibujo
 
 		/// <summary>

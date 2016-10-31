@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
-using OpenTK.Platform.MacOS;
-using OpenTK.Graphics.ES20;
 
 namespace Moggle
 {
@@ -17,8 +14,8 @@ namespace Moggle
 	/// </summary>
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
-	IEmisorTeclado, 
-	IComponentContainerComponent<IControl>, 
+	IEmisorTeclado,  // Para enviar señales de teclado a componentes
+	IComponentContainerComponent<IControl>, // Para controlar sus componentes
 	IControl
 	{
 		/// <summary>

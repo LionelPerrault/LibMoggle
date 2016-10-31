@@ -1,7 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace Moggle
 {
@@ -82,12 +80,9 @@ namespace Moggle
 		void Load (EntradaContenido entry)
 		{
 			var loadedContent = PrimerContenidoCargadoONulo (entry.NombreArchivo);
-			if (loadedContent != null)
-				entry.Contenido = loadedContent.Contenido;
-			else
-			{
-				entry.Contenido = Manager.Load<object> (entry.NombreArchivo);
-			}
+			entry.Contenido = loadedContent != null ? 
+				loadedContent.Contenido : 
+				Manager.Load<object> (entry.NombreArchivo);
 		}
 
 		/// <summary>
