@@ -92,12 +92,15 @@ namespace Moggle.Controles
 		[Obsolete]
 		public int Prioridad { get; set; }
 
+		public bool IsInitialized { get; private set; }
+
 		/// <summary>
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
 		public virtual void Initialize ()
 		{
+			IsInitialized = true;
 		}
 
 		/// <summary>

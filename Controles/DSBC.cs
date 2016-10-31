@@ -72,6 +72,7 @@ namespace Moggle.Controles
 		{
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
+			base.Initialize ();
 		}
 
 		/// <summary>

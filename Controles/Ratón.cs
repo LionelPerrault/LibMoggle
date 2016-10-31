@@ -115,6 +115,11 @@ namespace Moggle.Controles
 			manager.AddContent (ArchivoTextura);
 		}
 
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			Textura = manager.GetContent<Texture2D> (ArchivoTextura);
+		}
+
 		/// <summary>
 		/// Unloads the content.
 		/// </summary>

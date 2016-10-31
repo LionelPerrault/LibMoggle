@@ -38,7 +38,7 @@ namespace Moggle
 		/// <summary>
 		/// Diccionario nombre-
 		/// </summary>
-		readonly List <EntradaContenido> _contenido;
+		readonly Dictionary <string, EntradaContenido> _contenido;
 
 		/// <summary>
 		/// Agrega contenido al sistema
@@ -46,7 +46,7 @@ namespace Moggle
 		/// <param name="name">Nombre del archivo de contenido equiv nombre del contenido</param>
 		public void AddContent (string name)
 		{
-			AddContent (name, name);
+			tryAddContent (name, name);
 		}
 
 		/// <summary>
@@ -54,15 +54,26 @@ namespace Moggle
 		/// </summary>
 		/// <param name="name">Nombre único del contenido</param>
 		/// <param name="file">Nombre del archivo del contenido</param>
-		protected void AddContent (string name,
-		                           string file)
+		EntradaContenido tryAddContent (string name,
+		                                string file)
 		{
-			_contenido.Add (new EntradaContenido (name, file));
+			EntradaContenido ret;
+			if (_contenido.TryGetValue (name, out ret))
+				return ret;
+			ret = new EntradaContenido (name, file);
+			_contenido.Add (name, ret);
+			return ret;
+		}
+
+		public void AddContent (string name, object content)
+		{
+			var newCont = tryAddContent (name, null);
+			newCont.Contenido = content;
 		}
 
 		EntradaContenido PrimerContenidoCargadoONulo (string file)
 		{
-			foreach (var z in _contenido)
+			foreach (var z in _contenido.Values)
 				if (z.NombreArchivo == file && z.Contenido != null)
 					return z;
 			return null;
@@ -75,7 +86,7 @@ namespace Moggle
 				entry.Contenido = loadedContent.Contenido;
 			else
 			{
-				Manager.Load<object> (entry.NombreArchivo);
+				entry.Contenido = Manager.Load<object> (entry.NombreArchivo);
 			}
 		}
 
@@ -85,7 +96,7 @@ namespace Moggle
 		public void Load ()
 		{
 			foreach (var x in _contenido)
-				Load (x);
+				Load (x.Value);
 		}
 
 		/// <summary>
@@ -97,7 +108,7 @@ namespace Moggle
 		public T GetContent<T> (string nombre)
 		where T : class
 		{
-			var content = _contenido.First (z => z.NombreInvocación == nombre);
+			var content = _contenido [nombre];
 			return content.Contenido as T;
 		}
 
@@ -108,7 +119,7 @@ namespace Moggle
 		/// <param name="nombre">Nombre único del contenido</param>
 		public object GetContent (string nombre)
 		{
-			var content = _contenido.First (z => z.NombreInvocación == nombre);
+			var content = _contenido [nombre];
 			return content.Contenido;
 		}
 
@@ -124,7 +135,7 @@ namespace Moggle
 		internal BibliotecaContenido (ContentManager manager)
 		{
 			Manager = manager;
-			_contenido = new List<EntradaContenido> ();
+			_contenido = new Dictionary<string, EntradaContenido> ();
 		}
 	}
 }

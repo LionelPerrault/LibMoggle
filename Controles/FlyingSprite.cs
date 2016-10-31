@@ -32,6 +32,16 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Carga el contenido gráfico.
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			Texture = manager.GetContent<Texture2D> (TextureName);
+		}
+
+
+		/// <summary>
 		/// Desarga el contenido gráfico.
 		/// </summary>
 		public void UnloadContent ()
@@ -54,10 +64,6 @@ namespace Moggle.Controles
 		/// Initialize this instance.
 		/// </summary>
 		void IGameComponent.Initialize ()
-		{
-		}
-
-		void IComponent.InitializeContent (BibliotecaContenido manager)
 		{
 		}
 

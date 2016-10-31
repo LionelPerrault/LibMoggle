@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using System;
+using System.Linq;
 
 namespace Moggle.Controles
 {
@@ -41,11 +41,17 @@ namespace Moggle.Controles
 		public void Add (T item)
 		{
 			Objetos.Add (item);
+			if (IsInitialized)
+			{
+				(item as IGameComponent)?.Initialize ();
+				(item as IComponent)?.AddContent (Screen.Content);
+				(item as IComponent)?.InitializeContent (Screen.Content);
+			}
 		}
 
 		public bool Remove (T item)
 		{
-			throw new NotImplementedException ();
+			return Objetos.Remove (item);
 		}
 
 		/// <summary>
@@ -232,7 +238,21 @@ namespace Moggle.Controles
 		protected override void AddContent (BibliotecaContenido manager)
 		{
 			manager.AddContent (TextureFondoName);
-			//TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
+			foreach (var c in Objetos.OfType<IComponent> ())
+				c.AddContent (manager);
+		}
+
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			TexturaFondo = manager.GetContent<Texture2D> (TextureFondoName);
+			foreach (var c in Objetos.OfType<IComponent> ())
+				c.InitializeContent (manager);
+		}
+
+		public override void Initialize ()
+		{
+			foreach (var c in Objetos.OfType<IGameComponent> ())
+				c.Initialize ();
 		}
 
 		/// <summary>

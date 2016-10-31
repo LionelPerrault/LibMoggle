@@ -93,7 +93,12 @@ namespace Moggle
 
 			CurrentScreen?.Initialize ();
 
+			foreach (var x in Components.OfType<IComponent> ())
+				x.AddContent (Contenido);
+			CurrentScreen?.AddContent (Contenido);
+
 			base.Initialize ();
+
 			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
 		}
