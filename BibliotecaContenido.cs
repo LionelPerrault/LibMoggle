@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Moggle
 {
@@ -42,10 +43,19 @@ namespace Moggle
 		/// <summary>
 		/// Agrega contenido al sistema
 		/// </summary>
+		/// <param name="name">Nombre del archivo de contenido equiv nombre del contenido</param>
+		public void AddContent (string name)
+		{
+			AddContent (name, name);
+		}
+
+		/// <summary>
+		/// Agrega contenido al sistema
+		/// </summary>
 		/// <param name="name">Nombre único del contenido</param>
 		/// <param name="file">Nombre del archivo del contenido</param>
-		public void AddContent (string name,
-		                        string file)
+		protected void AddContent (string name,
+		                           string file)
 		{
 			_contenido.Add (new EntradaContenido (name, file));
 		}
@@ -100,6 +110,11 @@ namespace Moggle
 		{
 			var content = _contenido.First (z => z.NombreInvocación == nombre);
 			return content.Contenido;
+		}
+
+		public void ClearAll ()
+		{
+			_contenido.Clear ();
 		}
 
 		/// <summary>

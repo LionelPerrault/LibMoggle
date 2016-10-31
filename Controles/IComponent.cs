@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -17,13 +16,13 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		void LoadContent (ContentManager manager);
+		void AddContent (BibliotecaContenido manager);
 
 		/// <summary>
-		/// Desarga el contenido gráfico.
+		/// Aquí se debe de asignar a variables de clase el contenido de manager
 		/// </summary>
-		void UnloadContent ();
-
+		/// <param name="manager">Biblioteca de contenido</param>
+		void InitializeContent (BibliotecaContenido manager);
 	}
 
 	/// <summary>

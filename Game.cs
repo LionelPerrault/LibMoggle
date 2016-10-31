@@ -7,6 +7,8 @@ using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using OpenTK.Platform.MacOS;
+using OpenTK.Graphics.ES20;
 
 namespace Moggle
 {
@@ -45,12 +47,15 @@ namespace Moggle
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
 
+		public BibliotecaContenido Contenido { get; }
+
 		/// <summary>
 		/// </summary>
 		public Game ()
 		{
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
+			Contenido = new BibliotecaContenido (Content);
 			//Mouse = new Ratón (this);
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
@@ -118,10 +123,8 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent (Content);
-
-			CurrentScreen?.LoadContent (Content);
+			Contenido.Load ();
+			OnContentLoaded ();
 		}
 
 		/// <summary>
@@ -135,16 +138,33 @@ namespace Moggle
 			CurrentScreen.Update (gameTime);
 		}
 
-		#region Component
-
-		void IComponent.LoadContent (ContentManager manager)
+		/// <summary>
+		/// This method is invoked when all the content is loaded
+		/// </summary>
+		protected virtual void OnContentLoaded ()
 		{
-			LoadContent ();
+			foreach (var c in Components.OfType<IComponent> ())
+				c.InitializeContent (Contenido);
+
+			CurrentScreen?.InitializeContent (Contenido);
 		}
 
-		void IComponent.UnloadContent ()
+		#region Component
+
+		protected virtual void InitializeContent (BibliotecaContenido manager)
 		{
-			UnloadContent ();
+			foreach (var x in Components.OfType<IComponent> ())
+				x.InitializeContent (manager);
+			CurrentScreen?.InitializeContent (manager);
+		}
+
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
+		void IComponent.AddContent (BibliotecaContenido manager)
+		{
 		}
 
 		void IGameComponent.Initialize ()
@@ -234,7 +254,7 @@ namespace Moggle
 		/// </summary>
 		protected override void UnloadContent ()
 		{
-			CurrentScreen.UnloadContent ();
+			Contenido.ClearAll ();
 			base.UnloadContent ();
 		}
 

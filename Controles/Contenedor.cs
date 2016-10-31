@@ -4,15 +4,31 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
+using System;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Representa un contenedor de objetos
 	/// </summary>
-	public class Contenedor<T> : DSBC
+	public class Contenedor<T> : DSBC, IComponentContainerComponent<T>
 		where T : IDibujable
 	{
+		void IComponentContainerComponent<T>.AddComponent (T component)
+		{
+			Add (component);
+		}
+
+		bool IComponentContainerComponent<T>.RemoveComponent (T component)
+		{
+			return Remove (component);
+		}
+
+		IEnumerable<T> IComponentContainerComponent<T>.Components
+		{
+			get { return Objetos; }
+		}
+
 		/// <summary>
 		/// Devuelve o establece la lista de objetos
 		/// </summary>
@@ -25,6 +41,11 @@ namespace Moggle.Controles
 		public void Add (T item)
 		{
 			Objetos.Add (item);
+		}
+
+		public bool Remove (T item)
+		{
+			throw new NotImplementedException ();
 		}
 
 		/// <summary>
@@ -208,9 +229,10 @@ namespace Moggle.Controles
 		/// Loads the content.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
+			manager.AddContent (TextureFondoName);
+			//TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
 		}
 
 		/// <summary>

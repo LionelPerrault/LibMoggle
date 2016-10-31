@@ -42,8 +42,21 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		protected virtual void LoadContent (ContentManager manager)
+		protected virtual void AddContent (BibliotecaContenido manager)
 		{
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected virtual void InitializeContent (BibliotecaContenido manager)
+		{
+		}
+
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
 		}
 
 		/// <summary>
@@ -65,15 +78,12 @@ namespace Moggle.Controles
 		{
 		}
 
-		void IComponent.LoadContent (ContentManager manager)
+		void IComponent.AddContent (BibliotecaContenido manager)
 		{
-			LoadContent (manager);
+			AddContent (manager);
 		}
 
-		void IComponent.UnloadContent ()
-		{
-			UnloadContent ();
-		}
+
 
 		/// <summary>
 		/// Prioridad de dibujo;

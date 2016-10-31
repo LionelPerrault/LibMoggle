@@ -49,8 +49,8 @@ namespace Test
 					Color = Color.PaleVioletRed * 0.8f,
 					TextureName = "cont//void"
 				};
-
-				bts [i].LoadContent (Content);
+				//bts [i].AddContent (Content);
+				//AddComponent (bts[i]);
 
 				ct.Add (bts [i]);
 				//bts [i].AlClick += (sender, e) => buttonClicked (e, i);

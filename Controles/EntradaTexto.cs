@@ -136,10 +136,12 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			contornoTexture = manager.Load<Texture2D> (BgTexture);
-			fontTexture = manager.Load<BitmapFont> (FontTexture);
+			manager.AddContent (BgTexture);
+			manager.AddContent (FontTexture);
+			//contornoTexture = manager.Load<Texture2D> (BgTexture);
+			//fontTexture = manager.Load<BitmapFont> (FontTexture);
 		}
 
 		/// <summary>

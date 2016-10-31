@@ -25,9 +25,10 @@ namespace Moggle.Controles
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (ContentManager manager)
+		public void AddContent (BibliotecaContenido manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			manager.AddContent (TextureName);
+			//Texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
@@ -52,7 +53,11 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Initialize this instance.
 		/// </summary>
-		public void Initialize ()
+		void IGameComponent.Initialize ()
+		{
+		}
+
+		void IComponent.InitializeContent (BibliotecaContenido manager)
 		{
 		}
 

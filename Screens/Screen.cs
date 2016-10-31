@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
+using System;
 
 namespace Moggle.Screens
 {
@@ -52,16 +53,27 @@ namespace Moggle.Screens
 		public virtual void LoadContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent (Content);
+				x.AddContent (Content);
 		}
 
-		void IComponent.LoadContent (ContentManager manager)
+		void IComponent.AddContent (BibliotecaContenido manager)
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent (manager);
+				x.AddContent (manager);
 		}
 
-		void System.IDisposable.Dispose ()
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
+		protected virtual void InitializeContent (BibliotecaContenido manager)
+		{
+			foreach (var c in Components.OfType<IComponent> ())
+				c.InitializeContent (manager);
+		}
+
+		void IDisposable.Dispose ()
 		{
 		}
 
@@ -70,18 +82,18 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void UnloadContent ()
 		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.UnloadContent ();
+			foreach (var x in Components.OfType<IDisposable> ())
+				x.Dispose ();
 		}
 
 		/// <summary>
 		/// Devuelve el manejador de contenidos del juego.
 		/// </summary>
-		public ContentManager Content
+		public BibliotecaContenido Content
 		{
 			get
 			{
-				return Juego.Content;
+				return Juego.Contenido;
 			}
 		}
 

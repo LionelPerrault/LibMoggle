@@ -12,6 +12,8 @@ namespace Moggle.Controles
 	/// </summary>
 	public class Ratón : DSBC
 	{
+		const string mouseTexture = "mouse texture";
+
 		#region Dibujo
 
 		/// <summary>
@@ -108,9 +110,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Textura = manager.Load<Texture2D> (ArchivoTextura);
+			manager.AddContent (ArchivoTextura);
 		}
 
 		/// <summary>
