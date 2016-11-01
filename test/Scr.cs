@@ -5,6 +5,7 @@ using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Textures;
 
 namespace Test
 {
@@ -27,10 +28,21 @@ namespace Test
 			}
 		}
 
+		SimpleTextures textures;
+
 		public Scr (Moggle.Game game)
 			: base (game)
 		{
-			Content.AddContent ("solid", Solid);
+			textures = new SimpleTextures (game.Device);
+
+			Content.AddContent (
+				"solid",
+				textures.OutlineTexture (
+					new MonoGame.Extended.Size (
+						15,
+						10),
+					Color.White,
+					Color.Black));
 
 			bt = new Botón (this, new RectangleF (100, 100, 50, 50));
 			bt.Color = Color.Green;
