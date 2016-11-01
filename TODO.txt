@@ -1,6 +1,6 @@
 # TO DO
 	Casi cualquier componente, control, screen:
-		Revisar bien si los quiero protected o public
+		[X] Revisar bien si los quiero protected o public
 	DSBC: 
 		[X] Draw debe ser protected
 	SBC:
