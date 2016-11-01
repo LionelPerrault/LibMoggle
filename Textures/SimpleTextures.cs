@@ -26,7 +26,7 @@ namespace Moggle.Textures
 			var len = textureSize.Width * textureSize.Height;
 			var data = new Color[len];
 			for (int i = 0; i < len; i++)
-				data [i] = mapping (i / textureSize.Width, i / textureSize.Height);
+				data [i] = mapping (i % textureSize.Width, i / textureSize.Width);
 			var ret = new Texture2D (_grDevice, textureSize.Width, textureSize.Height);
 			ret.SetData<Color> (data);
 			return ret;
@@ -39,6 +39,8 @@ namespace Moggle.Textures
 		/// <param name="color">Color</param>
 		public Texture2D SolidTexture (Size textureSize, Color color)
 		{
+			if (textureSize.Height * textureSize.Width == 0)
+				throw new InvalidOperationException ("Cannot make a texture with heigth or width equal to zero.");
 			return generateFromFunc (textureSize, (i, j) => color);
 		}
 
@@ -67,7 +69,7 @@ namespace Moggle.Textures
 			var useInsideColor = insideColor ?? Color.Transparent;
 			return generateFromFunc (
 				textureSize,
-				(x, y) => x * y == 0 ? outlineColor : useInsideColor);
+				(x, y) => (x % (textureSize.Width - 1)) * (y % (textureSize.Height - 1)) == 0 ? outlineColor : useInsideColor);
 		}
 
 
