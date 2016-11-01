@@ -122,9 +122,9 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Unloads the content.
+		/// Releases all resource used by the <see cref="Moggle.Controles.Ratón"/> object.
 		/// </summary>
-		protected override void UnloadContent ()
+		protected override void Dispose ()
 		{
 			Textura = null;
 		}

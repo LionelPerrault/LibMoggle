@@ -49,7 +49,7 @@ namespace Moggle.Screens
 		/// Cargar contenido de cada control incluido.
 		/// Y también se le pide al controlador gráfico un nuevo Batch.
 		/// </summary>
-		public virtual void LoadContent ()
+		public virtual void AddAllContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
 				x.AddContent (Content);
@@ -128,15 +128,6 @@ namespace Moggle.Screens
 		#endregion
 
 		#region Comportamiento
-
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.
-		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.</returns>
-		public override string ToString ()
-		{
-			return string.Format ("[{0}]", GetType ());
-		}
 
 		/// <summary>
 		/// Devuelve el color de fondo.

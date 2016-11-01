@@ -57,13 +57,6 @@ namespace Moggle.Controles
 			InitializeContent (manager);
 		}
 
-		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected virtual void UnloadContent ()
-		{
-		}
-
 		void IDisposable.Dispose ()
 		{
 			Dispose ();
@@ -136,7 +129,6 @@ namespace Moggle.Controles
 		protected virtual void Dispose (bool disposing)
 		{
 			Container.RemoveComponent (this);
-			UnloadContent ();
 		}
 	}
 }

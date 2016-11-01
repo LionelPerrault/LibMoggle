@@ -116,10 +116,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Unloads the content.
 		/// </summary>
-		protected override void UnloadContent ()
+		protected override void Dispose ()
 		{
 			Textura = null;
-			base.UnloadContent ();
 		}
 
 		#endregion

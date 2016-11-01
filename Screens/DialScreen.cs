@@ -62,7 +62,7 @@ namespace Moggle.Screens
 		public override void Ejecutar ()
 		{
 			Initialize ();
-			LoadContent ();
+			AddAllContent ();
 			Juego.CurrentScreen = this;
 		}
 
