@@ -92,6 +92,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\Contenedor.cs" />
     <Compile Include="Controles\SelectionManager.cs" />
     <Compile Include="BibliotecaContenido.cs" />
+    <Compile Include="Textures\SimpleTextures.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -104,6 +105,7 @@ Un juego de controles para MonoGame</Description>
     <Folder Include="Controles\Listas\" />
     <Folder Include="Shape\" />
     <Folder Include="Comm\" />
+    <Folder Include="Textures\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
