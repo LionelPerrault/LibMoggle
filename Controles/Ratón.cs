@@ -27,7 +27,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
 		}

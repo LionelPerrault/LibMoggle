@@ -98,7 +98,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			// Altura
 			var ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;

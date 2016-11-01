@@ -52,7 +52,7 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return (RectangleF)font.GetStringRectangle (
 				Texto (),

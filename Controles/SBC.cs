@@ -93,7 +93,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public abstract IShapeF GetBounds ();
+		protected abstract IShapeF GetBounds ();
 
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.

@@ -195,7 +195,7 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Devuelve el menor rectángulo que contiene a este control.
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}
