@@ -67,7 +67,7 @@ namespace Moggle.Controles.Listas
 		/// Dibuja la lista.
 		/// </summary>
 		/// <param name="gameTime">Duración del tick</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			// Dibujar el rectángulo
 			var bat = Screen.Batch;

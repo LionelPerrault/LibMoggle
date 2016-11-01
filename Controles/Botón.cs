@@ -88,7 +88,7 @@ namespace Moggle.Controles
 		/// Dibuja el botón
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			Screen.Batch.Draw (TexturaInstancia, Bounds, Color);
 		}

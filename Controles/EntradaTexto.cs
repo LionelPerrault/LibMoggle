@@ -118,7 +118,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			Primitivos.DrawRectangle (
