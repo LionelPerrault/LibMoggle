@@ -55,6 +55,23 @@ namespace Moggle.Textures
 		}
 
 		/// <summary>
+		/// Genera una textura que incluye el contorno de un color y el interior de otro
+		/// </summary>
+		/// <param name="textureSize">Tamaño de la textura</param>
+		/// <param name="outlineColor">Color del contorno</param>
+		/// <param name="insideColor">Color interior</param>
+		public Texture2D OutlineTexture (Size textureSize,
+		                                 Color outlineColor,
+		                                 Color insideColor = Color.Transparent)
+		{
+			return generateFromFunc (
+				textureSize,
+				(x, y) => x * y == 0 ? outlineColor : insideColor);
+		}
+
+
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Moggle.Textures.SimpleTextures"/> class.
 		/// </summary>
 		/// <param name="device">Graphics device</param>
