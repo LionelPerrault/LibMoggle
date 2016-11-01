@@ -13,4 +13,6 @@
 	BibliotecaContenido:
 		[X] Hacer mi propio manejador de contenido, que cargue todo "de una vez"
 		[X] Agregarle contenido ya hecho (solid, etc)
+	Ratón:
+		El ratón es invisible hasta que se mueve
 
