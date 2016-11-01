@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
+using Moggle.Textures;
+using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
@@ -76,10 +77,10 @@ namespace Moggle.Controles.Listas
 				bat,
 				Bounds.GetBoundingRectangle (),
 				Color.White,
-				noTexture);
+				pixel);
 
 			// Background
-			bat.Draw (noTexture, Bounds, ColorBG);
+			bat.Draw (pixel, Bounds, ColorBG);
 
 			// TODO: Que no se me salga el texto.
 			var currY = Bounds.Location;
@@ -92,7 +93,7 @@ namespace Moggle.Controles.Listas
 				if (i == CursorIndex)
 				{
 					var rect = Fuente.GetStringRectangle (strTxt, currY);
-					bat.Draw (noTexture, rect, ColorSel);
+					bat.Draw (pixel, rect, ColorSel);
 				}
 				bat.DrawString (Fuente, strTxt, currY, x.Color);
 				currY.Y += Fuente.LineHeight;
@@ -175,7 +176,9 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public BitmapFont Fuente { get; set; }
 
-		Texture2D noTexture { get; set; }
+		Texture2D pixel { get; set; }
+
+		Texture2D cursorTexture { get; set; }
 
 		/// <summary>
 		/// Color del fondo del control
@@ -205,18 +208,22 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public bool InterceptarTeclado { get; set; }
 
-		const string fonts = "fonts";
-
-		const string rect = "Rect";
+		public string NombreTexturaFuente = "fonts";
 
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
 		protected override void AddContent (BibliotecaContenido manager)
 		{
-			// REMOVE
-			manager.AddContent (fonts);
-			manager.AddContent (rect);
+			manager.AddContent (NombreTexturaFuente);
+		}
+
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			var st = new SimpleTextures (Game.Device);
+			Fuente = manager.GetContent<BitmapFont> (NombreTexturaFuente);
+			pixel = st.SolidTexture (new Size (1, 1), Color.White);
+			base.InitializeContent (manager);
 		}
 
 		/// <summary>
@@ -225,7 +232,7 @@ namespace Moggle.Controles.Listas
 		protected override void Dispose (bool disposing)
 		{
 			Fuente = null;
-			noTexture = null;
+			pixel = null;
 			base.Dispose (disposing);
 		}
 
