@@ -62,11 +62,12 @@ namespace Moggle.Textures
 		/// <param name="insideColor">Color interior</param>
 		public Texture2D OutlineTexture (Size textureSize,
 		                                 Color outlineColor,
-		                                 Color insideColor = Color.Transparent)
+		                                 Color? insideColor = null)
 		{
+			var useInsideColor = insideColor ?? Color.Transparent;
 			return generateFromFunc (
 				textureSize,
-				(x, y) => x * y == 0 ? outlineColor : insideColor);
+				(x, y) => x * y == 0 ? outlineColor : useInsideColor);
 		}
 
 
