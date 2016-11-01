@@ -9,7 +9,7 @@ namespace Moggle.Controles
 	public interface IDibujable
 	{
 		/// <summary>
-		/// Dibuja el objeto sobre un rectpangulo específico
+		/// Dibuja el objeto sobre un rectángulo específico
 		/// </summary>
 		/// <param name="bat">Batch</param>
 		/// <param name="rect">Rectángulo de dibujo</param>
