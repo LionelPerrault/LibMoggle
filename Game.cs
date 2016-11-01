@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
@@ -15,8 +14,8 @@ namespace Moggle
 	/// </summary>
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
-	IEmisorTeclado, 
-	IComponentContainerComponent<IControl>, 
+	IEmisorTeclado,  // Para enviar señales de teclado a componentes
+	IComponentContainerComponent<IControl>, // Para controlar sus componentes
 	IControl
 	{
 		/// <summary>
@@ -46,11 +45,17 @@ namespace Moggle
 		public SpriteBatch Batch { get; private set; }
 
 		/// <summary>
+		/// Gets the content library
+		/// </summary>
+		public BibliotecaContenido Contenido { get; }
+
+		/// <summary>
 		/// </summary>
 		public Game ()
 		{
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
+			Contenido = new BibliotecaContenido (Content);
 			//Mouse = new Ratón (this);
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
@@ -88,7 +93,12 @@ namespace Moggle
 
 			CurrentScreen?.Initialize ();
 
+			foreach (var x in Components.OfType<IComponent> ())
+				x.AddContent (Contenido);
+			CurrentScreen?.AddContent (Contenido);
+
 			base.Initialize ();
+
 			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
 		}
@@ -118,10 +128,8 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent (Content);
-
-			CurrentScreen?.LoadContent (Content);
+			Contenido.Load ();
+			OnContentLoaded ();
 		}
 
 		/// <summary>
@@ -135,16 +143,37 @@ namespace Moggle
 			CurrentScreen.Update (gameTime);
 		}
 
-		#region Component
-
-		void IComponent.LoadContent (ContentManager manager)
+		/// <summary>
+		/// This method is invoked when all the content is loaded
+		/// </summary>
+		protected virtual void OnContentLoaded ()
 		{
-			LoadContent ();
+			foreach (var c in Components.OfType<IComponent> ())
+				c.InitializeContent (Contenido);
+
+			CurrentScreen?.InitializeContent (Contenido);
 		}
 
-		void IComponent.UnloadContent ()
+		#region Component
+
+		/// <summary>
+		/// Tell the components and the current screen to get the content from the library
+		/// </summary>
+		/// <param name="manager">Content library</param>
+		protected virtual void InitializeContent (BibliotecaContenido manager)
 		{
-			UnloadContent ();
+			foreach (var x in Components.OfType<IComponent> ())
+				x.InitializeContent (manager);
+			CurrentScreen?.InitializeContent (manager);
+		}
+
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
+		void IComponent.AddContent (BibliotecaContenido manager)
+		{
 		}
 
 		void IGameComponent.Initialize ()
@@ -234,7 +263,7 @@ namespace Moggle
 		/// </summary>
 		protected override void UnloadContent ()
 		{
-			CurrentScreen.UnloadContent ();
+			Contenido.ClearAll ();
 			base.UnloadContent ();
 		}
 

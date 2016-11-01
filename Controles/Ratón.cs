@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using OpenTK.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -108,9 +107,18 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Textura = manager.Load<Texture2D> (ArchivoTextura);
+			manager.AddContent (ArchivoTextura);
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenidos</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			Textura = manager.GetContent<Texture2D> (ArchivoTextura);
 		}
 
 		/// <summary>

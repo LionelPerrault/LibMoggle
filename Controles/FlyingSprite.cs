@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
@@ -25,10 +24,21 @@ namespace Moggle.Controles
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (ContentManager manager)
+		public void AddContent (BibliotecaContenido manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			manager.AddContent (TextureName);
+			//Texture = manager.Load<Texture2D> (TextureName);
 		}
+
+		/// <summary>
+		/// Carga el contenido gráfico.
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			Texture = manager.GetContent<Texture2D> (TextureName);
+		}
+
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -52,7 +62,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Initialize this instance.
 		/// </summary>
-		public void Initialize ()
+		void IGameComponent.Initialize ()
 		{
 		}
 

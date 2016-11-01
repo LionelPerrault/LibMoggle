@@ -7,7 +7,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -17,7 +16,6 @@ namespace Moggle.Controles
 	/// </summary>
 	public class MultiEtiqueta : SBCC
 	{
-
 		#region ctor
 
 		/// <summary>
@@ -158,9 +156,18 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Font = manager.Load<BitmapFont> (fontString);
+			manager.AddContent (fontString);
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenido</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			Font = manager.GetContent<BitmapFont> (fontString);
 		}
 
 		/// <summary>

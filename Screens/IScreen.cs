@@ -41,7 +41,7 @@ namespace Moggle.Screens
 		/// El manejador de contenido
 		/// </summary>
 		/// <value>The content.</value>
-		ContentManager Content { get; }
+		BibliotecaContenido Content { get; }
 
 		#endregion
 

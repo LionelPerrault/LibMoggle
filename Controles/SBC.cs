@@ -1,9 +1,7 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -42,8 +40,21 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		protected virtual void LoadContent (ContentManager manager)
+		protected virtual void AddContent (BibliotecaContenido manager)
 		{
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected virtual void InitializeContent (BibliotecaContenido manager)
+		{
+		}
+
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
 		}
 
 		/// <summary>
@@ -65,15 +76,12 @@ namespace Moggle.Controles
 		{
 		}
 
-		void IComponent.LoadContent (ContentManager manager)
+		void IComponent.AddContent (BibliotecaContenido manager)
 		{
-			LoadContent (manager);
+			AddContent (manager);
 		}
 
-		void IComponent.UnloadContent ()
-		{
-			UnloadContent ();
-		}
+
 
 		/// <summary>
 		/// Prioridad de dibujo;
@@ -83,11 +91,18 @@ namespace Moggle.Controles
 		public int Prioridad { get; set; }
 
 		/// <summary>
+		/// Gets a value indicating whether this control is initialized.
+		/// </summary>
+		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
+		public bool IsInitialized { get; private set; }
+
+		/// <summary>
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
 		public virtual void Initialize ()
 		{
+			IsInitialized = true;
 		}
 
 		/// <summary>

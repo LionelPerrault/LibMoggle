@@ -205,13 +205,18 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public bool InterceptarTeclado { get; set; }
 
+		const string fonts = "fonts";
+
+		const string rect = "Rect";
+
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Fuente = manager.Load<BitmapFont> ("fonts");
-			noTexture = manager.Load<Texture2D> ("Rect");
+			// REMOVE
+			manager.AddContent (fonts);
+			manager.AddContent (rect);
 		}
 
 		/// <summary>

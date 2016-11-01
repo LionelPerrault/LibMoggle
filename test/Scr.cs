@@ -4,17 +4,37 @@ using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Test
 {
 	public class Scr : Screen
 	{
+		public Texture2D Solid
+		{
+			get
+			{
+				var ret = new Texture2D (Juego.GraphicsDevice, 2, 2);
+				var _data = new []
+				{
+					Color.White,
+					Color.Black,
+					Color.Black,
+					Color.White
+				};
+				ret.SetData<Color> (_data);
+				return ret;
+			}
+		}
+
 		public Scr (Moggle.Game game)
 			: base (game)
 		{
+			Content.AddContent ("solid", Solid);
+
 			bt = new Botón (this, new RectangleF (100, 100, 50, 50));
 			bt.Color = Color.Green;
-			bt.Textura = "cont//void";
+			bt.Textura = "solid";
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
 			{
@@ -47,10 +67,10 @@ namespace Test
 				bts [i] = new FlyingSprite
 				{
 					Color = Color.PaleVioletRed * 0.8f,
-					TextureName = "cont//void"
+					TextureName = "cont/void"
 				};
-
-				bts [i].LoadContent (Content);
+				//bts [i].AddContent (Content);
+				//AddComponent (bts[i]);
 
 				ct.Add (bts [i]);
 				//bts [i].AlClick += (sender, e) => buttonClicked (e, i);
