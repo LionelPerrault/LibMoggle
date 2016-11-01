@@ -6,7 +6,6 @@ using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -140,8 +139,16 @@ namespace Moggle.Controles
 		{
 			manager.AddContent (BgTexture);
 			manager.AddContent (FontTexture);
-			//contornoTexture = manager.Load<Texture2D> (BgTexture);
-			//fontTexture = manager.Load<BitmapFont> (FontTexture);
+		}
+
+		/// <summary>
+		/// Vincula el contenido  a campos de clase
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			contornoTexture = manager.GetContent<Texture2D> (BgTexture);
+			fontTexture = manager.GetContent<BitmapFont> (FontTexture);
 		}
 
 		/// <summary>

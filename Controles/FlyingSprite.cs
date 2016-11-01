@@ -27,7 +27,6 @@ namespace Moggle.Controles
 		public void AddContent (BibliotecaContenido manager)
 		{
 			manager.AddContent (TextureName);
-			//Texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
