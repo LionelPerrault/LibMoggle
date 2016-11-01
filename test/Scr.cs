@@ -119,7 +119,7 @@ namespace Test
 				bts [i] = new FlyingSprite
 				{
 					Color = Color.PaleVioletRed * 0.8f,
-					TextureName = "cont/void"
+					TextureName = "solid"
 				};
 
 				ct.Add (bts [i]);
@@ -129,7 +129,7 @@ namespace Test
 
 			var contImg = new ContenedorImg (this)
 			{
-				MargenExterno = new MargenType ()
+				MargenExterno = new MargenType
 				{
 					Left = 3,
 					Right = 3,
@@ -140,8 +140,10 @@ namespace Test
 				BgColor = Color.Black,
 				Posición = new Point (400, 5),
 				TextureFondoName = "solid",
-				GridSize = new MonoGame.Extended.Size (4, 4)
+				GridSize = new MonoGame.Extended.Size (4, 4),
+				TipoOrden = Contenedor<FlyingSprite>.TipoOrdenEnum.FilaPrimero
 			};
+			var cnt = Content.GetContent ("alt_1");
 			contImg.Add ("alt_1", Color.White);
 			contImg.Add ("alt_2", Color.White);
 			contImg.Add ("alt_3", Color.White);
