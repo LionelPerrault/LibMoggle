@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
@@ -25,34 +24,28 @@ namespace Moggle.Controles
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (ContentManager manager)
+		public void AddContent (BibliotecaContenido manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			manager.AddContent (TextureName);
 		}
 
 		/// <summary>
-		/// Desarga el contenido gráfico.
+		/// Carga el contenido gráfico.
 		/// </summary>
-		public void UnloadContent ()
+		/// <param name="manager">Manager.</param>
+		void IComponent.InitializeContent (BibliotecaContenido manager)
 		{
+			Texture = manager.GetContent<Texture2D> (TextureName);
 		}
 
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.FlyingSprite"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Controles.FlyingSprite"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.FlyingSprite"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.FlyingSprite"/>
-		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.FlyingSprite"/> was occupying.</remarks>
-		public void Dispose ()
+		void IDisposable.Dispose ()
 		{
-			UnloadContent ();
 		}
 
 		/// <summary>
 		/// Initialize this instance.
 		/// </summary>
-		public void Initialize ()
+		void IGameComponent.Initialize ()
 		{
 		}
 

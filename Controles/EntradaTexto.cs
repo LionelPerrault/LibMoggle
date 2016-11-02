@@ -6,7 +6,6 @@ using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -94,7 +93,7 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}
@@ -118,7 +117,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			Primitivos.DrawRectangle (
@@ -136,16 +135,26 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			contornoTexture = manager.Load<Texture2D> (BgTexture);
-			fontTexture = manager.Load<BitmapFont> (FontTexture);
+			manager.AddContent (BgTexture);
+			manager.AddContent (FontTexture);
+		}
+
+		/// <summary>
+		/// Vincula el contenido  a campos de clase
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			contornoTexture = manager.GetContent<Texture2D> (BgTexture);
+			fontTexture = manager.GetContent<BitmapFont> (FontTexture);
 		}
 
 		/// <summary>
 		/// Unloads the content.
 		/// </summary>
-		protected override void UnloadContent ()
+		protected override void Dispose ()
 		{
 			contornoTexture = null;
 			fontTexture = null;

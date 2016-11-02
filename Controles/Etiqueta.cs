@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -52,7 +51,7 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return (RectangleF)font.GetStringRectangle (
 				Texto (),
@@ -77,7 +76,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			var txt = Texto ();
@@ -91,9 +90,18 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			font = manager.Load<BitmapFont> (UseFont);
+			manager.AddContent (UseFont);
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenidos</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			font = manager.GetContent<BitmapFont> (UseFont);
 		}
 
 		/// <summary>

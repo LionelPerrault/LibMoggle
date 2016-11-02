@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using OpenTK.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -27,7 +26,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
 		}
@@ -36,7 +35,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			var bat = Game.GetNewBatch ();
 			bat.Begin ();
@@ -108,15 +107,24 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Textura = manager.Load<Texture2D> (ArchivoTextura);
+			manager.AddContent (ArchivoTextura);
 		}
 
 		/// <summary>
-		/// Unloads the content.
+		/// Vincula el contenido a campos de clase
 		/// </summary>
-		protected override void UnloadContent ()
+		/// <param name="manager">Biblioteca de contenidos</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			Textura = manager.GetContent<Texture2D> (ArchivoTextura);
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Controles.Ratón"/> object.
+		/// </summary>
+		protected override void Dispose ()
 		{
 			Textura = null;
 		}

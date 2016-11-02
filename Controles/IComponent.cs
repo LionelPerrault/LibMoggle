@@ -1,29 +1,25 @@
 using System;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
 
 	/// <summary>
-	/// Puede ejecutar 
-	/// <see cref="LoadContent"/>
-	/// y 
-	/// <see cref="UnloadContent"/>
+	/// Representa un objeto de juego que necesita cargar contenido de una <see cref="BibliotecaContenido"/>
 	/// </summary>
 	public interface IComponent : IGameComponent, IDisposable
 	{
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		void LoadContent (ContentManager manager);
+		void AddContent (BibliotecaContenido manager);
 
 		/// <summary>
-		/// Desarga el contenido gráfico.
+		/// Aquí se debe de asignar a variables de clase el contenido de manager
 		/// </summary>
-		void UnloadContent ();
-
+		/// <param name="manager">Biblioteca de contenido</param>
+		void InitializeContent (BibliotecaContenido manager);
 	}
 
 	/// <summary>

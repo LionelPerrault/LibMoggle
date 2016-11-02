@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Moggle.Controles
 {
@@ -7,7 +6,6 @@ namespace Moggle.Controles
 	/// Representa un objeto que contiene Componentes de algún tipo.
 	/// </summary>
 	public interface IComponentContainerComponent<TComp> : IComponent
-		where TComp : IControl
 	{
 		/// <summary>
 		/// Agrega un componente

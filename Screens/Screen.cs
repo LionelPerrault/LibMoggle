@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
@@ -49,19 +49,34 @@ namespace Moggle.Screens
 		/// Cargar contenido de cada control incluido.
 		/// Y también se le pide al controlador gráfico un nuevo Batch.
 		/// </summary>
-		public virtual void LoadContent ()
+		public virtual void AddAllContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent (Content);
+				x.AddContent (Content);
 		}
 
-		void IComponent.LoadContent (ContentManager manager)
+		void IComponent.AddContent (BibliotecaContenido manager)
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.LoadContent (manager);
+				x.AddContent (manager);
 		}
 
-		void System.IDisposable.Dispose ()
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
+		/// <summary>
+		/// Tell its components to get the content from the library
+		/// </summary>
+		/// <param name="manager">The content library</param>
+		protected virtual void InitializeContent (BibliotecaContenido manager)
+		{
+			foreach (var c in Components.OfType<IComponent> ())
+				c.InitializeContent (manager);
+		}
+
+		void IDisposable.Dispose ()
 		{
 		}
 
@@ -70,18 +85,18 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void UnloadContent ()
 		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.UnloadContent ();
+			foreach (var x in Components.OfType<IDisposable> ())
+				x.Dispose ();
 		}
 
 		/// <summary>
 		/// Devuelve el manejador de contenidos del juego.
 		/// </summary>
-		public ContentManager Content
+		public BibliotecaContenido Content
 		{
 			get
 			{
-				return Juego.Content;
+				return Juego.Contenido;
 			}
 		}
 
@@ -113,15 +128,6 @@ namespace Moggle.Screens
 		#endregion
 
 		#region Comportamiento
-
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.
-		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Screens.Screen"/>.</returns>
-		public override string ToString ()
-		{
-			return string.Format ("[{0}]", GetType ());
-		}
 
 		/// <summary>
 		/// Devuelve el color de fondo.

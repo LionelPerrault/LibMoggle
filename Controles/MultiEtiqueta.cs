@@ -7,7 +7,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -17,7 +16,6 @@ namespace Moggle.Controles
 	/// </summary>
 	public class MultiEtiqueta : SBCC
 	{
-
 		#region ctor
 
 		/// <summary>
@@ -98,7 +96,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			// Altura
 			var ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;
@@ -138,7 +136,7 @@ namespace Moggle.Controles
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			var bat = Screen.Batch;
 			var ht = 0f;
@@ -158,9 +156,18 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Font = manager.Load<BitmapFont> (fontString);
+			manager.AddContent (fontString);
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenido</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			Font = manager.GetContent<BitmapFont> (fontString);
 		}
 
 		/// <summary>
