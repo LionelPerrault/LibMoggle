@@ -208,6 +208,9 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public bool InterceptarTeclado { get; set; }
 
+		/// <summary>
+		/// The nombre textura de la fuente.
+		/// </summary>
 		public string NombreTexturaFuente = "fonts";
 
 		/// <summary>
@@ -218,6 +221,10 @@ namespace Moggle.Controles.Listas
 			manager.AddContent (NombreTexturaFuente);
 		}
 
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		protected override void InitializeContent (BibliotecaContenido manager)
 		{
 			var st = new SimpleTextures (Game.Device);
