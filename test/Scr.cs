@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
+using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Graphics;
-using Moggle.Textures;
 
 namespace Test
 {
@@ -30,13 +30,10 @@ namespace Test
 
 		SimpleTextures textures;
 
-		public Scr (Moggle.Game game)
-			: base (game)
+		void buildTextures ()
 		{
-			textures = new SimpleTextures (game.Device);
-
 			Content.AddContent (
-				"solid",
+				"outline",
 				textures.OutlineTexture (
 					new MonoGame.Extended.Size (
 						15,
@@ -44,14 +41,104 @@ namespace Test
 					Color.White,
 					Color.Black));
 
+			Content.AddContent (
+				"solid",
+				textures.SolidTexture (
+					new MonoGame.Extended.Size (
+						1,
+						1),
+					Color.White));
+
+
+			#region Alternates Test
+			var altColor = new [] { Color.White, Color.Black };
+			Content.AddContent (
+				"alt_1",
+				textures.AlternatingTexture (
+					new MonoGame.Extended.Size (1, 1),
+					altColor));
+			Content.AddContent (
+				"alt_2",
+				textures.AlternatingTexture (
+					new MonoGame.Extended.Size (5, 5),
+					altColor));
+			Content.AddContent (
+				"alt_3",
+				textures.AlternatingTexture (
+					new MonoGame.Extended.Size (50, 20),
+					altColor));
+			Content.AddContent (
+				"alt_4",
+				textures.AlternatingTexture (
+					new MonoGame.Extended.Size (50, 100),
+					altColor));
+			
+			#endregion
+			#region Solid
+			Content.AddContent (
+				"sol_1",
+				textures.AlternatingTexture (
+					new MonoGame.Extended.Size (1, 1),
+					altColor));
+			Content.AddContent (
+				"sol_2",
+				textures.SolidTexture (
+					new MonoGame.Extended.Size (5, 5),
+					Color.White));
+			Content.AddContent (
+				"sol_3",
+				textures.SolidTexture (
+					new MonoGame.Extended.Size (5, 100),
+					Color.White));
+			Content.AddContent (
+				"sol_4",
+				textures.SolidTexture (
+					new MonoGame.Extended.Size (100, 100),
+					Color.White));
+
+			#endregion
+			Content.AddContent (
+				"out_1",
+				textures.OutlineTexture (
+					new MonoGame.Extended.Size (1, 1),
+					Color.White));
+			Content.AddContent (
+				"out_2",
+				textures.OutlineTexture (
+					new MonoGame.Extended.Size (3, 3),
+					Color.White));
+			Content.AddContent (
+				"out_3",
+				textures.OutlineTexture (
+					new MonoGame.Extended.Size (100, 3),
+					Color.White));
+			Content.AddContent (
+				"out_4",
+				textures.OutlineTexture (
+					new MonoGame.Extended.Size (6, 6),
+					Color.White));
+			Content.AddContent (
+				"out_5",
+				textures.OutlineTexture (
+					new MonoGame.Extended.Size (20, 20), // El tamaño de la imagen de muestra
+					Color.White));
+		}
+
+		public Scr (Moggle.Game game)
+			: base (game)
+		{
+			textures = new SimpleTextures (game.Device);
+
+			buildTextures ();
+
 			bt = new Botón (this, new RectangleF (100, 100, 50, 50));
 			bt.Color = Color.Green;
-			bt.Textura = "solid";
+			bt.Textura = "outline";
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
 			{
 				GridSize = new MonoGame.Extended.Size (4, 4),
-				TextureFondoName = "cont//void",
+				TextureFondoName = "solid",
 				MargenExterno = new MargenType
 				{
 					Top = 3,
@@ -79,25 +166,51 @@ namespace Test
 				bts [i] = new FlyingSprite
 				{
 					Color = Color.PaleVioletRed * 0.8f,
-					TextureName = "cont/void"
+					TextureName = "solid"
 				};
-				//bts [i].AddContent (Content);
-				//AddComponent (bts[i]);
 
 				ct.Add (bts [i]);
-				//bts [i].AlClick += (sender, e) => buttonClicked (e, i);
 			}
-			//ct.AlActivarBotón += Ct_AlActivarBotón;
-
-			/* 
-			 * //TODO: Agregar un font.
-			var tx = new EntradaTexto (this);
-			tx.Pos = new Vector2 (50, 50);
-			tx.BgTexture = "cont//void";
-			tx.FontTexture = "fonts";
-			*/
 
 			StrListen = new KeyStringListener (Juego.KeyListener);
+
+			var contImg = new ContenedorImg (this)
+			{
+				MargenExterno = new MargenType
+				{
+					Left = 3,
+					Right = 3,
+					Top = 3,
+					Bot = 3
+				},
+				MargenInterno = new MargenType
+				{
+					Left = 2,
+					Right = 2,
+					Top = 2,
+					Bot = 2
+				},
+				TamañoBotón = new MonoGame.Extended.Size (20, 20),
+				BgColor = Color.Black,
+				Posición = new Point (400, 5),
+				TextureFondoName = "solid",
+				GridSize = new MonoGame.Extended.Size (4, 4),
+				TipoOrden = Contenedor<FlyingSprite>.TipoOrdenEnum.FilaPrimero
+			};
+			contImg.Add ("sol_1", Color.White);
+			contImg.Add ("sol_2", Color.White);
+			contImg.Add ("sol_3", Color.White);
+			contImg.Add ("sol_4", Color.White);
+			contImg.Add ("alt_1", Color.White);
+			contImg.Add ("alt_2", Color.White);
+			contImg.Add ("alt_3", Color.White);
+			contImg.Add ("alt_4", Color.White);
+			contImg.Add ("out_1", Color.White);
+			contImg.Add ("out_2", Color.White);
+			contImg.Add ("out_3", Color.White);
+			contImg.Add ("out_4", Color.White);
+			contImg.Add ("out_5", Color.White);
+			AddComponent (contImg);
 		}
 
 		void buttonClicked (MouseEventArgs e, int index)

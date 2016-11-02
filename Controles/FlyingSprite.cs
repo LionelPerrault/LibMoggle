@@ -27,7 +27,6 @@ namespace Moggle.Controles
 		public void AddContent (BibliotecaContenido manager)
 		{
 			manager.AddContent (TextureName);
-			//Texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
@@ -39,24 +38,8 @@ namespace Moggle.Controles
 			Texture = manager.GetContent<Texture2D> (TextureName);
 		}
 
-
-		/// <summary>
-		/// Desarga el contenido gráfico.
-		/// </summary>
-		public void UnloadContent ()
+		void IDisposable.Dispose ()
 		{
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.FlyingSprite"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Controles.FlyingSprite"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.FlyingSprite"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.FlyingSprite"/>
-		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.FlyingSprite"/> was occupying.</remarks>
-		public void Dispose ()
-		{
-			UnloadContent ();
 		}
 
 		/// <summary>

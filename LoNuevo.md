@@ -2,6 +2,12 @@ Lo nuevo
 ========
 La lista de cambios
 
+En 0.8
+------
++ ContenedorSelección: corregir bugs gráficos
++ Se agrega clase BibliotecaContenido; maneja contenido que se carga de archivos. Cambia bastante el esquema de inicialización, así que puede perder compatibilidad con versiones anteriores.
++ Se agrega una clase de texturas definibles: Sólido, Alternado, Contorno
+
 En 0.7
 ------
 + Selección en ContenedorSelección es opcional

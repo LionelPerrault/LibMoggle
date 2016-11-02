@@ -67,6 +67,8 @@ namespace Moggle.Textures
 		                                 Color? insideColor = null)
 		{
 			var useInsideColor = insideColor ?? Color.Transparent;
+			if (textureSize.Height == 1 || textureSize.Width == 1)
+				return SolidTexture (textureSize, outlineColor);
 			return generateFromFunc (
 				textureSize,
 				(x, y) => (x % (textureSize.Width - 1)) * (y % (textureSize.Height - 1)) == 0 ? outlineColor : useInsideColor);

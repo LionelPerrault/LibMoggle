@@ -84,6 +84,10 @@ namespace Moggle
 
 		void Load (EntradaContenido entry)
 		{
+			// No cargar contenido si ya está cargado
+			if (entry.Contenido != null)
+				return;
+			
 			var loadedContent = PrimerContenidoCargadoONulo (entry.NombreArchivo);
 			entry.Contenido = loadedContent != null ? 
 				loadedContent.Contenido : 
