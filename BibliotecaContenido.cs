@@ -151,6 +151,15 @@ namespace Moggle
 		}
 
 		/// <summary>
+		/// Carga el contenido
+		/// </summary>
+		/// <param name="name">Nombre del contenido a cargar</param>
+		public void Load (string name)
+		{
+			Load (_contenido [name]);
+		}
+
+		/// <summary>
 		/// Carga todo el contenido agregado
 		/// </summary>
 		public void Load ()
