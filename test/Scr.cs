@@ -9,6 +9,40 @@ using MonoGame.Extended.Shapes;
 
 namespace Test
 {
+	public class DialScr : DialScreen
+	{
+		public override Color BgColor
+		{
+			get
+			{
+				return Color.Pink;
+			}
+		}
+
+		public override bool DibujarBase
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		public DialScr (Moggle.Game juego, IScreen baseScreen)
+			: base (juego, baseScreen)
+		{
+			var bt = new Botón (this)
+			{
+				Textura = "outline",
+				Color = Color.Green,
+				Bounds = new RectangleF (400, 400, 50, 50),
+			};
+
+			Components.Add (bt);
+				
+		}
+		
+	}
+
 	public class Scr : Screen
 	{
 		public Texture2D Solid
@@ -97,6 +131,7 @@ namespace Test
 					Color.White));
 
 			#endregion
+			#region Outline
 			Content.AddContent (
 				"out_1",
 				textures.OutlineTexture (
@@ -122,6 +157,7 @@ namespace Test
 				textures.OutlineTexture (
 					new MonoGame.Extended.Size (20, 20), // El tamaño de la imagen de muestra
 					Color.White));
+			#endregion
 		}
 
 		public Scr (Moggle.Game game)
@@ -134,6 +170,16 @@ namespace Test
 			bt = new Botón (this, new RectangleF (100, 100, 50, 50));
 			bt.Color = Color.Green;
 			bt.Textura = "outline";
+
+			bt = new Botón (this, new RectangleF (155, 100, 50, 50));
+			bt.Color = Color.Green;
+			bt.Textura = "outline";
+			bt.AlClick += delegate
+			{
+				var newScr = new DialScr (Juego, this);
+				newScr.Ejecutar ();
+			};
+
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
 			{
