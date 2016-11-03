@@ -74,6 +74,62 @@ namespace Moggle
 			newCont.Contenido = content;
 		}
 
+		/// <summary>
+		/// Devuelve el contenido por su nombre;
+		/// de ser necesario, va a cargar inmediatamente el contenido
+		/// </summary>
+		/// <param name="name">Nombre </param>
+		/// <param name="file">File.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T LoadAddContent<T> (string name, string file)
+			where T : class
+		{
+			return LoadAddContent (name, file) as T;
+		}
+
+		/// <summary>
+		/// Devuelve el contenido por su nombre;
+		/// de ser necesario, va a cargar inmediatamente el contenido
+		/// </summary>
+		/// <param name="name">Nombre </param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T LoadAddContent<T> (string name)
+			where T : class
+		{
+			return LoadAddContent (name) as T;
+		}
+
+		/// <summary>
+		/// Devuelve el contenido por su nombre;
+		/// de ser necesario, va a cargar inmediatamente el contenido
+		/// </summary>
+		/// <param name="name">Nombre </param>
+		/// <param name="file">File.</param>
+		public object LoadAddContent (string name, string file)
+		{
+			EntradaContenido ret;
+			if (_contenido.TryGetValue (name, out ret))
+			{
+				return ret;
+			}
+			ret = new EntradaContenido (name, file);
+			_contenido.Add (name, ret);
+			Load (ret);
+
+			return ret.Contenido;
+		}
+
+		/// <summary>
+		/// Devuelve el contenido por su nombre;
+		/// de ser necesario, va a cargar inmediatamente el contenido
+		/// </summary>
+		/// <param name="name">Nombre del archivo del contenido</param>
+		public object LoadAddContent (string name)
+		{
+			return LoadAddContent (name, name);
+		}
+
+
 		EntradaContenido PrimerContenidoCargadoONulo (string file)
 		{
 			foreach (var z in _contenido.Values)

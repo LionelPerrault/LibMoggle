@@ -2,6 +2,10 @@ Lo nuevo
 ========
 La lista de cambios
 
+En 0.8.1
+--------
++ Agregar Métodos de carga inmediata de contenido
+
 En 0.8
 ------
 + ContenedorSelección: corregir bugs gráficos

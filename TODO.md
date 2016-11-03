@@ -1,8 +1,9 @@
 # Actual
-	BibliotecaContenido:
-		LoadOrGetContent, para poder cargar contenido "on the fly"
 	Ratón:
 		El ratón es invisible hasta que se mueve
+# 0.8.1
+	BibliotecaContenido:
+		[X] LoadOrGetContent, para poder cargar contenido "on the fly"
 # 0.8
 	Casi cualquier componente, control, screen:
 		[X] Revisar bien si los quiero protected o public
