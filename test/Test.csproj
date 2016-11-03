@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scr.cs" />
     <Compile Include="Autotest\SelectionManager.cs" />
+    <Compile Include="DialScr.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\bin\Windows\*.xnb" />
