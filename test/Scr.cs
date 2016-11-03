@@ -35,18 +35,14 @@ namespace Test
 			Content.AddContent (
 				"outline",
 				textures.OutlineTexture (
-					new MonoGame.Extended.Size (
-						15,
-						10),
+					new MonoGame.Extended.Size (15, 10),
 					Color.White,
 					Color.Black));
 
 			Content.AddContent (
 				"solid",
 				textures.SolidTexture (
-					new MonoGame.Extended.Size (
-						1,
-						1),
+					new MonoGame.Extended.Size (1, 1),
 					Color.White));
 
 
@@ -97,6 +93,7 @@ namespace Test
 					Color.White));
 
 			#endregion
+			#region Outline
 			Content.AddContent (
 				"out_1",
 				textures.OutlineTexture (
@@ -122,6 +119,7 @@ namespace Test
 				textures.OutlineTexture (
 					new MonoGame.Extended.Size (20, 20), // El tamaño de la imagen de muestra
 					Color.White));
+			#endregion
 		}
 
 		public Scr (Moggle.Game game)
@@ -134,6 +132,16 @@ namespace Test
 			bt = new Botón (this, new RectangleF (100, 100, 50, 50));
 			bt.Color = Color.Green;
 			bt.Textura = "outline";
+
+			bt = new Botón (this, new RectangleF (155, 100, 50, 50));
+			bt.Color = Color.Green;
+			bt.Textura = "outline";
+			bt.AlClick += delegate
+			{
+				var newScr = new DialScr (Juego, this);
+				newScr.Ejecutar ();
+			};
+
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
 			{

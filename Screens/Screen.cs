@@ -47,7 +47,6 @@ namespace Moggle.Screens
 
 		/// <summary>
 		/// Cargar contenido de cada control incluido.
-		/// Y también se le pide al controlador gráfico un nuevo Batch.
 		/// </summary>
 		public virtual void AddAllContent ()
 		{
