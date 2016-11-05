@@ -90,6 +90,17 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		public override void Initialize ()
+		{
+			base.Initialize ();
+			var displ = Game.GraphicsDevice.Adapter.CurrentDisplayMode;
+			Pos = new Point (displ.Width / 2, displ.Height / 2);
+		}
+
+		/// <summary>
 		/// Devuelve el tamaño del apuntador.
 		/// </summary>
 		public readonly Size Tamaño;
