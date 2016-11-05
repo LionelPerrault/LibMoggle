@@ -41,13 +41,15 @@ namespace Moggle.Controles
 			return new Rectangle ((Pos + OffSet), Tamaño);
 		}
 
+		readonly SpriteBatch drawBatch;
+
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
 		protected override void Draw (GameTime gameTime)
 		{
-			var bat = Game.GetNewBatch ();
+			var bat = drawBatch;
 			bat.Begin ();
 			bat.Draw (
 				Textura,
@@ -85,6 +87,17 @@ namespace Moggle.Controles
 			{
 				Mouse.SetPosition (value.X, value.Y);
 			}
+		}
+
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		public override void Initialize ()
+		{
+			base.Initialize ();
+			var displ = Game.GraphicsDevice.Adapter.CurrentDisplayMode;
+			Pos = new Point (displ.Width / 2, displ.Height / 2);
 		}
 
 		/// <summary>
@@ -151,6 +164,7 @@ namespace Moggle.Controles
 			: base (gm)
 		{
 			Tamaño = tamaño;
+			drawBatch = Game.GetNewBatch ();
 		}
 
 		/// <summary>
@@ -160,6 +174,7 @@ namespace Moggle.Controles
 			: base (gm)
 		{
 			Tamaño = new Size (20, 20);
+			drawBatch = Game.GetNewBatch ();
 		}
 
 		#endregion
