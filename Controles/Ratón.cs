@@ -41,13 +41,15 @@ namespace Moggle.Controles
 			return new Rectangle ((Pos + OffSet), Tamaño);
 		}
 
+		readonly SpriteBatch drawBatch;
+
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
 		protected override void Draw (GameTime gameTime)
 		{
-			var bat = Game.GetNewBatch ();
+			var bat = drawBatch;
 			bat.Begin ();
 			bat.Draw (
 				Textura,
@@ -151,6 +153,7 @@ namespace Moggle.Controles
 			: base (gm)
 		{
 			Tamaño = tamaño;
+			drawBatch = Game.GetNewBatch ();
 		}
 
 		/// <summary>
@@ -160,6 +163,7 @@ namespace Moggle.Controles
 			: base (gm)
 		{
 			Tamaño = new Size (20, 20);
+			drawBatch = Game.GetNewBatch ();
 		}
 
 		#endregion
