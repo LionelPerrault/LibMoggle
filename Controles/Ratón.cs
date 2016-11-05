@@ -14,6 +14,11 @@ namespace Moggle.Controles
 		#region Dibujo
 
 		/// <summary>
+		/// Devuelve o establece el offset del cursor con respecto a su posición real
+		/// </summary>
+		public Point OffSet { get; set; }
+
+		/// <summary>
 		/// Devuelve o establece el archivo que contiene la textura del ratón.
 		/// </summary>
 		public string ArchivoTextura { get; set; }
@@ -31,6 +36,11 @@ namespace Moggle.Controles
 			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
 		}
 
+		Rectangle GetOffsetBounds ()
+		{
+			return new Rectangle ((Pos + OffSet), Tamaño);
+		}
+
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
@@ -41,7 +51,7 @@ namespace Moggle.Controles
 			bat.Begin ();
 			bat.Draw (
 				Textura,
-				(Rectangle)GetBounds ().GetBoundingRectangle (),
+				GetOffsetBounds (),
 				Color.WhiteSmoke);
 			bat.End ();
 		}
