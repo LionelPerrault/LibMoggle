@@ -23,7 +23,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		public void AddContent ()
 		{
 			Manager.AddContent (TextureName);
@@ -64,6 +63,9 @@ namespace Moggle.Controles
 		/// <value>The texture.</value>
 		public Texture2D Texture { get; private set; }
 
+		/// <summary>
+		/// Devuelve el manejador de contenidos
+		/// </summary>
 		public BibliotecaContenido Manager { get; }
 
 		/// <summary>
@@ -78,6 +80,10 @@ namespace Moggle.Controles
 		/// <value>The color.</value>
 		public Color Color { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Controles.FlyingSprite"/> class.
+		/// </summary>
+		/// <param name="manager">Manejador de contenido donde se suscribe esta clase</param>
 		public FlyingSprite (BibliotecaContenido manager)
 		{
 			Manager = manager;

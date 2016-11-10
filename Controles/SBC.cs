@@ -47,7 +47,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected virtual void InitializeContent ()
 		{
 		}

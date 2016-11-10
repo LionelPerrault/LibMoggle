@@ -239,7 +239,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected override void AddContent ()
 		{
 			var manager = Screen.Content;
@@ -251,7 +250,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenido</param>
 		protected override void InitializeContent ()
 		{
 			var manager = Screen.Content;

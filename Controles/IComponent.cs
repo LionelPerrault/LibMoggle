@@ -18,7 +18,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Aquí se debe de asignar a variables de clase el contenido de manager
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenido</param>
 		void InitializeContent ();
 	}
 

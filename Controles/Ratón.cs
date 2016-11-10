@@ -138,7 +138,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenidos</param>
 		protected override void InitializeContent ()
 		{
 			Textura = Screen.Content.GetContent<Texture2D> (ArchivoTextura);
