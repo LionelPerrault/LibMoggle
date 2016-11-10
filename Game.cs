@@ -76,11 +76,12 @@ namespace Moggle
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
-		public IComponentContainerComponent<IControl> Container
+		IComponentContainerComponent<IControl> IControl.Container
 		{
 			get
 			{
-				return null;
+				// Este valor hace que GetScreen sea más fácil
+				return CurrentScreen;
 			}
 		}
 

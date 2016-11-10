@@ -4,11 +4,10 @@ using Moggle.Screens;
 
 namespace Moggle.Controles
 {
-
 	/// <summary>
 	/// Representa un objeto de juego que necesita cargar contenido de una <see cref="BibliotecaContenido"/>
 	/// </summary>
-	public interface IComponent : IGameComponent, IDisposable
+	public interface IComponent : IGameComponent
 	{
 		/// <summary>
 		/// Carga el contenido gráfico.
@@ -24,7 +23,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Component ext.
 	/// </summary>
-	public static class ComponentExt
+	static class ComponentExt
 	{
 		/// <summary>
 		/// Devuelve el <see cref="IScreen"/> que contiene este control.

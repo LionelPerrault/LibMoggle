@@ -36,10 +36,6 @@ namespace Moggle.Controles
 			Texture = Manager.GetContent<Texture2D> (TextureName);
 		}
 
-		void IDisposable.Dispose ()
-		{
-		}
-
 		/// <summary>
 		/// Initialize this instance.
 		/// </summary>

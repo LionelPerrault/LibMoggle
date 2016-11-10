@@ -14,28 +14,19 @@ namespace Moggle.Controles
 		/// Pantalla del control
 		/// </summary>
 		/// <value>The screen.</value>
-		public IScreen Screen { get { return this.GetScreen (); } }
+		public IScreen Screen { get; }
 
 		/// <summary>
 		/// Gets the game.
 		/// </summary>
 		/// <value>The game.</value>
-		public Game Game { get { return this.GetGame (); } }
+		public Game Game { get { return Screen.Juego; } }
 
 		/// <summary>
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
 		public IComponentContainerComponent<IControl> Container { get; }
-
-		/// <summary>
-		/// </summary>
-		/// <param name="cont">Container</param>
-		protected SBC (IComponentContainerComponent<IControl> cont)
-		{
-			Container = cont;
-			Container.AddComponent (this);
-		}
 
 		/// <summary>
 		/// Loads the content.
@@ -56,24 +47,10 @@ namespace Moggle.Controles
 			InitializeContent ();
 		}
 
-		void IDisposable.Dispose ()
-		{
-			Dispose ();
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.SBC"/> object.
-		/// </summary>
-		protected virtual void Dispose ()
-		{
-		}
-
 		void IComponent.AddContent ()
 		{
 			AddContent ();
 		}
-
-
 
 		/// <summary>
 		/// Prioridad de dibujo;
@@ -122,12 +99,14 @@ namespace Moggle.Controles
 		public TimeSpan TiempoMouseOver { get; private set; }
 
 		/// <summary>
-		/// Shuts down the component.
 		/// </summary>
-		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected virtual void Dispose (bool disposing)
+		/// <param name="cont">Container</param>
+		protected SBC (IComponentContainerComponent<IControl> cont)
 		{
-			Container.RemoveComponent (this);
+			Screen = cont.GetScreen ();
+			Container = cont;
+			Container.AddComponent (this);
 		}
+
 	}
 }

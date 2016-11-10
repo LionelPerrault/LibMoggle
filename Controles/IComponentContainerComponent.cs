@@ -5,7 +5,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Representa un objeto que contiene Componentes de algún tipo.
 	/// </summary>
-	public interface IComponentContainerComponent<TComp> : IComponent
+	public interface IComponentContainerComponent<TComp> : IControl
 	{
 		/// <summary>
 		/// Agrega un componente

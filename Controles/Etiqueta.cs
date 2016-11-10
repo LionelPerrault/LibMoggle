@@ -103,15 +103,6 @@ namespace Moggle.Controles
 			font = Screen.Content.GetContent<BitmapFont> (UseFont);
 		}
 
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.Etiqueta"/> object.
-		/// </summary>
-		protected override void Dispose (bool disposing)
-		{
-			font = null;
-			base.Dispose (disposing);
-		}
-
 		#endregion
 	}
 }

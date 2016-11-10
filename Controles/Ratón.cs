@@ -118,16 +118,6 @@ namespace Moggle.Controles
 		#region Memoria
 
 		/// <summary>
-		/// Shuts down the component.
-		/// </summary>
-		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected override void Dispose (bool disposing)
-		{
-			Textura = null;
-			base.Dispose (disposing);
-		}
-
-		/// <summary>
 		/// Cargar contenido
 		/// </summary>
 		protected override void AddContent ()
@@ -141,14 +131,6 @@ namespace Moggle.Controles
 		protected override void InitializeContent ()
 		{
 			Textura = Screen.Content.GetContent<Texture2D> (ArchivoTextura);
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.Ratón"/> object.
-		/// </summary>
-		protected override void Dispose ()
-		{
-			Textura = null;
 		}
 
 		#endregion

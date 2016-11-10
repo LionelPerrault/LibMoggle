@@ -171,7 +171,7 @@ namespace Test
 			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{
-				bts [i] = new FlyingSprite
+				bts [i] = new FlyingSprite (Content)
 				{
 					Color = Color.PaleVioletRed * 0.8f,
 					TextureName = "solid"

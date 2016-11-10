@@ -169,14 +169,6 @@ namespace Moggle.Controles
 			Font = Screen.Content.GetContent<BitmapFont> (fontString);
 		}
 
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.MultiEtiqueta"/> object.
-		/// </summary>
-		protected override void Dispose (bool disposing)
-		{
-			Font = null;
-		}
-
 		#endregion
 
 		/// <summary>
