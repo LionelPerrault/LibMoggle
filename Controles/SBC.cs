@@ -40,7 +40,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		protected virtual void AddContent (BibliotecaContenido manager)
+		protected virtual void AddContent ()
 		{
 		}
 
@@ -48,13 +48,13 @@ namespace Moggle.Controles
 		/// Vincula el contenido a campos de clase
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
 		void IDisposable.Dispose ()
@@ -69,9 +69,9 @@ namespace Moggle.Controles
 		{
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			AddContent (manager);
+			AddContent ();
 		}
 
 

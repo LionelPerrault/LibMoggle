@@ -64,7 +64,7 @@ namespace Moggle.Screens
 			Initialize ();
 			AddAllContent ();
 			Content.Load ();
-			InitializeContent (Content);
+			InitializeContent ();
 			Juego.CurrentScreen = this;
 		}
 

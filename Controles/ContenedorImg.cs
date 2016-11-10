@@ -14,7 +14,7 @@ namespace Moggle.Controles
 		/// <param name="color">Color.</param>
 		public void Add (string texture, Color color)
 		{
-			var newItem = new FlyingSprite
+			var newItem = new FlyingSprite (Screen.Content)
 			{
 				Color = color,
 				TextureName = texture

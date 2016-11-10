@@ -216,21 +216,20 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			manager.AddContent (NombreTexturaFuente);
+			Screen.Content.AddContent (NombreTexturaFuente);
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
 			var st = new SimpleTextures (Game.Device);
-			Fuente = manager.GetContent<BitmapFont> (NombreTexturaFuente);
+			Fuente = Screen.Content.GetContent<BitmapFont> (NombreTexturaFuente);
 			pixel = st.SolidTexture (new Size (1, 1), Color.White);
-			base.InitializeContent (manager);
+			base.InitializeContent ();
 		}
 
 		/// <summary>

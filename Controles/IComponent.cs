@@ -13,13 +13,13 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		void AddContent (BibliotecaContenido manager);
+		void AddContent ();
 
 		/// <summary>
 		/// Aquí se debe de asignar a variables de clase el contenido de manager
 		/// </summary>
 		/// <param name="manager">Biblioteca de contenido</param>
-		void InitializeContent (BibliotecaContenido manager);
+		void InitializeContent ();
 	}
 
 	/// <summary>
