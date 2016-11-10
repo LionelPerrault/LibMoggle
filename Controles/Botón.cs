@@ -12,15 +12,6 @@ namespace Moggle.Controles
 	/// </summary>
 	public class Botón : DSBC, IColorable, IBotón
 	{
-		#region Memoria
-
-		void IDisposable.Dispose ()
-		{
-			Textura = null;
-		}
-
-		#endregion
-
 		#region Comportamiento
 
 		/// <summary>

@@ -8,7 +8,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Un <see cref="SBC"/> que puede ser dibujado y actualizado.
 	/// </summary>
-	public abstract class DSBC : SBC, IDrawable, IUpdateable
+	public abstract class DSBC : SBC, IDrawable, IUpdateable, IDisposable
 	{
 		#region Estado
 
@@ -177,12 +177,17 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// Shuts down the component.
+		/// De de-suscribe a los eventos del ratón
 		/// </summary>
-		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected override void Dispose (bool disposing)
+		protected virtual void Dispose ()
 		{
 			Game.MouseListener.MouseClicked -= check_click;
 			Game.MouseListener.MouseDoubleClicked -= check_2click;
+		}
+
+		void IDisposable.Dispose ()
+		{
+			Dispose ();
 		}
 
 		#endregion

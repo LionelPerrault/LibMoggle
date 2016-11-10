@@ -56,24 +56,10 @@ namespace Moggle.Controles
 			InitializeContent ();
 		}
 
-		void IDisposable.Dispose ()
-		{
-			Dispose ();
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.SBC"/> object.
-		/// </summary>
-		protected virtual void Dispose ()
-		{
-		}
-
 		void IComponent.AddContent ()
 		{
 			AddContent ();
 		}
-
-
 
 		/// <summary>
 		/// Prioridad de dibujo;
@@ -120,14 +106,5 @@ namespace Moggle.Controles
 		/// </summary>
 		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public TimeSpan TiempoMouseOver { get; private set; }
-
-		/// <summary>
-		/// Shuts down the component.
-		/// </summary>
-		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected virtual void Dispose (bool disposing)
-		{
-			Container.RemoveComponent (this);
-		}
 	}
 }

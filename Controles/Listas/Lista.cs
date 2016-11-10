@@ -233,16 +233,6 @@ namespace Moggle.Controles.Listas
 		}
 
 		/// <summary>
-		/// Dispose.
-		/// </summary>
-		protected override void Dispose (bool disposing)
-		{
-			Fuente = null;
-			pixel = null;
-			base.Dispose (disposing);
-		}
-
-		/// <summary>
 		/// Tecla para desplazarse hacia abajo.
 		/// </summary>
 		/// <seealso cref="InterceptarTeclado"/>

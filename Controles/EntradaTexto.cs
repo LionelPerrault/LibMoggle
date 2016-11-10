@@ -6,6 +6,7 @@ using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using System;
 
 namespace Moggle.Controles
 {
@@ -152,15 +153,6 @@ namespace Moggle.Controles
 			fontTexture = manager.GetContent<BitmapFont> (FontTexture);
 		}
 
-		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected override void Dispose ()
-		{
-			contornoTexture = null;
-			fontTexture = null;
-		}
-
 		#endregion
 
 		#region Teclado
@@ -174,6 +166,22 @@ namespace Moggle.Controles
 		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
 		{
 			return StringListen.RecibirSeñal (key);
+		}
+
+		#endregion
+
+		#region Dispose
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Controles.EntradaTexto"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Controles.EntradaTexto"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.EntradaTexto"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.EntradaTexto"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.EntradaTexto"/> was occupying.</remarks>
+		public void Dispose ()
+		{
+			StringListen.Dispose ();
 		}
 
 		#endregion

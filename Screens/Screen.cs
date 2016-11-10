@@ -75,6 +75,20 @@ namespace Moggle.Screens
 
 		void IDisposable.Dispose ()
 		{
+			Dispose ();
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Screens.Screen"/> object and its components
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Screens.Screen"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Screens.Screen"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Screens.Screen"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Moggle.Screens.Screen"/> was occupying.</remarks>
+		protected virtual void Dispose ()
+		{
+			foreach (var comp in Components.OfType<IDisposable> ())
+				comp.Dispose ();
 		}
 
 		/// <summary>

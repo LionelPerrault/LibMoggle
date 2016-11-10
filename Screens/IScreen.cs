@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
+using System;
 
 
 namespace Moggle.Screens
@@ -10,7 +11,12 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IControl>, IControl
+	public interface IScreen : 
+	IEmisorTeclado, 
+	IReceptorTeclado, 
+	IComponentContainerComponent<IControl>, 
+	IControl,
+	IDisposable
 	{
 		#region Dibujo
 
