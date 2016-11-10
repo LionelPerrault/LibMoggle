@@ -226,7 +226,7 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		protected override void InitializeContent ()
 		{
-			var st = new SimpleTextures (Game.Device);
+			var st = new SimpleTextures (Game.GraphicsDevice);
 			Fuente = Screen.Content.GetContent<BitmapFont> (NombreTexturaFuente);
 			pixel = st.SolidTexture (new Size (1, 1), Color.White);
 			base.InitializeContent ();

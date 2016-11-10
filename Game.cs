@@ -231,7 +231,7 @@ namespace Moggle
 		/// </summary>
 		protected override void Draw (GameTime gameTime)
 		{
-			Device.Clear (BackgroundColor);
+			GraphicsDevice.Clear (BackgroundColor);
 			CurrentScreen?.Draw (gameTime);
 			base.Draw (gameTime);
 		}
@@ -245,18 +245,6 @@ namespace Moggle
 		public SpriteBatch GetNewBatch ()
 		{
 			return new SpriteBatch (GraphicsDevice);
-		}
-
-		/// <summary>
-		/// Devuelve el controlador gráfico.
-		/// </summary>
-		/// <value>The device.</value>
-		public GraphicsDevice Device
-		{
-			get
-			{
-				return GraphicsDevice;
-			}
 		}
 
 		/// <summary>
