@@ -125,7 +125,7 @@ namespace Test
 		public Scr (Moggle.Game game)
 			: base (game)
 		{
-			textures = new SimpleTextures (game.Device);
+			textures = new SimpleTextures (game.GraphicsDevice);
 
 			buildTextures ();
 
