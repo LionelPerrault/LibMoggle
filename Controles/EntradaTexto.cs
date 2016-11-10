@@ -6,7 +6,6 @@ using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using System;
 
 namespace Moggle.Controles
 {
@@ -179,8 +178,9 @@ namespace Moggle.Controles
 		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.EntradaTexto"/> in an unusable state. After
 		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.EntradaTexto"/>
 		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.EntradaTexto"/> was occupying.</remarks>
-		public void Dispose ()
+		protected override void Dispose ()
 		{
+			base.Dispose ();
 			StringListen.Dispose ();
 		}
 
