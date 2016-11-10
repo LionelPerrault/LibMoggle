@@ -476,6 +476,5 @@ namespace Moggle.Controles.Listas
 			ColorSel = Color.White * 0.5f;
 			InterceptarTeclado = true;
 		}
-
 	}
 }

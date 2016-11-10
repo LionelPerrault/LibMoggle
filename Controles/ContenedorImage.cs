@@ -5,7 +5,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Representa un contenedor de sprites
 	/// </summary>
-	public class ContenedorImg : Contenedor<FlyingSprite>
+	public class ContenedorImage : Contenedor<FlyingSprite>
 	{
 		/// <summary>
 		/// Agrega un sprite
@@ -25,7 +25,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// </summary>
 		/// <param name="cont">Container</param>
-		public ContenedorImg (IComponentContainerComponent<IControl> cont)
+		public ContenedorImage (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{
 		}

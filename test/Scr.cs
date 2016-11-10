@@ -182,7 +182,7 @@ namespace Test
 
 			StrListen = new KeyStringListener (Juego.KeyListener);
 
-			var contImg = new ContenedorImg (this)
+			var contImg = new ContenedorImage (this)
 			{
 				MargenExterno = new MargenType
 				{
