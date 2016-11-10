@@ -121,7 +121,7 @@ namespace Moggle.Screens
 		/// <param name="key">Key.</param>
 		public virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			foreach (var x in Components.OfType<IReceptorTeclado> ())
+			foreach (var x in Components.OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (key);
 		}
 

@@ -76,8 +76,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\Botón.cs" />
     <Compile Include="Shape\Ellipse.cs" />
     <Compile Include="Controles\IComponent.cs" />
-    <Compile Include="Comm\IEmisorTeclado.cs" />
-    <Compile Include="Comm\IReceptorTeclado.cs" />
     <Compile Include="BatchExt.cs" />
     <Compile Include="Controles\IComponentContainerComponent.cs" />
     <Compile Include="Controles\DSBC.cs" />
@@ -93,6 +91,8 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="BibliotecaContenido.cs" />
     <Compile Include="Textures\SimpleTextures.cs" />
     <Compile Include="Controles\ContenedorImage.cs" />
+    <Compile Include="Comm\IReceptor.cs" />
+    <Compile Include="Comm\IEmisor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

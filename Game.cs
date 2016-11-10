@@ -14,7 +14,7 @@ namespace Moggle
 	/// </summary>
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
-	IEmisorTeclado,                         // Para enviar señales de teclado a componentes
+	IEmisor<KeyboardEventArgs>,                         // Para enviar señales de teclado a componentes
 	IComponentContainerComponent<IControl>, // Para controlar sus componentes
 	IControl
 	{
@@ -130,7 +130,7 @@ namespace Moggle
 			CurrentScreen?.RecibirSeñal (key);
 		}
 
-		void IEmisorTeclado.MandarSeñal (KeyboardEventArgs key)
+		void IEmisor<KeyboardEventArgs>.MandarSeñal (KeyboardEventArgs key)
 		{
 			MandarSeñal (key);
 		}

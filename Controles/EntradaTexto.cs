@@ -12,7 +12,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Permite entrar un renglón de texto
 	/// </summary>
-	public class EntradaTexto : DSBC, IReceptorTeclado
+	public class EntradaTexto : DSBC, IReceptor<KeyboardEventArgs>
 	{
 		#region ctor
 
@@ -162,7 +162,7 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs key)
 		{
 			return StringListen.RecibirSeñal (key);
 		}

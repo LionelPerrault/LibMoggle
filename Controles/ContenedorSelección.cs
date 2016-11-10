@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
+using MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
 	/// <summary>
 	/// Un contenedor que puede seleccionar un objeto usando el teclado y ratón
 	/// </summary>
-	public class ContenedorSelección<T> : Contenedor<T>, IReceptorTeclado
+	public class ContenedorSelección<T> : Contenedor<T>, IReceptor<KeyboardEventArgs>
 		where T : IDibujable
 	{
 		#region Selección y enfoque
@@ -117,7 +118,7 @@ namespace Moggle.Controles
 
 		bool isCoolingDown { get { return cooldown > TimeSpan.Zero; } }
 
-		bool IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs key)
 		{
 			if (isCoolingDown)
 				return false;

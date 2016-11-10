@@ -21,7 +21,7 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : DSBC, IList<TObj>, IListaControl<TObj>, IReceptorTeclado
+	public class Lista<TObj> : DSBC, IList<TObj>, IListaControl<TObj>, IReceptor<KeyboardEventArgs>
 	{
 		/// <summary>
 		/// Representa una entrada de la lista.
