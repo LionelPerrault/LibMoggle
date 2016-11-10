@@ -86,6 +86,9 @@ namespace Moggle
 		}
 
 		/// <summary>
+		/// Inicializa las componentes globales, así como la pantalla actual (si existe)
+		/// También agrega los contenidos al manejador de contenido y carga su contenido.
+		/// Finalmente se suscribe a los eventos del teclado
 		/// </summary>
 		protected override void Initialize ()
 		{
@@ -102,6 +105,15 @@ namespace Moggle
 
 			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
+		}
+
+		/// <summary>
+		/// Dispose the game
+		/// </summary>
+		protected override void Dispose (bool disposing)
+		{
+			KeyListener.KeyPressed -= keyPressed;
+			base.Dispose (disposing);
 		}
 
 		void keyPressed (object sender, KeyboardEventArgs e)
