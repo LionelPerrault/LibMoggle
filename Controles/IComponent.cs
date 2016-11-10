@@ -23,7 +23,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Component ext.
 	/// </summary>
-	public static class ComponentExt
+	static class ComponentExt
 	{
 		/// <summary>
 		/// Devuelve el <see cref="IScreen"/> que contiene este control.

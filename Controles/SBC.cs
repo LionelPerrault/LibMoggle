@@ -14,28 +14,19 @@ namespace Moggle.Controles
 		/// Pantalla del control
 		/// </summary>
 		/// <value>The screen.</value>
-		public IScreen Screen { get { return this.GetScreen (); } }
+		public IScreen Screen { get; }
 
 		/// <summary>
 		/// Gets the game.
 		/// </summary>
 		/// <value>The game.</value>
-		public Game Game { get { return this.GetGame (); } }
+		public Game Game { get { return Screen.Juego; } }
 
 		/// <summary>
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
 		public IComponentContainerComponent<IControl> Container { get; }
-
-		/// <summary>
-		/// </summary>
-		/// <param name="cont">Container</param>
-		protected SBC (IComponentContainerComponent<IControl> cont)
-		{
-			Container = cont;
-			Container.AddComponent (this);
-		}
 
 		/// <summary>
 		/// Loads the content.
@@ -106,5 +97,16 @@ namespace Moggle.Controles
 		/// </summary>
 		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public TimeSpan TiempoMouseOver { get; private set; }
+
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		protected SBC (IComponentContainerComponent<IControl> cont)
+		{
+			Screen = cont.GetScreen ();
+			Container = cont;
+			Container.AddComponent (this);
+		}
+
 	}
 }

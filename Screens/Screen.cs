@@ -29,7 +29,7 @@ namespace Moggle.Screens
 		{
 			get
 			{
-				return Juego;
+				return this;
 			}
 		}
 
