@@ -90,18 +90,17 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			manager.AddContent (UseFont);
+			Screen.Content.AddContent (UseFont);
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenidos</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
-			font = manager.GetContent<BitmapFont> (UseFont);
+			font = Screen.Content.GetContent<BitmapFont> (UseFont);
 		}
 
 		/// <summary>

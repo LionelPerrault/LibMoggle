@@ -51,28 +51,26 @@ namespace Moggle.Screens
 		public virtual void AddAllContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent (Content);
+				x.AddContent ();
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent (manager);
+			AddAllContent ();
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
 		/// <summary>
 		/// Tell its components to get the content from the library
 		/// </summary>
-		/// <param name="manager">The content library</param>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
 			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent (manager);
+				c.InitializeContent ();
 		}
 
 		void IDisposable.Dispose ()

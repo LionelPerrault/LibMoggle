@@ -94,8 +94,8 @@ namespace Moggle
 			CurrentScreen?.Initialize ();
 
 			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent (Contenido);
-			CurrentScreen?.AddContent (Contenido);
+				x.AddContent ();
+			CurrentScreen?.AddContent ();
 
 			base.Initialize ();
 
@@ -144,14 +144,15 @@ namespace Moggle
 		}
 
 		/// <summary>
-		/// This method is invoked when all the content is loaded
+		/// This method is invoked when all the content is loaded.
+		/// It initializes all the content
 		/// </summary>
 		protected virtual void OnContentLoaded ()
 		{
 			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent (Contenido);
+				c.InitializeContent ();
 
-			CurrentScreen?.InitializeContent (Contenido);
+			CurrentScreen?.InitializeContent ();
 		}
 
 		#region Component
@@ -159,20 +160,19 @@ namespace Moggle
 		/// <summary>
 		/// Tell the components and the current screen to get the content from the library
 		/// </summary>
-		/// <param name="manager">Content library</param>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.InitializeContent (manager);
-			CurrentScreen?.InitializeContent (manager);
+				x.InitializeContent ();
+			CurrentScreen?.InitializeContent ();
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
 		}
 
