@@ -9,14 +9,43 @@ namespace Moggle.Controles
 	{
 		readonly List<ObservationState> observedObjects;
 
+		public void ObserveObject (ISpaceable obj)
+		{
+			if (IsBeingObserved (obj))
+				throw new InvalidOperationException ("Object already being observed.");
+			var state = new ObservationState (obj);
+			observedObjects.Add (state);
+		}
+
+		public void UnobserveObject (ISpaceable obj)
+		{
+			observedObjects.RemoveAll (z => z.ObservedObject.Equals (obj));
+		}
+
+		public bool IsBeingObserved (ISpaceable obj)
+		{
+			return observedObjects.Exists (z => z.ObservedObject.Equals (obj));
+		}
+
+
+		public ObservationState GetState (ISpaceable obj)
+		{
+			// Recordar que nunca, los objetos observados, son nulos
+			foreach (var x in observedObjects)
+				if (object.Equals (x.ObservedObject, obj))
+					return x;
+			throw new InvalidOperationException (
+				string.Format (
+					"Object {0} is not being observed.",
+					obj));
+		}
+
 		public void Update (GameTime gameTime)
 		{
 			var mouseState = Mouse.GetState ();
 			foreach (var obj in observedObjects)
 			{
-				var shape = obj.ObservedObject.GetBounds ();
-				if (shape.GetBoundingRectangle ().Contains (mouseState.Position) &&
-				    shape.Contains (mouseState.Position.ToVector2 ()))
+				if (obj.ObservedObject.GetBounds ().Contains (mouseState.Position.ToVector2 ()))
 				{
 					obj.AcumularTiempo (gameTime.ElapsedGameTime);
 					if (!obj.IsMouseOn)
@@ -37,21 +66,9 @@ namespace Moggle.Controles
 			}
 		}
 
-		public bool Enabled
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public bool Enabled { get; set; }
 
-		public int UpdateOrder
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		int IUpdateable.UpdateOrder { get { return 0; } }
 
 		/// <summary>
 		/// Raises the ratón encima event.
@@ -115,6 +132,8 @@ namespace Moggle.Controles
 
 			public ObservationState (ISpaceable observedObject)
 			{
+				if (observedObject == null)
+					throw new ArgumentNullException ("observedObject");
 				ObservedObject = observedObject;
 			}
 		}
