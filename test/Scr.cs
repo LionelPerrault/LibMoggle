@@ -143,10 +143,10 @@ namespace Test
 				newScr.Ejecutar ();
 			};
 				
-			MouseObs.RatónEncima += (sender, e) => Debug.WriteLine (
+			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",
 				e.ObservedObject);
-			MouseObs.RatónSeFue += (sender, e) => Debug.WriteLine (
+			MouseObserver.RatónSeFue += (sender, e) => Debug.WriteLine (
 				"Mouse estuvo sobre {0} por {1}",
 				e.ObservedObject,
 				e.TimeOnObject);
@@ -191,7 +191,7 @@ namespace Test
 				ct.Add (bts [i]);
 			}
 
-			MouseObs.ObserveObject (ct);
+			MouseObserver.ObserveObject (ct);
 
 			StrListen = new KeyStringListener (Juego.KeyListener);
 
@@ -236,20 +236,12 @@ namespace Test
 
 		void buttonClicked (MouseEventArgs e, int index)
 		{
-			System.Console.WriteLine ("botón [{0}] click: {1}", e, index);
-			System.Console.WriteLine ("stringActual = {0}", StrListen.CurrentString);
+			Console.WriteLine ("botón [{0}] click: {1}", e, index);
+			Console.WriteLine ("stringActual = {0}", StrListen.CurrentString);
 		}
 
 		readonly Botón bt;
 		readonly KeyStringListener StrListen;
-		readonly MouseObserver MouseObs = new MouseObserver ();
-
-		public override void Update (GameTime gameTime)
-		{
-			base.Update (gameTime);
-			if (MouseObs.Enabled)
-				MouseObs.Update (gameTime);
-		}
 
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
