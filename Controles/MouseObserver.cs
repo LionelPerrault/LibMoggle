@@ -47,9 +47,10 @@ namespace Moggle.Controles
 			{
 				if (obj.ObservedObject.GetBounds ().Contains (mouseState.Position.ToVector2 ()))
 				{
+					var estabaEncima = obj.IsMouseOn;
 					obj.AcumularTiempo (gameTime.ElapsedGameTime);
-					if (!obj.IsMouseOn)
-						OnRatónEncima (obj.ObservedObject);
+					if (!estabaEncima)
+						OnRatónEncima (obj);
 				}
 				else
 				{
@@ -59,7 +60,7 @@ namespace Moggle.Controles
 						// El ratón estaba sobre el objeto
 						// Observe que se invoca el evento antes que el reset, 
 						// es para poder enviar el tiempo que estuvo encima
-						OnRatónSeFue (obj.ObservedObject);
+						OnRatónSeFue (obj);
 						obj.Reset ();
 					}
 				}
@@ -74,7 +75,7 @@ namespace Moggle.Controles
 		/// Raises the ratón encima event.
 		/// </summary>
 		/// <param name="e">E.</param>
-		protected virtual void OnRatónEncima (ISpaceable e)
+		protected virtual void OnRatónEncima (ObservationState e)
 		{
 			RatónEncima?.Invoke (this, e);
 		}
@@ -83,7 +84,7 @@ namespace Moggle.Controles
 		/// Raises the ratón se fue event.
 		/// </summary>
 		/// <param name="e">E.</param>
-		protected virtual void OnRatónSeFue (ISpaceable e)
+		protected virtual void OnRatónSeFue (ObservationState e)
 		{
 			RatónSeFue?.Invoke (this, e);
 		}
@@ -101,15 +102,16 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Ocurre cuando el ratón pasa por encima del objeto
 		/// </summary>
-		public event EventHandler<ISpaceable> RatónEncima;
+		public event EventHandler<ObservationState> RatónEncima;
 		/// <summary>
 		/// Ocurre cuando el ratón ya no está encima del objeto
 		/// </summary>
-		public event EventHandler<ISpaceable> RatónSeFue;
+		public event EventHandler<ObservationState> RatónSeFue;
 
 		public MouseObserver ()
 		{
 			observedObjects = new List<ObservationState> ();
+			Enabled = true;
 		}
 
 		public class ObservationState

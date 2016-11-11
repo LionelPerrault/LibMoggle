@@ -8,7 +8,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Single buffered control
 	/// </summary>
-	public abstract class SBC : IControl
+	public abstract class SBC : IControl, ISpaceable
 	{
 		/// <summary>
 		/// Pantalla del control
@@ -78,6 +78,11 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		protected abstract IShapeF GetBounds ();
+
+		IShapeF ISpaceable.GetBounds ()
+		{
+			return GetBounds ();
+		}
 
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.

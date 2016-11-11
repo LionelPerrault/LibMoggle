@@ -6,6 +6,7 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using System;
 
 namespace Test
 {
@@ -141,6 +142,16 @@ namespace Test
 				var newScr = new DialScr (Juego, this);
 				newScr.Ejecutar ();
 			};
+				
+			MouseObs.RatónEncima += (sender, e) => Debug.WriteLine (
+				"Mouse ahora sobre {0}",
+				e.ObservedObject);
+			MouseObs.RatónSeFue += (sender, e) => Debug.WriteLine (
+				"Mouse estuvo sobre {0} por {1}",
+				e.ObservedObject,
+				e.TimeOnObject);
+
+
 
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
@@ -179,6 +190,8 @@ namespace Test
 
 				ct.Add (bts [i]);
 			}
+
+			MouseObs.ObserveObject (ct);
 
 			StrListen = new KeyStringListener (Juego.KeyListener);
 
@@ -229,6 +242,14 @@ namespace Test
 
 		readonly Botón bt;
 		readonly KeyStringListener StrListen;
+		readonly MouseObserver MouseObs = new MouseObserver ();
+
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
+			if (MouseObs.Enabled)
+				MouseObs.Update (gameTime);
+		}
 
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{

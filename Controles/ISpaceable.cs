@@ -1,5 +1,4 @@
 ﻿using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -13,5 +12,4 @@ namespace Moggle.Controles
 		/// </summary>
 		IShapeF GetBounds ();
 	}
-
 }
