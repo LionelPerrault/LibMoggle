@@ -41,6 +41,11 @@ namespace Moggle.Screens
 
 		MouseListener MouseListener{ get { return Juego.MouseListener; } }
 
+		/// <summary>
+		/// El observador del ratón
+		/// </summary>
+		public readonly MouseObserver MouseObserver = new MouseObserver ();
+
 		#endregion
 
 		#region Memoria
@@ -176,6 +181,9 @@ namespace Moggle.Screens
 			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
 				if (x.Enabled)
 					x.Update (gameTime);
+
+			if (MouseObserver.Enabled)
+				MouseObserver.Update (gameTime);
 		}
 
 		#endregion

@@ -93,6 +93,8 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\ContenedorImage.cs" />
     <Compile Include="Comm\IReceptor.cs" />
     <Compile Include="Comm\IEmisor.cs" />
+    <Compile Include="Controles\MouseObserver.cs" />
+    <Compile Include="Controles\ISpaceable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

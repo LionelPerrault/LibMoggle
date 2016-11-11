@@ -8,7 +8,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Single buffered control
 	/// </summary>
-	public abstract class SBC : IControl
+	public abstract class SBC : IControl, ISpaceable
 	{
 		/// <summary>
 		/// Pantalla del control
@@ -79,10 +79,14 @@ namespace Moggle.Controles
 		/// </summary>
 		protected abstract IShapeF GetBounds ();
 
+		IShapeF ISpaceable.GetBounds ()
+		{
+			return GetBounds ();
+		}
+
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.
 		/// </summary>
-		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public bool MouseOver
 		{
 			get
@@ -95,7 +99,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tiempo en el que el apuntador ha estado sobre este control.
 		/// </summary>
-		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public TimeSpan TiempoMouseOver { get; private set; }
 
 		/// <summary>
