@@ -82,7 +82,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.
 		/// </summary>
-		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public bool MouseOver
 		{
 			get
@@ -95,7 +94,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tiempo en el que el apuntador ha estado sobre este control.
 		/// </summary>
-		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public TimeSpan TiempoMouseOver { get; private set; }
 
 		/// <summary>
