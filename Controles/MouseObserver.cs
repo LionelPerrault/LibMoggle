@@ -5,10 +5,17 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Controles
 {
+	/// <summary>
+	/// Permite observar la posición del ratón con respecto a un conjunto de 
+	/// </summary>
 	public class MouseObserver : IUpdateable
 	{
 		readonly List<ObservationState> observedObjects;
 
+		/// <summary>
+		/// Empieza a observar un espacio
+		/// </summary>
+		/// <param name="obj">Objeto a observar</param>
 		public void ObserveObject (ISpaceable obj)
 		{
 			if (IsBeingObserved (obj))
@@ -17,22 +24,35 @@ namespace Moggle.Controles
 			observedObjects.Add (state);
 		}
 
+		/// <summary>
+		/// Deja de observar un espacio
+		/// </summary>
 		public void UnobserveObject (ISpaceable obj)
 		{
 			observedObjects.RemoveAll (z => z.ObservedObject.Equals (obj));
 		}
 
+		/// <summary>
+		/// Vacía la lista de observación
+		/// </summary>
 		public void ClearObservation ()
 		{
 			observedObjects.Clear ();
 		}
 
+		/// <summary>
+		/// Determina si un objeto está siendo observado
+		/// </summary>
 		public bool IsBeingObserved (ISpaceable obj)
 		{
 			return observedObjects.Exists (z => z.ObservedObject.Equals (obj));
 		}
 
-
+		/// <summary>
+		/// Devuelve el estado de observación de un objeto
+		/// </summary>
+		/// <remarks>Puede causar <see cref="InvalidOperationException"/> si no esta siendo observado tal objeto</remarks>
+		/// <returns>El estado de observación del objeto</returns>
 		public ObservationState GetState (ISpaceable obj)
 		{
 			// Recordar que nunca, los objetos observados, son nulos
@@ -45,6 +65,9 @@ namespace Moggle.Controles
 					obj));
 		}
 
+		/// <summary>
+		/// Actualiza el estado
+		/// </summary>
 		public void Update (GameTime gameTime)
 		{
 			var mouseState = Mouse.GetState ();
@@ -72,6 +95,9 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Determina si está habilitado este observador
+		/// </summary>
 		public bool Enabled { get; set; }
 
 		int IUpdateable.UpdateOrder { get { return 0; } }
@@ -113,18 +139,33 @@ namespace Moggle.Controles
 		/// </summary>
 		public event EventHandler<ObservationState> RatónSeFue;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Controles.MouseObserver"/> class.
+		/// </summary>
 		public MouseObserver ()
 		{
 			observedObjects = new List<ObservationState> ();
 			Enabled = true;
 		}
 
+		/// <summary>
+		/// Representa el estado de observación de un objeto
+		/// </summary>
 		public class ObservationState
 		{
+			/// <summary>
+			/// El objeto observado
+			/// </summary>
 			public readonly ISpaceable ObservedObject;
 
+			/// <summary>
+			/// Devuelve el tiempo que ha estado el ratón sobre el espacio del <see cref="ObservedObject"/>
+			/// </summary>
 			public TimeSpan TimeOnObject { get; private set; }
 
+			/// <summary>
+			/// Determina si el ratón está sobre el <see cref="ObservedObject"/>
+			/// </summary>
 			public bool IsMouseOn { get { return TimeSpan.Zero != TimeOnObject; } }
 
 			internal void AcumularTiempo (TimeSpan time)
@@ -137,7 +178,7 @@ namespace Moggle.Controles
 				TimeOnObject = TimeSpan.Zero;
 			}
 
-			public ObservationState (ISpaceable observedObject)
+			internal ObservationState (ISpaceable observedObject)
 			{
 				if (observedObject == null)
 					throw new ArgumentNullException ("observedObject");

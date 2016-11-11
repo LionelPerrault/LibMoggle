@@ -41,6 +41,9 @@ namespace Moggle.Screens
 
 		MouseListener MouseListener{ get { return Juego.MouseListener; } }
 
+		/// <summary>
+		/// El observador del ratón
+		/// </summary>
 		public readonly MouseObserver MouseObserver = new MouseObserver ();
 
 		#endregion
