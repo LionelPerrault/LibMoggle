@@ -22,6 +22,11 @@ namespace Moggle.Controles
 			observedObjects.RemoveAll (z => z.ObservedObject.Equals (obj));
 		}
 
+		public void ClearObservation ()
+		{
+			observedObjects.Clear ();
+		}
+
 		public bool IsBeingObserved (ISpaceable obj)
 		{
 			return observedObjects.Exists (z => z.ObservedObject.Equals (obj));
