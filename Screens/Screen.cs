@@ -29,7 +29,7 @@ namespace Moggle.Screens
 		{
 			get
 			{
-				return Juego;
+				return this;
 			}
 		}
 
@@ -41,6 +41,11 @@ namespace Moggle.Screens
 
 		MouseListener MouseListener{ get { return Juego.MouseListener; } }
 
+		/// <summary>
+		/// El observador del ratón
+		/// </summary>
+		public readonly MouseObserver MouseObserver = new MouseObserver ();
+
 		#endregion
 
 		#region Memoria
@@ -51,32 +56,44 @@ namespace Moggle.Screens
 		public virtual void AddAllContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent (Content);
+				x.AddContent ();
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent (manager);
+			AddAllContent ();
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
 		/// <summary>
 		/// Tell its components to get the content from the library
 		/// </summary>
-		/// <param name="manager">The content library</param>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
 			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent (manager);
+				c.InitializeContent ();
 		}
 
 		void IDisposable.Dispose ()
 		{
+			Dispose ();
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Screens.Screen"/> object and its components
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Screens.Screen"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Screens.Screen"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Screens.Screen"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Moggle.Screens.Screen"/> was occupying.</remarks>
+		protected virtual void Dispose ()
+		{
+			foreach (var comp in Components.OfType<IDisposable> ())
+				comp.Dispose ();
 		}
 
 		/// <summary>
@@ -109,7 +126,7 @@ namespace Moggle.Screens
 		/// <param name="key">Key.</param>
 		public virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			foreach (var x in Components.OfType<IReceptorTeclado> ())
+			foreach (var x in Components.OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (key);
 		}
 
@@ -164,6 +181,9 @@ namespace Moggle.Screens
 			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
 				if (x.Enabled)
 					x.Update (gameTime);
+
+			if (MouseObserver.Enabled)
+				MouseObserver.Update (gameTime);
 		}
 
 		#endregion

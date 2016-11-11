@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
+using Moggle.Textures;
+using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
@@ -20,7 +21,7 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : DSBC, IList<TObj>, IListaControl<TObj>, IReceptorTeclado
+	public class Lista<TObj> : DSBC, IList<TObj>, IListaControl<TObj>, IReceptor<KeyboardEventArgs>
 	{
 		/// <summary>
 		/// Representa una entrada de la lista.
@@ -76,10 +77,10 @@ namespace Moggle.Controles.Listas
 				bat,
 				Bounds.GetBoundingRectangle (),
 				Color.White,
-				noTexture);
+				pixel);
 
 			// Background
-			bat.Draw (noTexture, Bounds, ColorBG);
+			bat.Draw (pixel, Bounds, ColorBG);
 
 			// TODO: Que no se me salga el texto.
 			var currY = Bounds.Location;
@@ -92,7 +93,7 @@ namespace Moggle.Controles.Listas
 				if (i == CursorIndex)
 				{
 					var rect = Fuente.GetStringRectangle (strTxt, currY);
-					bat.Draw (noTexture, rect, ColorSel);
+					bat.Draw (pixel, rect, ColorSel);
 				}
 				bat.DrawString (Fuente, strTxt, currY, x.Color);
 				currY.Y += Fuente.LineHeight;
@@ -175,7 +176,9 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public BitmapFont Fuente { get; set; }
 
-		Texture2D noTexture { get; set; }
+		Texture2D pixel { get; set; }
+
+		Texture2D cursorTexture { get; set; }
 
 		/// <summary>
 		/// Color del fondo del control
@@ -205,28 +208,28 @@ namespace Moggle.Controles.Listas
 		/// </summary>
 		public bool InterceptarTeclado { get; set; }
 
-		const string fonts = "fonts";
-
-		const string rect = "Rect";
+		/// <summary>
+		/// The nombre textura de la fuente.
+		/// </summary>
+		public string NombreTexturaFuente = "fonts";
 
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			// REMOVE
-			manager.AddContent (fonts);
-			manager.AddContent (rect);
+			Screen.Content.AddContent (NombreTexturaFuente);
 		}
 
 		/// <summary>
-		/// Dispose.
+		/// Vincula el contenido a campos de clase
 		/// </summary>
-		protected override void Dispose (bool disposing)
+		protected override void InitializeContent ()
 		{
-			Fuente = null;
-			noTexture = null;
-			base.Dispose (disposing);
+			var st = new SimpleTextures (Game.GraphicsDevice);
+			Fuente = Screen.Content.GetContent<BitmapFont> (NombreTexturaFuente);
+			pixel = st.SolidTexture (new Size (1, 1), Color.White);
+			base.InitializeContent ();
 		}
 
 		/// <summary>
@@ -463,6 +466,5 @@ namespace Moggle.Controles.Listas
 			ColorSel = Color.White * 0.5f;
 			InterceptarTeclado = true;
 		}
-
 	}
 }

@@ -12,7 +12,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Permite entrar un renglón de texto
 	/// </summary>
-	public class EntradaTexto : DSBC, IReceptorTeclado
+	public class EntradaTexto : DSBC, IReceptor<KeyboardEventArgs>
 	{
 		#region ctor
 
@@ -135,8 +135,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
+			var manager = Screen.Content;
 			manager.AddContent (BgTexture);
 			manager.AddContent (FontTexture);
 		}
@@ -144,20 +145,11 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Vincula el contenido  a campos de clase
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
+			var manager = Screen.Content;
 			contornoTexture = manager.GetContent<Texture2D> (BgTexture);
 			fontTexture = manager.GetContent<BitmapFont> (FontTexture);
-		}
-
-		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected override void Dispose ()
-		{
-			contornoTexture = null;
-			fontTexture = null;
 		}
 
 		#endregion
@@ -170,9 +162,26 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs key)
 		{
 			return StringListen.RecibirSeñal (key);
+		}
+
+		#endregion
+
+		#region Dispose
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Controles.EntradaTexto"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Controles.EntradaTexto"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.EntradaTexto"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.EntradaTexto"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.EntradaTexto"/> was occupying.</remarks>
+		protected override void Dispose ()
+		{
+			base.Dispose ();
+			StringListen.Dispose ();
 		}
 
 		#endregion

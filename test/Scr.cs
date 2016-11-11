@@ -6,6 +6,7 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using System;
 
 namespace Test
 {
@@ -125,7 +126,7 @@ namespace Test
 		public Scr (Moggle.Game game)
 			: base (game)
 		{
-			textures = new SimpleTextures (game.Device);
+			textures = new SimpleTextures (game.GraphicsDevice);
 
 			buildTextures ();
 
@@ -141,6 +142,16 @@ namespace Test
 				var newScr = new DialScr (Juego, this);
 				newScr.Ejecutar ();
 			};
+				
+			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
+				"Mouse ahora sobre {0}",
+				e.ObservedObject);
+			MouseObserver.RatónSeFue += (sender, e) => Debug.WriteLine (
+				"Mouse estuvo sobre {0} por {1}",
+				e.ObservedObject,
+				e.TimeOnObject);
+
+
 
 
 			var ct = new ContenedorSelección<FlyingSprite> (this)
@@ -171,7 +182,7 @@ namespace Test
 			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{
-				bts [i] = new FlyingSprite
+				bts [i] = new FlyingSprite (Content)
 				{
 					Color = Color.PaleVioletRed * 0.8f,
 					TextureName = "solid"
@@ -180,9 +191,11 @@ namespace Test
 				ct.Add (bts [i]);
 			}
 
+			MouseObserver.ObserveObject (ct);
+
 			StrListen = new KeyStringListener (Juego.KeyListener);
 
-			var contImg = new ContenedorImg (this)
+			var contImg = new ContenedorImage (this)
 			{
 				MargenExterno = new MargenType
 				{
@@ -223,8 +236,8 @@ namespace Test
 
 		void buttonClicked (MouseEventArgs e, int index)
 		{
-			System.Console.WriteLine ("botón [{0}] click: {1}", e, index);
-			System.Console.WriteLine ("stringActual = {0}", StrListen.CurrentString);
+			Console.WriteLine ("botón [{0}] click: {1}", e, index);
+			Console.WriteLine ("stringActual = {0}", StrListen.CurrentString);
 		}
 
 		readonly Botón bt;

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
+using System;
+using MonoGame.Extended.InputListeners;
 
 
 namespace Moggle.Screens
@@ -10,7 +12,12 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen : IEmisorTeclado, IReceptorTeclado, IComponentContainerComponent<IControl>, IControl
+	public interface IScreen : 
+	IEmisor<KeyboardEventArgs>, 
+	IReceptor<KeyboardEventArgs>, 
+	IComponentContainerComponent<IControl>, 
+	IControl,
+	IDisposable
 	{
 		#region Dibujo
 

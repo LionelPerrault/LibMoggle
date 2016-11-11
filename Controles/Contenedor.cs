@@ -36,6 +36,7 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// Add the specified item.
+		/// It initializes the item if it is requiered
 		/// </summary>
 		/// <param name="item">Item.</param>
 		public void Add (T item)
@@ -44,8 +45,8 @@ namespace Moggle.Controles
 			if (IsInitialized)
 			{
 				(item as IGameComponent)?.Initialize ();
-				(item as IComponent)?.AddContent (Screen.Content);
-				(item as IComponent)?.InitializeContent (Screen.Content);
+				(item as IComponent)?.AddContent ();
+				(item as IComponent)?.InitializeContent ();
 			}
 		}
 
@@ -238,23 +239,23 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
+			var manager = Screen.Content;
 			manager.AddContent (TextureFondoName);
 			foreach (var c in Objetos.OfType<IComponent> ())
-				c.AddContent (manager);
+				c.AddContent ();
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenido</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
+			var manager = Screen.Content;
 			TexturaFondo = manager.GetContent<Texture2D> (TextureFondoName);
 			foreach (var c in Objetos.OfType<IComponent> ())
-				c.InitializeContent (manager);
+				c.InitializeContent ();
 		}
 
 		/// <summary>

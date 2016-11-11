@@ -4,28 +4,26 @@ using Moggle.Screens;
 
 namespace Moggle.Controles
 {
-
 	/// <summary>
 	/// Representa un objeto de juego que necesita cargar contenido de una <see cref="BibliotecaContenido"/>
 	/// </summary>
-	public interface IComponent : IGameComponent, IDisposable
+	public interface IComponent : IGameComponent
 	{
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		void AddContent (BibliotecaContenido manager);
+		void AddContent ();
 
 		/// <summary>
 		/// Aquí se debe de asignar a variables de clase el contenido de manager
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenido</param>
-		void InitializeContent (BibliotecaContenido manager);
+		void InitializeContent ();
 	}
 
 	/// <summary>
 	/// Component ext.
 	/// </summary>
-	public static class ComponentExt
+	static class ComponentExt
 	{
 		/// <summary>
 		/// Devuelve el <see cref="IScreen"/> que contiene este control.

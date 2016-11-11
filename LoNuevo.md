@@ -1,6 +1,16 @@
 Lo nuevo
 ========
-La lista de cambios
+
+0.9
+------
+  + Clase `Raton` Tiene propiedad `Offset`, devuelve o establece el desface entre la posición del cursor del ratón y la posición de la textura (topleft)
+  + Corregir la visibilidad inical del ratón
+  + `AddContent` y `InitializeContent` no tiene `BibliotecaContenido` como argumento
+  + `IComponent` No hereda `IDisposable`, pero `DSBC` sí lo implementa
+  + Eliminar la propiedad `Moggle.Game.Device` era repetida
+  + Las clases de emisión y recepción ahora son templates, de único argumento el tipo de señal que manda/recibe. p.e. `EmisorTeclado` es ahora `Emisor<KeyboardEventArgs>`
+  + Screen tiene una propiedad `MouseObserver MouseObserver` que vigila y genera eventos de cuándo el ratón interactúa con controles (más bien con `ISpaceable`) determinados
+  + Se actualizó *MonoGame.Extended*
 
 En 0.8.1
 --------

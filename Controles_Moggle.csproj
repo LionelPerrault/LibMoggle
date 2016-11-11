@@ -12,7 +12,7 @@
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>0.8.3</ReleaseVersion>
+    <ReleaseVersion>0.9</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,8 +76,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\Botón.cs" />
     <Compile Include="Shape\Ellipse.cs" />
     <Compile Include="Controles\IComponent.cs" />
-    <Compile Include="Comm\IEmisorTeclado.cs" />
-    <Compile Include="Comm\IReceptorTeclado.cs" />
     <Compile Include="BatchExt.cs" />
     <Compile Include="Controles\IComponentContainerComponent.cs" />
     <Compile Include="Controles\DSBC.cs" />
@@ -87,12 +85,16 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\MargenType.cs" />
     <Compile Include="Controles\IDibujable.cs" />
     <Compile Include="Controles\FlyingSprite.cs" />
-    <Compile Include="Controles\ContenedorImg.cs" />
     <Compile Include="Controles\ContenedorSelección.cs" />
     <Compile Include="Controles\Contenedor.cs" />
     <Compile Include="Controles\SelectionManager.cs" />
     <Compile Include="BibliotecaContenido.cs" />
     <Compile Include="Textures\SimpleTextures.cs" />
+    <Compile Include="Controles\ContenedorImage.cs" />
+    <Compile Include="Comm\IReceptor.cs" />
+    <Compile Include="Comm\IEmisor.cs" />
+    <Compile Include="Controles\MouseObserver.cs" />
+    <Compile Include="Controles\ISpaceable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

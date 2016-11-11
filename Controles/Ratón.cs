@@ -14,6 +14,11 @@ namespace Moggle.Controles
 		#region Dibujo
 
 		/// <summary>
+		/// Devuelve o establece el offset del cursor con respecto a su posición real
+		/// </summary>
+		public Point OffSet { get; set; }
+
+		/// <summary>
 		/// Devuelve o establece el archivo que contiene la textura del ratón.
 		/// </summary>
 		public string ArchivoTextura { get; set; }
@@ -31,17 +36,24 @@ namespace Moggle.Controles
 			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
 		}
 
+		Rectangle GetOffsetBounds ()
+		{
+			return new Rectangle ((Pos + OffSet), Tamaño);
+		}
+
+		readonly SpriteBatch drawBatch;
+
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
 		protected override void Draw (GameTime gameTime)
 		{
-			var bat = Game.GetNewBatch ();
+			var bat = drawBatch;
 			bat.Begin ();
 			bat.Draw (
 				Textura,
-				(Rectangle)GetBounds ().GetBoundingRectangle (),
+				GetOffsetBounds (),
 				Color.WhiteSmoke);
 			bat.End ();
 		}
@@ -78,6 +90,17 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		public override void Initialize ()
+		{
+			base.Initialize ();
+			var displ = Game.GraphicsDevice.Adapter.CurrentDisplayMode;
+			Pos = new Point (displ.Width / 2, displ.Height / 2);
+		}
+
+		/// <summary>
 		/// Devuelve el tamaño del apuntador.
 		/// </summary>
 		public readonly Size Tamaño;
@@ -95,38 +118,19 @@ namespace Moggle.Controles
 		#region Memoria
 
 		/// <summary>
-		/// Shuts down the component.
-		/// </summary>
-		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected override void Dispose (bool disposing)
-		{
-			Textura = null;
-			base.Dispose (disposing);
-		}
-
-		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			manager.AddContent (ArchivoTextura);
+			Screen.Content.AddContent (ArchivoTextura);
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenidos</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
-			Textura = manager.GetContent<Texture2D> (ArchivoTextura);
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.Ratón"/> object.
-		/// </summary>
-		protected override void Dispose ()
-		{
-			Textura = null;
+			Textura = Screen.Content.GetContent<Texture2D> (ArchivoTextura);
 		}
 
 		#endregion
@@ -141,6 +145,7 @@ namespace Moggle.Controles
 			: base (gm)
 		{
 			Tamaño = tamaño;
+			drawBatch = Game.GetNewBatch ();
 		}
 
 		/// <summary>
@@ -150,6 +155,7 @@ namespace Moggle.Controles
 			: base (gm)
 		{
 			Tamaño = new Size (20, 20);
+			drawBatch = Game.GetNewBatch ();
 		}
 
 		#endregion

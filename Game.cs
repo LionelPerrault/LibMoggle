@@ -14,7 +14,7 @@ namespace Moggle
 	/// </summary>
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
-	IEmisorTeclado,                         // Para enviar señales de teclado a componentes
+	IEmisor<KeyboardEventArgs>,                         // Para enviar señales de teclado a componentes
 	IComponentContainerComponent<IControl>, // Para controlar sus componentes
 	IControl
 	{
@@ -76,15 +76,19 @@ namespace Moggle
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
-		public IComponentContainerComponent<IControl> Container
+		IComponentContainerComponent<IControl> IControl.Container
 		{
 			get
 			{
-				return null;
+				// Este valor hace que GetScreen sea más fácil
+				return CurrentScreen;
 			}
 		}
 
 		/// <summary>
+		/// Inicializa las componentes globales, así como la pantalla actual (si existe)
+		/// También agrega los contenidos al manejador de contenido y carga su contenido.
+		/// Finalmente se suscribe a los eventos del teclado
 		/// </summary>
 		protected override void Initialize ()
 		{
@@ -94,13 +98,22 @@ namespace Moggle
 			CurrentScreen?.Initialize ();
 
 			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent (Contenido);
-			CurrentScreen?.AddContent (Contenido);
+				x.AddContent ();
+			CurrentScreen?.AddContent ();
 
 			base.Initialize ();
 
 			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
+		}
+
+		/// <summary>
+		/// Dispose the game
+		/// </summary>
+		protected override void Dispose (bool disposing)
+		{
+			KeyListener.KeyPressed -= keyPressed;
+			base.Dispose (disposing);
 		}
 
 		void keyPressed (object sender, KeyboardEventArgs e)
@@ -117,7 +130,7 @@ namespace Moggle
 			CurrentScreen?.RecibirSeñal (key);
 		}
 
-		void IEmisorTeclado.MandarSeñal (KeyboardEventArgs key)
+		void IEmisor<KeyboardEventArgs>.MandarSeñal (KeyboardEventArgs key)
 		{
 			MandarSeñal (key);
 		}
@@ -144,14 +157,15 @@ namespace Moggle
 		}
 
 		/// <summary>
-		/// This method is invoked when all the content is loaded
+		/// This method is invoked when all the content is loaded.
+		/// It initializes all the content
 		/// </summary>
 		protected virtual void OnContentLoaded ()
 		{
 			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent (Contenido);
+				c.InitializeContent ();
 
-			CurrentScreen?.InitializeContent (Contenido);
+			CurrentScreen?.InitializeContent ();
 		}
 
 		#region Component
@@ -159,20 +173,19 @@ namespace Moggle
 		/// <summary>
 		/// Tell the components and the current screen to get the content from the library
 		/// </summary>
-		/// <param name="manager">Content library</param>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.InitializeContent (manager);
-			CurrentScreen?.InitializeContent (manager);
+				x.InitializeContent ();
+			CurrentScreen?.InitializeContent ();
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
 		}
 
@@ -230,7 +243,7 @@ namespace Moggle
 		/// </summary>
 		protected override void Draw (GameTime gameTime)
 		{
-			Device.Clear (BackgroundColor);
+			GraphicsDevice.Clear (BackgroundColor);
 			CurrentScreen?.Draw (gameTime);
 			base.Draw (gameTime);
 		}
@@ -244,18 +257,6 @@ namespace Moggle
 		public SpriteBatch GetNewBatch ()
 		{
 			return new SpriteBatch (GraphicsDevice);
-		}
-
-		/// <summary>
-		/// Devuelve el controlador gráfico.
-		/// </summary>
-		/// <value>The device.</value>
-		public GraphicsDevice Device
-		{
-			get
-			{
-				return GraphicsDevice;
-			}
 		}
 
 		/// <summary>

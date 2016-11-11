@@ -9,7 +9,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Listens the keyboard and returns a string
 	/// </summary>
-	public class KeyStringListener : IReceptorTeclado, IDisposable
+	public class KeyStringListener : IReceptor<KeyboardEventArgs>, IDisposable
 	{
 		/// <summary>
 		/// Gets or set the current string
@@ -30,7 +30,7 @@ namespace Moggle.Controles
 		/// Esta función establece el comportamiento de este control cuando el jugador presiona una tecla dada.
 		/// </summary>
 		/// <param name="key">Tecla presionada por el usuario.</param>
-		bool IReceptorTeclado.RecibirSeñal (KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs key)
 		{
 			return RecibirSeñal (key);
 		}

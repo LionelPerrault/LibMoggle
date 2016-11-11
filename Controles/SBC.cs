@@ -8,19 +8,19 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Single buffered control
 	/// </summary>
-	public abstract class SBC : IControl
+	public abstract class SBC : IControl, ISpaceable
 	{
 		/// <summary>
 		/// Pantalla del control
 		/// </summary>
 		/// <value>The screen.</value>
-		public IScreen Screen { get { return this.GetScreen (); } }
+		public IScreen Screen { get; }
 
 		/// <summary>
 		/// Gets the game.
 		/// </summary>
 		/// <value>The game.</value>
-		public Game Game { get { return this.GetGame (); } }
+		public Game Game { get { return Screen.Juego; } }
 
 		/// <summary>
 		/// Gets the container.
@@ -29,52 +29,28 @@ namespace Moggle.Controles
 		public IComponentContainerComponent<IControl> Container { get; }
 
 		/// <summary>
-		/// </summary>
-		/// <param name="cont">Container</param>
-		protected SBC (IComponentContainerComponent<IControl> cont)
-		{
-			Container = cont;
-			Container.AddComponent (this);
-		}
-
-		/// <summary>
 		/// Loads the content.
 		/// </summary>
-		protected virtual void AddContent (BibliotecaContenido manager)
+		protected virtual void AddContent ()
 		{
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
-		void IDisposable.Dispose ()
+		void IComponent.AddContent ()
 		{
-			Dispose ();
+			AddContent ();
 		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.SBC"/> object.
-		/// </summary>
-		protected virtual void Dispose ()
-		{
-		}
-
-		void IComponent.AddContent (BibliotecaContenido manager)
-		{
-			AddContent (manager);
-		}
-
-
 
 		/// <summary>
 		/// Prioridad de dibujo;
@@ -103,10 +79,14 @@ namespace Moggle.Controles
 		/// </summary>
 		protected abstract IShapeF GetBounds ();
 
+		IShapeF ISpaceable.GetBounds ()
+		{
+			return GetBounds ();
+		}
+
 		/// <summary>
 		/// Determina si el apuntador del ratón está sobre este control.
 		/// </summary>
-		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public bool MouseOver
 		{
 			get
@@ -119,16 +99,17 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tiempo en el que el apuntador ha estado sobre este control.
 		/// </summary>
-		[Obsolete ("Eventualmente dejará de ser obsoleto.")]
 		public TimeSpan TiempoMouseOver { get; private set; }
 
 		/// <summary>
-		/// Shuts down the component.
 		/// </summary>
-		/// <param name="disposing">If set to <c>true</c> disposing.</param>
-		protected virtual void Dispose (bool disposing)
+		/// <param name="cont">Container</param>
+		protected SBC (IComponentContainerComponent<IControl> cont)
 		{
-			Container.RemoveComponent (this);
+			Screen = cont.GetScreen ();
+			Container = cont;
+			Container.AddComponent (this);
 		}
+
 	}
 }

@@ -20,6 +20,7 @@ namespace Test
 			Graphics.IsFullScreen = false;
 			//CurrentScreen.Initialize ();
 			var ms = new Ratón (this);
+			ms.OffSet = new Point (-10, -10);
 			ms.ArchivoTextura = @"cont/void";
 			base.Initialize ();
 		}

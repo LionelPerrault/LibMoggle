@@ -156,26 +156,17 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Cargar contenido
 		/// </summary>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			manager.AddContent (fontString);
+			Screen.Content.AddContent (fontString);
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenido</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
-			Font = manager.GetContent<BitmapFont> (fontString);
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.MultiEtiqueta"/> object.
-		/// </summary>
-		protected override void Dispose (bool disposing)
-		{
-			Font = null;
+			Font = Screen.Content.GetContent<BitmapFont> (fontString);
 		}
 
 		#endregion

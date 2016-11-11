@@ -10,6 +10,7 @@ using MonoMac.Foundation;
 
 
 
+
 #elif __IOS__
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -22,6 +23,7 @@ namespace Test
 	[Register("AppDelegate")]
 	class Program : UIApplicationDelegate
 	
+
 
 
 
