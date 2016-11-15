@@ -134,7 +134,10 @@ namespace Moggle
 		/// <param name="key">Tecla señal</param>
 		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			CurrentScreen?.RecibirSeñal (key);
+			var sign = new Tuple<KeyboardEventArgs, ScreenThread> (
+				           key,
+				           ScreenManager.ActiveThread);
+			CurrentScreen?.RecibirSeñal (sign);
 		}
 
 		void IEmisor<KeyboardEventArgs>.MandarSeñal (KeyboardEventArgs key)

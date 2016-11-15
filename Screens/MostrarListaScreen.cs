@@ -32,16 +32,17 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Cuando se presiona una tecla
 		/// </summary>
-		/// <param name="key">Tecla</param>
-		public override bool RecibirSeñal (KeyboardEventArgs key)
+		/// <param name="data">Tecla</param>
+		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
-			switch (key.Key)
+			switch (data.Item1.Key)
 			{
 				case Keys.Escape:
 					Salida = new TipoSalida (
 						TipoSalida.EnumTipoSalida.Cancelación,
 						SelecciónActual);
 					Response?.Invoke (this, Salida);
+					data.Item2.TerminateLast ();
 					return true;
 				case Keys.Space:
 					var curObj = ObjetoEnCursor;
@@ -55,9 +56,10 @@ namespace Moggle.Screens
 						TipoSalida.EnumTipoSalida.Aceptación,
 						SelecciónActual);
 					Response?.Invoke (this, Salida);
+					data.Item2.TerminateLast ();
 					return true;
 				default:
-					return base.RecibirSeñal (key);
+					return base.RecibirSeñal (data);
 			}
 		}
 

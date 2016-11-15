@@ -139,10 +139,10 @@ namespace Moggle.Screens
 		/// Rebice señal del teclado
 		/// </summary>
 		/// <returns>Devuelve <c>true</c> si la señal fue aceptada.</returns>
-		/// <param name="key">Señal tecla</param>
-		public virtual bool RecibirSeñal (KeyboardEventArgs key)
+		/// <param name="data">Señal tecla</param>
+		public virtual bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
-			MandarSeñal (key);
+			MandarSeñal (data.Item1);
 			return true;
 		}
 
