@@ -1,8 +1,14 @@
 Lo nuevo
 ========
+0.10
+----
+  + Nuevo sistema de hilos de pantallas
+    + La clase `ScreenThread` Maneja una línea de invocaciones de pantallas (hace a `ScreenDial` obsoleto y eliminado) que recuerda y maneja su línea de llamadas.
+    + La clase `ScreenThreadManager` maneja un conjunto de `ScreenThread` mediante una lista. No puede construirse, así que sólo existe comoun miembro de `Game`. Decide quén es el `ScreenThread` activo (sólo uno), maneja los `Draw`, `Update` y recepcion de señal de sus pantallas, mandando a ellos cuál `ScreenThread` es quien lo invoco (esto hace que un `IScreen` pueda pertenecer a distintos `ScreenThread`.
+  + DSBC.Draw (y por lo tanto sus hijos) no requieren argumento `GameTime`.
 
 0.9
-------
+---
   + Clase `Raton` Tiene propiedad `Offset`, devuelve o establece el desface entre la posición del cursor del ratón y la posición de la textura (topleft)
   + Corregir la visibilidad inical del ratón
   + `AddContent` y `InitializeContent` no tiene `BibliotecaContenido` como argumento
