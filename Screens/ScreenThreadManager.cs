@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
-
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Screens
 {
@@ -21,6 +21,7 @@ namespace Moggle.Screens
 			{
 				if (_currentThreadIndex == -1)
 					throw new InvalidOperationException ("Cannot get the current thread.");
+				return _screens [_currentThreadIndex];
 			}
 			set
 			{
@@ -66,6 +67,16 @@ namespace Moggle.Screens
 				scrTh.Dispose ();
 			else
 				throw new InvalidOperationException ("Cannot remove non-existent thread.");
+		}
+
+		public void UpdateActive (GameTime gameTime)
+		{
+			ActiveThread.Update (gameTime);
+		}
+
+		public void DrawActive (GameTime gameTime)
+		{
+			ActiveThread.Draw (gameTime);
 		}
 
 		public ScreenThreadManager ()

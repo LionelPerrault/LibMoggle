@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 
 namespace Moggle.Screens
 {
 	/// <summary>
 	/// Representa una serie de invocaciones de <see cref="IScreen"/>
 	/// </summary>
-	public class ScreenThread
+	public class ScreenThread : IUpdate
 	{
 		readonly List<IScreen> _invocationStack;
 		readonly List<ScreenStackOptions> _options;
@@ -88,6 +90,27 @@ namespace Moggle.Screens
 			_invocationStack.Clear ();
 			_options.Clear ();
 		}
+
+		public void Update (GameTime gameTime)
+		{
+			for (int i = Count - 1; i >= 0; i--)
+			{
+				this._invocationStack [i].Update (gameTime);
+				if (!_options [i].ActualizaBase)
+					return;
+			}
+		}
+
+		public void Draw (GameTime gameTime)
+		{
+			for (int i = Count - 1; i >= 0; i--)
+			{
+				_invocationStack [i].Draw (gameTime);
+				if (!_options [i].DibujaBase)
+					return;
+			}
+		}
+
 
 		/// <summary>
 		/// Devuelve un nuevo <see cref="System.Collections.Generic.Stack{IScreen}"/> con las invocaciones de pantallas

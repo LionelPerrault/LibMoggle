@@ -59,25 +59,31 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Ejecuta la pantalla.
 		/// </summary>
+		[Obsolete]
 		public override void Ejecutar ()
 		{
+			/*
 			Initialize ();
 			AddAllContent ();
 			Content.Load ();
 			InitializeContent ();
 			Juego.CurrentScreen = this;
+			*/
 		}
 
 		/// <summary>
 		/// Se sale de este diálogo.
 		/// Libera todo los recursos usados.
 		/// </summary>
+		[Obsolete]
 		public virtual void Salir ()
 		{
+			/*
 			Juego.CurrentScreen = ScreenBase;
 			AlTerminar?.Invoke (this, EventArgs.Empty);
 
 			UnloadContent ();
+			*/
 		}
 
 		/// <summary>

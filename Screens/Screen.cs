@@ -166,9 +166,9 @@ namespace Moggle.Screens
 		/// Ejecuta esta pantalla.
 		/// Deja de escuchar a la pantalla anterior y yo comienzo a escuchar.
 		/// </summary>
+		[Obsolete]
 		public virtual void Ejecutar ()
 		{
-			Juego.CurrentScreen = this;
 		}
 
 		/// <summary>
