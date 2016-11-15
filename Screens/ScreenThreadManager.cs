@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-// TEST
 namespace Moggle.Screens
 {
 	/// <summary>
