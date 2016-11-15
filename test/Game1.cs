@@ -16,7 +16,7 @@ namespace Test
 	{
 		protected override void Initialize ()
 		{
-			CurrentScreen = new Scr (this);
+			ScreenManager.AddNewThread ().Stack (new Scr (this));
 			Graphics.IsFullScreen = false;
 			//CurrentScreen.Initialize ();
 			var ms = new Ratón (this);

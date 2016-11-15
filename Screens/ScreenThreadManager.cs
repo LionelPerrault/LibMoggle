@@ -46,6 +46,8 @@ namespace Moggle.Screens
 			if (_screens.Contains (scrTh))
 				throw new InvalidOperationException ("Duplicated screen thread.");
 			_screens.Add (scrTh);
+			if (_currentThreadIndex < 0)
+				_currentThreadIndex = 0;
 		}
 
 		public ScreenThread AddNewThread ()
@@ -53,6 +55,8 @@ namespace Moggle.Screens
 			var ret = new ScreenThread ();
 			// Remark: no need to duplicate check on this one.
 			_screens.Add (ret);
+			if (_currentThreadIndex < 0)
+				_currentThreadIndex = 0;
 			return ret;
 		}
 
