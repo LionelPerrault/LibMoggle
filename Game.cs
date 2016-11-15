@@ -6,6 +6,7 @@ using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using System.Diagnostics;
 
 namespace Moggle
 {
@@ -15,13 +16,25 @@ namespace Moggle
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
 	IEmisor<KeyboardEventArgs>,				// Para enviar señales de teclado a componentes
-	IComponentContainerComponent<IControl>, // Para controlar sus componentes
-	IControl
+	IComponentContainerComponent<IControl>	// Para controlar sus componentes
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
-		public IScreen CurrentScreen { get { return ScreenManager.ActiveThread.Current; } }
+		public IScreen CurrentScreen
+		{ 
+			get
+			{ 
+				try
+				{
+					return ScreenManager.ActiveThread.Current; 
+				}
+				catch (InvalidOperationException)
+				{
+					return null;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Devuelve el manejador de pantallas
@@ -102,11 +115,26 @@ namespace Moggle
 			foreach (var x in Components)
 				x.Initialize ();
 
-			CurrentScreen?.Initialize ();
+			try
+			{
+				CurrentScreen?.Initialize ();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine (ex);
+			}
 
 			foreach (var x in Components.OfType<IComponent> ())
 				x.AddContent ();
-			CurrentScreen?.AddContent ();
+			try
+			{
+				CurrentScreen?.AddContent ();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine (ex);	
+			}
+
 
 			base.Initialize ();
 

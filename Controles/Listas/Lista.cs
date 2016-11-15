@@ -21,40 +21,51 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : DSBC, IList<TObj>, IListaControl<TObj>, IReceptor<KeyboardEventArgs>
+	public class Lista<TObj> : DSBC, 
+	IList<TObj>, 
+	IListaControl<TObj>, 
+	IReceptor<KeyboardEventArgs>
 	{
+		#region Comportamiento
+
 		/// <summary>
-		/// Representa una entrada de la lista.
+		/// Tecla para desplazarse hacia abajo.
 		/// </summary>
-		public struct Entrada
+		/// <seealso cref="InterceptarTeclado"/>
+		public Keys AbajoKey = Keys.Down;
+
+		/// <summary>
+		/// Tecla para desplazarse hacia arriba.
+		/// </summary>
+		/// <seealso cref="InterceptarTeclado"/>
+		public Keys ArribaKey = Keys.Up;
+
+		/// <summary>
+		/// Devuelve o establece el límite del control
+		/// </summary>
+		public RectangleF Bounds { get; set; }
+
+		/// <summary>
+		/// Devuelve el menor rectángulo que contiene a este control.
+		/// </summary>
+		protected override IShapeF GetBounds ()
 		{
-			/// <summary>
-			/// El objeto.
-			/// </summary>
-			public TObj Objeto;
-			/// <summary>
-			/// El color.
-			/// </summary>
-			public Color Color;
-
-			/// <summary>
-			/// </summary>
-			/// <param name="obj">Objeto</param>
-			public Entrada (TObj obj)
-				: this (obj, Color.White)
-			{
-			}
-
-			/// <summary>
-			/// </summary>
-			/// <param name="obj">Objeto</param>
-			/// <param name="color">Color</param>
-			public Entrada (TObj obj, Color color)
-			{
-				Objeto = obj;
-				Color = color;
-			}
+			return Bounds;
 		}
+
+		/// <summary>
+		/// Devuelve o establece si este control puede interactuar por sí mismo con el teclado
+		/// </summary>
+		public bool InterceptarTeclado { get; set; }
+
+		/// <summary>
+		/// Devuelve o establece el método para convertir el objeto en <c>string</c>
+		/// </summary>
+		public Func<TObj, string> Stringificación { get; set; }
+
+		#endregion
+
+		#region Lógico
 
 		/// <summary>
 		/// Updates the list
@@ -63,6 +74,54 @@ namespace Moggle.Controles.Listas
 		public override void Update (GameTime gameTime)
 		{
 		}
+
+		/// <summary>
+		/// Catchs the key.
+		/// </summary>
+		public bool RecibirSeñal (KeyboardEventArgs key)
+		{
+			if (!InterceptarTeclado)
+				return false;
+			if (key.Key == AbajoKey)
+			{
+				SeleccionaSiguiente ();
+				return true;
+			}
+			if (key.Key == ArribaKey)
+			{
+				SeleccionaAnterior ();
+				return true;
+			}
+			return false;
+		}
+
+		#endregion
+
+		#region Dibujo
+
+		/// <summary>
+		/// The nombre textura de la fuente.
+		/// </summary>
+		public string NombreTexturaFuente = "fonts";
+
+		/// <summary>
+		/// Devuelve o establece la fuente a usar para imprimir el texto.
+		/// </summary>
+		public BitmapFont Fuente { get; set; }
+
+		Texture2D pixel { get; set; }
+
+		Texture2D cursorTexture { get; set; }
+
+		/// <summary>
+		/// Color del fondo del control
+		/// </summary>
+		public Color ColorBG { get; set; }
+
+		/// <summary>
+		/// Color del fondo del elemento seleccionado
+		/// </summary>
+		public Color ColorSel { get; set; }
 
 		/// <summary>
 		/// Dibuja la lista.
@@ -111,6 +170,10 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
+		#endregion
+
+		#region Estado
+
 		int _primerVisible;
 
 		/// <summary>
@@ -133,11 +196,6 @@ namespace Moggle.Controles.Listas
 		/// Devuelve la lista de objetos
 		/// </summary>
 		public List<Entrada> Objetos { get; }
-
-		/// <summary>
-		/// Devuelve o establece el método para convertir el objeto en <c>string</c>
-		/// </summary>
-		public Func<TObj, string> Stringificación { get; set; }
 
 		int _cursorIndex;
 
@@ -170,47 +228,9 @@ namespace Moggle.Controles.Listas
 			}
 		}
 
-		/// <summary>
-		/// Devuelve o establece la fuente a usar para imprimir el texto.
-		/// </summary>
-		public BitmapFont Fuente { get; set; }
+		#endregion
 
-		Texture2D pixel { get; set; }
-
-		Texture2D cursorTexture { get; set; }
-
-		/// <summary>
-		/// Color del fondo del control
-		/// </summary>
-		public Color ColorBG { get; set; }
-
-		/// <summary>
-		/// Color del fondo del elemento seleccionado
-		/// </summary>
-		public Color ColorSel { get; set; }
-
-		/// <summary>
-		/// Devuelve o establece el límite del control
-		/// </summary>
-		public RectangleF Bounds { get; set; }
-
-		/// <summary>
-		/// Devuelve el menor rectángulo que contiene a este control.
-		/// </summary>
-		protected override IShapeF GetBounds ()
-		{
-			return Bounds;
-		}
-
-		/// <summary>
-		/// Devuelve o establece si este control puede interactuar por sí mismo con el teclado
-		/// </summary>
-		public bool InterceptarTeclado { get; set; }
-
-		/// <summary>
-		/// The nombre textura de la fuente.
-		/// </summary>
-		public string NombreTexturaFuente = "fonts";
+		#region Memoria y contenido
 
 		/// <summary>
 		/// Cargar contenido
@@ -231,38 +251,7 @@ namespace Moggle.Controles.Listas
 			base.InitializeContent ();
 		}
 
-		/// <summary>
-		/// Tecla para desplazarse hacia abajo.
-		/// </summary>
-		/// <seealso cref="InterceptarTeclado"/>
-		public Keys AbajoKey = Keys.Down;
-
-		/// <summary>
-		/// Tecla para desplazarse hacia arriba.
-		/// </summary>
-		/// <seealso cref="InterceptarTeclado"/>
-		public Keys ArribaKey = Keys.Up;
-
-		/// <summary>
-		/// Catchs the key.
-		/// </summary>
-
-		public bool RecibirSeñal (KeyboardEventArgs key)
-		{
-			if (!InterceptarTeclado)
-				return false;
-			if (key.Key == AbajoKey)
-			{
-				SeleccionaSiguiente ();
-				return true;
-			}
-			if (key.Key == ArribaKey)
-			{
-				SeleccionaAnterior ();
-				return true;
-			}
-			return false;
-		}
+		#endregion
 
 		#region IListaControl
 
@@ -454,6 +443,8 @@ namespace Moggle.Controles.Listas
 
 		#endregion
 
+		#region ctor
+
 		/// <summary>
 		/// </summary>
 		/// <param name="comp">Container</param>
@@ -464,6 +455,41 @@ namespace Moggle.Controles.Listas
 			ColorBG = Color.Blue * 0.3f;
 			ColorSel = Color.White * 0.5f;
 			InterceptarTeclado = true;
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Representa una entrada de la lista.
+		/// </summary>
+		public struct Entrada
+		{
+			/// <summary>
+			/// El objeto.
+			/// </summary>
+			public TObj Objeto;
+			/// <summary>
+			/// El color.
+			/// </summary>
+			public Color Color;
+
+			/// <summary>
+			/// </summary>
+			/// <param name="obj">Objeto</param>
+			public Entrada (TObj obj)
+				: this (obj, Color.White)
+			{
+			}
+
+			/// <summary>
+			/// </summary>
+			/// <param name="obj">Objeto</param>
+			/// <param name="color">Color</param>
+			public Entrada (TObj obj, Color color)
+			{
+				Objeto = obj;
+				Color = color;
+			}
 		}
 	}
 }
