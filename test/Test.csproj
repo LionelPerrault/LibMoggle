@@ -60,6 +60,7 @@
     <Compile Include="Scr.cs" />
     <Compile Include="Autotest\SelectionManager.cs" />
     <Compile Include="DialScr.cs" />
+    <Compile Include="Autotest\ScreenThread.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\bin\Windows\*.xnb" />
