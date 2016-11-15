@@ -15,8 +15,7 @@ namespace Moggle
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
 	IEmisor<KeyboardEventArgs>,				// Para enviar señales de teclado a componentes
-	IComponentContainerComponent<IControl>, // Para controlar sus componentes
-	IControl
+	IComponentContainerComponent<IControl>	// Para controlar sus componentes
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente

@@ -12,10 +12,10 @@ namespace Moggle.Screens
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
 	public interface IScreen : 
-	IEmisor<KeyboardEventArgs>, 
-	IReceptor<Tuple<KeyboardEventArgs, ScreenThread>>, 
-	IComponentContainerComponent<IControl>, 
-	IControl,
+	IEmisor<KeyboardEventArgs>,							// Puede emitir datos de teclas a sus componentes
+	IReceptor<Tuple<KeyboardEventArgs, ScreenThread>>,	// Ouede recibir datos desde un thread
+	IComponentContainerComponent<IControl>,				// Contiene controles
+	IControl,											// Posee un contenedor
 	IDisposable
 	{
 		#region Dibujo
