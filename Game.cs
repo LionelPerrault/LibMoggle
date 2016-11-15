@@ -254,7 +254,7 @@ namespace Moggle
 		protected override void Draw (GameTime gameTime)
 		{
 			GraphicsDevice.Clear (BackgroundColor);
-			ScreenManager.DrawActive (gameTime);
+			ScreenManager.DrawActive ();
 			base.Draw (gameTime);
 		}
 

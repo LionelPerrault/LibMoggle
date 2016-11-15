@@ -75,8 +75,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected override void Draw (GameTime gameTime)
+		protected override void Draw ()
 		{
 			var bat = Screen.Batch;
 			var txt = Texto ();

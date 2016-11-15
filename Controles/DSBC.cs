@@ -24,12 +24,11 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected abstract void Draw (GameTime gameTime);
+		protected abstract void Draw ();
 
 		void IDrawable.Draw (GameTime gameTime)
 		{
-			Draw (gameTime);
+			Draw ();
 		}
 
 		/// <summary>

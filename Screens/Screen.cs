@@ -214,26 +214,25 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Dibuja esta pantalla
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public virtual void Draw (GameTime gameTime)
+		public virtual void Draw ()
 		{
 			Batch.Begin ();
-			EntreBatches (gameTime);
+			EntreBatches ();
 			Batch.End ();
 		}
 
 		/// <summary>
 		/// Se invoca entre Batch.Begin y Batch.End
 		/// </summary>
-		protected virtual void EntreBatches (GameTime gameTime)
+		protected virtual void EntreBatches ()
 		{
-			drawComponents (gameTime);
+			drawComponents ();
 		}
 
-		void drawComponents (GameTime gameTime)
+		void drawComponents ()
 		{
 			foreach (var x in Components.OfType<IDrawable> ())
-				x.Draw (gameTime);
+				x.Draw (null);
 		}
 
 		/// <summary>

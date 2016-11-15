@@ -163,11 +163,11 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Dibuja
 		/// </summary>
-		public void Draw (GameTime gameTime)
+		public void Draw ()
 		{
 			for (int i = Count - 1; i >= 0; i--)
 			{
-				_invocationStack [i].Draw (gameTime);
+				_invocationStack [i].Draw ();
 				if (!_options [i].DibujaBase)
 					return;
 			}

@@ -23,7 +23,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		void Draw (GameTime gameTime);
+		void Draw ();
 
 		#endregion
 

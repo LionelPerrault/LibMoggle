@@ -104,9 +104,9 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Dibuja el hilo activo
 		/// </summary>
-		public void DrawActive (GameTime gameTime)
+		public void DrawActive ()
 		{
-			ActiveThread.Draw (gameTime);
+			ActiveThread.Draw ();
 		}
 
 		internal ScreenThreadManager ()
