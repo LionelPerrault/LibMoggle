@@ -27,8 +27,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected override void Draw (GameTime gameTime)
+		protected override void Draw ()
 		{
 			throw new NotImplementedException ();
 			//var rect = Port.UniversoAVentana (GetBounds ().GetBoundingRectangle ());

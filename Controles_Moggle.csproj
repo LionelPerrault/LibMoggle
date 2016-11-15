@@ -12,7 +12,7 @@
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>0.9</ReleaseVersion>
+    <ReleaseVersion>0.10</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,7 +60,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Controles\Ratón.cs" />
-    <Compile Include="Screens\DialScreen.cs" />
     <Compile Include="Screens\MostrarListaScreen.cs" />
     <Compile Include="Controles\Listas\IListaControl.cs" />
     <Compile Include="Controles\Listas\Lista.cs" />
@@ -95,6 +94,8 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Comm\IEmisor.cs" />
     <Compile Include="Controles\MouseObserver.cs" />
     <Compile Include="Controles\ISpaceable.cs" />
+    <Compile Include="Screens\ScreenThread.cs" />
+    <Compile Include="Screens\ScreenThreadManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

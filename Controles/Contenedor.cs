@@ -130,7 +130,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
-		protected override void Draw (GameTime gameTime)
+		protected override void Draw ()
 		{
 			var bat = Screen.Batch;
 			bat.Draw (TexturaFondo, GetBounds ().GetBoundingRectangle (), BgColor);

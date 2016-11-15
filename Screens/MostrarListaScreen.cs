@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework.Input;
 using Moggle.Controles.Listas;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using System;
 
 namespace Moggle.Screens
 {
 	/// <summary>
 	/// Pantalla de pedir desde lista
 	/// </summary>
-	public class MostrarListaScreen<TObj> : DialScreen
+	public class MostrarListaScreen<TObj> : Screen
 	{
 		#region Comportamiento
 
@@ -20,26 +21,9 @@ namespace Moggle.Screens
 		public TObj ObjetoEnCursor { get { return ListaComponente.Objetos [ListaComponente.CursorIndex].Objeto; } }
 
 		/// <summary>
-		/// La pantalla madre se debe dibujar.
-		/// </summary>
-		public override bool DibujarBase { get { return true; } }
-
-		/// <summary>
-		/// Devuelve o establece el color del fondo de la pantalla.
-		/// </summary>
-		public Color ColorFondo { get; set; }
-
-		/// <summary>
-		/// Devuelve el color de fondo.
-		/// </summary>
-		public override Color BgColor { get { return ColorFondo; } }
-
-		/// <summary>
 		/// Cuando se termina, aquí se almacena la salida del jugador.
 		/// </summary>
 		public TipoSalida Salida { get; private set; }
-
-		/// 
 
 		#endregion
 
@@ -48,16 +32,17 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Cuando se presiona una tecla
 		/// </summary>
-		/// <param name="key">Tecla</param>
-		public override bool RecibirSeñal (KeyboardEventArgs key)
+		/// <param name="data">Tecla</param>
+		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
-			switch (key.Key)
+			switch (data.Item1.Key)
 			{
 				case Keys.Escape:
 					Salida = new TipoSalida (
 						TipoSalida.EnumTipoSalida.Cancelación,
 						SelecciónActual);
-					Salir ();
+					Response?.Invoke (this, Salida);
+					data.Item2.TerminateLast ();
 					return true;
 				case Keys.Space:
 					var curObj = ObjetoEnCursor;
@@ -70,10 +55,11 @@ namespace Moggle.Screens
 					Salida = new TipoSalida (
 						TipoSalida.EnumTipoSalida.Aceptación,
 						SelecciónActual);
-					Salir ();
+					Response?.Invoke (this, Salida);
+					data.Item2.TerminateLast ();
 					return true;
 				default:
-					return base.RecibirSeñal (key);
+					return base.RecibirSeñal (data);
 			}
 		}
 
@@ -100,6 +86,15 @@ namespace Moggle.Screens
 		/// Devuelve la lista de los objetos seleccionados hasta el momento
 		/// </summary>
 		public List<TObj> SelecciónActual { get; }
+
+		#endregion
+
+		#region Events
+
+		/// <summary>
+		/// Ocurre al obtener una respuesta
+		/// </summary>
+		public event EventHandler<TipoSalida> Response;
 
 		#endregion
 
