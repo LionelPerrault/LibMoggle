@@ -95,7 +95,8 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Comm\IEmisor.cs" />
     <Compile Include="Controles\MouseObserver.cs" />
     <Compile Include="Controles\ISpaceable.cs" />
-    <Compile Include="Screens\HiloPantallas.cs" />
+    <Compile Include="Screens\ScreenThread.cs" />
+    <Compile Include="Screens\ScreenThreadManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

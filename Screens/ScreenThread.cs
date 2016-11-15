@@ -6,7 +6,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una serie de invocaciones de <see cref="IScreen"/>
 	/// </summary>
-	public class HiloPantallas
+	public class ScreenThread
 	{
 		readonly List<IScreen> _invocationStack;
 		readonly List<ScreenStackOptions> _options;
@@ -58,6 +58,18 @@ namespace Moggle.Screens
 			_options.Add (opt);
 		}
 
+		public IScreen ClosestOfType <T> ()
+			where T : IScreen
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				var iterScr = this [i];
+				if (iterScr is T)
+					return iterScr;
+			}
+			throw new Exception ("There is not screen of the given type.");
+		}
+
 		/// <summary>
 		/// Añade una nueva pantalla a la pila, haciendo ésta la pantalla actual
 		/// </summary>
@@ -65,6 +77,16 @@ namespace Moggle.Screens
 		public void Stack (IScreen scr)
 		{
 			Stack (scr, ScreenStackOptions.Default);
+		}
+
+		public void Dispose ()
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				this [i].Dispose ();
+			}
+			_invocationStack.Clear ();
+			_options.Clear ();
 		}
 
 		/// <summary>
@@ -77,7 +99,7 @@ namespace Moggle.Screens
 
 		/// <summary>
 		/// </summary>
-		public HiloPantallas ()
+		public ScreenThread ()
 		{
 			_invocationStack = new List<IScreen> ();
 			_options = new List<ScreenStackOptions> ();
