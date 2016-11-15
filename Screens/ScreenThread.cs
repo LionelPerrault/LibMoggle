@@ -73,6 +73,9 @@ namespace Moggle.Screens
 		/// <param name="opt">Opciones</param>
 		public void Stack (IScreen scr, ScreenStackOptions opt)
 		{
+			if (scr == null)
+				throw new ArgumentNullException ("scr");
+
 			var lastCurr = Count == 0 ? null : Current;
 			_invocationStack.Add (scr);
 			_options.Add (opt);
