@@ -139,8 +139,9 @@ namespace Test
 			bt.Textura = "outline";
 			bt.AlClick += delegate
 			{
-				var newScr = new DialScr (Juego, this);
-				newScr.Ejecutar ();
+				var newScr = new DialScr (Juego);
+				newScr.Prepare ();
+				Juego.ScreenManager.ActiveThread.Stack (newScr);
 			};
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
@@ -258,7 +259,7 @@ namespace Test
 			return base.RecibirSeñal (key);
 		}
 
-		public override Color BgColor
+		public override Color? BgColor
 		{
 			get
 			{
@@ -266,9 +267,9 @@ namespace Test
 			}
 		}
 
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
-			base.Initialize ();
+			base.DoInitialization ();
 			bt.AlClick += Bt_AlClick;
 		}
 

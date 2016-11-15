@@ -5,26 +5,10 @@ using MonoGame.Extended.Shapes;
 
 namespace Test
 {
-	public class DialScr : DialScreen
+	public class DialScr : Screen
 	{
-		public override Color BgColor
-		{
-			get
-			{
-				return Color.Pink;
-			}
-		}
-
-		public override bool DibujarBase
-		{
-			get
-			{
-				return true;
-			}
-		}
-
-		public DialScr (Moggle.Game juego, IScreen baseScreen)
-			: base (juego, baseScreen)
+		public DialScr (Moggle.Game juego)
+			: base (juego)
 		{
 			var bt = new Botón (this)
 			{
@@ -39,9 +23,6 @@ namespace Test
 			};
 
 			Components.Add (bt);
-				
 		}
-		
 	}
-	
 }

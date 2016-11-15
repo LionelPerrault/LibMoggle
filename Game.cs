@@ -241,7 +241,7 @@ namespace Moggle
 		{
 			get
 			{
-				return CurrentScreen.BgColor;
+				return ScreenManager.ActiveThread.BgColor ?? Color.Black;
 			}
 		}
 

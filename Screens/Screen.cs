@@ -51,6 +51,11 @@ namespace Moggle.Screens
 		#region Memoria
 
 		/// <summary>
+		/// Devuelve un valor indicando si esta pantalla ha sido inicializada
+		/// </summary>
+		public bool IsInitialized { get; private set; }
+
+		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
 		public virtual void AddAllContent ()
@@ -149,12 +154,24 @@ namespace Moggle.Screens
 		/// Devuelve el color de fondo.
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public abstract Color BgColor { get; }
+		public virtual Color? BgColor{ get { return null; } }
 
 		/// <summary>
-		/// Inicializa sus controles
+		/// Inicializa esta panatalla si es necesario
 		/// </summary>
-		public virtual void Initialize ()
+		public void Initialize ()
+		{
+			if (!IsInitialized)
+			{
+				DoInitialization ();
+				IsInitialized = true;
+			}
+		}
+
+		/// <summary>
+		/// Realiza la inicialización
+		/// </summary>
+		protected virtual void DoInitialization ()
 		{
 			foreach (var x in Components)
 				x.Initialize ();
@@ -163,13 +180,16 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
-		/// Ejecuta esta pantalla.
-		/// Deja de escuchar a la pantalla anterior y yo comienzo a escuchar.
+		/// Inicializa estructura y contenido de los controles de esta pantalla
 		/// </summary>
-		[Obsolete]
-		public virtual void Ejecutar ()
+		public virtual void Prepare ()
 		{
+			Initialize ();
+			AddAllContent ();
+			Content.Load ();
+			InitializeContent ();
 		}
+
 
 		/// <summary>
 		/// Ciclo de la lógica de la pantalla.

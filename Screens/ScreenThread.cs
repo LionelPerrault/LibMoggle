@@ -19,6 +19,20 @@ namespace Moggle.Screens
 		/// <value>The count.</value>
 		public int Count { get { return _invocationStack.Count; } }
 
+		public Color? BgColor
+		{
+			get
+			{
+				for (int i = Count - 1; i >= 0; i--)
+				{
+					var retClr = _invocationStack [i].BgColor;
+					if (retClr != null)
+						return retClr;
+				}
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// Devuelve la panalla correspondiente a un índice.
 		/// Hace corresponer a la pantalla actual con el índice cero
@@ -56,10 +70,19 @@ namespace Moggle.Screens
 		/// <param name="opt">Opciones</param>
 		public void Stack (IScreen scr, ScreenStackOptions opt)
 		{
+			var lastCurr = Count == 0 ? null : Current;
 			_invocationStack.Add (scr);
 			_options.Add (opt);
+			if (lastCurr != null)
+				LostPreference?.Invoke (this, lastCurr);
+			GotPreference?.Invoke (this, Current);
+			if (lastCurr != null)
+				GotChild?.Invoke (this, lastCurr);
 		}
 
+		/// <summary>
+		/// Devuelve la pantalla más próxima de un tipo dado
+		/// </summary>
 		public IScreen ClosestOfType <T> ()
 			where T : IScreen
 		{
@@ -81,16 +104,49 @@ namespace Moggle.Screens
 			Stack (scr, ScreenStackOptions.Default);
 		}
 
+		/// <summary>
+		/// Termina el último elemento del stack
+		/// </summary>
+		public void TerminateLast ()
+		{
+			var lastCurr = Current;
+
+			RemoveAt (Count - 1);
+
+			Terminated?.Invoke (this, lastCurr);
+			LostChild?.Invoke (this, Current);
+			LostPreference?.Invoke (this, lastCurr);
+			GotPreference?.Invoke (this, Current);
+
+			lastCurr.Dispose ();
+		}
+
+		void RemoveAt (int i)
+		{
+			_invocationStack.RemoveAt (i);
+			_options.RemoveAt (i);
+
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Moggle.Screens.ScreenThread"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Screens.ScreenThread"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Screens.ScreenThread"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Screens.ScreenThread"/> so
+		/// the garbage collector can reclaim the memory that the <see cref="Moggle.Screens.ScreenThread"/> was occupying.</remarks>
 		public void Dispose ()
 		{
 			for (int i = 0; i < Count; i++)
-			{
 				this [i].Dispose ();
-			}
 			_invocationStack.Clear ();
 			_options.Clear ();
 		}
 
+		/// <summary>
+		/// Actualizacińo lógica
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public void Update (GameTime gameTime)
 		{
 			for (int i = Count - 1; i >= 0; i--)
@@ -101,6 +157,9 @@ namespace Moggle.Screens
 			}
 		}
 
+		/// <summary>
+		/// Dibuja
+		/// </summary>
 		public void Draw (GameTime gameTime)
 		{
 			for (int i = Count - 1; i >= 0; i--)
@@ -111,6 +170,32 @@ namespace Moggle.Screens
 			}
 		}
 
+		#region Events
+
+		/// <summary>
+		/// Ocurre cuando un screen ya no es la actual.
+		/// </summary>
+		public event EventHandler<IScreen> LostPreference;
+		/// <summary>
+		/// Ocurre cuando un screen ahora es la actual
+		/// </summary>
+		public event EventHandler<IScreen> GotPreference;
+
+		/// <summary>
+		/// Ocurre cuando su child es terminado
+		/// </summary>
+		public event EventHandler<IScreen> LostChild;
+		/// <summary>
+		/// Ocurre cuando tiene un nuevo child
+		/// </summary>
+		public event EventHandler<IScreen> GotChild;
+
+		/// <summary>
+		/// Ocurre cuando es terminado
+		/// </summary>
+		public event EventHandler<IScreen> Terminated;
+
+		#endregion
 
 		/// <summary>
 		/// Devuelve un nuevo <see cref="System.Collections.Generic.Stack{IScreen}"/> con las invocaciones de pantallas
@@ -152,7 +237,8 @@ namespace Moggle.Screens
 			{
 				Default = new ScreenStackOptions
 				{
-					DibujaBase = false 
+					DibujaBase = false,
+					ActualizaBase = false
 				};
 			}
 		}

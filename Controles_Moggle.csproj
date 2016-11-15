@@ -60,7 +60,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Controles\Ratón.cs" />
-    <Compile Include="Screens\DialScreen.cs" />
     <Compile Include="Screens\MostrarListaScreen.cs" />
     <Compile Include="Controles\Listas\IListaControl.cs" />
     <Compile Include="Controles\Listas\Lista.cs" />

@@ -11,10 +11,17 @@ namespace Moggle.Screens
 	{
 		readonly List<ScreenThread> _screens;
 
+		/// <summary>
+		/// Devuelve el número de hilos registrados
+		/// </summary>
+		/// <value>The count.</value>
 		public int Count { get { return _screens.Count; } }
 
 		int _currentThreadIndex;
 
+		/// <summary>
+		/// Devuelve o establece el hilo activo
+		/// </summary>
 		public ScreenThread ActiveThread
 		{
 			get
@@ -29,6 +36,9 @@ namespace Moggle.Screens
 			}
 		}
 
+		/// <summary>
+		/// Cambia el hilo activo
+		/// </summary>
 		public void SetActiveThread (ScreenThread scrTh)
 		{
 			var i = _screens.IndexOf (scrTh);
@@ -41,6 +51,10 @@ namespace Moggle.Screens
 			_currentThreadIndex = i;
 		}
 
+		/// <summary>
+		/// Registra un hilo
+		/// </summary>
+		/// <param name="scrTh">Hilo a registrar</param>
 		public void AddThread (ScreenThread scrTh)
 		{
 			if (_screens.Contains (scrTh))
@@ -50,21 +64,27 @@ namespace Moggle.Screens
 				_currentThreadIndex = 0;
 		}
 
+		/// <summary>
+		/// Contruye y registra un nuevo hilo
+		/// </summary>
 		public ScreenThread AddNewThread ()
 		{
 			var ret = new ScreenThread ();
-			// Remark: no need to duplicate check on this one.
-			_screens.Add (ret);
-			if (_currentThreadIndex < 0)
-				_currentThreadIndex = 0;
+			AddThread (ret);
 			return ret;
 		}
 
+		/// <summary>
+		/// Des-registra un hilo
+		/// </summary>
 		public bool RemoveThread (ScreenThread scrTh)
 		{
 			return _screens.Remove (scrTh);
 		}
 
+		/// <summary>
+		/// Desregistra y libera un hilo
+		/// </summary>
 		public void RemoveAndDispose (ScreenThread scrTh)
 		{
 			if (_screens.Remove (scrTh))
@@ -73,17 +93,23 @@ namespace Moggle.Screens
 				throw new InvalidOperationException ("Cannot remove non-existent thread.");
 		}
 
+		/// <summary>
+		/// Actualiza el hilo activo
+		/// </summary>
 		public void UpdateActive (GameTime gameTime)
 		{
 			ActiveThread.Update (gameTime);
 		}
 
+		/// <summary>
+		/// Dibuja el hilo activo
+		/// </summary>
 		public void DrawActive (GameTime gameTime)
 		{
 			ActiveThread.Draw (gameTime);
 		}
 
-		public ScreenThreadManager ()
+		internal ScreenThreadManager ()
 		{
 			_currentThreadIndex = -1;
 			_screens = new List<ScreenThread> ();

@@ -1,11 +1,5 @@
-﻿#region Using Statements
-using System;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using Moggle.Controles;
-
-#endregion
 
 namespace Test
 {

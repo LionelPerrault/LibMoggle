@@ -38,7 +38,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Color de fondo
 		/// </summary>
-		Color BgColor { get; }
+		Color? BgColor { get; }
 
 		#endregion
 
