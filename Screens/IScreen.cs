@@ -33,7 +33,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Ciclo de la lógica
 		/// </summary>
-		void Update (GameTime gameTime);
+		void Update (GameTime gameTime, ScreenThread currentThread);
 
 		/// <summary>
 		/// Color de fondo

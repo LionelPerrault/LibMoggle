@@ -19,6 +19,9 @@ namespace Moggle.Screens
 		/// <value>The count.</value>
 		public int Count { get { return _invocationStack.Count; } }
 
+		/// <summary>
+		/// Devuelve el color de fondo pedido por la pila
+		/// </summary>
 		public Color? BgColor
 		{
 			get
@@ -151,7 +154,7 @@ namespace Moggle.Screens
 		{
 			for (int i = Count - 1; i >= 0; i--)
 			{
-				this._invocationStack [i].Update (gameTime);
+				_invocationStack [i].Update (gameTime, this);
 				if (!_options [i].ActualizaBase)
 					return;
 			}

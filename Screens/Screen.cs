@@ -196,7 +196,8 @@ namespace Moggle.Screens
 		/// Actualiza a cada control.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public virtual void Update (GameTime gameTime)
+		/// <param name="currentThread">The thread that is doing the update</param>
+		public virtual void Update (GameTime gameTime, ScreenThread currentThread)
 		{
 			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
 				if (x.Enabled)

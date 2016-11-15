@@ -7,6 +7,14 @@ namespace Test
 {
 	public class DialScr : Screen
 	{
+		public override Color? BgColor
+		{
+			get
+			{
+				return Color.Red;
+			}
+		}
+
 		public DialScr (Moggle.Game juego)
 			: base (juego)
 		{
