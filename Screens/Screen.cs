@@ -51,6 +51,11 @@ namespace Moggle.Screens
 		#region Memoria
 
 		/// <summary>
+		/// Devuelve un valor indicando si esta pantalla ha sido inicializada
+		/// </summary>
+		public bool IsInitialized { get; private set; }
+
+		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
 		public virtual void AddAllContent ()
@@ -134,10 +139,10 @@ namespace Moggle.Screens
 		/// Rebice señal del teclado
 		/// </summary>
 		/// <returns>Devuelve <c>true</c> si la señal fue aceptada.</returns>
-		/// <param name="key">Señal tecla</param>
-		public virtual bool RecibirSeñal (KeyboardEventArgs key)
+		/// <param name="data">Señal tecla</param>
+		public virtual bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
-			MandarSeñal (key);
+			MandarSeñal (data.Item1);
 			return true;
 		}
 
@@ -149,12 +154,24 @@ namespace Moggle.Screens
 		/// Devuelve el color de fondo.
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public abstract Color BgColor { get; }
+		public virtual Color? BgColor{ get { return null; } }
 
 		/// <summary>
-		/// Inicializa sus controles
+		/// Inicializa esta panatalla si es necesario
 		/// </summary>
-		public virtual void Initialize ()
+		public void Initialize ()
+		{
+			if (!IsInitialized)
+			{
+				DoInitialization ();
+				IsInitialized = true;
+			}
+		}
+
+		/// <summary>
+		/// Realiza la inicialización
+		/// </summary>
+		protected virtual void DoInitialization ()
 		{
 			foreach (var x in Components)
 				x.Initialize ();
@@ -163,20 +180,24 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
-		/// Ejecuta esta pantalla.
-		/// Deja de escuchar a la pantalla anterior y yo comienzo a escuchar.
+		/// Inicializa estructura y contenido de los controles de esta pantalla
 		/// </summary>
-		public virtual void Ejecutar ()
+		public virtual void Prepare ()
 		{
-			Juego.CurrentScreen = this;
+			Initialize ();
+			AddAllContent ();
+			Content.Load ();
+			InitializeContent ();
 		}
+
 
 		/// <summary>
 		/// Ciclo de la lógica de la pantalla.
 		/// Actualiza a cada control.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public virtual void Update (GameTime gameTime)
+		/// <param name="currentThread">The thread that is doing the update</param>
+		public virtual void Update (GameTime gameTime, ScreenThread currentThread)
 		{
 			foreach (var x in Components.OfType<IUpdateable> ().OrderBy (z => z.UpdateOrder))
 				if (x.Enabled)

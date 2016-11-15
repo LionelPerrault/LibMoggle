@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
-using System;
 using MonoGame.Extended.InputListeners;
 
 
@@ -14,7 +13,7 @@ namespace Moggle.Screens
 	/// </summary>
 	public interface IScreen : 
 	IEmisor<KeyboardEventArgs>, 
-	IReceptor<KeyboardEventArgs>, 
+	IReceptor<Tuple<KeyboardEventArgs, ScreenThread>>, 
 	IComponentContainerComponent<IControl>, 
 	IControl,
 	IDisposable
@@ -33,12 +32,12 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Ciclo de la lógica
 		/// </summary>
-		void Update (GameTime gameTime);
+		void Update (GameTime gameTime, ScreenThread currentThread);
 
 		/// <summary>
 		/// Color de fondo
 		/// </summary>
-		Color BgColor { get; }
+		Color? BgColor { get; }
 
 		#endregion
 

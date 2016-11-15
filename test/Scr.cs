@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
@@ -6,7 +7,6 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using System;
 
 namespace Test
 {
@@ -139,8 +139,9 @@ namespace Test
 			bt.Textura = "outline";
 			bt.AlClick += delegate
 			{
-				var newScr = new DialScr (Juego, this);
-				newScr.Ejecutar ();
+				var newScr = new DialScr (Juego);
+				newScr.Prepare ();
+				Juego.ScreenManager.ActiveThread.Stack (newScr);
 			};
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
@@ -243,8 +244,9 @@ namespace Test
 		readonly Botón bt;
 		readonly KeyStringListener StrListen;
 
-		public override bool RecibirSeñal (KeyboardEventArgs key)
+		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
+			var key = data.Item1;
 			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
 			{
 				Juego.Exit ();
@@ -255,10 +257,10 @@ namespace Test
 				key.Character,
 				key.Key,
 				key.Modifiers));
-			return base.RecibirSeñal (key);
+			return base.RecibirSeñal (data);
 		}
 
-		public override Color BgColor
+		public override Color? BgColor
 		{
 			get
 			{
@@ -266,9 +268,9 @@ namespace Test
 			}
 		}
 
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
-			base.Initialize ();
+			base.DoInitialization ();
 			bt.AlClick += Bt_AlClick;
 		}
 

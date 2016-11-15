@@ -14,14 +14,20 @@ namespace Moggle
 	/// </summary>
 	public class Game :
 	Microsoft.Xna.Framework.Game, 
-	IEmisor<KeyboardEventArgs>,                         // Para enviar señales de teclado a componentes
+	IEmisor<KeyboardEventArgs>,				// Para enviar señales de teclado a componentes
 	IComponentContainerComponent<IControl>, // Para controlar sus componentes
 	IControl
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
-		public IScreen CurrentScreen;
+		public IScreen CurrentScreen { get { return ScreenManager.ActiveThread.Current; } }
+
+		/// <summary>
+		/// Devuelve el manejador de pantallas
+		/// </summary>
+		/// <value>The screen manager.</value>
+		public ScreenThreadManager ScreenManager { get; }
 
 		/// <summary>
 		/// The graphics.
@@ -56,7 +62,8 @@ namespace Moggle
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
 			Contenido = new BibliotecaContenido (Content);
-			//Mouse = new Ratón (this);
+
+			ScreenManager = new ScreenThreadManager ();
 
 			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
 			IsFixedTimeStep = false;
@@ -127,7 +134,10 @@ namespace Moggle
 		/// <param name="key">Tecla señal</param>
 		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
-			CurrentScreen?.RecibirSeñal (key);
+			var sign = new Tuple<KeyboardEventArgs, ScreenThread> (
+				           key,
+				           ScreenManager.ActiveThread);
+			CurrentScreen?.RecibirSeñal (sign);
 		}
 
 		void IEmisor<KeyboardEventArgs>.MandarSeñal (KeyboardEventArgs key)
@@ -153,7 +163,7 @@ namespace Moggle
 		protected override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
-			CurrentScreen.Update (gameTime);
+			ScreenManager.UpdateActive (gameTime);
 		}
 
 		/// <summary>
@@ -234,7 +244,7 @@ namespace Moggle
 		{
 			get
 			{
-				return CurrentScreen.BgColor;
+				return ScreenManager.ActiveThread.BgColor ?? Color.Black;
 			}
 		}
 
@@ -244,7 +254,7 @@ namespace Moggle
 		protected override void Draw (GameTime gameTime)
 		{
 			GraphicsDevice.Clear (BackgroundColor);
-			CurrentScreen?.Draw (gameTime);
+			ScreenManager.DrawActive (gameTime);
 			base.Draw (gameTime);
 		}
 
