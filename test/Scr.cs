@@ -140,10 +140,7 @@ namespace Test
 			bt.AlClick += delegate
 			{
 				var newScr = new DialScr (Juego);
-				newScr.Prepare ();
-				Juego.ScreenManager.ActiveThread.Stack (
-					newScr,
-					new ScreenThread.ScreenStackOptions{ DibujaBase = true });
+				newScr.Execute (ScreenThread.ScreenStackOptions.Dialog);
 			};
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
