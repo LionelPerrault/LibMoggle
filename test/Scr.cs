@@ -141,7 +141,9 @@ namespace Test
 			{
 				var newScr = new DialScr (Juego);
 				newScr.Prepare ();
-				Juego.ScreenManager.ActiveThread.Stack (newScr);
+				Juego.ScreenManager.ActiveThread.Stack (
+					newScr,
+					new ScreenThread.ScreenStackOptions{ DibujaBase = true });
 			};
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (

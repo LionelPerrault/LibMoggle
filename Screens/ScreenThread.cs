@@ -155,12 +155,14 @@ namespace Moggle.Screens
 		/// <param name="gameTime">Game time.</param>
 		public void Update (GameTime gameTime)
 		{
-			for (int i = Count - 1; i >= 0; i--)
-			{
+			// Localizar el primer índice que se va a dibujar
+			var deepestDrawIndex = Count - 1;
+			while (deepestDrawIndex > 0 && _options [deepestDrawIndex].ActualizaBase)
+				deepestDrawIndex--;
+
+			// Dibujar en orden creciente
+			for (int i = deepestDrawIndex; i < Count; i++)
 				_invocationStack [i].Update (gameTime, this);
-				if (!_options [i].ActualizaBase)
-					return;
-			}
 		}
 
 		/// <summary>
@@ -168,12 +170,14 @@ namespace Moggle.Screens
 		/// </summary>
 		public void Draw ()
 		{
-			for (int i = Count - 1; i >= 0; i--)
-			{
+			// Localizar el primer índice que se va a dibujar
+			var deepestDrawIndex = Count - 1;
+			while (deepestDrawIndex > 0 && _options [deepestDrawIndex].DibujaBase)
+				deepestDrawIndex--;
+
+			// Dibujar en orden creciente
+			for (int i = deepestDrawIndex; i < Count; i++)
 				_invocationStack [i].Draw ();
-				if (!_options [i].DibujaBase)
-					return;
-			}
 		}
 
 		#region Events
