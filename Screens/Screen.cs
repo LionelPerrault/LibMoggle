@@ -151,6 +151,46 @@ namespace Moggle.Screens
 		#region Comportamiento
 
 		/// <summary>
+		/// Inicializa la pantalla y la establece como activa en un thread dado
+		/// </summary>
+		/// <param name="thread">Thread donde ejecutar</param>
+		/// <param name="opt">Opciones</param>
+		public void Execute (ScreenThread thread,
+		                     ScreenThread.ScreenStackOptions opt)
+		{
+			if (thread == null)
+				throw new ArgumentNullException ("thread");
+			Prepare ();
+			thread.Stack (this, opt);
+		}
+
+		/// <summary>
+		/// Inicializa la pantalla y la establece como activa en un thread dado
+		/// </summary>
+		public void Execute ()
+		{
+			Execute (Juego.ScreenManager.ActiveThread);
+		}
+
+		/// <summary>
+		/// Inicializa la pantalla y la establece como activa en un thread dado
+		/// </summary>
+		/// <param name="opt">Opciones</param>
+		public void Execute (ScreenThread.ScreenStackOptions opt)
+		{
+			Execute (Juego.ScreenManager.ActiveThread, opt);
+		}
+
+		/// <summary>
+		/// Inicializa la pantalla y la establece como activa en un thread dado
+		/// </summary>
+		/// <param name="thread">Thread donde ejecutar</param>
+		public void Execute (ScreenThread thread)
+		{
+			Execute (thread, ScreenThread.ScreenStackOptions.Default);
+		}
+
+		/// <summary>
 		/// Devuelve el color de fondo.
 		/// </summary>
 		/// <value>The color of the background.</value>
