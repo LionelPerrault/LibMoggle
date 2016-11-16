@@ -10,14 +10,72 @@ namespace Moggle.Screens
 	/// </summary>
 	public class ScreenThread : IUpdate
 	{
+		#region Data
+
 		readonly List<IScreen> _invocationStack;
 		readonly List<ScreenStackOptions> _options;
+
+		#endregion
+
+		#region Status
 
 		/// <summary>
 		/// Devuelve el número de pantallas la pila
 		/// </summary>
 		/// <value>The count.</value>
 		public int Count { get { return _invocationStack.Count; } }
+
+		/// <summary>
+		/// Devuelve la panalla correspondiente a un índice.
+		/// Hace corresponer a la pantalla actual con el índice cero
+		/// </summary>
+		/// <param name="index">Índice de pantalla basado en cero.</param>
+		public IScreen this [int index]
+		{
+			// No hay necesidad de exception check. Va a devolver el error de fuera de índice, y ése corresponde
+			get	{ return _invocationStack [Count - index - 1]; }
+		}
+
+		/// <summary>
+		/// Devuelve la pantalla actual
+		/// </summary>
+		/// <value>The current.</value>
+		public IScreen Current
+		{ 
+			get
+			{
+				if (Count == 0)
+					throw new InvalidOperationException ("This thread has no screens.");
+				return this [0]; 
+			} 
+		}
+
+		/// <summary>
+		/// Devuelve la pantalla más próxima de un tipo dado
+		/// </summary>
+		public IScreen ClosestOfType <T> ()
+			where T : IScreen
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				var iterScr = this [i];
+				if (iterScr is T)
+					return iterScr;
+			}
+			throw new Exception ("There is not screen of the given type.");
+		}
+
+		/// <summary>
+		/// Devuelve un nuevo <see cref="System.Collections.Generic.Stack{IScreen}"/> con las invocaciones de pantallas
+		/// </summary>
+		public Stack<IScreen> AsStack ()
+		{
+			return new Stack<IScreen> (_invocationStack);
+		}
+
+		#endregion
+
+		#region Control
 
 		/// <summary>
 		/// Devuelve el color de fondo pedido por la pila
@@ -36,35 +94,52 @@ namespace Moggle.Screens
 			}
 		}
 
-		/// <summary>
-		/// Devuelve la panalla correspondiente a un índice.
-		/// Hace corresponer a la pantalla actual con el índice cero
-		/// </summary>
-		/// <param name="index">Índice de pantalla basado en cero.</param>
-		public IScreen this [int index]
-		{
-			// No hay necesidad de exception check. Va a devolver el error de fuera de índice, y ése corresponde
-			get	{ return _invocationStack [Count - index - 1]; }
-		}
-
+		[Obsolete]
 		ScreenStackOptions getOptionsFromNewIndex (int index)
 		{
 			return _options [Count - index - 1];
 		}
 
-		/// <summary>
-		/// Devuelve la pantalla actual
-		/// </summary>
-		/// <value>The current.</value>
-		public IScreen Current
-		{ 
-			get
-			{
-				if (Count == 0)
-					throw new InvalidOperationException ("This thread has no screens.");
-				return this [0]; 
-			} 
+		void RemoveAt (int i)
+		{
+			_invocationStack.RemoveAt (i);
+			_options.RemoveAt (i);
 		}
+
+		/// <summary>
+		/// Actualizacińo lógica
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public void Update (GameTime gameTime)
+		{
+			// Localizar el primer índice que se va a dibujar
+			var deepestDrawIndex = Count - 1;
+			while (deepestDrawIndex > 0 && _options [deepestDrawIndex].ActualizaBase)
+				deepestDrawIndex--;
+
+			// Dibujar en orden creciente
+			for (int i = deepestDrawIndex; i < Count; i++)
+				_invocationStack [i].Update (gameTime, this);
+		}
+
+		/// <summary>
+		/// Dibuja
+		/// </summary>
+		public void Draw ()
+		{
+			// Localizar el primer índice que se va a dibujar
+			var deepestDrawIndex = Count - 1;
+			while (deepestDrawIndex > 0 && _options [deepestDrawIndex].DibujaBase)
+				deepestDrawIndex--;
+
+			// Dibujar en orden creciente
+			for (int i = deepestDrawIndex; i < Count; i++)
+				_invocationStack [i].Draw ();
+		}
+
+		#endregion
+
+		#region Manipulation
 
 		/// <summary>
 		/// Añade una nueva pantalla a la pila, haciendo ésta la pantalla actual
@@ -84,21 +159,6 @@ namespace Moggle.Screens
 			GotPreference?.Invoke (this, Current);
 			if (lastCurr != null)
 				GotChild?.Invoke (this, lastCurr);
-		}
-
-		/// <summary>
-		/// Devuelve la pantalla más próxima de un tipo dado
-		/// </summary>
-		public IScreen ClosestOfType <T> ()
-			where T : IScreen
-		{
-			for (int i = 0; i < Count; i++)
-			{
-				var iterScr = this [i];
-				if (iterScr is T)
-					return iterScr;
-			}
-			throw new Exception ("There is not screen of the given type.");
 		}
 
 		/// <summary>
@@ -127,12 +187,9 @@ namespace Moggle.Screens
 			lastCurr.Dispose ();
 		}
 
-		void RemoveAt (int i)
-		{
-			_invocationStack.RemoveAt (i);
-			_options.RemoveAt (i);
+		#endregion
 
-		}
+		#region Memory
 
 		/// <summary>
 		/// Releases all resource used by the <see cref="Moggle.Screens.ScreenThread"/> object.
@@ -149,32 +206,7 @@ namespace Moggle.Screens
 			_options.Clear ();
 		}
 
-		/// <summary>
-		/// Actualizacińo lógica
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public void Update (GameTime gameTime)
-		{
-			for (int i = Count - 1; i >= 0; i--)
-			{
-				_invocationStack [i].Update (gameTime, this);
-				if (!_options [i].ActualizaBase)
-					return;
-			}
-		}
-
-		/// <summary>
-		/// Dibuja
-		/// </summary>
-		public void Draw ()
-		{
-			for (int i = Count - 1; i >= 0; i--)
-			{
-				_invocationStack [i].Draw ();
-				if (!_options [i].DibujaBase)
-					return;
-			}
-		}
+		#endregion
 
 		#region Events
 
@@ -186,7 +218,6 @@ namespace Moggle.Screens
 		/// Ocurre cuando un screen ahora es la actual
 		/// </summary>
 		public event EventHandler<IScreen> GotPreference;
-
 		/// <summary>
 		/// Ocurre cuando su child es terminado
 		/// </summary>
@@ -195,7 +226,6 @@ namespace Moggle.Screens
 		/// Ocurre cuando tiene un nuevo child
 		/// </summary>
 		public event EventHandler<IScreen> GotChild;
-
 		/// <summary>
 		/// Ocurre cuando es terminado
 		/// </summary>
@@ -203,13 +233,7 @@ namespace Moggle.Screens
 
 		#endregion
 
-		/// <summary>
-		/// Devuelve un nuevo <see cref="System.Collections.Generic.Stack{IScreen}"/> con las invocaciones de pantallas
-		/// </summary>
-		public Stack<IScreen> AsStack ()
-		{
-			return new Stack<IScreen> (_invocationStack);
-		}
+		#region ctor
 
 		/// <summary>
 		/// </summary>
@@ -218,6 +242,10 @@ namespace Moggle.Screens
 			_invocationStack = new List<IScreen> ();
 			_options = new List<ScreenStackOptions> ();
 		}
+
+		#endregion
+
+		#region Subclasses
 
 		/// <summary>
 		/// Options for each screen in the stack
@@ -248,5 +276,7 @@ namespace Moggle.Screens
 				};
 			}
 		}
+
+		#endregion
 	}
 }

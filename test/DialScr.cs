@@ -22,7 +22,7 @@ namespace Test
 			{
 				Textura = "outline",
 				Color = Color.Green,
-				Bounds = new RectangleF (400, 400, 50, 50),
+				Bounds = new RectangleF (145, 90, 50, 50),
 			};
 
 			bt.AlClick += delegate
