@@ -96,6 +96,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\ISpaceable.cs" />
     <Compile Include="Screens\ScreenThread.cs" />
     <Compile Include="Screens\ScreenThreadManager.cs" />
+    <Compile Include="Screens\Dials\ScreenDialSerial.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -109,6 +110,7 @@ Un juego de controles para MonoGame</Description>
     <Folder Include="Shape\" />
     <Folder Include="Comm\" />
     <Folder Include="Textures\" />
+    <Folder Include="Screens\Dials\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
