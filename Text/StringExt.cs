@@ -1,6 +1,5 @@
 ﻿using MonoGame.Extended.BitmapFonts;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Moggle.Text
 {
