@@ -7,6 +7,8 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using Moggle.Screens.Dials;
+using System.Text;
 
 namespace Test
 {
@@ -250,6 +252,20 @@ namespace Test
 			{
 				Juego.Exit ();
 				return true;
+			}
+			else if (key.Key == Microsoft.Xna.Framework.Input.Keys.T)
+			{
+				var ser = new ScreenDialSerial ();
+
+				ser.AddRequest (new RedBlueDial (Juego));
+				ser.AddRequest (new RedBlueDial (Juego));
+				ser.AddRequest (new RedBlueDial (Juego));
+
+				ser.Executar (Juego.ScreenManager.ActiveThread);
+				ser.HayRespuesta += delegate(object sender, object [] e)
+				{
+					Debug.WriteLine (e);
+				};
 			}
 			Debug.WriteLine (string.Format (
 				"{0}:{1}:{2}",

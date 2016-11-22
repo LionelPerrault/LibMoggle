@@ -52,6 +52,8 @@ namespace Moggle.Screens.Dials
 			InvocationList.Add (inputScreen);
 		}
 
+		int _currentScr;
+
 		/// <summary>
 		/// Ejecuta la serie de invocaciones
 		/// </summary>
@@ -70,11 +72,17 @@ namespace Moggle.Screens.Dials
 				scr.Content.Load ();
 				scr.InitializeContent ();
 
-				useThread.Stack (scr);
+				useThread.Stack (
+					scr,
+					new ScreenThread.ScreenStackOptions
+					{
+						DibujaBase = false,
+						ActualizaBase = false
+					});
 
 				scr.HayRespuesta += delegate(object sender, object e)
 				{
-					collectedData [i] = e;
+					collectedData [_currentScr--] = e;
 					useThread.TerminateLast ();
 				};
 
@@ -86,6 +94,7 @@ namespace Moggle.Screens.Dials
 					};
 				}
 			}
+			_currentScr = InvocationList.Count - 1;
 		}
 
 		/// <summary>
