@@ -257,9 +257,9 @@ namespace Test
 			{
 				var ser = new ScreenDialSerial ();
 
-				ser.AddRequest (new RedBlueDial (Juego));
-				ser.AddRequest (new RedBlueDial (Juego));
-				ser.AddRequest (new RedBlueDial (Juego));
+				ser.AddRequest (new RedBlueDial (Juego, 2));
+				ser.AddRequest (new RedBlueDial (Juego, 1));
+				ser.AddRequest (new RedBlueDial (Juego, 0));
 
 				ser.Executar (Juego.ScreenManager.ActiveThread);
 				ser.HayRespuesta += delegate(object sender, object [] e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Moggle.Screens.Dials
 {
@@ -86,10 +87,11 @@ namespace Moggle.Screens.Dials
 					useThread.TerminateLast ();
 				};
 
-				if (i == 0)
+				if (i == InvocationList.Count - 1)
 				{
 					scr.HayRespuesta += delegate
 					{
+						Debug.WriteLine (i);
 						HayRespuesta?.Invoke (this, collectedData);
 					};
 				}

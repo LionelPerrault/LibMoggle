@@ -35,9 +35,12 @@ namespace Test
 			return base.RecibirSeñal (data);
 		}
 
-		public RedBlueDial (Moggle.Game game)
+		public readonly int Id;
+
+		public RedBlueDial (Moggle.Game game, int id)
 			: base (game)
 		{
+			Id = id;
 			var btRed = new Botón (this)
 			{
 				Textura = "pixel",
