@@ -7,6 +7,7 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using System.Threading;
 
 namespace Test
 {
@@ -142,6 +143,16 @@ namespace Test
 				var newScr = new DialScr (Juego);
 				newScr.Execute (ScreenThread.ScreenStackOptions.Dialog);
 			};
+
+			var et = new EtiquetaMultiLínea (this)
+			{
+				Texto = "Esto es una linea larga, debe que quedar cortada en algún espacio intermedio.",
+				TopLeft = new Point (300, 10),
+				UseFont = "cont//font",
+				MaxSize = new MonoGame.Extended.Size (40, 2000),
+				Color = Color.White
+			};
+			AddComponent (et);
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",
