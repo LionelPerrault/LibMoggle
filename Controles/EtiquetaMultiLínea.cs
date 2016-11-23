@@ -6,6 +6,7 @@ using Moggle.Text;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Moggle.Controles
 {
@@ -19,37 +20,44 @@ namespace Moggle.Controles
 
 		public Point TopLeft { get; set; }
 
+		Texture2D bgTexture;
 		string [] drawingLines;
-		Size maxSize;
+		int maxWidth;
 
 		protected override void AddContent ()
 		{
+			var textures = new Textures.SimpleTextures (Screen.Device);
+			bgTexture = textures.SolidTexture (new Size (1, 1), Color.White);
 			Screen.Content.AddContent (UseFont);
 		}
 
 		protected override IShapeF GetBounds ()
 		{
-			return new RectangleF (TopLeft.ToVector2 (), MaxSize);
+			return new RectangleF (TopLeft.ToVector2 (), Size);
 		}
 
-		public Size MaxSize
+		public int MaxWidth
 		{
 			get
 			{
-				return maxSize;
+				return maxWidth;
 			}
 			set
 			{
-				maxSize = value;
+				maxWidth = value;
 				RecalcularLíneas ();
 			}
 		}
+
+		public int Height { get { return VisibleLines * Font.LineHeight; } }
+
+		public Size Size { get { return new Size (MaxWidth, Height); } }
 
 		protected void RecalcularLíneas ()
 		{
 			if (!IsInitialized) // Si no está inicializado, Font es nulo así que no se debe correr
 				return;
-			var lins = StringExt.SepararLíneas (Font, Texto, MaxSize.Width);
+			var lins = StringExt.SepararLíneas (Font, Texto, MaxWidth);
 			drawingLines = lins;
 		}
 
@@ -59,21 +67,29 @@ namespace Moggle.Controles
 			{
 				if (!IsInitialized)
 					throw new InvalidOperationException ("Item not initialized");
-				return Math.Min (MaxSize.Height / Font.LineHeight, drawingLines.Length);
+				return drawingLines.Length;
 			}
 		}
 
-		public Color Color { get; set; }
+		public Color TextColor { get; set; }
+
+		public Color BackgroundColor { get; set; }
 
 		protected override void Draw ()
 		{
 			var currTop = TopLeft.Y;
 			var bat = Screen.Batch;
 
+			bat.Draw (bgTexture, new Rectangle (TopLeft, Size), BackgroundColor);
+
 			for (int i = 0; i < VisibleLines; i++)
 			{
 				var currLine = drawingLines [i];
-				bat.DrawString (Font, currLine, new Vector2 (TopLeft.X, currTop), Color);
+				bat.DrawString (
+					Font,
+					currLine,
+					new Vector2 (TopLeft.X, currTop),
+					TextColor);
 				currTop += Font.LineHeight;
 			}
 		}
@@ -92,6 +108,8 @@ namespace Moggle.Controles
 		public EtiquetaMultiLínea (IScreen screen)
 			: base (screen)
 		{
+			TextColor = Color.White;
+			BackgroundColor = Color.Transparent;
 		}
 	}
 }

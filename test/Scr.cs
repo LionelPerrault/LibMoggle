@@ -7,7 +7,6 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
-using System.Threading;
 
 namespace Test
 {
@@ -149,8 +148,9 @@ namespace Test
 				Texto = "Esto es una linea larga, debe que quedar cortada en algún espacio intermedio.",
 				TopLeft = new Point (300, 250),
 				UseFont = "cont//font",
-				MaxSize = new MonoGame.Extended.Size (60, 2000),
-				Color = Color.White
+				MaxWidth = 100,
+				TextColor = Color.White,
+				BackgroundColor = Color.Red
 			};
 			AddComponent (et);
 				
