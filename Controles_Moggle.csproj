@@ -97,6 +97,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\ScreenThread.cs" />
     <Compile Include="Screens\ScreenThreadManager.cs" />
     <Compile Include="Text\StringExt.cs" />
+    <Compile Include="Controles\EtiquetaMultiLínea.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
