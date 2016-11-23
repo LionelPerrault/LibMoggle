@@ -62,6 +62,7 @@
     <Compile Include="DialScr.cs" />
     <Compile Include="Autotest\ScreenThread.cs" />
     <Compile Include="RedBlueDial.cs" />
+    <Compile Include="Autotest\SeparaString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\bin\Windows\*.xnb" />

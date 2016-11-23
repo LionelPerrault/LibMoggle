@@ -144,6 +144,17 @@ namespace Test
 				var newScr = new DialScr (Juego);
 				newScr.Execute (ScreenThread.ScreenStackOptions.Dialog);
 			};
+
+			var et = new EtiquetaMultiLínea (this)
+			{
+				Texto = "Esto es una linea larga, debe que quedar cortada en algún espacio intermedio.",
+				TopLeft = new Point (300, 250),
+				UseFont = "cont//font",
+				MaxWidth = 100,
+				TextColor = Color.White,
+				BackgroundColor = Color.Red
+			};
+			AddComponent (et);
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",

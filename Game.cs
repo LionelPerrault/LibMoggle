@@ -115,6 +115,8 @@ namespace Moggle
 			foreach (var x in Components)
 				x.Initialize ();
 
+			CurrentScreen?.Initialize ();
+			/*
 			try
 			{
 				CurrentScreen?.Initialize ();
@@ -123,6 +125,7 @@ namespace Moggle
 			{
 				Debug.WriteLine (ex);
 			}
+			*/
 
 			foreach (var x in Components.OfType<IComponent> ())
 				x.AddContent ();

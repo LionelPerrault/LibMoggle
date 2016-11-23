@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
@@ -35,7 +36,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Una función que determina el texto a mostrar.
 		/// </summary>
-		public Func<string> Texto;
+		public virtual Func<string> Texto { get; set; }
 
 		/// <summary>
 		/// Devuelve o establece la posición de la etiqueta.
@@ -53,7 +54,7 @@ namespace Moggle.Controles
 		/// <returns>The bounds.</returns>
 		protected override IShapeF GetBounds ()
 		{
-			return (RectangleF)font.GetStringRectangle (
+			return (RectangleF)Font.GetStringRectangle (
 				Texto (),
 				Posición.ToVector2 ());
 		}
@@ -70,7 +71,7 @@ namespace Moggle.Controles
 
 		#region Dibujo
 
-		BitmapFont font;
+		protected BitmapFont Font;
 
 		/// <summary>
 		/// Dibuja el control
@@ -79,7 +80,7 @@ namespace Moggle.Controles
 		{
 			var bat = Screen.Batch;
 			var txt = Texto ();
-			bat.DrawString (font, txt, Posición.ToVector2 (), Color);
+			bat.DrawString (Font, txt, Posición.ToVector2 (), Color);
 		}
 
 		#endregion
@@ -99,7 +100,7 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void InitializeContent ()
 		{
-			font = Screen.Content.GetContent<BitmapFont> (UseFont);
+			Font = Screen.Content.GetContent<BitmapFont> (UseFont);
 		}
 
 		#endregion
