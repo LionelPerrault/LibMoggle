@@ -1,5 +1,11 @@
 Lo nuevo
 ========
+0.11
+----
+  + Se agregan opciones constantes en `ScreenStackOptions`.
+  + Nuevo sistema de invocación de `IScreen` en serie; con respuesta en un evento.
+  + Nuevo control `EtiquetaMultiLínea` es una etiqueta que corta líneas cuando el texto se sale de un grosor máximo.
+
 0.10
 ----
   + Nuevo sistema de hilos de pantallas
