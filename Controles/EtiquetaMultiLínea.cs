@@ -10,20 +10,39 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Moggle.Controles
 {
+	/// <summary>
+	/// Una etiqueta con máximo grosor
+	/// </summary>
 	public class EtiquetaMultiLínea : DSBC
 	{
+		/// <summary>
+		/// Devuelve o establece el texto
+		/// </summary>
 		public string Texto { get; set; }
 
+		/// <summary>
+		/// Devuelve o establece el nombre de la fuente como contenido
+		/// </summary>
 		public string UseFont { get; set; }
 
+		/// <summary>
+		/// Devuelve la fuente de impresión
+		/// </summary>
 		public BitmapFont Font { get; private set; }
 
+		/// <summary>
+		/// Devuelve o establece la posición de la etiqueta
+		/// </summary>
+		/// <value>La posición de la esquena superior izquierda</value>
 		public Point TopLeft { get; set; }
 
 		Texture2D bgTexture;
 		string [] drawingLines;
 		int maxWidth;
 
+		/// <summary>
+		/// Loads the content.
+		/// </summary>
 		protected override void AddContent ()
 		{
 			var textures = new Textures.SimpleTextures (Screen.Device);
@@ -31,11 +50,17 @@ namespace Moggle.Controles
 			Screen.Content.AddContent (UseFont);
 		}
 
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
 		protected override IShapeF GetBounds ()
 		{
 			return new RectangleF (TopLeft.ToVector2 (), Size);
 		}
 
+		/// <summary>
+		/// Devuelve o establece el máximo grosor de cada línea
+		/// </summary>
 		public int MaxWidth
 		{
 			get
@@ -49,10 +74,20 @@ namespace Moggle.Controles
 			}
 		}
 
-		public int Height { get { return VisibleLines * Font.LineHeight; } }
+		/// <summary>
+		/// Devuelve la altura actual de la etiqueta
+		/// </summary>
+		public int Height { get { return LinesCount * Font.LineHeight; } }
 
+		/// <summary>
+		/// Devuelve el tamaño de la etiqueta
+		/// </summary>
 		public Size Size { get { return new Size (MaxWidth, Height); } }
 
+		/// <summary>
+		/// Vuelve a calcular las líneas.
+		/// Debe invocarse cuando el texto, la fuente o el tamaño cambia
+		/// </summary>
 		protected void RecalcularLíneas ()
 		{
 			if (!IsInitialized) // Si no está inicializado, Font es nulo así que no se debe correr
@@ -61,7 +96,10 @@ namespace Moggle.Controles
 			drawingLines = lins;
 		}
 
-		public int VisibleLines
+		/// <summary>
+		/// Devuelve el número de líneas
+		/// </summary>
+		public int LinesCount
 		{
 			get
 			{
@@ -71,10 +109,19 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Devuelve o establece el color del texto
+		/// </summary>
 		public Color TextColor { get; set; }
 
+		/// <summary>
+		/// Devuelve o establece el color de fondo
+		/// </summary>
 		public Color BackgroundColor { get; set; }
 
+		/// <summary>
+		/// Imprime la etiqueta
+		/// </summary>
 		protected override void Draw ()
 		{
 			var currTop = TopLeft.Y;
@@ -82,7 +129,7 @@ namespace Moggle.Controles
 
 			bat.Draw (bgTexture, new Rectangle (TopLeft, Size), BackgroundColor);
 
-			for (int i = 0; i < VisibleLines; i++)
+			for (int i = 0; i < LinesCount; i++)
 			{
 				var currLine = drawingLines [i];
 				bat.DrawString (
@@ -94,6 +141,9 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
 		protected override void InitializeContent ()
 		{
 			base.InitializeContent ();
@@ -101,10 +151,16 @@ namespace Moggle.Controles
 			RecalcularLíneas ();
 		}
 
+		/// <summary>
+		/// Update lógico
+		/// </summary>
 		public override void Update (GameTime gameTime)
 		{
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="screen">Screen.</param>
 		public EtiquetaMultiLínea (IScreen screen)
 			: base (screen)
 		{

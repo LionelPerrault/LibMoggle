@@ -71,6 +71,9 @@ namespace Moggle.Controles
 
 		#region Dibujo
 
+		/// <summary>
+		/// La <see cref="BitmapFont"/> que se usa para imprimir el texto
+		/// </summary>
 		protected BitmapFont Font;
 
 		/// <summary>

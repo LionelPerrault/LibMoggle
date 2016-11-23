@@ -5,6 +5,9 @@ using System;
 
 namespace Moggle.Text
 {
+	/// <summary>
+	/// Extensiones de <c>string</c>
+	/// </summary>
 	public static class StringExt
 	{
 		/// <summary>

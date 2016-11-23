@@ -8,7 +8,6 @@ using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Moggle.Screens.Dials;
-using System.Text;
 
 namespace Test
 {
@@ -155,6 +154,15 @@ namespace Test
 				BackgroundColor = Color.Red
 			};
 			AddComponent (et);
+
+			var singleEt = new Etiqueta (this)
+			{
+				Texto = () => "Etiqueta normal",
+				UseFont = "cont//font",
+				Color = Color.White,
+				Posición = new Point (410, 250)
+			};
+			AddComponent (singleEt);
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",
