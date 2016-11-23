@@ -262,10 +262,24 @@ namespace Moggle.Screens
 			/// </summary>
 			public bool ActualizaBase;
 
+			#region Constantes
+
 			/// <summary>
 			/// Devuelve el <see cref="ScreenStackOptions"/> predeterminado
 			/// </summary>
-			public static ScreenStackOptions Default;
+			public readonly static ScreenStackOptions Default;
+
+			/// <summary>
+			/// Tipo diálogo con base frozen
+			/// </summary>
+			public readonly static ScreenStackOptions Dialog;
+
+			/// <summary>
+			/// Tipo diálogoc on base activa
+			/// </summary>
+			public readonly static ScreenStackOptions DialogLive;
+
+			#endregion
 
 			static ScreenStackOptions ()
 			{
@@ -273,6 +287,16 @@ namespace Moggle.Screens
 				{
 					DibujaBase = false,
 					ActualizaBase = false
+				};
+				Dialog = new ScreenStackOptions
+				{
+					DibujaBase = true,
+					ActualizaBase = false
+				};
+				DialogLive = new ScreenStackOptions
+				{
+					DibujaBase = true,
+					ActualizaBase = true
 				};
 			}
 		}

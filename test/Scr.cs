@@ -7,6 +7,7 @@ using Moggle.Screens;
 using Moggle.Textures;
 using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
+using Moggle.Screens.Dials;
 
 namespace Test
 {
@@ -142,6 +143,26 @@ namespace Test
 				var newScr = new DialScr (Juego);
 				newScr.Execute (ScreenThread.ScreenStackOptions.Dialog);
 			};
+
+			var et = new EtiquetaMultiLínea (this)
+			{
+				Texto = "Esto es una linea larga, debe que quedar cortada en algún espacio intermedio.",
+				TopLeft = new Point (300, 250),
+				UseFont = "cont//font",
+				MaxWidth = 100,
+				TextColor = Color.White,
+				BackgroundColor = Color.Red
+			};
+			AddComponent (et);
+
+			var singleEt = new Etiqueta (this)
+			{
+				Texto = () => "Etiqueta normal",
+				UseFont = "cont//font",
+				Color = Color.White,
+				Posición = new Point (410, 250)
+			};
+			AddComponent (singleEt);
 				
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",
@@ -250,6 +271,20 @@ namespace Test
 			{
 				Juego.Exit ();
 				return true;
+			}
+			else if (key.Key == Microsoft.Xna.Framework.Input.Keys.T)
+			{
+				var ser = new ScreenDialSerial ();
+
+				ser.AddRequest (new RedBlueDial (Juego, 2));
+				ser.AddRequest (new RedBlueDial (Juego, 1));
+				ser.AddRequest (new RedBlueDial (Juego, 0));
+
+				ser.Executar (Juego.ScreenManager.ActiveThread);
+				ser.HayRespuesta += delegate(object sender, object [] e)
+				{
+					Debug.WriteLine (e);
+				};
 			}
 			Debug.WriteLine (string.Format (
 				"{0}:{1}:{2}",

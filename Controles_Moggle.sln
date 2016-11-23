@@ -18,7 +18,6 @@ Global
 		{41724C52-3D50-45BB-81EB-3C8A247EAFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41724C52-3D50-45BB-81EB-3C8A247EAFD1}.Default|Any CPU.ActiveCfg = Debug|Any CPU
 		{41724C52-3D50-45BB-81EB-3C8A247EAFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41724C52-3D50-45BB-81EB-3C8A247EAFD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Default|Any CPU.ActiveCfg = Debug|Any CPU
@@ -31,6 +30,6 @@ Global
 		{AEE6CA94-826A-4329-9BE3-8C533EF856E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		version = 0.10
+		version = 0.11
 	EndGlobalSection
 EndGlobal
