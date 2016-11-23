@@ -147,9 +147,9 @@ namespace Test
 			var et = new EtiquetaMultiLínea (this)
 			{
 				Texto = "Esto es una linea larga, debe que quedar cortada en algún espacio intermedio.",
-				TopLeft = new Point (300, 10),
+				TopLeft = new Point (300, 250),
 				UseFont = "cont//font",
-				MaxSize = new MonoGame.Extended.Size (40, 2000),
+				MaxSize = new MonoGame.Extended.Size (60, 2000),
 				Color = Color.White
 			};
 			AddComponent (et);

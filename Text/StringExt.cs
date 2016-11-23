@@ -1,5 +1,7 @@
 ﻿using MonoGame.Extended.BitmapFonts;
 using System.Collections.Generic;
+using System.Text;
+using System;
 
 namespace Moggle.Text
 {
@@ -17,34 +19,40 @@ namespace Moggle.Text
 		                                      int maxWidth)
 		{
 			var ret = new List<string> ();
-			int sep = 0;
-			while (sep < text.Length)
+			var splitText = new List<string> (text.Split (' '));
+			while (splitText.Count > 0)
 			{
-				var newLine = tomarUnaLínea (bmFont, text, maxWidth, sep, out sep);
+				var newLine = tomarUnaLínea (bmFont, splitText, maxWidth);
+				if (string.IsNullOrWhiteSpace (newLine))
+					throw new Exception ("Cannot make string fit.");
 				ret.Add (newLine);
 			}
 			return ret.ToArray ();
 		}
 
-		static string tomarUnaLínea (BitmapFont bmFont,
-		                             string text,
-		                             int maxWidth,
-		                             int startIndex,
-		                             out int endIndex)
+		static string joinString (IList<string> sepString)
 		{
-			endIndex = startIndex;
-			while (true)
+			var ret = new StringBuilder ();
+			foreach (var x in sepString)
+				ret.Append (x.Trim () + " ");
+			return ret.ToString ().Trim ();
+		}
+
+		static string tomarUnaLínea (BitmapFont bmFont,
+		                             IList<string> spacedText,
+		                             int maxWidth)
+		{
+			var ret = "";
+			while (spacedText.Count > 0)
 			{
-				var i = text.IndexOf (' ', startIndex);
-				var nextStr = text.Substring (startIndex, i - startIndex);
-				var cSize = bmFont.MeasureString (nextStr);
-				if (cSize.Width > maxWidth)
-				{
-					//endIndex = indexSeeker
-					return text.Substring (startIndex, endIndex - startIndex);
-				}
-				endIndex = i;
+				var nextWord = spacedText [0].Trim ();
+				var nextStr = string.Format ("{0} {1}", ret, nextWord).Trim ();
+				if (bmFont.MeasureString (nextStr).Width > maxWidth)
+					return ret;
+				ret = nextStr;
+				spacedText.RemoveAt (0);
 			}
+			return ret;
 		}
 	}
 }
