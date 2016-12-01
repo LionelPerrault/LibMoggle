@@ -22,12 +22,11 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="fontName">Fuente del texto a usar.</param>
-		public MultiEtiqueta (IScreen screen, string fontName = "fonts")
+		public MultiEtiqueta (IScreen screen)
 			: base (screen)
 		{
 			Mostrables = new List<IEntry> ();
 			TiempoEntreCambios = TimeSpan.FromSeconds (1);
-			fontString = fontName;
 			NumEntradasMostrar = 1;
 			EspacioEntreLineas = 4;
 		}
@@ -44,7 +43,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Posición del control
 		/// </summary>
-		public Vector2 Pos;
+		public Point Pos;
 
 		/// <summary>
 		/// Número de entradas que se muestran;
@@ -98,12 +97,12 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override IShapeF GetBounds ()
 		{
-			// Altura
-			var ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;
-			// Grosor
+			var ht = Actual.Aggregate (
+				         0,
+				         (agg, acc) => agg + acc.Altura + EspacioEntreLineas);
 			var wd = Actual.Aggregate (0, (agg, acc) => Math.Max (agg, acc.Largo));
 
-			return new RectangleF (Pos, new SizeF (wd, ht));
+			return new RectangleF (Pos.ToVector2 (), new SizeF (wd, ht));
 		}
 
 		/// <summary>
@@ -115,22 +114,9 @@ namespace Moggle.Controles
 			base.OnChrono ();
 		}
 
-		/// <summary>
-		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
-		/// </summary>
-		public override void Initialize ()
-		{
-			base.Initialize ();
-			Mostrables.Clear ();
-		}
-
 		#endregion
 
 		#region Dibujo
-
-		BitmapFont Font;
-
-		string fontString { get; }
 
 		/// <summary>
 		/// Dibuja el control
@@ -138,12 +124,12 @@ namespace Moggle.Controles
 		protected override void Draw ()
 		{
 			var bat = Screen.Batch;
-			var ht = 0f;
+			var ht = 0;
 			var strs = Actual;
 			for (int i = 0; i < NumEntradasMostrar; i++)
 			{
 				var entry = Actual [i];
-				entry.Dibujar (bat, Pos + new Vector2 (0, ht));
+				entry.Dibujar (bat, Pos + new Point (0, ht));
 				ht += entry.Altura + EspacioEntreLineas;
 			}
 		}
@@ -157,7 +143,6 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void AddContent ()
 		{
-			Screen.Content.AddContent (fontString);
 		}
 
 		/// <summary>
@@ -165,7 +150,6 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void InitializeContent ()
 		{
-			Font = Screen.Content.GetContent<BitmapFont> (fontString);
 		}
 
 		#endregion
@@ -180,7 +164,7 @@ namespace Moggle.Controles
 			/// </summary>
 			/// <param name="bat">Batch de dibujo.</param>
 			/// <param name="pos">Posición de dibujo.</param>
-			void Dibujar (SpriteBatch bat, Vector2 pos);
+			void Dibujar (SpriteBatch bat, Point pos);
 
 			/// <summary>
 			/// Del tamaño de la entrada, devuelve la altura.
@@ -214,13 +198,18 @@ namespace Moggle.Controles
 			/// </summary>
 			/// <param name="bat">Batch de dibujo.</param>
 			/// <param name="pos">Posición de dibujo.</param>
-			public void Dibujar (SpriteBatch bat, Vector2 pos)
+			public void Dibujar (SpriteBatch bat, Point pos)
 			{
-				bat.Draw (
-					TexturaIcon,
-					new Rectangle (pos.ToPoint (), Tamaño),
-					ColorIcon);
-				bat.DrawString (Font, Str, pos + new Vector2 (Tamaño.X, 0), ColorTexto);
+				if (TexturaIcon != null)
+					bat.Draw (
+						TexturaIcon,
+						new Rectangle (pos, Tamaño),
+						ColorIcon);
+				bat.DrawString (
+					Font,
+					Str,
+					new Vector2 (pos.X + Tamaño.X, pos.Y),
+					ColorTexto);
 			}
 
 			#endregion
@@ -272,9 +261,8 @@ namespace Moggle.Controles
 
 			#region ctor
 
-			/// <summary>
-			/// </summary>
-			public IconTextEntry ()
+			public IconTextEntry (BitmapFont font, string str, Color colorTexto)
+				: this (font, null, str, colorTexto, Color.White)
 			{
 			}
 
