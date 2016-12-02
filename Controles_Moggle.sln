@@ -30,6 +30,6 @@ Global
 		{AEE6CA94-826A-4329-9BE3-8C533EF856E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		version = 0.11
+		version = 0.11.1
 	EndGlobalSection
 EndGlobal

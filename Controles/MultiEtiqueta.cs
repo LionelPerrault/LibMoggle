@@ -21,15 +21,159 @@ namespace Moggle.Controles
 		/// <summary>
 		/// </summary>
 		/// <param name="screen">Screen.</param>
-		/// <param name="fontName">Fuente del texto a usar.</param>
-		public MultiEtiqueta (IScreen screen, string fontName = "fonts")
+		public MultiEtiqueta (IScreen screen)
 			: base (screen)
 		{
-			Mostrables = new List<IEntry> ();
+			Entradas = new List<IEntry> ();
 			TiempoEntreCambios = TimeSpan.FromSeconds (1);
-			fontString = fontName;
 			NumEntradasMostrar = 1;
 			EspacioEntreLineas = 4;
+		}
+
+		#endregion
+
+		#region Entradas
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		public void Add (IEntry entry)
+		{
+			Entradas.Add (entry);
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="color">Color</param>
+		public IconTextEntry Add (BitmapFont font, string str, Color color)
+		{
+			var ret = new IconTextEntry (font, str, color);
+			Add (ret);
+			return ret;
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color</param>
+		/// <param name = "icon">Textura del icono</param>
+		/// <param name = "colorIcon">el color de sobreposición</param>
+		public IconTextEntry Add (BitmapFont font,
+		                          string str,
+		                          Color colorTexto,
+		                          Texture2D icon,
+		                          Color colorIcon)
+		{
+			var ret = new IconTextEntry (font, icon, str, colorTexto, colorIcon);
+			ret.TamañoIcono = new Size (icon.Width, icon.Height);
+			Add (ret);
+			return ret;
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color</param>
+		/// <param name = "icon">Textura del icono</param>
+		public IconTextEntry Add (BitmapFont font,
+		                          string str,
+		                          Color colorTexto,
+		                          Texture2D icon)
+		{
+			return Add (font, str, colorTexto, icon, Color.White);
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Textos</param>
+		/// <param name="color">Color</param>
+		public void Add (BitmapFont font,
+		                 IEnumerable<string> str,
+		                 Color color)
+		{
+			foreach (var item in str)
+				Add (font, item, color);
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color del texto</param>
+		/// <param name = "colorIcon">Si no es nulo, es el color del icono</param>
+		/// <param name = "icon">Textura del icono</param>
+		public void Add (BitmapFont font,
+		                 IEnumerable<string> str,
+		                 Color colorTexto,
+		                 Texture2D icon,
+		                 Color colorIcon)
+		{
+			foreach (var item in str)
+				Add (font, item, colorTexto, icon, colorIcon);
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color del texto</param>
+		/// <param name = "icon">Textura del icono</param>
+		public void Add (BitmapFont font,
+		                 IEnumerable<string> str,
+		                 Color colorTexto,
+		                 Texture2D icon)
+		{
+			Add (font, str, colorTexto, icon, Color.White);
+		}
+
+		/// <summary>
+		/// Devuelve el número de entradas registradas
+		/// </summary>
+		/// <value>The count.</value>
+		public int Count { get { return Entradas.Count; } }
+
+		/// <summary>
+		/// Elimina todas las entradas.
+		/// </summary>
+		public void Clear ()
+		{
+			Entradas.Clear ();
+		}
+
+		/// <summary>
+		/// Devuelve la entrada en un índice dado
+		/// </summary>
+		/// <param name="index">Index.</param>
+		public IEntry this [int index]
+		{
+			get { return Entradas [index]; }
+			set
+			{
+				if (value == null)
+					throw new ArgumentNullException ("value");
+				Entradas [index] = value;
+			}
+		}
+
+		/// <summary>
+		/// Devuelve un enumerador de las entradas
+		/// </summary>
+		/// <returns>The entries.</returns>
+		public IEnumerable<IEntry> EnumerateEntries ()
+		{
+			foreach (var x in Entradas)
+				yield return x;
 		}
 
 		#endregion
@@ -39,36 +183,38 @@ namespace Moggle.Controles
 		/// <summary>
 		/// La lista de objetos.
 		/// </summary>
-		public List<IEntry> Mostrables { get; }
+		protected List<IEntry> Entradas { get; }
 
 		/// <summary>
 		/// Posición del control
 		/// </summary>
-		public Vector2 Pos;
+		public Point Pos;
+
+		int numEntradasMostrar;
 
 		/// <summary>
 		/// Número de entradas que se muestran;
 		/// </summary>
 		/// <value>The number entradas mostrar.</value>
-		public int NumEntradasMostrar { get; set; }
-
-		/// <summary>
-		/// Espacio vertical entre objetos listados.
-		/// </summary>
-		/// <value>The espacio entre lineas.</value>
-		public int EspacioEntreLineas { get; set; }
-
-		/// <summary>
-		/// Devuelve la entrada actual.
-		/// </summary>
-		[Obsolete ("Usar Actual")]
-		public IEntry EntradaActual
+		public int NumEntradasMostrar
 		{
 			get
 			{
-				return índiceActualString < Mostrables.Count ? Mostrables [índiceActualString] : null;
+				return numEntradasMostrar;
+			}
+			set
+			{
+				if (value <= 0)
+					throw new ArgumentException ("value must be positive.", "value");
+				numEntradasMostrar = value;
 			}
 		}
+
+		/// <summary>
+		/// Espacio vertical entre objetos listados.
+		/// Este valor es adicional a la altura de la fuente
+		/// </summary>
+		public int EspacioEntreLineas { get; set; }
 
 		/// <summary>
 		/// Devuelve las entradas que son visibles actualmente.
@@ -80,7 +226,7 @@ namespace Moggle.Controles
 				var ret = new IEntry[NumEntradasMostrar];
 				for (int i = 0; i < NumEntradasMostrar; i++)
 				{
-					ret [i] = Mostrables [(índiceActualString + i) % Mostrables.Count];
+					ret [i] = Entradas [(índiceActualString + i) % Entradas.Count];
 				}
 				return ret;
 			}
@@ -90,7 +236,7 @@ namespace Moggle.Controles
 
 		void StringSiguiente ()
 		{
-			índiceActualString = (índiceActualString + NumEntradasMostrar) % Mostrables.Count;
+			índiceActualString = (índiceActualString + NumEntradasMostrar) % Entradas.Count;
 		}
 
 		/// <summary>
@@ -98,12 +244,14 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override IShapeF GetBounds ()
 		{
-			// Altura
-			var ht = NumEntradasMostrar * Font.LineHeight + (NumEntradasMostrar - 1) * EspacioEntreLineas;
-			// Grosor
-			var wd = Actual.Aggregate (0, (agg, acc) => Math.Max (agg, acc.Largo));
+			var ht = Actual.Aggregate (
+				         0,
+				         (agg, acc) => agg + acc.Tamaño.Height + EspacioEntreLineas);
+			var wd = Actual.Aggregate (
+				         0,
+				         (agg, acc) => Math.Max (agg, acc.Tamaño.Width));
 
-			return new RectangleF (Pos, new SizeF (wd, ht));
+			return new RectangleF (Pos.ToVector2 (), new SizeF (wd, ht));
 		}
 
 		/// <summary>
@@ -115,36 +263,25 @@ namespace Moggle.Controles
 			base.OnChrono ();
 		}
 
-		/// <summary>
-		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores
-		/// </summary>
-		public override void Initialize ()
-		{
-			base.Initialize ();
-			Mostrables.Clear ();
-		}
-
 		#endregion
 
 		#region Dibujo
-
-		BitmapFont Font;
-
-		string fontString { get; }
 
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
 		protected override void Draw ()
 		{
+			if (Count == 0)
+				return;
 			var bat = Screen.Batch;
-			var ht = 0f;
+			var ht = 0;
 			var strs = Actual;
 			for (int i = 0; i < NumEntradasMostrar; i++)
 			{
 				var entry = Actual [i];
-				entry.Dibujar (bat, Pos + new Vector2 (0, ht));
-				ht += entry.Altura + EspacioEntreLineas;
+				entry.Dibujar (bat, Pos + new Point (0, ht));
+				ht += entry.Tamaño.Height + EspacioEntreLineas;
 			}
 		}
 
@@ -157,7 +294,6 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void AddContent ()
 		{
-			Screen.Content.AddContent (fontString);
 		}
 
 		/// <summary>
@@ -165,7 +301,6 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void InitializeContent ()
 		{
-			Font = Screen.Content.GetContent<BitmapFont> (fontString);
 		}
 
 		#endregion
@@ -180,17 +315,13 @@ namespace Moggle.Controles
 			/// </summary>
 			/// <param name="bat">Batch de dibujo.</param>
 			/// <param name="pos">Posición de dibujo.</param>
-			void Dibujar (SpriteBatch bat, Vector2 pos);
+			void Dibujar (SpriteBatch bat, Point pos);
 
 			/// <summary>
-			/// Del tamaño de la entrada, devuelve la altura.
+			/// Devuelve el tamaño de la entrada
 			/// </summary>
-			int Altura { get; }
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la longitud.
-			/// </summary>
-			int Largo { get; }
+			/// <value>The tamaño.</value>
+			Size Tamaño { get; }
 		}
 
 		/// <summary>
@@ -210,17 +341,35 @@ namespace Moggle.Controles
 			public Texture2D TexturaIcon;
 
 			/// <summary>
+			/// La separación entre el icono y el texto
+			/// </summary>
+			public int SeparaciónIconoTexto = 2;
+
+			/// <summary>
 			/// Dibuja la entrada en una posición dada.
 			/// </summary>
 			/// <param name="bat">Batch de dibujo.</param>
 			/// <param name="pos">Posición de dibujo.</param>
-			public void Dibujar (SpriteBatch bat, Vector2 pos)
+			public void Dibujar (SpriteBatch bat, Point pos)
 			{
-				bat.Draw (
-					TexturaIcon,
-					new Rectangle (pos.ToPoint (), Tamaño),
-					ColorIcon);
-				bat.DrawString (Font, Str, pos + new Vector2 (Tamaño.X, 0), ColorTexto);
+				if (TexturaIcon != null)
+				{
+					bat.Draw (
+						TexturaIcon,
+						new Rectangle (pos, TamañoIcono),
+						ColorIcon);
+					bat.DrawString (
+						Font,
+						Texto,
+						new Vector2 (pos.X + TamañoIcono.Width + SeparaciónIconoTexto, pos.Y),
+						ColorTexto);
+				}
+				else
+					bat.DrawString (
+						Font,
+						Texto,
+						new Vector2 (pos.X, pos.Y),
+						ColorTexto);
 			}
 
 			#endregion
@@ -230,11 +379,40 @@ namespace Moggle.Controles
 			/// <summary>
 			/// Texto.
 			/// </summary>
-			public string Str;
+			public string Texto;
+
 			/// <summary>
-			/// Tamaño del icono.
+			/// Devuelve o establece el tamaño del icono
 			/// </summary>
-			public Point Tamaño;
+			/// <value>The tamaño icono.</value>
+			public Size TamañoIcono { get; set; }
+
+			/// <summary>
+			/// Tamaño del texto
+			/// </summary>
+			public Size TamañoTexto
+			{
+				get { return Font.GetSize (Texto); }
+			}
+
+			/// <summary>
+			/// Devuelve el tamaño de la entrada
+			/// </summary>
+			/// <value>The tamaño.</value>
+			public Size Tamaño
+			{
+				get
+				{
+					return TexturaIcon == null ?
+						TamañoTexto :
+						new Size (
+						TamañoTexto.Width + TamañoIcono.Width,
+						Math.Max (
+							TamañoIcono.Height,
+							TamañoTexto.Height));
+				}
+			}
+
 			/// <summary>
 			/// Color del texto.
 			/// </summary>
@@ -244,37 +422,17 @@ namespace Moggle.Controles
 			/// </summary>
 			public Color ColorIcon;
 
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la altura.
-			/// </summary>
-			/// <value>The altura.</value>
-			public int Altura
-			{
-				get
-				{
-					return Math.Max (Font.LineHeight, Tamaño.Y);
-				}
-			}
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la longitud.
-			/// </summary>
-			/// <value>The largo.</value>
-			public int Largo
-			{
-				get
-				{
-					return Tamaño.X + Font.GetStringRectangle (Str, Vector2.Zero).Width;
-				}
-			}
-
 			#endregion
 
 			#region ctor
 
 			/// <summary>
 			/// </summary>
-			public IconTextEntry ()
+			/// <param name="font">Fuente</param>
+			/// <param name="str">Texto</param>
+			/// <param name="colorTexto">Color texto.</param>
+			public IconTextEntry (BitmapFont font, string str, Color colorTexto)
+				: this (font, null, str, colorTexto, Color.White)
 			{
 			}
 
@@ -293,8 +451,7 @@ namespace Moggle.Controles
 			{
 				Font = font;
 				TexturaIcon = texturaIcon;
-				Str = str;
-				Tamaño = new Point (Font.LineHeight, 24);
+				Texto = str;
 				ColorTexto = colorTexto;
 				ColorIcon = colorIcon;
 			}
