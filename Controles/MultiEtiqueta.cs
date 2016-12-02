@@ -7,7 +7,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using System.Diagnostics;
 
 namespace Moggle.Controles
 {
@@ -35,11 +34,20 @@ namespace Moggle.Controles
 
 		#region Entradas
 
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
 		public void Add (IEntry entry)
 		{
 			Entradas.Add (entry);
 		}
 
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="color">Color</param>
 		public IconTextEntry Add (BitmapFont font, string str, Color color)
 		{
 			var ret = new IconTextEntry (font, str, color);
@@ -47,6 +55,14 @@ namespace Moggle.Controles
 			return ret;
 		}
 
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color</param>
+		/// <param name = "icon">Textura del icono</param>
+		/// <param name = "colorIcon">el color de sobreposición</param>
 		public IconTextEntry Add (BitmapFont font,
 		                          string str,
 		                          Color colorTexto,
@@ -59,6 +75,27 @@ namespace Moggle.Controles
 			return ret;
 		}
 
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color</param>
+		/// <param name = "icon">Textura del icono</param>
+		public IconTextEntry Add (BitmapFont font,
+		                          string str,
+		                          Color colorTexto,
+		                          Texture2D icon)
+		{
+			return Add (font, str, colorTexto, icon, Color.White);
+		}
+
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Textos</param>
+		/// <param name="color">Color</param>
 		public void Add (BitmapFont font,
 		                 IEnumerable<string> str,
 		                 Color color)
@@ -67,6 +104,14 @@ namespace Moggle.Controles
 				Add (font, item, color);
 		}
 
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color del texto</param>
+		/// <param name = "colorIcon">Si no es nulo, es el color del icono</param>
+		/// <param name = "icon">Textura del icono</param>
 		public void Add (BitmapFont font,
 		                 IEnumerable<string> str,
 		                 Color colorTexto,
@@ -77,13 +122,39 @@ namespace Moggle.Controles
 				Add (font, item, colorTexto, icon, colorIcon);
 		}
 
+		/// <summary>
+		/// Agrega una entrada
+		/// </summary>
+		/// <param name="font">Fuente</param>
+		/// <param name="str">Texto</param>
+		/// <param name="colorTexto">Color del texto</param>
+		/// <param name = "icon">Textura del icono</param>
+		public void Add (BitmapFont font,
+		                 IEnumerable<string> str,
+		                 Color colorTexto,
+		                 Texture2D icon)
+		{
+			Add (font, str, colorTexto, icon, Color.White);
+		}
+
+		/// <summary>
+		/// Devuelve el número de entradas registradas
+		/// </summary>
+		/// <value>The count.</value>
 		public int Count { get { return Entradas.Count; } }
 
+		/// <summary>
+		/// Elimina todas las entradas.
+		/// </summary>
 		public void Clear ()
 		{
 			Entradas.Clear ();
 		}
 
+		/// <summary>
+		/// Devuelve la entrada en un índice dado
+		/// </summary>
+		/// <param name="index">Index.</param>
 		public IEntry this [int index]
 		{
 			get { return Entradas [index]; }
@@ -95,6 +166,10 @@ namespace Moggle.Controles
 			}
 		}
 
+		/// <summary>
+		/// Devuelve un enumerador de las entradas
+		/// </summary>
+		/// <returns>The entries.</returns>
 		public IEnumerable<IEntry> EnumerateEntries ()
 		{
 			foreach (var x in Entradas)
@@ -242,6 +317,10 @@ namespace Moggle.Controles
 			/// <param name="pos">Posición de dibujo.</param>
 			void Dibujar (SpriteBatch bat, Point pos);
 
+			/// <summary>
+			/// Devuelve el tamaño de la entrada
+			/// </summary>
+			/// <value>The tamaño.</value>
 			Size Tamaño { get; }
 		}
 
@@ -261,6 +340,9 @@ namespace Moggle.Controles
 			/// </summary>
 			public Texture2D TexturaIcon;
 
+			/// <summary>
+			/// La separación entre el icono y el texto
+			/// </summary>
 			public int SeparaciónIconoTexto = 2;
 
 			/// <summary>
@@ -299,16 +381,24 @@ namespace Moggle.Controles
 			/// </summary>
 			public string Texto;
 
+			/// <summary>
+			/// Devuelve o establece el tamaño del icono
+			/// </summary>
+			/// <value>The tamaño icono.</value>
 			public Size TamañoIcono { get; set; }
 
 			/// <summary>
-			/// Tamaño del icono.
+			/// Tamaño del texto
 			/// </summary>
 			public Size TamañoTexto
 			{
 				get { return Font.GetSize (Texto); }
 			}
 
+			/// <summary>
+			/// Devuelve el tamaño de la entrada
+			/// </summary>
+			/// <value>The tamaño.</value>
 			public Size Tamaño
 			{
 				get
@@ -336,6 +426,11 @@ namespace Moggle.Controles
 
 			#region ctor
 
+			/// <summary>
+			/// </summary>
+			/// <param name="font">Fuente</param>
+			/// <param name="str">Texto</param>
+			/// <param name="colorTexto">Color texto.</param>
 			public IconTextEntry (BitmapFont font, string str, Color colorTexto)
 				: this (font, null, str, colorTexto, Color.White)
 			{
