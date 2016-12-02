@@ -1,12 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
 using Moggle.Text;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Moggle.Controles
 {
@@ -15,10 +15,23 @@ namespace Moggle.Controles
 	/// </summary>
 	public class EtiquetaMultiLínea : DSBC
 	{
+		string _texto;
+
 		/// <summary>
 		/// Devuelve o establece el texto
 		/// </summary>
-		public string Texto { get; set; }
+		public string Texto
+		{
+			get
+			{
+				return _texto;
+			}
+			set
+			{
+				_texto = value;
+				RecalcularLíneas ();
+			}
+		}
 
 		/// <summary>
 		/// Devuelve o establece el nombre de la fuente como contenido
