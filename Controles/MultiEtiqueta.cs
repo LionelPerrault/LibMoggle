@@ -261,7 +261,7 @@ namespace Moggle.Controles
 			/// </summary>
 			public Texture2D TexturaIcon;
 
-			const int separaIconoTexto = 3;
+			public int SeparaciónIconoTexto = 2;
 
 			/// <summary>
 			/// Dibuja la entrada en una posición dada.
@@ -279,7 +279,7 @@ namespace Moggle.Controles
 					bat.DrawString (
 						Font,
 						Texto,
-						new Vector2 (pos.X + TamañoIcono.Width + separaIconoTexto, pos.Y),
+						new Vector2 (pos.X + TamañoIcono.Width + SeparaciónIconoTexto, pos.Y),
 						ColorTexto);
 				}
 				else
