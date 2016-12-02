@@ -7,6 +7,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
+using System.Diagnostics;
 
 namespace Moggle.Controles
 {
@@ -53,6 +54,7 @@ namespace Moggle.Controles
 		                          Color colorIcon)
 		{
 			var ret = new IconTextEntry (font, icon, str, colorTexto, colorIcon);
+			ret.TamañoIcono = new Size (icon.Width, icon.Height);
 			Add (ret);
 			return ret;
 		}
@@ -259,6 +261,8 @@ namespace Moggle.Controles
 			/// </summary>
 			public Texture2D TexturaIcon;
 
+			const int separaIconoTexto = 3;
+
 			/// <summary>
 			/// Dibuja la entrada en una posición dada.
 			/// </summary>
@@ -267,15 +271,23 @@ namespace Moggle.Controles
 			public void Dibujar (SpriteBatch bat, Point pos)
 			{
 				if (TexturaIcon != null)
+				{
 					bat.Draw (
 						TexturaIcon,
-						new Rectangle (pos, Tamaño),
+						new Rectangle (pos, TamañoIcono),
 						ColorIcon);
-				bat.DrawString (
-					Font,
-					Texto,
-					new Vector2 (pos.X + Tamaño.Width, pos.Y),
-					ColorTexto);
+					bat.DrawString (
+						Font,
+						Texto,
+						new Vector2 (pos.X + TamañoIcono.Width + separaIconoTexto, pos.Y),
+						ColorTexto);
+				}
+				else
+					bat.DrawString (
+						Font,
+						Texto,
+						new Vector2 (pos.X, pos.Y),
+						ColorTexto);
 			}
 
 			#endregion
@@ -287,12 +299,28 @@ namespace Moggle.Controles
 			/// </summary>
 			public string Texto;
 
+			public Size TamañoIcono { get; set; }
+
 			/// <summary>
 			/// Tamaño del icono.
 			/// </summary>
-			public Size Tamaño
+			public Size TamañoTexto
 			{
 				get { return Font.GetSize (Texto); }
+			}
+
+			public Size Tamaño
+			{
+				get
+				{
+					return TexturaIcon == null ?
+						TamañoTexto :
+						new Size (
+						TamañoTexto.Width + TamañoIcono.Width,
+						Math.Max (
+							TamañoIcono.Height,
+							TamañoTexto.Height));
+				}
 			}
 
 			/// <summary>
@@ -303,30 +331,6 @@ namespace Moggle.Controles
 			/// Color del icono.
 			/// </summary>
 			public Color ColorIcon;
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la altura.
-			/// </summary>
-			/// <value>The altura.</value>
-			public int Altura
-			{
-				get
-				{
-					return Font.LineHeight;
-				}
-			}
-
-			/// <summary>
-			/// Del tamaño de la entrada, devuelve la longitud.
-			/// </summary>
-			/// <value>The largo.</value>
-			public int Largo
-			{
-				get
-				{
-					return Font.GetSize (Texto).Width;
-				}
-			}
 
 			#endregion
 

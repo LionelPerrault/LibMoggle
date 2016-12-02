@@ -9,6 +9,7 @@ using MonoGame.Extended.InputListeners;
 using MonoGame.Extended.Shapes;
 using Moggle.Screens.Dials;
 using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended;
 
 namespace Test
 {
@@ -131,26 +132,21 @@ namespace Test
 			textures = new SimpleTextures (game.GraphicsDevice);
 
 			var met = new MultiEtiqueta (this);
-			met.Entradas.Add (new MultiEtiqueta.IconTextEntry (
+			met.Add (
 				Content.Manager.Load<BitmapFont> ("cont//font"),
-				null,
 				"hi",
-				Color.Green,
-				Color.White));
-			met.Entradas.Add (new MultiEtiqueta.IconTextEntry (
+				Color.Green);
+			met.Add (
 				Content.Manager.Load<BitmapFont> ("cont//font"),
-				null,
-				"hi 2",
-				Color.Green,
-				Color.White));
-			met.Entradas.Add (new MultiEtiqueta.IconTextEntry (
+				"hi II",
+				Color.Green);
+			met.Add (
 				Content.Manager.Load<BitmapFont> ("cont//font"),
-				null,
-				"hi 3",
-				Color.Green,
-				Color.White));
+				"hi III", Color.Green, textures.OutlineTexture (
+				new Size (10, 10), Color.White, Color.Red), Color.White
+			);
 			met.NumEntradasMostrar = 2;
-			met.EspacioEntreLineas = -5;
+			met.EspacioEntreLineas = 3;
 			met.Pos = new Point (200, 200);
 
 			buildTextures ();
