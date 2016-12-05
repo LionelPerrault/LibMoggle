@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,7 +7,6 @@ using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
-using System.Diagnostics;
 
 namespace Moggle
 {
@@ -59,6 +59,11 @@ namespace Moggle
 		public MouseListener MouseListener { get; protected set; }
 
 		/// <summary>
+		/// Gets the input listener.
+		/// </summary>
+		public InputListenerComponent InputListener { get; }
+
+		/// <summary>
 		/// Batch de dibujo
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
@@ -84,11 +89,12 @@ namespace Moggle
 			// Crear los listeners
 			KeyListener = new KeyboardListener ();
 			MouseListener = new MouseListener ();
-
-			Components.Add (new InputListenerComponent (
+			InputListener = new InputListenerComponent (
 				this,
 				KeyListener,
-				MouseListener));
+				MouseListener);
+
+			Components.Add (InputListener);
 			
 		}
 
