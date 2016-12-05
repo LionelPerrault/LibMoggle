@@ -58,6 +58,8 @@ namespace Moggle
 		/// <value>The mouse listener.</value>
 		public MouseListener MouseListener { get; protected set; }
 
+		public InputListenerComponent Listener { get; }
+
 		/// <summary>
 		/// Batch de dibujo
 		/// </summary>
@@ -84,11 +86,12 @@ namespace Moggle
 			// Crear los listeners
 			KeyListener = new KeyboardListener ();
 			MouseListener = new MouseListener ();
-
-			Components.Add (new InputListenerComponent (
+			Listener = new InputListenerComponent (
 				this,
 				KeyListener,
-				MouseListener));
+				MouseListener);
+
+			Components.Add (Listener);
 			
 		}
 
