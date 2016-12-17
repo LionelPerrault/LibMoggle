@@ -21,6 +21,8 @@ namespace Moggle.Text
 		                                      string text,
 		                                      int maxWidth)
 		{
+			if (string.IsNullOrWhiteSpace (text))
+				return new string [] { };
 			var ret = new List<string> ();
 			var splitText = new List<string> (text.Split (' '));
 			while (splitText.Count > 0)
