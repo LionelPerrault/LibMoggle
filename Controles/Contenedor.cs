@@ -161,6 +161,14 @@ namespace Moggle.Controles
 					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
 		}
 
+		public Rectangle ControlBounds ()
+		{
+			return new Rectangle (Posición,
+				new Size (
+					MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
+					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
+		}
+
 		/// <summary>
 		/// Update lógico
 		/// </summary>
