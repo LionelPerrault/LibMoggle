@@ -161,6 +161,17 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Gets the bounds of this control
+		/// </summary>
+		public Rectangle ControlBounds ()
+		{
+			return new Rectangle (Posición,
+				new Size (
+					MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
+					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
+		}
+
+		/// <summary>
 		/// Update lógico
 		/// </summary>
 		public override void Update (GameTime gameTime)

@@ -30,6 +30,7 @@ namespace Moggle.Controles
 			set
 			{
 				_focusIndex = Math.Min (Math.Max (0, value), Count - 1);
+				CursorChanged?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
@@ -207,6 +208,11 @@ namespace Moggle.Controles
 		/// Ocurre cuando un control es activado
 		/// </summary>
 		public event EventHandler Activado;
+
+		/// <summary>
+		/// Ocurrs when the cursor location changes
+		/// </summary>
+		public event EventHandler CursorChanged;
 
 		#endregion
 
