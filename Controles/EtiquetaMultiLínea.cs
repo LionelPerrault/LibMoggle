@@ -44,6 +44,11 @@ namespace Moggle.Controles
 		public BitmapFont Font { get; private set; }
 
 		/// <summary>
+		/// Gets the texture generator (for background)
+		/// </summary>
+		protected Textures.SimpleTextures TextureGenerator { get; }
+
+		/// <summary>
 		/// Devuelve o establece la posición de la etiqueta
 		/// </summary>
 		/// <value>La posición de la esquena superior izquierda</value>
@@ -62,6 +67,24 @@ namespace Moggle.Controles
 			base.LoadContent (manager);
 			Font = Screen.Content.Load<BitmapFont> (UseFont);
 			RecalcularLíneas ();
+		}
+
+		void buildBackgroundTexture ()
+		{
+			bgTexture = TextureGenerator.OutlineTexture (
+				Size,
+				BackgroundColor,
+				Color.White);
+		}
+
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		public override void Initialize ()
+		{
+			base.Initialize ();
+			buildBackgroundTexture ();
 		}
 
 		/// <summary>
@@ -108,6 +131,7 @@ namespace Moggle.Controles
 				return;
 			var lins = StringExt.SepararLíneas (Font, Texto, MaxWidth);
 			drawingLines = lins;
+			buildBackgroundTexture ();
 		}
 
 		/// <summary>
@@ -170,6 +194,7 @@ namespace Moggle.Controles
 		{
 			TextColor = Color.White;
 			BackgroundColor = Color.Transparent;
+			TextureGenerator = new Moggle.Textures.SimpleTextures (screen.Device);
 		}
 	}
 }
