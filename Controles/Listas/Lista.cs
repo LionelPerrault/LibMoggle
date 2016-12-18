@@ -232,6 +232,10 @@ namespace Moggle.Controles.Listas
 
 		#region Memoria y contenido
 
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			var st = new SimpleTextures (Game.GraphicsDevice);

@@ -65,7 +65,6 @@ namespace Moggle.Controles
 
 		/// <summary>
 		/// Devuelve o establece el nombre de la textura.
-		/// Si se establece, <see cref="InitializeContent"/> cargará la <see cref="TexturaInstancia"/>
 		/// </summary>
 		public string Textura { get; set; }
 
@@ -85,6 +84,10 @@ namespace Moggle.Controles
 
 		#region Memoria
 
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);

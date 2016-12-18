@@ -1,8 +1,8 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -36,6 +36,9 @@ namespace Moggle.Controles
 		[Obsolete]
 		public int Prioridad { get; set; }
 
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
 		protected virtual void LoadContent (ContentManager manager)
 		{
 		}

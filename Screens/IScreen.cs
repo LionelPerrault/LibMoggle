@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework.Content;
 
 
 namespace Moggle.Screens
@@ -50,6 +50,9 @@ namespace Moggle.Screens
 		/// <value>The content.</value>
 		ContentManager Content { get; }
 
+		/// <summary>
+		/// Loads the content of the all it's components
+		/// </summary>
 		void LoadAllContent ();
 
 		#endregion

@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle
 {
@@ -81,7 +80,6 @@ namespace Moggle
 		{
 			Graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";
-			Contenido = new BibliotecaContenido (Content);
 
 			ScreenManager = new ScreenThreadManager ();
 
@@ -259,15 +257,6 @@ namespace Moggle
 		public SpriteBatch GetNewBatch ()
 		{
 			return new SpriteBatch (GraphicsDevice);
-		}
-
-		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected override void UnloadContent ()
-		{
-			Contenido.ClearAll ();
-			base.UnloadContent ();
 		}
 
 		/// <summary>

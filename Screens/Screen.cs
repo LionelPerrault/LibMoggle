@@ -70,6 +70,9 @@ namespace Moggle.Screens
 				x.LoadContent (manager);
 		}
 
+		/// <summary>
+		/// Gets the game's content manager
+		/// </summary>
 		public Microsoft.Xna.Framework.Content.ContentManager Content { get { return Juego.Content; } }
 
 		void IDisposable.Dispose ()

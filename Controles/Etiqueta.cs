@@ -90,6 +90,10 @@ namespace Moggle.Controles
 
 		#region Memoria
 
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			Font = Screen.Content.Load <BitmapFont> (UseFont);
