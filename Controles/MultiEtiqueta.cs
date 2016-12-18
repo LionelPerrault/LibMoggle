@@ -287,24 +287,6 @@ namespace Moggle.Controles
 
 		#endregion
 
-		#region Memoria
-
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		protected override void AddContent ()
-		{
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-		}
-
-		#endregion
-
 		/// <summary>
 		/// Una entrada de MultiEtiqueta.
 		/// </summary>

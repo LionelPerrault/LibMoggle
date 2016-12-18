@@ -132,23 +132,13 @@ namespace Moggle.Controles
 		#region Memoria
 
 		/// <summary>
-		/// Cargar contenido
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			var manager = Screen.Content;
-			manager.AddContent (BgTexture);
-			manager.AddContent (FontTexture);
-		}
-
-		/// <summary>
-		/// Vincula el contenido  a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			var manager = Screen.Content;
-			contornoTexture = manager.GetContent<Texture2D> (BgTexture);
-			fontTexture = manager.GetContent<BitmapFont> (FontTexture);
+			contornoTexture = manager.Load<Texture2D> (BgTexture);
+			fontTexture = manager.Load<BitmapFont> (FontTexture);
 		}
 
 		#endregion

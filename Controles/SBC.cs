@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
@@ -29,35 +30,23 @@ namespace Moggle.Controles
 		public IComponentContainerComponent<IControl> Container { get; }
 
 		/// <summary>
-		/// Loads the content.
-		/// </summary>
-		protected virtual void AddContent ()
-		{
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected virtual void InitializeContent ()
-		{
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			InitializeContent ();
-		}
-
-		void IComponent.AddContent ()
-		{
-			AddContent ();
-		}
-
-		/// <summary>
 		/// Prioridad de dibujo;
 		/// Mayor prioridad se dibuja en la cima
 		/// </summary>
 		[Obsolete]
 		public int Prioridad { get; set; }
+
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		protected virtual void LoadContent (ContentManager manager)
+		{
+		}
+
+		void IComponent.LoadContent (ContentManager manager)
+		{
+			LoadContent (manager);
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether this control is initialized.

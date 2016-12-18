@@ -10,8 +10,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Description>Controles MonoGame
 Un juego de controles para MonoGame</Description>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ReleaseVersion>0.11.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -87,7 +85,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\ContenedorSelección.cs" />
     <Compile Include="Controles\Contenedor.cs" />
     <Compile Include="Controles\SelectionManager.cs" />
-    <Compile Include="BibliotecaContenido.cs" />
     <Compile Include="Textures\SimpleTextures.cs" />
     <Compile Include="Controles\ContenedorImage.cs" />
     <Compile Include="Comm\IReceptor.cs" />

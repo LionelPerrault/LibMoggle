@@ -233,22 +233,16 @@ namespace Moggle.Controles.Listas
 		#region Memoria y contenido
 
 		/// <summary>
-		/// Cargar contenido
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
-		{
-			Screen.Content.AddContent (NombreTexturaFuente);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			var st = new SimpleTextures (Game.GraphicsDevice);
-			Fuente = Screen.Content.GetContent<BitmapFont> (NombreTexturaFuente);
+			Fuente = Screen.Content.Load<BitmapFont> (NombreTexturaFuente);
 			pixel = st.SolidTexture (new Size (1, 1), Color.White);
-			base.InitializeContent ();
+
+			base.LoadContent (manager);
 		}
 
 		#endregion
