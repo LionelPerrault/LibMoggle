@@ -7,6 +7,7 @@ using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using Moggle.Textures;
 
 namespace Moggle
 {
