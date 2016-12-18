@@ -6,7 +6,7 @@ using Moggle.Screens;
 namespace Moggle.Controles
 {
 	/// <summary>
-	/// Representa un objeto de juego que necesita cargar contenido de una <see cref="BibliotecaContenido"/>
+	/// Represents an objetcs that can be initialized and load external content
 	/// </summary>
 	public interface IComponent : IGameComponent
 	{
