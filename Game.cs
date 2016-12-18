@@ -58,8 +58,6 @@ namespace Moggle
 		/// <value>The mouse listener.</value>
 		public MouseListener MouseListener { get; protected set; }
 
-		public InputListenerComponent Listener { get; }
-
 		/// <summary>
 		/// Gets the input listener.
 		/// </summary>

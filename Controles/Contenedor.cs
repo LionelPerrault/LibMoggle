@@ -161,6 +161,9 @@ namespace Moggle.Controles
 					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
 		}
 
+		/// <summary>
+		/// Gets the bounds of this control
+		/// </summary>
 		public Rectangle ControlBounds ()
 		{
 			return new Rectangle (Posición,
