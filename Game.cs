@@ -69,12 +69,6 @@ namespace Moggle
 		public SpriteBatch Batch { get; private set; }
 
 		/// <summary>
-		/// Devuelve la biblioteca de contenido
-		/// </summary>
-		[Obsolete]
-		public BibliotecaContenido Contenido { get; }
-
-		/// <summary>
 		/// </summary>
 		public Game ()
 		{
