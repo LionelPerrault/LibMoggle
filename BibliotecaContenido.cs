@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace Moggle
 {
 	/// <summary>
 	/// Provee métodos para cargar y descargar contenido en una forma organizada
 	/// </summary>
+	[Obsolete]
 	public class BibliotecaContenido
 	{
 		class EntradaContenido

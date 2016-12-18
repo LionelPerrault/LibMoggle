@@ -85,28 +85,9 @@ namespace Moggle.Controles
 
 		#region Memoria
 
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			Screen.Content.AddContent (Textura);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			TexturaInstancia = Screen.Content.GetContent<Texture2D> (Textura);
-		}
-
-		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected override void Dispose ()
-		{
-			Textura = null;
+			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
 		}
 
 		#endregion

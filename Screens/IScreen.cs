@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework.Content;
 
 
 namespace Moggle.Screens
@@ -47,7 +48,9 @@ namespace Moggle.Screens
 		/// El manejador de contenido
 		/// </summary>
 		/// <value>The content.</value>
-		BibliotecaContenido Content { get; }
+		ContentManager Content { get; }
+
+		void LoadAllContent ();
 
 		#endregion
 

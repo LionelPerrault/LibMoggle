@@ -7,6 +7,7 @@ using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle
 {
@@ -58,8 +59,6 @@ namespace Moggle
 		/// <value>The mouse listener.</value>
 		public MouseListener MouseListener { get; protected set; }
 
-		public InputListenerComponent Listener { get; }
-
 		/// <summary>
 		/// Gets the input listener.
 		/// </summary>
@@ -73,6 +72,7 @@ namespace Moggle
 		/// <summary>
 		/// Devuelve la biblioteca de contenido
 		/// </summary>
+		[Obsolete]
 		public BibliotecaContenido Contenido { get; }
 
 		/// <summary>
@@ -116,37 +116,13 @@ namespace Moggle
 		/// <summary>
 		/// Inicializa las componentes globales, así como la pantalla actual (si existe)
 		/// También agrega los contenidos al manejador de contenido y carga su contenido.
-		/// Finalmente se suscribe a los eventos del teclado
+		/// Finalmente se suscribe a los eventos necesarios
 		/// </summary>
 		protected override void Initialize ()
 		{
 			foreach (var x in Components)
 				x.Initialize ();
-
 			CurrentScreen?.Initialize ();
-			/*
-			try
-			{
-				CurrentScreen?.Initialize ();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine (ex);
-			}
-			*/
-
-			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent ();
-			try
-			{
-				CurrentScreen?.AddContent ();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine (ex);	
-			}
-
-
 			base.Initialize ();
 
 			LoadContent ();
@@ -190,8 +166,16 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			Contenido.Load ();
-			OnContentLoaded ();
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (Content);
+			CurrentScreen?.LoadContent (Content);
+		}
+
+		void IComponent.LoadContent (ContentManager manager)
+		{
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (manager);
+			CurrentScreen?.LoadContent (manager);
 		}
 
 		/// <summary>
@@ -205,38 +189,7 @@ namespace Moggle
 			ScreenManager.UpdateActive (gameTime);
 		}
 
-		/// <summary>
-		/// This method is invoked when all the content is loaded.
-		/// It initializes all the content
-		/// </summary>
-		protected virtual void OnContentLoaded ()
-		{
-			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent ();
-
-			CurrentScreen?.InitializeContent ();
-		}
-
 		#region Component
-
-		/// <summary>
-		/// Tell the components and the current screen to get the content from the library
-		/// </summary>
-		protected virtual void InitializeContent ()
-		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.InitializeContent ();
-			CurrentScreen?.InitializeContent ();
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			InitializeContent ();
-		}
-
-		void IComponent.AddContent ()
-		{
-		}
 
 		void IGameComponent.Initialize ()
 		{

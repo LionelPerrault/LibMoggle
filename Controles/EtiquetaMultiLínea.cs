@@ -53,14 +53,11 @@ namespace Moggle.Controles
 		string [] drawingLines;
 		int maxWidth;
 
-		/// <summary>
-		/// Loads the content.
-		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			var textures = new Textures.SimpleTextures (Screen.Device);
-			bgTexture = textures.SolidTexture (new Size (1, 1), Color.White);
-			Screen.Content.AddContent (UseFont);
+			base.LoadContent (manager);
+			Font = Screen.Content.Load<BitmapFont> (UseFont);
+			RecalcularLíneas ();
 		}
 
 		/// <summary>
@@ -152,16 +149,6 @@ namespace Moggle.Controles
 					TextColor);
 				currTop += Font.LineHeight;
 			}
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			base.InitializeContent ();
-			Font = Screen.Content.GetContent<BitmapFont> (UseFont);
-			RecalcularLíneas ();
 		}
 
 		/// <summary>

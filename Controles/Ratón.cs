@@ -116,21 +116,6 @@ namespace Moggle.Controles
 
 		#region Memoria
 
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		protected override void AddContent ()
-		{
-			Screen.Content.AddContent (ArchivoTextura);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			Textura = Screen.Content.GetContent<Texture2D> (ArchivoTextura);
-		}
 
 		#endregion
 

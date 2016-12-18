@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
+using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -9,15 +10,7 @@ namespace Moggle.Controles
 	/// </summary>
 	public interface IComponent : IGameComponent
 	{
-		/// <summary>
-		/// Carga el contenido gráfico.
-		/// </summary>
-		void AddContent ();
-
-		/// <summary>
-		/// Aquí se debe de asignar a variables de clase el contenido de manager
-		/// </summary>
-		void InitializeContent ();
+		void LoadContent (ContentManager manager);
 	}
 
 	/// <summary>

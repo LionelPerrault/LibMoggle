@@ -58,30 +58,19 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
-		public virtual void AddAllContent ()
+		public virtual void LoadAllContent ()
 		{
 			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent ();
+				x.LoadContent (Juego.Content);
 		}
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			AddAllContent ();
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (manager);
 		}
 
-		void IComponent.InitializeContent ()
-		{
-			InitializeContent ();
-		}
-
-		/// <summary>
-		/// Tell its components to get the content from the library
-		/// </summary>
-		protected virtual void InitializeContent ()
-		{
-			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent ();
-		}
+		public Microsoft.Xna.Framework.Content.ContentManager Content { get { return Juego.Content; } }
 
 		void IDisposable.Dispose ()
 		{
@@ -108,17 +97,6 @@ namespace Moggle.Screens
 		{
 			foreach (var x in Components.OfType<IDisposable> ())
 				x.Dispose ();
-		}
-
-		/// <summary>
-		/// Devuelve el manejador de contenidos del juego.
-		/// </summary>
-		public BibliotecaContenido Content
-		{
-			get
-			{
-				return Juego.Contenido;
-			}
 		}
 
 		#endregion
@@ -225,9 +203,7 @@ namespace Moggle.Screens
 		public virtual void Prepare ()
 		{
 			Initialize ();
-			AddAllContent ();
-			Content.Load ();
-			InitializeContent ();
+			LoadAllContent ();
 		}
 
 

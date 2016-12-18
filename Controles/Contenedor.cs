@@ -44,9 +44,8 @@ namespace Moggle.Controles
 			Objetos.Add (item);
 			if (IsInitialized)
 			{
-				(item as IGameComponent)?.Initialize ();
-				(item as IComponent)?.AddContent ();
-				(item as IComponent)?.InitializeContent ();
+				item.Initialize ();
+				item.LoadContent (Screen.Content);
 			}
 		}
 
@@ -236,26 +235,11 @@ namespace Moggle.Controles
 			FilaPrimero
 		}
 
-		/// <summary>
-		/// Loads the content.
-		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			var manager = Screen.Content;
-			manager.AddContent (TextureFondoName);
+			TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
 			foreach (var c in Objetos.OfType<IComponent> ())
-				c.AddContent ();
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			var manager = Screen.Content;
-			TexturaFondo = manager.GetContent<Texture2D> (TextureFondoName);
-			foreach (var c in Objetos.OfType<IComponent> ())
-				c.InitializeContent ();
+				c.LoadContent (manager);
 		}
 
 		/// <summary>

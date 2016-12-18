@@ -90,20 +90,9 @@ namespace Moggle.Controles
 
 		#region Memoria
 
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			Screen.Content.AddContent (UseFont);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			Font = Screen.Content.GetContent<BitmapFont> (UseFont);
+			Font = Screen.Content.Load <BitmapFont> (UseFont);
 		}
 
 		#endregion
