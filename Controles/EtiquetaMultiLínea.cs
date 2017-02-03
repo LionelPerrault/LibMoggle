@@ -143,7 +143,7 @@ namespace Moggle.Controles
 			{
 				if (!IsInitialized)
 					throw new InvalidOperationException ("Item not initialized");
-				return drawingLines.Length;
+				return drawingLines?.Length ?? 0;
 			}
 		}
 
