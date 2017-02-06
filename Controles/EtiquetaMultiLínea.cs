@@ -84,6 +84,7 @@ namespace Moggle.Controles
 		public override void Initialize ()
 		{
 			base.Initialize ();
+			LoadContent (Screen.Content);
 			buildBackgroundTexture ();
 		}
 
