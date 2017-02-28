@@ -41,9 +41,10 @@ namespace Moggle.Controles
 		/// </summary>
 		public event EventHandler AlActivar;
 
-		void IActivable.Activar ()
+		bool IActivable.Activar ()
 		{
 			AlActivar?.Invoke (this, EventArgs.Empty);
+			return true;
 		}
 
 		/// <summary>

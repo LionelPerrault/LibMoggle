@@ -10,7 +10,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Manda señal de activación
 		/// </summary>
-		void Activar ();
+		bool Activar ();
 
 		/// <summary>
 		/// Ocurre cuando se activa.

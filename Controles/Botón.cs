@@ -116,9 +116,10 @@ namespace Moggle.Controles
 			}
 		}
 
-		void IActivable.Activar ()
+		bool IActivable.Activar ()
 		{
 			AlClickIzquierdo?.Invoke (this, EventArgs.Empty);
+			return true;
 		}
 
 		/// <summary>
