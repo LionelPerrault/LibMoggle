@@ -72,11 +72,11 @@ namespace Moggle.Controles
 		/// Inicializa esta instancia
 		/// Se suscribe a eventos del ratón
 		/// </summary>
-		public override void Initialize ()
+		protected override void ForceInitialization ()
 		{
+			base.ForceInitialization ();
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
-			base.Initialize ();
 		}
 
 		/// <summary>

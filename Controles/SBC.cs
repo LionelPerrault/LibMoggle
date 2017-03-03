@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
@@ -55,10 +56,18 @@ namespace Moggle.Controles
 		public bool IsInitialized { get; private set; }
 
 		/// <summary>
-		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
-		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// Initialize this component, avoiding multiple calls
 		/// </summary>
-		public virtual void Initialize ()
+		void IGameComponent.Initialize ()
+		{
+			if (!IsInitialized)
+				ForceInitialization ();
+		}
+
+		/// <summary>
+		/// Initializes the component
+		/// </summary>
+		protected virtual void ForceInitialization ()
 		{
 			IsInitialized = true;
 		}
@@ -99,6 +108,5 @@ namespace Moggle.Controles
 			Container = cont;
 			Container.AddComponent (this);
 		}
-
 	}
 }
