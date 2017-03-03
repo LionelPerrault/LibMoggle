@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
@@ -57,7 +58,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Initialize this component, avoiding multiple calls
 		/// </summary>
-		public void Initialize ()
+		void IGameComponent.Initialize ()
 		{
 			if (!IsInitialized)
 				ForceInitialization ();
