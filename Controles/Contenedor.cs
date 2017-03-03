@@ -44,9 +44,18 @@ namespace Moggle.Controles
 			Objetos.Add (item);
 			if (IsInitialized)
 			{
+				// Automatically initialize objets when the game is initialized
 				item.Initialize ();
 				item.LoadContent (Screen.Content);
 			}
+		}
+
+		/// <summary>
+		/// Removes all the items from this collection
+		/// </summary>
+		public void Clear ()
+		{
+			Objetos.Clear ();
 		}
 
 		/// <summary>
