@@ -92,9 +92,9 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public override void Initialize ()
+		protected override void ForceInitialization ()
 		{
-			base.Initialize ();
+			base.ForceInitialization ();
 			var displ = Game.GraphicsDevice.Adapter.CurrentDisplayMode;
 			Pos = new Point (displ.Width / 2, displ.Height / 2);
 		}
