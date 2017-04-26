@@ -10,7 +10,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Description>Controles MonoGame
 Un juego de controles para MonoGame</Description>
-    <ReleaseVersion>0.11.1</ReleaseVersion>
+    <ReleaseVersion>0.12</ReleaseVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
