@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -72,6 +72,8 @@ namespace Moggle.Controles
 		/// <param name="manager">Manejador de contenido donde se suscribe esta clase</param>
 		public FlyingSprite (ContentManager manager)
 		{
+			if (manager == null)
+				throw new ArgumentNullException ("manager");
 			Manager = manager;
 		}
 
@@ -81,6 +83,8 @@ namespace Moggle.Controles
 		/// <param name="texture">Textura</param>
 		public FlyingSprite (Texture2D texture)
 		{
+			if (texture == null)
+				throw new ArgumentNullException ("texture");
 			Texture = texture;
 		}
 	}
