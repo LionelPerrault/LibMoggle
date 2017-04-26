@@ -26,7 +26,7 @@ namespace Moggle.Controles
 		/// </summary>
 		void IComponent.LoadContent (ContentManager manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			Texture = Texture ?? manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
@@ -73,6 +73,12 @@ namespace Moggle.Controles
 		public FlyingSprite (ContentManager manager)
 		{
 			Manager = manager;
+		}
+
+		public FlyingSprite (ContentManager manager, Texture2D texture)
+			: this (manager)
+		{
+			Texture = texture;
 		}
 	}
 }

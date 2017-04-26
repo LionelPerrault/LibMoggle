@@ -252,7 +252,7 @@ namespace Moggle.Controles
 		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			TexturaFondo = manager.Load<Texture2D> (TextureFondoName);
+			TexturaFondo = TexturaFondo ?? manager.Load<Texture2D> (TextureFondoName);
 			foreach (var c in Objetos.OfType<IComponent> ())
 				c.LoadContent (manager);
 		}
@@ -275,5 +275,13 @@ namespace Moggle.Controles
 		{
 			Objetos = new List<T> ();
 		}
+
+		public Contenedor (IComponentContainerComponent<IControl> cont,
+		                   Texture2D texture)
+			: this (cont)
+		{
+			TexturaFondo = texture;
+		}
+
 	}
 }

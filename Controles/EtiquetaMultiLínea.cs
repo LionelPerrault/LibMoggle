@@ -71,6 +71,7 @@ namespace Moggle.Controles
 
 		void buildBackgroundTexture ()
 		{
+			RecalcularLíneas ();
 			bgTexture = TextureGenerator.OutlineTexture (
 				Size,
 				BackgroundColor,
@@ -107,7 +108,8 @@ namespace Moggle.Controles
 			set
 			{
 				maxWidth = value;
-				RecalcularLíneas ();
+				if (IsInitialized)
+					buildBackgroundTexture ();
 			}
 		}
 
@@ -131,7 +133,6 @@ namespace Moggle.Controles
 				return;
 			var lins = StringExt.SepararLíneas (Font, Texto, MaxWidth);
 			drawingLines = lins;
-			buildBackgroundTexture ();
 		}
 
 		/// <summary>

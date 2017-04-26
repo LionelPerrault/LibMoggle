@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Moggle.Controles
 {
@@ -22,11 +23,24 @@ namespace Moggle.Controles
 			Add (newItem);
 		}
 
+		public void Add (Texture2D texture, Color color)
+		{
+			var newItem = new FlyingSprite (Screen.Content, texture)
+			{ Color = color };
+			Add (newItem);
+		}
+
 		/// <summary>
 		/// </summary>
 		/// <param name="cont">Container</param>
 		public ContenedorImage (IComponentContainerComponent<IControl> cont)
 			: base (cont)
+		{
+		}
+
+		public ContenedorImage (IComponentContainerComponent<IControl> cont,
+		                        Texture2D bgTexture)
+			: base (cont, bgTexture)
 		{
 		}
 	}

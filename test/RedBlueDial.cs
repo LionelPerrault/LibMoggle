@@ -13,13 +13,6 @@ namespace Test
 	{
 		public event System.EventHandler<object> HayRespuesta;
 
-		public override void AddAllContent ()
-		{
-			base.AddAllContent ();
-			var tx = new SimpleTextures (Device);
-			Content.AddContent ("pixel", tx.SolidTexture (new Size (1, 1), Color.White));
-		}
-
 		public override bool RecibirSeñal (System.Tuple<MonoGame.Extended.InputListeners.KeyboardEventArgs, ScreenThread> data)
 		{
 			if (data.Item1.Key == Keys.D1)

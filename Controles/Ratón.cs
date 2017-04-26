@@ -116,6 +116,10 @@ namespace Moggle.Controles
 
 		#region Memoria
 
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+			Textura = Textura ?? manager.Load<Texture2D> (ArchivoTextura);
+		}
 
 		#endregion
 

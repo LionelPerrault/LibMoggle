@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
@@ -90,7 +91,7 @@ namespace Moggle.Controles
 		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
+			TexturaInstancia = TexturaInstancia ?? Screen.Content.Load<Texture2D> (Textura);
 		}
 
 		#endregion
@@ -148,7 +149,7 @@ namespace Moggle.Controles
 		/// Inicaliza un <see cref="Botón"/> rectangular.
 		/// </summary>
 		/// <param name="screen">Screen.</param>
-		public Botón (Moggle.Screens.IScreen screen)
+		public Botón (IScreen screen)
 			: base (screen)
 		{
 			Color = Color.White;
@@ -159,22 +160,37 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="shape">Forma del botón</param>
-		public Botón (Moggle.Screens.IScreen screen, IShapeF shape)
+		public Botón (IScreen screen, IShapeF shape)
 			: this (screen)
 		{
 			Bounds = shape;
 		}
 
+		// THINK: Why is this ctor requiered?
 		/// <summary>
 		/// Inicaliza un <see cref="Botón"/> rectangular.
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="bounds">Límites del rectángulo.</param>
-		public Botón (Moggle.Screens.IScreen screen,
+		public Botón (IScreen screen,
 		              RectangleF bounds)
 			: this (screen)
 		{
 			Bounds = new RectangleF (bounds.Location, bounds.Size);
+		}
+
+		public Botón (IScreen screen, Texture2D texture)
+			: this (screen)
+		{
+			TexturaInstancia = texture;
+		}
+
+		public Botón (IScreen screen,
+		              IShapeF shape,
+		              Texture2D texture)
+			: this (screen, shape)
+		{
+			TexturaInstancia = texture;
 		}
 
 		#endregion
