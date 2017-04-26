@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
+using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -58,9 +59,15 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public virtual void Initialize ()
+		protected virtual void Initialize ()
 		{
 			IsInitialized = true;
+		}
+
+		void IGameComponent.Initialize ()
+		{
+			if (!IsInitialized)
+				Initialize ();
 		}
 
 		/// <summary>
