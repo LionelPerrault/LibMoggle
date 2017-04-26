@@ -23,9 +23,14 @@ namespace Moggle.Controles
 			Add (newItem);
 		}
 
+		/// <summary>
+		/// Agrega un sprite
+		/// </summary>
+		/// <param name="texture">Texture.</param>
+		/// <param name="color">Color.</param>
 		public void Add (Texture2D texture, Color color)
 		{
-			var newItem = new FlyingSprite (Screen.Content, texture)
+			var newItem = new FlyingSprite (texture)
 			{ Color = color };
 			Add (newItem);
 		}
@@ -38,6 +43,10 @@ namespace Moggle.Controles
 		{
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		/// <param name = "bgTexture">Textura de background</param>
 		public ContenedorImage (IComponentContainerComponent<IControl> cont,
 		                        Texture2D bgTexture)
 			: base (cont, bgTexture)

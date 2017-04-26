@@ -277,6 +277,10 @@ namespace Moggle.Controles
 			Objetos = new List<T> ();
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		/// <param name = "texture">color de background</param>
 		public Contenedor (IComponentContainerComponent<IControl> cont,
 		                   Texture2D texture)
 			: this (cont)

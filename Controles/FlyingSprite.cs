@@ -75,8 +75,11 @@ namespace Moggle.Controles
 			Manager = manager;
 		}
 
-		public FlyingSprite (ContentManager manager, Texture2D texture)
-			: this (manager)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Controles.FlyingSprite"/> class.
+		/// </summary>
+		/// <param name="texture">Textura</param>
+		public FlyingSprite (Texture2D texture)
 		{
 			Texture = texture;
 		}

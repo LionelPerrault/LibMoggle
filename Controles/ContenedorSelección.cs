@@ -230,6 +230,10 @@ namespace Moggle.Controles
 			Selection = new SelectionManager<T> (Objetos);
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		/// <param name = "bgTexture">Color de background</param>
 		public ContenedorSelección (IComponentContainerComponent<IControl> cont,
 		                            Texture2D bgTexture)
 			: base (cont,

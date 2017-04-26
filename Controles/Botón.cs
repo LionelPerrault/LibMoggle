@@ -172,6 +172,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="bounds">Límites del rectángulo.</param>
+		[Obsolete]
 		public Botón (IScreen screen,
 		              RectangleF bounds)
 			: this (screen)
@@ -179,12 +180,23 @@ namespace Moggle.Controles
 			Bounds = new RectangleF (bounds.Location, bounds.Size);
 		}
 
+		/// <summary>
+		/// Inicaliza un <see cref="Botón"/> rectangular.
+		/// </summary>
+		/// <param name="screen">Screen.</param>
+		/// <param name="texture">Textura del botón</param>
 		public Botón (IScreen screen, Texture2D texture)
 			: this (screen)
 		{
 			TexturaInstancia = texture;
 		}
 
+		/// <summary>
+		/// Inicaliza un <see cref="Botón"/>.
+		/// </summary>
+		/// <param name = "screen">Screen.</param>
+		/// <param name = "shape">Forma del botón, para uso de mouse over</param>
+		/// <param name = "texture">Textura del botón</param>
 		public Botón (IScreen screen,
 		              IShapeF shape,
 		              Texture2D texture)
