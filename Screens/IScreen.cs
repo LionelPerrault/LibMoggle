@@ -76,7 +76,7 @@ namespace Moggle.Screens
 
 		#endregion
 
-		#region ctor
+		#region Game
 
 		/// <summary>
 		/// Devuelve el campo Juego.
