@@ -1,9 +1,9 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 using MonoGame.Extended.Shapes;
 using Inputs = MonoGame.Extended.InputListeners;
-using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -29,13 +29,6 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <value>The container.</value>
 		public IComponentContainerComponent<IControl> Container { get; }
-
-		/// <summary>
-		/// Prioridad de dibujo;
-		/// Mayor prioridad se dibuja en la cima
-		/// </summary>
-		[Obsolete]
-		public int Prioridad { get; set; }
 
 		/// <summary>
 		/// Loads the content using a given manager
@@ -106,6 +99,5 @@ namespace Moggle.Controles
 			Container = cont;
 			Container.AddComponent (this);
 		}
-
 	}
 }
