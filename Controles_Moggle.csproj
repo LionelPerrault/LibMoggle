@@ -99,6 +99,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\EtiquetaMultiLínea.cs" />
     <Compile Include="Screens\Dials\ScreenDialSerial.cs" />
     <Compile Include="Controles\VanishingLabel.cs" />
+    <Compile Include="Controles\TipoOrdenEnum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
