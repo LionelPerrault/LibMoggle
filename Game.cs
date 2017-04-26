@@ -7,7 +7,6 @@ using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
-using Moggle.Textures;
 
 namespace Moggle
 {
@@ -68,30 +67,6 @@ namespace Moggle
 		/// Batch de dibujo
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
-
-		/// <summary>
-		/// </summary>
-		public Game ()
-		{
-			Graphics = new GraphicsDeviceManager (this);
-			Content.RootDirectory = "Content";
-
-			ScreenManager = new ScreenThreadManager ();
-
-			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
-			IsFixedTimeStep = false;
-
-			// Crear los listeners
-			KeyListener = new KeyboardListener ();
-			MouseListener = new MouseListener ();
-			InputListener = new InputListenerComponent (
-				this,
-				KeyListener,
-				MouseListener);
-
-			Components.Add (InputListener);
-			
-		}
 
 		/// <summary>
 		/// Gets the container.
@@ -266,5 +241,28 @@ namespace Moggle
 		}
 
 		#endregion
+
+		/// <summary>
+		/// </summary>
+		public Game ()
+		{
+			Graphics = new GraphicsDeviceManager (this);
+			Content.RootDirectory = "Content";
+
+			ScreenManager = new ScreenThreadManager ();
+
+			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
+			IsFixedTimeStep = false;
+
+			// Crear los listeners
+			KeyListener = new KeyboardListener ();
+			MouseListener = new MouseListener ();
+			InputListener = new InputListenerComponent (
+				this,
+				KeyListener,
+				MouseListener);
+
+			Components.Add (InputListener);
+		}
 	}
 }
