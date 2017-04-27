@@ -197,7 +197,7 @@ namespace Test
 			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{
-				bts [i] = new FlyingSprite (Content, solids [0])
+				bts [i] = new FlyingSprite (solids [0])
 				{ Color = Color.PaleVioletRed * 0.8f };
 
 				ct.Add (bts [i]);
@@ -227,7 +227,7 @@ namespace Test
 				BgColor = Color.Black,
 				Posición = new Point (400, 5),
 				GridSize = new Size (4, 4),
-				TipoOrden = Contenedor<FlyingSprite>.TipoOrdenEnum.FilaPrimero
+				TipoOrden = TipoOrdenEnum.FilaPrimero
 			};
 			for (int i = 0; i < 4; i++)
 				contImg.Add (solids [i], Color.White);
