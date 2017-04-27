@@ -55,6 +55,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public bool IsInitialized { get; private set; }
 
+		public bool Disposed { get; private set; }
+
 		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
@@ -77,20 +79,26 @@ namespace Moggle.Screens
 
 		void IDisposable.Dispose ()
 		{
-			Dispose ();
+			DisposeChildren ();
+			DisposeSelf ();
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Screens.Screen"/> object and its components
+		/// Releases all resource used by the childrends of this <see cref="Moggle.Screens.Screen"/>
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Screens.Screen"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Screens.Screen"/> in an unusable state. After calling
-		/// <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Screens.Screen"/> so the garbage
-		/// collector can reclaim the memory that the <see cref="Moggle.Screens.Screen"/> was occupying.</remarks>
-		protected virtual void Dispose ()
+		protected void DisposeChildren ()
 		{
 			foreach (var comp in Components.OfType<IDisposable> ())
 				comp.Dispose ();
+		}
+
+		/// <summary>
+		/// Dispose this object (not its childrens)
+		/// </summary>
+		protected virtual void DisposeSelf ()
+		{
+			Disposed = true;
+			IsInitialized = false;
 		}
 
 		/// <summary>
@@ -182,6 +190,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public void Initialize ()
 		{
+			if (Disposed)
+				throw new ObjectDisposedException ("Screen disposed.");
 			if (!IsInitialized)
 			{
 				DoInitialization ();
