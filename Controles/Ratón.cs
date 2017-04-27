@@ -92,7 +92,7 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public override void Initialize ()
+		protected override void Initialize ()
 		{
 			base.Initialize ();
 			var displ = Game.GraphicsDevice.Adapter.CurrentDisplayMode;
@@ -117,19 +117,12 @@ namespace Moggle.Controles
 		#region Memoria
 
 		/// <summary>
-		/// Cargar contenido
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			Screen.Content.AddContent (ArchivoTextura);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			Textura = Screen.Content.GetContent<Texture2D> (ArchivoTextura);
+			Textura = Textura ?? manager.Load<Texture2D> (ArchivoTextura);
 		}
 
 		#endregion

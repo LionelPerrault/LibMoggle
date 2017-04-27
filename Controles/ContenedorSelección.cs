@@ -30,6 +30,7 @@ namespace Moggle.Controles
 			set
 			{
 				_focusIndex = Math.Min (Math.Max (0, value), Count - 1);
+				CursorChanged?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
@@ -208,6 +209,11 @@ namespace Moggle.Controles
 		/// </summary>
 		public event EventHandler Activado;
 
+		/// <summary>
+		/// Ocurrs when the cursor location changes
+		/// </summary>
+		public event EventHandler CursorChanged;
+
 		#endregion
 
 		#region ctor
@@ -217,6 +223,21 @@ namespace Moggle.Controles
 		/// <param name="cont">Container</param>
 		public ContenedorSelección (IComponentContainerComponent<IControl> cont)
 			: base (cont)
+		{
+			FocusedColor = Color.Yellow * 0.7f;
+			SelectionColor = Color.Red * 0.65f;
+			InitialCooldown = TimeSpan.FromMilliseconds (100);
+			Selection = new SelectionManager<T> (Objetos);
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		/// <param name = "bgTexture">Color de background</param>
+		public ContenedorSelección (IComponentContainerComponent<IControl> cont,
+		                            Texture2D bgTexture)
+			: base (cont,
+			        bgTexture)
 		{
 			FocusedColor = Color.Yellow * 0.7f;
 			SelectionColor = Color.Red * 0.65f;

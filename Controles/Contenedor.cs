@@ -44,9 +44,8 @@ namespace Moggle.Controles
 			Objetos.Add (item);
 			if (IsInitialized)
 			{
-				(item as IGameComponent)?.Initialize ();
-				(item as IComponent)?.AddContent ();
-				(item as IComponent)?.InitializeContent ();
+				item.Initialize ();
+				item.LoadContent (Screen.Content);
 			}
 		}
 
@@ -162,6 +161,17 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
+		/// Gets the bounds of this control
+		/// </summary>
+		public Rectangle ControlBounds ()
+		{
+			return new Rectangle (Posición,
+				new Size (
+					MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
+					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
+		}
+
+		/// <summary>
 		/// Update lógico
 		/// </summary>
 		public override void Update (GameTime gameTime)
@@ -221,49 +231,25 @@ namespace Moggle.Controles
 			}
 		}
 
-		/// <summary>
-		/// Representa el orden en el que se enlistan los objetos
-		/// </summary>
-		public enum TipoOrdenEnum
-		{
-			/// <summary>
-			/// Llena las columnas antes que las filas.
-			/// </summary>
-			ColumnaPrimero,
-			/// <summary>
-			/// Llena las filas antes que las columnas.
-			/// </summary>
-			FilaPrimero
-		}
 
 		/// <summary>
-		/// Loads the content.
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			var manager = Screen.Content;
-			manager.AddContent (TextureFondoName);
+			TexturaFondo = TexturaFondo ?? manager.Load<Texture2D> (TextureFondoName);
 			foreach (var c in Objetos.OfType<IComponent> ())
-				c.AddContent ();
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			var manager = Screen.Content;
-			TexturaFondo = manager.GetContent<Texture2D> (TextureFondoName);
-			foreach (var c in Objetos.OfType<IComponent> ())
-				c.InitializeContent ();
+				c.LoadContent (manager);
 		}
 
 		/// <summary>
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public override void Initialize ()
+		protected override void Initialize ()
 		{
+			base.Initialize ();
 			foreach (var c in Objetos.OfType<IGameComponent> ())
 				c.Initialize ();
 		}
@@ -276,5 +262,17 @@ namespace Moggle.Controles
 		{
 			Objetos = new List<T> ();
 		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		/// <param name = "texture">color de background</param>
+		public Contenedor (IComponentContainerComponent<IControl> cont,
+		                   Texture2D texture)
+			: this (cont)
+		{
+			TexturaFondo = texture;
+		}
+
 	}
 }

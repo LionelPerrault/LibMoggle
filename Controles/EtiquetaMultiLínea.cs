@@ -44,6 +44,11 @@ namespace Moggle.Controles
 		public BitmapFont Font { get; private set; }
 
 		/// <summary>
+		/// Gets the texture generator (for background)
+		/// </summary>
+		protected Textures.SimpleTextures TextureGenerator { get; }
+
+		/// <summary>
 		/// Devuelve o establece la posición de la etiqueta
 		/// </summary>
 		/// <value>La posición de la esquena superior izquierda</value>
@@ -54,13 +59,33 @@ namespace Moggle.Controles
 		int maxWidth;
 
 		/// <summary>
-		/// Loads the content.
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			var textures = new Textures.SimpleTextures (Screen.Device);
-			bgTexture = textures.SolidTexture (new Size (1, 1), Color.White);
-			Screen.Content.AddContent (UseFont);
+			base.LoadContent (manager);
+			Font = Screen.Content.Load<BitmapFont> (UseFont);
+			RecalcularLíneas ();
+		}
+
+		void buildBackgroundTexture ()
+		{
+			RecalcularLíneas ();
+			bgTexture = TextureGenerator.OutlineTexture (
+				Size,
+				BackgroundColor,
+				Color.White);
+		}
+
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		protected override void Initialize ()
+		{
+			base.Initialize ();
+			buildBackgroundTexture ();
 		}
 
 		/// <summary>
@@ -83,7 +108,8 @@ namespace Moggle.Controles
 			set
 			{
 				maxWidth = value;
-				RecalcularLíneas ();
+				if (IsInitialized)
+					buildBackgroundTexture ();
 			}
 		}
 
@@ -155,16 +181,6 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			base.InitializeContent ();
-			Font = Screen.Content.GetContent<BitmapFont> (UseFont);
-			RecalcularLíneas ();
-		}
-
-		/// <summary>
 		/// Update lógico
 		/// </summary>
 		public override void Update (GameTime gameTime)
@@ -179,6 +195,7 @@ namespace Moggle.Controles
 		{
 			TextColor = Color.White;
 			BackgroundColor = Color.Transparent;
+			TextureGenerator = new Moggle.Textures.SimpleTextures (screen.Device);
 		}
 	}
 }

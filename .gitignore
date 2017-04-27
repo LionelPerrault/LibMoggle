@@ -10,3 +10,6 @@ doc/*
 *.usertasks
 
 TODO.md
+
+# Backup files
+*.cs~

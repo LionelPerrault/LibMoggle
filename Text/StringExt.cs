@@ -1,7 +1,7 @@
-﻿using MonoGame.Extended.BitmapFonts;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System;
+using MonoGame.Extended.BitmapFonts;
 
 namespace Moggle.Text
 {
@@ -21,6 +21,8 @@ namespace Moggle.Text
 		                                      string text,
 		                                      int maxWidth)
 		{
+			if (string.IsNullOrWhiteSpace (text))
+				return new string [] { };
 			var ret = new List<string> ();
 			var splitText = new List<string> (text.Split (' '));
 			while (splitText.Count > 0)

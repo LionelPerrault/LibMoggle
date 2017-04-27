@@ -69,9 +69,7 @@ namespace Moggle.Screens.Dials
 				// Preparar screen i
 				var scr = InvocationList [i];
 				scr.Initialize ();
-				scr.AddContent ();
-				scr.Content.Load ();
-				scr.InitializeContent ();
+				scr.LoadAllContent ();
 
 				useThread.Stack (
 					scr,

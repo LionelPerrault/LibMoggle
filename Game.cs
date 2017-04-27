@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
-using System.Diagnostics;
 
 namespace Moggle
 {
@@ -59,38 +59,14 @@ namespace Moggle
 		public MouseListener MouseListener { get; protected set; }
 
 		/// <summary>
+		/// Gets the input listener.
+		/// </summary>
+		public InputListenerComponent InputListener { get; }
+
+		/// <summary>
 		/// Batch de dibujo
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
-
-		/// <summary>
-		/// Devuelve la biblioteca de contenido
-		/// </summary>
-		public BibliotecaContenido Contenido { get; }
-
-		/// <summary>
-		/// </summary>
-		public Game ()
-		{
-			Graphics = new GraphicsDeviceManager (this);
-			Content.RootDirectory = "Content";
-			Contenido = new BibliotecaContenido (Content);
-
-			ScreenManager = new ScreenThreadManager ();
-
-			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
-			IsFixedTimeStep = false;
-
-			// Crear los listeners
-			KeyListener = new KeyboardListener ();
-			MouseListener = new MouseListener ();
-
-			Components.Add (new InputListenerComponent (
-				this,
-				KeyListener,
-				MouseListener));
-			
-		}
 
 		/// <summary>
 		/// Gets the container.
@@ -108,40 +84,16 @@ namespace Moggle
 		/// <summary>
 		/// Inicializa las componentes globales, así como la pantalla actual (si existe)
 		/// También agrega los contenidos al manejador de contenido y carga su contenido.
-		/// Finalmente se suscribe a los eventos del teclado
+		/// Finalmente se suscribe a los eventos necesarios
 		/// </summary>
 		protected override void Initialize ()
 		{
+			LoadContent ();
 			foreach (var x in Components)
 				x.Initialize ();
-
 			CurrentScreen?.Initialize ();
-			/*
-			try
-			{
-				CurrentScreen?.Initialize ();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine (ex);
-			}
-			*/
-
-			foreach (var x in Components.OfType<IComponent> ())
-				x.AddContent ();
-			try
-			{
-				CurrentScreen?.AddContent ();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine (ex);	
-			}
-
-
 			base.Initialize ();
 
-			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
 		}
 
@@ -182,8 +134,16 @@ namespace Moggle
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			Contenido.Load ();
-			OnContentLoaded ();
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (Content);
+			CurrentScreen?.LoadContent (Content);
+		}
+
+		void IComponent.LoadContent (ContentManager manager)
+		{
+			foreach (var x in Components.OfType<IComponent> ())
+				x.LoadContent (manager);
+			CurrentScreen?.LoadContent (manager);
 		}
 
 		/// <summary>
@@ -197,38 +157,7 @@ namespace Moggle
 			ScreenManager.UpdateActive (gameTime);
 		}
 
-		/// <summary>
-		/// This method is invoked when all the content is loaded.
-		/// It initializes all the content
-		/// </summary>
-		protected virtual void OnContentLoaded ()
-		{
-			foreach (var c in Components.OfType<IComponent> ())
-				c.InitializeContent ();
-
-			CurrentScreen?.InitializeContent ();
-		}
-
 		#region Component
-
-		/// <summary>
-		/// Tell the components and the current screen to get the content from the library
-		/// </summary>
-		protected virtual void InitializeContent ()
-		{
-			foreach (var x in Components.OfType<IComponent> ())
-				x.InitializeContent ();
-			CurrentScreen?.InitializeContent ();
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			InitializeContent ();
-		}
-
-		void IComponent.AddContent ()
-		{
-		}
 
 		void IGameComponent.Initialize ()
 		{
@@ -301,15 +230,6 @@ namespace Moggle
 		}
 
 		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected override void UnloadContent ()
-		{
-			Contenido.ClearAll ();
-			base.UnloadContent ();
-		}
-
-		/// <summary>
 		/// Devuelve el modo actual de display gráfico.
 		/// </summary>
 		public DisplayMode GetDisplayMode
@@ -321,5 +241,28 @@ namespace Moggle
 		}
 
 		#endregion
+
+		/// <summary>
+		/// </summary>
+		public Game ()
+		{
+			Graphics = new GraphicsDeviceManager (this);
+			Content.RootDirectory = "Content";
+
+			ScreenManager = new ScreenThreadManager ();
+
+			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
+			IsFixedTimeStep = false;
+
+			// Crear los listeners
+			KeyListener = new KeyboardListener ();
+			MouseListener = new MouseListener ();
+			InputListener = new InputListenerComponent (
+				this,
+				KeyListener,
+				MouseListener);
+
+			Components.Add (InputListener);
+		}
 	}
 }

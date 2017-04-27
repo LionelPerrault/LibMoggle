@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
@@ -47,7 +48,12 @@ namespace Moggle.Screens
 		/// El manejador de contenido
 		/// </summary>
 		/// <value>The content.</value>
-		BibliotecaContenido Content { get; }
+		ContentManager Content { get; }
+
+		/// <summary>
+		/// Loads the content of the all it's components
+		/// </summary>
+		void LoadAllContent ();
 
 		#endregion
 
@@ -70,7 +76,7 @@ namespace Moggle.Screens
 
 		#endregion
 
-		#region ctor
+		#region Game
 
 		/// <summary>
 		/// Devuelve el campo Juego.
