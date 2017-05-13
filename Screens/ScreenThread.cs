@@ -33,7 +33,7 @@ namespace Moggle.Screens
 		public IScreen this [int index]
 		{
 			// No hay necesidad de exception check. Va a devolver el error de fuera de índice, y ése corresponde
-			get	{ return _invocationStack [Count - index - 1]; }
+			get { return _invocationStack [Count - index - 1]; }
 		}
 
 		/// <summary>
@@ -41,19 +41,19 @@ namespace Moggle.Screens
 		/// </summary>
 		/// <value>The current.</value>
 		public IScreen Current
-		{ 
+		{
 			get
 			{
 				if (Count == 0)
 					throw new InvalidOperationException ("This thread has no screens.");
-				return this [0]; 
-			} 
+				return this [0];
+			}
 		}
 
 		/// <summary>
 		/// Devuelve la pantalla más próxima de un tipo dado
 		/// </summary>
-		public IScreen ClosestOfType <T> ()
+		public IScreen ClosestOfType<T> ()
 			where T : IScreen
 		{
 			for (int i = 0; i < Count; i++)
@@ -149,7 +149,7 @@ namespace Moggle.Screens
 		public void Stack (IScreen scr, ScreenStackOptions opt)
 		{
 			if (scr == null)
-				throw new ArgumentNullException ("scr");
+				throw new ArgumentNullException (nameof (scr));
 
 			var lastCurr = Count == 0 ? null : Current;
 			_invocationStack.Add (scr);
@@ -192,12 +192,8 @@ namespace Moggle.Screens
 		#region Memory
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Screens.ScreenThread"/> object.
+		/// Releases all resource used by the <see cref="ScreenThread"/> object.
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Screens.ScreenThread"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Screens.ScreenThread"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Screens.ScreenThread"/> so
-		/// the garbage collector can reclaim the memory that the <see cref="Moggle.Screens.ScreenThread"/> was occupying.</remarks>
 		public void Dispose ()
 		{
 			for (int i = 0; i < Count; i++)

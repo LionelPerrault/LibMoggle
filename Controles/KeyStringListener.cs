@@ -14,7 +14,8 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Gets or set the current string
 		/// </summary>
-		public string CurrentString {
+		public string CurrentString
+		{
 			get { return outputBuilder.ToString (); }
 			set { outputBuilder = new StringBuilder (value); }
 		}
@@ -41,7 +42,8 @@ namespace Moggle.Controles
 		/// <param name="key">Señal tecla</param>
 		public virtual bool RecibirSeñal (KeyboardEventArgs key)
 		{
-			if (key.Key == Keys.Back) {
+			if (key.Key == Keys.Back)
+			{
 				if (outputBuilder.Length > 0)
 					outputBuilder.Remove (outputBuilder.Length - 1, 1);
 				return true;
@@ -57,7 +59,7 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.KeyStringListener"/> object.
+		/// Releases all resource used by the <see cref="KeyStringListener"/> object.
 		/// </summary>
 		public void Dispose ()
 		{
@@ -82,7 +84,7 @@ namespace Moggle.Controles
 		public KeyStringListener (KeyboardListener listen)
 		{
 			if (listen == null)
-				throw new ArgumentNullException ("listen");
+				throw new ArgumentNullException (nameof (listen));
 			outputBuilder = new StringBuilder ();
 			listener = listen;
 

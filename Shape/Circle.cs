@@ -20,7 +20,7 @@ namespace Moggle.Shape
 		public readonly Vector2 Center;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Circle"/> struct.
+		/// Initializes a new instance of the <see cref="Circle"/> struct.
 		/// </summary>
 		/// <param name="radius">Radius.</param>
 		/// <param name="center">Center.</param>

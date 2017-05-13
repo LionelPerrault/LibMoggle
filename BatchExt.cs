@@ -16,7 +16,7 @@ namespace Moggle
 								 Rectangle rectangle,
 								 Color color)
 		{
-			bat.Draw (texture, (Rectangle)rectangle, color);
+			bat.Draw (texture, rectangle, color);
 		}
 	}
 }

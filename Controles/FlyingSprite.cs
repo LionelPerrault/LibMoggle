@@ -68,24 +68,24 @@ namespace Moggle.Controles
 		ContentManager Manager { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Controles.FlyingSprite"/> class.
+		/// Initializes a new instance of the <see cref="FlyingSprite"/> class.
 		/// </summary>
 		/// <param name="manager">Manejador de contenido donde se suscribe esta clase</param>
 		public FlyingSprite (ContentManager manager)
 		{
 			if (manager == null)
-				throw new ArgumentNullException ("manager");
+				throw new ArgumentNullException (nameof (manager));
 			Manager = manager;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Controles.FlyingSprite"/> class.
+		/// Initializes a new instance of the <see cref="FlyingSprite"/> class.
 		/// </summary>
 		/// <param name="texture">Textura</param>
 		public FlyingSprite (Texture2D texture)
 		{
 			if (texture == null)
-				throw new ArgumentNullException ("texture");
+				throw new ArgumentNullException (nameof (texture));
 			Texture = texture;
 		}
 	}

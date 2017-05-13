@@ -84,7 +84,7 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
-		/// Releases all resource used by the childrends of this <see cref="Moggle.Screens.Screen"/>
+		/// Releases all resource used by the childrends of this <see cref="Screen"/>
 		/// </summary>
 		protected void DisposeChildren ()
 		{

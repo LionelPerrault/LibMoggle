@@ -28,9 +28,9 @@ namespace Moggle
 											  Color color,
 											  Texture2D text)
 		{
-			Vector2 edge = end - start;
+			var edge = end - start;
 			// calculate angle to rotate line
-			float angle = (float)Math.Atan2 (edge.Y, edge.X);
+			var angle = (float)Math.Atan2 (edge.Y, edge.X);
 
 			sb.Draw (text,
 				start,
@@ -192,7 +192,7 @@ namespace Moggle
 			points.Add (points [0]);
 
 			// Now remove the points at the end of the circle to create the arc
-			int sidesInArc = (int)((radians / anglePerSide) + 0.5);
+			var sidesInArc = (int)((radians / anglePerSide) + 0.5);
 			points.RemoveRange (sidesInArc + 1, points.Count - sidesInArc - 1);
 
 			return points;
@@ -558,10 +558,10 @@ namespace Moggle
 											  float thickness)
 		{
 			// calculate the distance between the two vectors
-			float distance = Vector2.Distance (point1, point2);
+			var distance = Vector2.Distance (point1, point2);
 
 			// calculate the angle between the two vectors
-			float angle = (float)Math.Atan2 (point2.Y - point1.Y, point2.X - point1.X);
+			var angle = (float)Math.Atan2 (point2.Y - point1.Y, point2.X - point1.X);
 
 			DrawLine (spriteBatch, point1, distance, angle, color, thickness);
 		}
@@ -806,7 +806,7 @@ namespace Moggle
 											 Color color,
 											 float thickness)
 		{
-			List<Vector2> arc = CreateArc (radius, sides, startingAngle, radians);
+			var arc = CreateArc (radius, sides, startingAngle, radians);
 			//List<Vector2> arc = CreateArc2(radius, sides, startingAngle, degrees);
 			DrawPoints (spriteBatch, center, arc, color, thickness);
 		}

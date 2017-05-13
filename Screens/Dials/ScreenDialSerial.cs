@@ -119,7 +119,7 @@ namespace Moggle.Screens.Dials
 		public event EventHandler<object []> HayRespuesta;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Screens.Dials.ScreenDialSerial"/> class.
+		/// Initializes a new instance of the <see cref="ScreenDialSerial"/> class.
 		/// </summary>
 		public ScreenDialSerial ()
 		{
