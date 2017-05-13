@@ -164,6 +164,11 @@ namespace Moggle.Controles
 			Bounds = shape;
 		}
 
+		public Botón (Screens.IScreen screen, Rectangle shape, Texture2D texture) : this (screen, shape)
+		{
+			TexturaInstancia = texture;
+		}
+
 		#endregion
 	}
 }

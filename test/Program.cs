@@ -26,7 +26,7 @@ namespace Test
 
 
 #else
-	static class Program
+	public static class Program
 #endif
 	{
 		static Game1 game;
@@ -43,8 +43,9 @@ namespace Test
 #if !MONOMAC && !__IOS__
 		[STAThread]
 #endif
-		static void Main ()
+		public static void Main (string [] args)
 		{
+			Console.WriteLine ("Running...");
 #if MONOMAC
 			NSApplication.Init ();
 
@@ -89,4 +90,3 @@ namespace Test
 	}  
 #endif
 }
-

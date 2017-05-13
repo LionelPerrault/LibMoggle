@@ -9,7 +9,7 @@ namespace Test
 	[TestFixture]
 	public class SeparaString
 	{
-		[Ignore]
+		[Ignore ("")]
 		public void SeparaLines ()
 		{
 			var _r = new Random ();
@@ -28,7 +28,7 @@ namespace Test
 			Assert.AreEqual (longLine, rebuild.ToString ().Trim ());
 			// (2)
 			foreach (var l in lines)
-				Assert.LessOrEqual (font.GetSize (l).Width, maxLen);
+				Assert.LessOrEqual (font.LineHeight, maxLen);
 		}
 	}
 }
