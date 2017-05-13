@@ -55,6 +55,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public bool IsInitialized { get; private set; }
 
+		public bool Disposed { get; private set; }
+
 		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
@@ -77,16 +79,26 @@ namespace Moggle.Screens
 
 		void IDisposable.Dispose ()
 		{
-			Dispose ();
+			DisposeChildren ();
+			DisposeSelf ();
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Screen"/> object and its components
+		/// Releases all resource used by the childrends of this <see cref="Moggle.Screens.Screen"/>
 		/// </summary>
-		protected virtual void Dispose ()
+		protected void DisposeChildren ()
 		{
 			foreach (var comp in Components.OfType<IDisposable> ())
 				comp.Dispose ();
+		}
+
+		/// <summary>
+		/// Dispose this object (not its childrens)
+		/// </summary>
+		protected virtual void DisposeSelf ()
+		{
+			Disposed = true;
+			IsInitialized = false;
 		}
 
 		/// <summary>
@@ -178,6 +190,8 @@ namespace Moggle.Screens
 		/// </summary>
 		public void Initialize ()
 		{
+			if (Disposed)
+				throw new ObjectDisposedException ("Screen disposed.");
 			if (!IsInitialized)
 			{
 				DoInitialization ();
@@ -320,7 +334,8 @@ namespace Moggle.Screens
 			return Components.Remove (component);
 		}
 
-		IEnumerable<IControl> IComponentContainerComponent<IControl>.Components { get { return Components; } }
+		IEnumerable<IControl> IComponentContainerComponent<IControl>.Components
+		{ get { return Components; } }
 
 		#endregion
 

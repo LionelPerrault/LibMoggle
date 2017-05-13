@@ -161,11 +161,11 @@ namespace Moggle.Controles
 			{
 				var t = escalarColor;
 				var ret = new Color (
-								 (int)(ColorInicial.R * t + ColorFinal.R * (1 - t)),
-								 (int)(ColorInicial.G * t + ColorFinal.G * (1 - t)),
-								 (int)(ColorInicial.B * t + ColorFinal.B * (1 - t)),
-								 (int)(ColorInicial.A * t + ColorFinal.A * (1 - t))
-							 );
+					          (int)(ColorInicial.R * t + ColorFinal.R * (1 - t)),
+					          (int)(ColorInicial.G * t + ColorFinal.G * (1 - t)),
+					          (int)(ColorInicial.B * t + ColorFinal.B * (1 - t)),
+					          (int)(ColorInicial.A * t + ColorFinal.A * (1 - t))
+				          );
 				return ret;
 			}
 		}
@@ -229,9 +229,9 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		protected override void ForceInitialization ()
+		protected override void Initialize ()
 		{
-			base.ForceInitialization ();
+			base.Initialize ();
 			calcularBounds ();
 		}
 

@@ -12,7 +12,7 @@
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>0.12</ReleaseVersion>
+    <ReleaseVersion>0.12.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,6 +100,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\EtiquetaMultiLínea.cs" />
     <Compile Include="Screens\Dials\ScreenDialSerial.cs" />
     <Compile Include="Controles\VanishingLabel.cs" />
+    <Compile Include="Controles\TipoOrdenEnum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

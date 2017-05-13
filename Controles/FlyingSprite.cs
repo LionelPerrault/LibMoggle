@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using Microsoft.Xna.Framework.Content;
 
 namespace Moggle.Controles
 {
@@ -26,7 +26,7 @@ namespace Moggle.Controles
 		/// </summary>
 		void IComponent.LoadContent (ContentManager manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			Texture = Texture ?? manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
@@ -73,7 +73,20 @@ namespace Moggle.Controles
 		/// <param name="manager">Manejador de contenido donde se suscribe esta clase</param>
 		public FlyingSprite (ContentManager manager)
 		{
+			if (manager == null)
+				throw new ArgumentNullException ("manager");
 			Manager = manager;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Moggle.Controles.FlyingSprite"/> class.
+		/// </summary>
+		/// <param name="texture">Textura</param>
+		public FlyingSprite (Texture2D texture)
+		{
+			if (texture == null)
+				throw new ArgumentNullException ("texture");
+			Texture = texture;
 		}
 	}
 }

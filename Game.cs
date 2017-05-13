@@ -106,12 +106,12 @@ namespace Moggle
 		/// </summary>
 		protected override void Initialize ()
 		{
+			LoadContent ();
 			foreach (var x in Components)
 				x.Initialize ();
 			CurrentScreen?.Initialize ();
 			base.Initialize ();
 
-			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
 		}
 

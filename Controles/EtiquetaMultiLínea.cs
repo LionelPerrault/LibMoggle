@@ -68,6 +68,7 @@ namespace Moggle.Controles
 
 		void buildBackgroundTexture ()
 		{
+			RecalcularLíneas ();
 			bgTexture = TextureGenerator.OutlineTexture (
 				Size,
 				BackgroundColor,
@@ -78,10 +79,9 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		protected override void ForceInitialization ()
+		protected override void Initialize ()
 		{
-			base.ForceInitialization ();
-			LoadContent (Screen.Content);
+			base.Initialize ();
 			buildBackgroundTexture ();
 		}
 
@@ -105,7 +105,8 @@ namespace Moggle.Controles
 			set
 			{
 				maxWidth = value;
-				RecalcularLíneas ();
+				if (IsInitialized)
+					buildBackgroundTexture ();
 			}
 		}
 
@@ -129,7 +130,6 @@ namespace Moggle.Controles
 				return;
 			var lins = StringExt.SepararLíneas (Font, Texto, MaxWidth);
 			drawingLines = lins;
-			buildBackgroundTexture ();
 		}
 
 		/// <summary>
@@ -141,7 +141,7 @@ namespace Moggle.Controles
 			{
 				if (!IsInitialized)
 					throw new InvalidOperationException ("Item not initialized");
-				return drawingLines?.Length ?? 0;
+				return drawingLines.Length;
 			}
 		}
 

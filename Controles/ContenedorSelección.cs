@@ -218,6 +218,21 @@ namespace Moggle.Controles
 			Selection = new SelectionManager<T> (Objetos);
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="cont">Container</param>
+		/// <param name = "bgTexture">Color de background</param>
+		public ContenedorSelección (IComponentContainerComponent<IControl> cont,
+		                            Texture2D bgTexture)
+			: base (cont,
+			        bgTexture)
+		{
+			FocusedColor = Color.Yellow * 0.7f;
+			SelectionColor = Color.Red * 0.65f;
+			InitialCooldown = TimeSpan.FromMilliseconds (100);
+			Selection = new SelectionManager<T> (Objetos);
+		}
+
 		#endregion
 	}
 }

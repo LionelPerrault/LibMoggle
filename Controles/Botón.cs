@@ -88,7 +88,7 @@ namespace Moggle.Controles
 		/// <param name="manager">Manager.</param>
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			TexturaInstancia = Screen.Content.Load<Texture2D> (Textura);
+			TexturaInstancia = TexturaInstancia ?? Screen.Content.Load<Texture2D> (Textura);
 		}
 
 		#endregion

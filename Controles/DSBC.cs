@@ -47,11 +47,14 @@ namespace Moggle.Controles
 		/// Determina si el control es visible
 		/// </summary>
 		/// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
-		public bool Visible {
-			get {
+		public bool Visible
+		{
+			get
+			{
 				return _visible;
 			}
-			set {
+			set
+			{
 				if (_visible != value)
 					VisibleChanged?.Invoke (this, EventArgs.Empty);
 				_visible = value;
@@ -66,9 +69,8 @@ namespace Moggle.Controles
 		/// Inicializa esta instancia
 		/// Se suscribe a eventos del ratón
 		/// </summary>
-		protected override void ForceInitialization ()
+		protected override void Initialize ()
 		{
-			base.ForceInitialization ();
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
 		}
@@ -77,11 +79,14 @@ namespace Moggle.Controles
 		/// El orden de update.
 		/// </summary>
 		/// <value>The update order.</value>
-		public int UpdateOrder {
-			get {
+		public int UpdateOrder
+		{
+			get
+			{
 				return _updateOrder;
 			}
-			set {
+			set
+			{
 				if (_updateOrder != value)
 					UpdateOrderChanged?.Invoke (this, EventArgs.Empty);
 				_updateOrder = value;
@@ -92,11 +97,14 @@ namespace Moggle.Controles
 		/// Determina si el control está habilitado.
 		/// </summary>
 		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-		public bool Enabled {
-			get {
+		public bool Enabled
+		{
+			get
+			{
 				return _enabled;
 			}
-			set {
+			set
+			{
 				if (_enabled != value)
 					EnabledChanged?.Invoke (this, EventArgs.Empty);
 				_enabled = value;
