@@ -1,4 +1,4 @@
-﻿using MonoGame.Extended.Shapes;
+﻿using Microsoft.Xna.Framework;
 
 namespace Moggle.Controles
 {
@@ -10,6 +10,6 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el espacio que ocupa en la pantalla
 		/// </summary>
-		IShapeF GetBounds ();
+		Rectangle GetBounds ();
 	}
 }

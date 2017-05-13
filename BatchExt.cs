@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
 using Microsoft.Xna.Framework;
 
 namespace Moggle
@@ -13,22 +12,11 @@ namespace Moggle
 		/// Over de Draw
 		/// </summary>
 		public static void Draw (this SpriteBatch bat,
-		                         Texture2D texture,
-		                         RectangleF rectangle,
-		                         Color color)
+								 Texture2D texture,
+								 Rectangle rectangle,
+								 Color color)
 		{
 			bat.Draw (texture, (Rectangle)rectangle, color);
-		}
-
-		/// <summary>
-		/// Over de Draw
-		/// </summary>
-		public static void Draw (this SpriteBatch bat,
-		                         Texture2D texture,
-		                         IShapeF shape,
-		                         Color color)
-		{
-			bat.Draw (texture, shape.GetBoundingRectangle (), color);
 		}
 	}
 }

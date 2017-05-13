@@ -1,12 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controles;
 using Moggle.Screens;
 using Moggle.Text;
-using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -91,9 +88,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
-			return new RectangleF (TopLeft.ToVector2 (), Size);
+			return new Rectangle (TopLeft, new Point (Size.Width, Size.Height));
 		}
 
 		/// <summary>
@@ -120,7 +117,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tamaño de la etiqueta
 		/// </summary>
-		public Size Size { get { return new Size (MaxWidth, Height); } }
+		public CE.Size Size { get { return new CE.Size (MaxWidth, Height); } }
 
 		/// <summary>
 		/// Vuelve a calcular las líneas.
@@ -166,7 +163,7 @@ namespace Moggle.Controles
 			var currTop = TopLeft.Y;
 			var bat = Screen.Batch;
 
-			bat.Draw (bgTexture, new Rectangle (TopLeft, Size), BackgroundColor);
+			bat.Draw (bgTexture, new Rectangle (TopLeft, new Point (Size.Width, Size.Height)), BackgroundColor);
 
 			for (int i = 0; i < LinesCount; i++)
 			{
@@ -195,7 +192,7 @@ namespace Moggle.Controles
 		{
 			TextColor = Color.White;
 			BackgroundColor = Color.Transparent;
-			TextureGenerator = new Moggle.Textures.SimpleTextures (screen.Device);
+			TextureGenerator = new Textures.SimpleTextures (screen.Device);
 		}
 	}
 }

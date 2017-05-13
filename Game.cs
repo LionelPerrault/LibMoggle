@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using Moggle.Textures;
 
 namespace Moggle
@@ -15,23 +15,18 @@ namespace Moggle
 	/// Clase global de un juego.
 	/// </summary>
 	public class Game :
-	Microsoft.Xna.Framework.Game, 
-	IEmisor<KeyboardEventArgs>,				// Para enviar señales de teclado a componentes
-	IComponentContainerComponent<IControl>	// Para controlar sus componentes
+	Microsoft.Xna.Framework.Game,
+	IEmisor<KeyboardEventArgs>,             // Para enviar señales de teclado a componentes
+	IComponentContainerComponent<IControl>  // Para controlar sus componentes
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
-		public IScreen CurrentScreen
-		{ 
-			get
-			{ 
-				try
-				{
-					return ScreenManager.ActiveThread.Current; 
-				}
-				catch (InvalidOperationException)
-				{
+		public IScreen CurrentScreen {
+			get {
+				try {
+					return ScreenManager.ActiveThread.Current;
+				} catch (InvalidOperationException) {
 					return null;
 				}
 			}
@@ -90,17 +85,15 @@ namespace Moggle
 				MouseListener);
 
 			Components.Add (InputListener);
-			
+
 		}
 
 		/// <summary>
 		/// Gets the container.
 		/// </summary>
 		/// <value>The container.</value>
-		IComponentContainerComponent<IControl> IControl.Container
-		{
-			get
-			{
+		IComponentContainerComponent<IControl> IControl.Container {
+			get {
 				// Este valor hace que GetScreen sea más fácil
 				return CurrentScreen;
 			}
@@ -143,8 +136,8 @@ namespace Moggle
 		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
 			var sign = new Tuple<KeyboardEventArgs, ScreenThread> (
-				           key,
-				           ScreenManager.ActiveThread);
+						   key,
+						   ScreenManager.ActiveThread);
 			CurrentScreen?.RecibirSeñal (sign);
 		}
 
@@ -212,8 +205,7 @@ namespace Moggle
 			return Components.Remove (component);
 		}
 
-		System.Collections.Generic.IEnumerable<IControl> IComponentContainerComponent<IControl>.Components
-		{
+		System.Collections.Generic.IEnumerable<IControl> IComponentContainerComponent<IControl>.Components {
 			get { return Components.OfType<IControl> (); }
 		}
 
@@ -225,10 +217,8 @@ namespace Moggle
 		/// <summary>
 		/// Gets the color of the background.
 		/// </summary>
-		public Color BackgroundColor
-		{
-			get
-			{
+		public Color BackgroundColor {
+			get {
 				return ScreenManager.ActiveThread.BgColor ?? Color.Black;
 			}
 		}
@@ -257,10 +247,8 @@ namespace Moggle
 		/// <summary>
 		/// Devuelve el modo actual de display gráfico.
 		/// </summary>
-		public DisplayMode GetDisplayMode
-		{
-			get
-			{
+		public DisplayMode GetDisplayMode {
+			get {
 				return GraphicsDevice.Adapter.CurrentDisplayMode;
 			}
 		}

@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.InputListeners;
-using Inputs = MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -35,11 +34,9 @@ namespace Moggle.Controles
 		/// El orden de dibujo
 		/// </summary>
 		/// <value>The draw order.</value>
-		public int DrawOrder
-		{
-			get{ return _drawOrder; }
-			set
-			{
+		public int DrawOrder {
+			get { return _drawOrder; }
+			set {
 				if (_drawOrder != value)
 					DrawOrderChanged?.Invoke (this, EventArgs.Empty);
 				_drawOrder = value;
@@ -50,14 +47,11 @@ namespace Moggle.Controles
 		/// Determina si el control es visible
 		/// </summary>
 		/// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
-		public bool Visible
-		{
-			get
-			{
+		public bool Visible {
+			get {
 				return _visible;
 			}
-			set
-			{
+			set {
 				if (_visible != value)
 					VisibleChanged?.Invoke (this, EventArgs.Empty);
 				_visible = value;
@@ -83,14 +77,11 @@ namespace Moggle.Controles
 		/// El orden de update.
 		/// </summary>
 		/// <value>The update order.</value>
-		public int UpdateOrder
-		{
-			get
-			{
+		public int UpdateOrder {
+			get {
 				return _updateOrder;
 			}
-			set
-			{
+			set {
 				if (_updateOrder != value)
 					UpdateOrderChanged?.Invoke (this, EventArgs.Empty);
 				_updateOrder = value;
@@ -101,14 +92,11 @@ namespace Moggle.Controles
 		/// Determina si el control está habilitado.
 		/// </summary>
 		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-		public bool Enabled
-		{
-			get
-			{
+		public bool Enabled {
+			get {
 				return _enabled;
 			}
-			set
-			{
+			set {
 				if (_enabled != value)
 					EnabledChanged?.Invoke (this, EventArgs.Empty);
 				_enabled = value;

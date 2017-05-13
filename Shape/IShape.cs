@@ -1,7 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Moggle.Shape;
-using MonoGame.Extended.Shapes;
 
 namespace Moggle.Shape
 {
@@ -30,19 +28,21 @@ namespace Moggle.Shape
 	/// <summary>
 	/// Shapes.
 	/// </summary>
+	[Obsolete]
 	public static class Shapes
 	{
 		/// <summary>
 		/// Devuelve una <see cref="IShape"/> vacía.
 		/// </summary>
-		public static IShapeF NoShape { get { return Shapeless.NoShape; } }
+		public static IShape NoShape { get { return Shapeless.NoShape; } }
 	}
 
-	class Shapeless : IShapeF
+	[Obsolete]
+	class Shapeless : IShape
 	{
 		public static readonly Shapeless NoShape = new Shapeless ();
 
-		public RectangleF GetBoundingRectangle ()
+		public Microsoft.Xna.Framework.Rectangle GetContainingRectangle ()
 		{
 			return Microsoft.Xna.Framework.Rectangle.Empty;
 		}
@@ -52,17 +52,17 @@ namespace Moggle.Shape
 			return false;
 		}
 
-		public bool Contains (Vector2 point)
+		public bool Contains (Point point)
 		{
 			return false;
 		}
 
-		public float Left{ get { return 0; } }
+		public float Left { get { return 0; } }
 
-		public float Top{ get { return 0; } }
+		public float Top { get { return 0; } }
 
-		public float Right{ get { return 0; } }
+		public float Right { get { return 0; } }
 
-		public float Bottom{ get { return 0; } }
+		public float Bottom { get { return 0; } }
 	}
 }

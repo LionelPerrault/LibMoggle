@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
-using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.InputListeners;
-using MonoGame.Extended.Shapes;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -63,7 +61,7 @@ namespace Moggle.Controles
 		/// Devuelve o establece la posición del control.
 		/// </summary>
 		/// <value>The position.</value>
-		public Vector2 Pos
+		public Point Pos
 		{
 			get
 			{
@@ -71,7 +69,7 @@ namespace Moggle.Controles
 			}
 			set
 			{
-				Bounds = new RectangleF (value, Bounds.Size);
+				Bounds = new Rectangle (value, Bounds.Size);
 			}
 		}
 
@@ -87,13 +85,13 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Límites de el control
 		/// </summary>
-		public RectangleF Bounds { get; set; }
+		public Rectangle Bounds { get; set; }
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
 			return Bounds;
 		}
@@ -121,10 +119,10 @@ namespace Moggle.Controles
 			var bat = Screen.Batch;
 			Primitivos.DrawRectangle (
 				bat,
-				GetBounds ().GetBoundingRectangle (),
+				GetBounds (),
 				ColorContorno,
 				contornoTexture);
-			bat.DrawString (fontTexture, Texto, Pos, ColorTexto);
+			bat.DrawString (fontTexture, Texto, Pos.ToVector2 (), ColorTexto);
 		}
 
 		#endregion
@@ -161,12 +159,8 @@ namespace Moggle.Controles
 		#region Dispose
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.EntradaTexto"/> object.
+		/// Releases all resource used by the <see cref="EntradaTexto"/> object.
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Moggle.Controles.EntradaTexto"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Moggle.Controles.EntradaTexto"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Moggle.Controles.EntradaTexto"/>
-		/// so the garbage collector can reclaim the memory that the <see cref="Moggle.Controles.EntradaTexto"/> was occupying.</remarks>
 		protected override void Dispose ()
 		{
 			base.Dispose ();

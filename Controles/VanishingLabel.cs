@@ -1,9 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -30,7 +28,7 @@ namespace Moggle.Controles
 
 		BitmapFont Font;
 		string _texto;
-		Vector2 topLeft;
+		Point topLeft;
 
 		string _fontName;
 
@@ -98,7 +96,7 @@ namespace Moggle.Controles
 		/// Gets or sets the top left corner's coordinates
 		/// </summary>
 		/// <value>The top left.</value>
-		public Vector2 TopLeft
+		public Point TopLeft
 		{
 			get
 			{
@@ -115,7 +113,7 @@ namespace Moggle.Controles
 		/// Gets or sets the center of the label
 		/// </summary>
 		/// <value>The centro.</value>
-		public Vector2 Centro
+		public Point Centro
 		{
 			get
 			{
@@ -125,7 +123,7 @@ namespace Moggle.Controles
 			{
 				var altura = Bounds.Height;
 				var grosor = Bounds.Width;
-				topLeft = value - new Vector2 (grosor / 2.0f, altura / 2.0f);
+				topLeft = value - new Point (grosor / 2, altura / 2);
 				calcularBounds ();
 			}
 		}
@@ -133,12 +131,12 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Gets the bounds of the label
 		/// </summary>
-		public RectangleF Bounds { get; private set; }
+		public Rectangle Bounds { get; private set; }
 
 		/// <summary>
 		/// Gets the bounds of the label
 		/// </summary>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
 			return Bounds;
 		}
@@ -163,11 +161,11 @@ namespace Moggle.Controles
 			{
 				var t = escalarColor;
 				var ret = new Color (
-					          (int)(ColorInicial.R * t + ColorFinal.R * (1 - t)),
-					          (int)(ColorInicial.G * t + ColorFinal.G * (1 - t)),
-					          (int)(ColorInicial.B * t + ColorFinal.B * (1 - t)),
-					          (int)(ColorInicial.A * t + ColorFinal.A * (1 - t))
-				          );
+								 (int)(ColorInicial.R * t + ColorFinal.R * (1 - t)),
+								 (int)(ColorInicial.G * t + ColorFinal.G * (1 - t)),
+								 (int)(ColorInicial.B * t + ColorFinal.B * (1 - t)),
+								 (int)(ColorInicial.A * t + ColorFinal.A * (1 - t))
+							 );
 				return ret;
 			}
 		}
@@ -192,7 +190,7 @@ namespace Moggle.Controles
 		/// </summary>
 		protected override void Draw ()
 		{
-			Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
+			Screen.Batch.DrawString (Font, Texto, TopLeft.ToVector2 (), ColorActual);
 		}
 
 		/// <summary>
@@ -213,7 +211,7 @@ namespace Moggle.Controles
 			if (Restante < TimeSpan.Zero)
 				OnTerminar ();
 			else
-				TopLeft += Velocidad * (float)gameTime.ElapsedGameTime.TotalSeconds;
+				TopLeft += (Velocidad * (float)gameTime.ElapsedGameTime.TotalSeconds).ToPoint ();
 		}
 
 		/// <summary>
@@ -238,9 +236,8 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="VanishingLabel"/>.
+		/// Returns a <see cref="string"/> that represents the current <see cref="VanishingLabel"/>.
 		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="VanishingLabel"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (

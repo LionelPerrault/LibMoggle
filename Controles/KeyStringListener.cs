@@ -1,5 +1,5 @@
 ﻿using Moggle.Comm;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
 using System;
@@ -14,8 +14,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Gets or set the current string
 		/// </summary>
-		public string CurrentString
-		{
+		public string CurrentString {
 			get { return outputBuilder.ToString (); }
 			set { outputBuilder = new StringBuilder (value); }
 		}
@@ -42,8 +41,7 @@ namespace Moggle.Controles
 		/// <param name="key">Señal tecla</param>
 		public virtual bool RecibirSeñal (KeyboardEventArgs key)
 		{
-			if (key.Key == Keys.Back)
-			{
+			if (key.Key == Keys.Back) {
 				if (outputBuilder.Length > 0)
 					outputBuilder.Remove (outputBuilder.Length - 1, 1);
 				return true;

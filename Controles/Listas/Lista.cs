@@ -6,10 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Textures;
-using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.InputListeners;
-using MonoGame.Extended.Shapes;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles.Listas
 {
@@ -21,9 +19,9 @@ namespace Moggle.Controles.Listas
 	/// Interactúa con el teclado.
 	/// </para>
 	/// </summary>
-	public class Lista<TObj> : DSBC, 
-	IList<TObj>, 
-	IListaControl<TObj>, 
+	public class Lista<TObj> : DSBC,
+	IList<TObj>,
+	IListaControl<TObj>,
 	IReceptor<KeyboardEventArgs>
 	{
 		#region Comportamiento
@@ -43,12 +41,12 @@ namespace Moggle.Controles.Listas
 		/// <summary>
 		/// Devuelve o establece el límite del control
 		/// </summary>
-		public RectangleF Bounds { get; set; }
+		public Rectangle Bounds { get; set; }
 
 		/// <summary>
 		/// Devuelve el menor rectángulo que contiene a este control.
 		/// </summary>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
 			return Bounds;
 		}
@@ -133,7 +131,7 @@ namespace Moggle.Controles.Listas
 
 			Primitivos.DrawRectangle (
 				bat,
-				Bounds.GetBoundingRectangle (),
+				Bounds,
 				Color.White,
 				pixel);
 
@@ -153,7 +151,7 @@ namespace Moggle.Controles.Listas
 					var rect = Fuente.GetStringRectangle (strTxt, currY);
 					bat.Draw (pixel, rect, ColorSel);
 				}
-				bat.DrawString (Fuente, strTxt, currY, x.Color);
+				bat.DrawString (Fuente, strTxt, currY.ToVector2 (), x.Color);
 				currY.Y += Fuente.LineHeight;
 			}
 		}
@@ -166,7 +164,7 @@ namespace Moggle.Controles.Listas
 		{
 			get
 			{
-				return (int)Bounds.Height / Fuente.LineHeight;
+				return Bounds.Height / Fuente.LineHeight;
 			}
 		}
 
@@ -240,7 +238,7 @@ namespace Moggle.Controles.Listas
 		{
 			var st = new SimpleTextures (Game.GraphicsDevice);
 			Fuente = Screen.Content.Load<BitmapFont> (NombreTexturaFuente);
-			pixel = st.SolidTexture (new Size (1, 1), Color.White);
+			pixel = st.SolidTexture (new CE.Size (1, 1), Color.White);
 
 			base.LoadContent (manager);
 		}
@@ -356,7 +354,7 @@ namespace Moggle.Controles.Listas
 		{
 			if (array.Length < arrayIndex + Count)
 				throw new IndexOutOfRangeException ("Cannot copy the collection into the array.");
-			
+
 			for (int i = 0; i < Objetos.Count - 1; i++)
 				array [i + arrayIndex] = Objetos [i].Objeto;
 		}

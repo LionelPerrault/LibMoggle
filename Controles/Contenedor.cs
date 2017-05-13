@@ -3,8 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -97,12 +96,12 @@ namespace Moggle.Controles
 		/// Devuelve o establece el tamaño de los botones.
 		/// </summary>
 		/// <value>The tamaño botón.</value>
-		public Size TamañoBotón { get; set; }
+		public CE.Size TamañoBotón { get; set; }
 
 		/// <summary>
 		/// Devuelve o establece el número de objetos que pueden existir visiblemente en el control
 		/// </summary>
-		public Size GridSize { get; set; }
+		public CE.Size GridSize { get; set; }
 
 		/// <summary>
 		/// Devuelve o establece el márgen de los botones respecto a ellos mismos y al contenedor.
@@ -141,7 +140,7 @@ namespace Moggle.Controles
 		protected override void Draw ()
 		{
 			var bat = Screen.Batch;
-			bat.Draw (TexturaFondo, GetBounds ().GetBoundingRectangle (), BgColor);
+			bat.Draw (TexturaFondo, GetBounds (), BgColor);
 			for (int i = 0; i < Objetos.Count; i++)
 				DrawObject (bat, i);
 		}
@@ -161,12 +160,12 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
-			return new RectangleF (Posición.ToVector2 (),
-				new SizeF (
-					MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
-					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
+			return new Rectangle (Posición,
+					 new Point (
+						MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
+						MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
 		}
 
 		/// <summary>
@@ -175,7 +174,7 @@ namespace Moggle.Controles
 		public Rectangle ControlBounds ()
 		{
 			return new Rectangle (Posición,
-				new Size (
+				new Point (
 					MargenExterno.Left + MargenExterno.Right + Columnas * TamañoBotón.Width,
 					MargenExterno.Top + MargenExterno.Bot + Filas * TamañoBotón.Height));
 		}
@@ -207,8 +206,8 @@ namespace Moggle.Controles
 			Rectangle bounds;
 			Point locGrid;
 			int orden = index;
-			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ? 
-				new Point (orden / Filas, orden % Filas) : 
+			locGrid = TipoOrden == TipoOrdenEnum.ColumnaPrimero ?
+				new Point (orden / Filas, orden % Filas) :
 				new Point (orden % Columnas, orden / Columnas);
 			bounds = new Rectangle (Posición.X + MargenExterno.Left + TamañoBotón.Width * locGrid.X,
 				Posición.Y + MargenExterno.Top + TamañoBotón.Height * locGrid.Y,
@@ -225,7 +224,7 @@ namespace Moggle.Controles
 		/// This control was clicked.
 		/// </summary>
 		/// <param name="args">Arguments.</param>
-		protected override void OnClick (MonoGame.Extended.InputListeners.MouseEventArgs args)
+		protected override void OnClick (MouseEventArgs args)
 		{
 			Debug.WriteLine ("Click on container");
 			for (int i = 0; i < Count; i++)

@@ -2,8 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
-using Inputs = MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -15,9 +14,8 @@ namespace Moggle.Controles
 		#region Comportamiento
 
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Moggle.Controles.Botón"/>.
+		/// Returns a <see cref="string"/> that represents the current <see cref="Botón"/>.
 		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Moggle.Controles.Botón"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format ("{0}{1}", Habilidato ? "[H]" : "", Textura);
@@ -35,7 +33,7 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
 			return Bounds;
 		}
@@ -50,7 +48,7 @@ namespace Moggle.Controles
 		/// Devuelve o restablece la forma del botón
 		/// </summary>
 		/// <value>The bounds.</value>
-		public IShapeF Bounds { get; set; }
+		public Rectangle Bounds { get; set; }
 
 		/// <summary>
 		/// Textura del fondo del botón
@@ -101,18 +99,18 @@ namespace Moggle.Controles
 		/// Botón hecho clic.
 		/// </summary>
 		/// <param name="args">Argumentos de ratón.</param>
-		protected override void OnClick (Inputs.MouseEventArgs args)
+		protected override void OnClick (MouseEventArgs args)
 		{
 			AlClick?.Invoke (this, args);
 			switch (args.Button)
 			{
-				case Inputs.MouseButton.Left:
-					AlClickIzquierdo?.Invoke (this, args);
-					break;
+			case MouseButton.Left:
+				AlClickIzquierdo?.Invoke (this, args);
+				break;
 
-				case Inputs.MouseButton.Right:
-					AlClickDerecho?.Invoke (this, args);
-					break;
+			case MouseButton.Right:
+				AlClickDerecho?.Invoke (this, args);
+				break;
 			}
 		}
 
@@ -125,7 +123,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Ocurre cuando se hace click (cualquiera( en este control.
 		/// </summary>
-		public event EventHandler<Inputs.MouseEventArgs> AlClick;
+		public event EventHandler<MouseEventArgs> AlClick;
 		/// <summary>
 		/// Ocurre cuando se hace click izquierdo en este control.
 		/// </summary>
@@ -137,8 +135,8 @@ namespace Moggle.Controles
 
 		event EventHandler IActivable.AlActivar
 		{
-			add{ AlClickIzquierdo += value;}
-			remove{ AlClickIzquierdo += value;}
+			add { AlClickIzquierdo += value; }
+			remove { AlClickIzquierdo += value; }
 		}
 
 		#endregion
@@ -149,7 +147,7 @@ namespace Moggle.Controles
 		/// Inicaliza un <see cref="Botón"/> rectangular.
 		/// </summary>
 		/// <param name="screen">Screen.</param>
-		public Botón (Moggle.Screens.IScreen screen)
+		public Botón (Screens.IScreen screen)
 			: base (screen)
 		{
 			Color = Color.White;
@@ -160,22 +158,10 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="shape">Forma del botón</param>
-		public Botón (Moggle.Screens.IScreen screen, IShapeF shape)
+		public Botón (Screens.IScreen screen, Rectangle shape)
 			: this (screen)
 		{
 			Bounds = shape;
-		}
-
-		/// <summary>
-		/// Inicaliza un <see cref="Botón"/> rectangular.
-		/// </summary>
-		/// <param name="screen">Screen.</param>
-		/// <param name="bounds">Límites del rectángulo.</param>
-		public Botón (Moggle.Screens.IScreen screen,
-		              RectangleF bounds)
-			: this (screen)
-		{
-			Bounds = new RectangleF (bounds.Location, bounds.Size);
 		}
 
 		#endregion

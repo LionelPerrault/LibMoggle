@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -21,14 +21,11 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve o establece el índice (zero-based) del objeto seleccionado
 		/// </summary>
-		public int FocusedIndex
-		{
-			get
-			{
+		public int FocusedIndex {
+			get {
 				return _focusIndex;
 			}
-			set
-			{
+			set {
 				_focusIndex = Math.Min (Math.Max (0, value), Count - 1);
 				CursorChanged?.Invoke (this, EventArgs.Empty);
 			}
@@ -67,13 +64,11 @@ namespace Moggle.Controles
 		/// <param name="index">Índice del objeto a dibujar</param>
 		protected override void DrawObject (SpriteBatch bat, int index)
 		{
-			if (index == FocusedIndex)
-			{
+			if (index == FocusedIndex) {
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, FocusedColor);
 			}
-			if (Selection.IsSelected (Objetos [index]))
-			{
+			if (Selection.IsSelected (Objetos [index])) {
 				var rect = CalcularPosición (index);
 				bat.Draw (TexturaFondo, rect, SelectionColor);
 			}
@@ -125,45 +120,39 @@ namespace Moggle.Controles
 				return false;
 			cooldown = InitialCooldown;
 			Debug.WriteLine (key.Key);
-			if (key.Key == UpKey)
-			{
+			if (key.Key == UpKey) {
 				if (TipoOrden == TipoOrdenEnum.ColumnaPrimero)
 					FocusedIndex--;
 				else
 					FocusedIndex -= Columnas;
 				return true;
 			}
-			if (key.Key == DownKey)
-			{
+			if (key.Key == DownKey) {
 				if (TipoOrden == TipoOrdenEnum.ColumnaPrimero)
 					FocusedIndex++;
 				else
 					FocusedIndex += Columnas;
 				return true;
 			}
-			if (key.Key == LeftKey)
-			{
+			if (key.Key == LeftKey) {
 				if (TipoOrden == TipoOrdenEnum.FilaPrimero)
 					FocusedIndex--;
 				else
 					FocusedIndex -= Columnas;
 				return true;
 			}
-			if (key.Key == RightKey)
-			{
+			if (key.Key == RightKey) {
 				if (TipoOrden == TipoOrdenEnum.FilaPrimero)
 					FocusedIndex++;
 				else
 					FocusedIndex += Columnas;
 				return true;
 			}
-			if (key.Key == EnterKey)
-			{
+			if (key.Key == EnterKey) {
 				Activar (key);
 				return true;
 			}
-			if (SelectionEnabled && key.Key == SelectKey)
-			{
+			if (SelectionEnabled && key.Key == SelectKey) {
 				Selection.ToggleSelection (FocusedItem);
 			}
 			return false;
@@ -188,8 +177,7 @@ namespace Moggle.Controles
 		/// </summary>
 		public override void Update (GameTime gameTime)
 		{
-			if (isCoolingDown)
-			{
+			if (isCoolingDown) {
 				cooldown -= gameTime.ElapsedGameTime;
 				Debug.WriteLineIf (!isCoolingDown, "Keyboard cooldown over.");
 			}
