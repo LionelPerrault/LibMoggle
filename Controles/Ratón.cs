@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using OpenTK.Input;
+using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Controles
 {
@@ -64,10 +64,8 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve un valor determinando si el ratón está habilitado para esta aplicación.
 		/// </summary>
-		public bool Habilitado
-		{
-			get
-			{
+		public bool Habilitado {
+			get {
 				return Textura != null || !string.IsNullOrWhiteSpace (ArchivoTextura);
 			}
 		}
@@ -76,14 +74,11 @@ namespace Moggle.Controles
 		/// Devuelve o establece la posición actual del apuntador del ratón.
 		/// </summary>
 		/// <value>The position.</value>
-		public static Point Pos
-		{
-			get
-			{
+		public static Point Pos {
+			get {
 				return Microsoft.Xna.Framework.Input.Mouse.GetState ().Position;
 			}
-			set
-			{
+			set {
 				Mouse.SetPosition (value.X, value.Y);
 			}
 		}
