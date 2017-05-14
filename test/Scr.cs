@@ -5,11 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
 using Moggle.Textures;
-using MonoGame.Extended.InputListeners;
-using MonoGame.Extended.Shapes;
 using Moggle.Screens.Dials;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Test
 {
@@ -27,102 +25,79 @@ namespace Test
 					Color.Black,
 					Color.White
 				};
-				ret.SetData<Color> (_data);
+				ret.SetData (_data);
 				return ret;
 			}
 		}
 
 		SimpleTextures textures;
 
+		Texture2D [] solids = new Texture2D [4];
+		Texture2D [] alts = new Texture2D [4];
+		Texture2D [] outlines = new Texture2D [5];
+
 		void buildTextures ()
 		{
-			Content.AddContent (
-				"outline",
-				textures.OutlineTexture (
-					new MonoGame.Extended.Size (15, 10),
-					Color.White,
-					Color.Black));
-
-			Content.AddContent (
-				"solid",
-				textures.SolidTexture (
-					new MonoGame.Extended.Size (1, 1),
-					Color.White));
-
-
 			#region Alternates Test
 			var altColor = new [] { Color.White, Color.Black };
-			Content.AddContent (
-				"alt_1",
+			alts [0] =
 				textures.AlternatingTexture (
-					new MonoGame.Extended.Size (1, 1),
-					altColor));
-			Content.AddContent (
-				"alt_2",
+				new CE.Size (1, 1),
+				altColor);
+			alts [1] =
 				textures.AlternatingTexture (
-					new MonoGame.Extended.Size (5, 5),
-					altColor));
-			Content.AddContent (
-				"alt_3",
+				new CE.Size (5, 5),
+				altColor);
+			alts [2] =
 				textures.AlternatingTexture (
-					new MonoGame.Extended.Size (50, 20),
-					altColor));
-			Content.AddContent (
-				"alt_4",
+				new CE.Size (50, 20),
+				altColor);
+			alts [3] =
 				textures.AlternatingTexture (
-					new MonoGame.Extended.Size (50, 100),
-					altColor));
-			
+				new CE.Size (50, 100),
+				altColor);
+
 			#endregion
 			#region Solid
-			Content.AddContent (
-				"sol_1",
+			solids [0] =
 				textures.AlternatingTexture (
-					new MonoGame.Extended.Size (1, 1),
-					altColor));
-			Content.AddContent (
-				"sol_2",
+				new CE.Size (1, 1),
+				altColor);
+			solids [1] =
 				textures.SolidTexture (
-					new MonoGame.Extended.Size (5, 5),
-					Color.White));
-			Content.AddContent (
-				"sol_3",
+				new CE.Size (5, 5),
+				Color.White);
+			solids [2] =
 				textures.SolidTexture (
-					new MonoGame.Extended.Size (5, 100),
-					Color.White));
-			Content.AddContent (
-				"sol_4",
+				new CE.Size (5, 100),
+				Color.White);
+			solids [3] =
 				textures.SolidTexture (
-					new MonoGame.Extended.Size (100, 100),
-					Color.White));
+				new CE.Size (100, 100),
+				Color.White);
 
 			#endregion
 			#region Outline
-			Content.AddContent (
-				"out_1",
+			outlines [0] =
 				textures.OutlineTexture (
-					new MonoGame.Extended.Size (1, 1),
-					Color.White));
-			Content.AddContent (
-				"out_2",
+				new CE.Size (1, 1),
+				Color.White);
+			outlines [1] =
 				textures.OutlineTexture (
-					new MonoGame.Extended.Size (3, 3),
-					Color.White));
-			Content.AddContent (
-				"out_3",
+				new CE.Size (3, 3),
+				Color.White);
+			outlines [2] =
 				textures.OutlineTexture (
-					new MonoGame.Extended.Size (100, 3),
-					Color.White));
-			Content.AddContent (
-				"out_4",
+				new CE.Size (100, 3),
+				Color.White);
+			outlines [3] =
 				textures.OutlineTexture (
-					new MonoGame.Extended.Size (6, 6),
-					Color.White));
-			Content.AddContent (
-				"out_5",
+				new CE.Size (6, 6),
+				Color.White);
+			outlines [4] =
 				textures.OutlineTexture (
-					new MonoGame.Extended.Size (20, 20), // El tamaño de la imagen de muestra
-					Color.White));
+				new CE.Size (20, 20),
+				Color.White);
 			#endregion
 		}
 
@@ -133,17 +108,17 @@ namespace Test
 
 			var met = new MultiEtiqueta (this);
 			met.Add (
-				Content.Manager.Load<BitmapFont> ("cont//font"),
+				Content.Load<BitmapFont> ("cont//font"),
 				"hi",
 				Color.Green);
 			met.Add (
-				Content.Manager.Load<BitmapFont> ("cont//font"),
+				Content.Load<BitmapFont> ("cont//font"),
 				"hi II",
 				Color.Green);
 			met.Add (
-				Content.Manager.Load<BitmapFont> ("cont//font"),
+				Content.Load<BitmapFont> ("cont//font"),
 				"hi III", Color.Green, textures.OutlineTexture (
-				new Size (10, 10), Color.White, Color.Red), Color.White
+				new CE.Size (10, 10), Color.White, Color.Red), Color.White
 			);
 			met.NumEntradasMostrar = 2;
 			met.EspacioEntreLineas = 3;
@@ -151,13 +126,14 @@ namespace Test
 
 			buildTextures ();
 
-			bt = new Botón (this, new RectangleF (100, 100, 50, 50));
+			bt = new Botón (this, new Rectangle (100, 100, 50, 50), outlines [0]);
 			bt.Color = Color.Green;
-			bt.Textura = "outline";
 
-			bt = new Botón (this, new RectangleF (155, 100, 50, 50));
+			bt = new Botón (
+				this,
+				new Rectangle (155, 100, 50, 50),
+				outlines [0]);
 			bt.Color = Color.Green;
-			bt.Textura = "outline";
 			bt.AlClick += delegate
 			{
 				var newScr = new DialScr (Juego);
@@ -183,7 +159,7 @@ namespace Test
 				Posición = new Point (410, 250)
 			};
 			AddComponent (singleEt);
-				
+
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",
 				e.ObservedObject);
@@ -192,13 +168,9 @@ namespace Test
 				e.ObservedObject,
 				e.TimeOnObject);
 
-
-
-
-			var ct = new ContenedorSelección<FlyingSprite> (this)
+			var ct = new ContenedorSelección<FlyingSprite> (this, solids [0])
 			{
-				GridSize = new MonoGame.Extended.Size (4, 4),
-				TextureFondoName = "solid",
+				GridSize = new CE.Size (4, 4),
 				MargenExterno = new MargenType
 				{
 					Top = 3,
@@ -214,7 +186,7 @@ namespace Test
 					Bot = 2
 				},
 				BgColor = Color.Gray * 0.3f,
-				TamañoBotón = new MonoGame.Extended.Size (12, 12),
+				TamañoBotón = new CE.Size (12, 12),
 				Posición = new Point (5, 5),
 				SelectionEnabled = true
 			};
@@ -223,11 +195,7 @@ namespace Test
 			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{
-				bts [i] = new FlyingSprite (Content)
-				{
-					Color = Color.PaleVioletRed * 0.8f,
-					TextureName = "solid"
-				};
+				bts [i] = new FlyingSprite (solids [0]) { Color = Color.PaleVioletRed * 0.8f };
 
 				ct.Add (bts [i]);
 			}
@@ -236,7 +204,7 @@ namespace Test
 
 			StrListen = new KeyStringListener (Juego.KeyListener);
 
-			var contImg = new ContenedorImage (this)
+			var contImg = new ContenedorImage (this, solids [0])
 			{
 				MargenExterno = new MargenType
 				{
@@ -252,26 +220,18 @@ namespace Test
 					Top = 2,
 					Bot = 2
 				},
-				TamañoBotón = new MonoGame.Extended.Size (20, 20),
+				TamañoBotón = new CE.Size (20, 20),
 				BgColor = Color.Black,
 				Posición = new Point (400, 5),
-				TextureFondoName = "solid",
-				GridSize = new MonoGame.Extended.Size (4, 4),
-				TipoOrden = Contenedor<FlyingSprite>.TipoOrdenEnum.FilaPrimero
+				GridSize = new CE.Size (4, 4),
+				TipoOrden = TipoOrdenEnum.FilaPrimero
 			};
-			contImg.Add ("sol_1", Color.White);
-			contImg.Add ("sol_2", Color.White);
-			contImg.Add ("sol_3", Color.White);
-			contImg.Add ("sol_4", Color.White);
-			contImg.Add ("alt_1", Color.White);
-			contImg.Add ("alt_2", Color.White);
-			contImg.Add ("alt_3", Color.White);
-			contImg.Add ("alt_4", Color.White);
-			contImg.Add ("out_1", Color.White);
-			contImg.Add ("out_2", Color.White);
-			contImg.Add ("out_3", Color.White);
-			contImg.Add ("out_4", Color.White);
-			contImg.Add ("out_5", Color.White);
+			for (int i = 0; i < 4; i++)
+				contImg.Add (solids [i], Color.White);
+			for (int i = 0; i < 4; i++)
+				contImg.Add (alts [i], Color.White);
+			for (int i = 0; i < 5; i++)
+				contImg.Add (outlines [i], Color.White);
 			AddComponent (contImg);
 		}
 
@@ -292,7 +252,7 @@ namespace Test
 				Juego.Exit ();
 				return true;
 			}
-			else if (key.Key == Microsoft.Xna.Framework.Input.Keys.T)
+			if (key.Key == Microsoft.Xna.Framework.Input.Keys.T)
 			{
 				var ser = new ScreenDialSerial ();
 
@@ -301,7 +261,7 @@ namespace Test
 				ser.AddRequest (new RedBlueDial (Juego, 0));
 
 				ser.Executar (Juego.ScreenManager.ActiveThread);
-				ser.HayRespuesta += delegate(object sender, object [] e)
+				ser.HayRespuesta += delegate (object sender, object [] e)
 				{
 					Debug.WriteLine (e);
 				};

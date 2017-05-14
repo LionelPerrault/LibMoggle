@@ -1,7 +1,5 @@
 ﻿#region Using Statements
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 #if MONOMAC
 using MonoMac.AppKit;
@@ -19,7 +17,7 @@ using MonoTouch.UIKit;
 
 namespace Test
 {
-	#if __IOS__
+#if __IOS__
 	[Register("AppDelegate")]
 	class Program : UIApplicationDelegate
 	
@@ -28,10 +26,10 @@ namespace Test
 
 
 #else
-	static class Program
+	public static class Program
 #endif
-    {
-		private static Game1 game;
+	{
+		static Game1 game;
 
 		internal static void RunGame ()
 		{
@@ -42,35 +40,36 @@ namespace Test
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
-		#if !MONOMAC && !__IOS__		 
-        [STAThread]
-		#endif
-		static void Main (string [] args)
+#if !MONOMAC && !__IOS__
+		[STAThread]
+#endif
+		public static void Main (string [] args)
 		{
-			#if MONOMAC
+			Console.WriteLine ("Running...");
+#if MONOMAC
 			NSApplication.Init ();
 
 			using (var p = new NSAutoreleasePool ()) {
 				NSApplication.SharedApplication.Delegate = new AppDelegate();
 				NSApplication.Main(args);
 			}
-			#elif __IOS__
+#elif __IOS__
 			UIApplication.Main(args, null, "AppDelegate");
-			#else
+#else
 			RunGame ();
-			#endif
+#endif
 			Environment.Exit (0);
 		}
 
-		#if __IOS__
+#if __IOS__
 		public override void FinishedLaunching(UIApplication app)
 		{
 			RunGame();
 		}
-		#endif
+#endif
 	}
 
-	#if MONOMAC
+#if MONOMAC
 	class AppDelegate : NSApplicationDelegate
 	{
 		public override void FinishedLaunching (MonoMac.Foundation.NSObject notification)
@@ -89,6 +88,5 @@ namespace Test
 			return true;
 		}
 	}  
-	#endif
+#endif
 }
-

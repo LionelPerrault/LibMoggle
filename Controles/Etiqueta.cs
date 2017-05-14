@@ -1,9 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -52,9 +50,9 @@ namespace Moggle.Controles
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
-			return (RectangleF)Font.GetStringRectangle (
+			return Font.GetStringRectangle (
 				Texto (),
 				Posición.ToVector2 ());
 		}
@@ -91,19 +89,12 @@ namespace Moggle.Controles
 		#region Memoria
 
 		/// <summary>
-		/// Cargar contenido
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			Screen.Content.AddContent (UseFont);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			Font = Screen.Content.GetContent<BitmapFont> (UseFont);
+			Font = Screen.Content.Load<BitmapFont> (UseFont);
 		}
 
 		#endregion

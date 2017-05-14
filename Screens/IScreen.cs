@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 
 namespace Moggle.Screens
@@ -11,11 +12,11 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Representa una pantalla con controles visibles al jugador.
 	/// </summary>
-	public interface IScreen : 
-	IEmisor<KeyboardEventArgs>,							// Puede emitir datos de teclas a sus componentes
-	IReceptor<Tuple<KeyboardEventArgs, ScreenThread>>,	// Ouede recibir datos desde un thread
-	IComponentContainerComponent<IControl>,				// Contiene controles
-	IControl,											// Posee un contenedor
+	public interface IScreen :
+	IEmisor<KeyboardEventArgs>,                         // Puede emitir datos de teclas a sus componentes
+	IReceptor<Tuple<KeyboardEventArgs, ScreenThread>>,  // Ouede recibir datos desde un thread
+	IComponentContainerComponent<IControl>,             // Contiene controles
+	IControl,                                           // Posee un contenedor
 	IDisposable
 	{
 		#region Dibujo
@@ -47,7 +48,12 @@ namespace Moggle.Screens
 		/// El manejador de contenido
 		/// </summary>
 		/// <value>The content.</value>
-		BibliotecaContenido Content { get; }
+		ContentManager Content { get; }
+
+		/// <summary>
+		/// Loads the content of the all it's components
+		/// </summary>
+		void LoadAllContent ();
 
 		#endregion
 
@@ -70,7 +76,7 @@ namespace Moggle.Screens
 
 		#endregion
 
-		#region ctor
+		#region Game
 
 		/// <summary>
 		/// Devuelve el campo Juego.

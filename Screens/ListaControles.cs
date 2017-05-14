@@ -7,7 +7,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// Ona lista ordenada de controles según prioridad.
 	/// </summary>
-	[ObsoleteAttribute]
+	[Obsolete]
 	public class ListaControl : SortedSet<IControl>
 	{
 		/// <summary>

@@ -1,26 +1,18 @@
-﻿using Moggle.Screens;
-using Moggle.Controles;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended.Shapes;
-using Moggle.Screens.Dials;
-using Moggle.Textures;
-using MonoGame.Extended;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Moggle.Controles;
+using Moggle.Screens;
+using Moggle.Screens.Dials;
+using MonoGame.Extended.Input.InputListeners;
+using System;
 
 namespace Test
 {
 	public class RedBlueDial : Screen, IRespScreen
 	{
-		public event System.EventHandler<object> HayRespuesta;
+		public event EventHandler<IntEventArgs> HayRespuesta;
 
-		public override void AddAllContent ()
-		{
-			base.AddAllContent ();
-			var tx = new SimpleTextures (Device);
-			Content.AddContent ("pixel", tx.SolidTexture (new Size (1, 1), Color.White));
-		}
-
-		public override bool RecibirSeñal (System.Tuple<MonoGame.Extended.InputListeners.KeyboardEventArgs, ScreenThread> data)
+		public override bool RecibirSeñal (System.Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
 			if (data.Item1.Key == Keys.D1)
 			{
@@ -45,13 +37,13 @@ namespace Test
 			{
 				Textura = "pixel",
 				Color = Color.Red,
-				Bounds = new RectangleF (50, 50, 200, 100)
+				Bounds = new Rectangle (50, 50, 200, 100)
 			};
 			var btBlue = new Botón (this)
 			{
 				Textura = "pixel",
 				Color = Color.Green,
-				Bounds = new RectangleF (250, 50, 200, 100)
+				Bounds = new Rectangle (250, 50, 200, 100)
 			};
 
 			btRed.AlClick += delegate

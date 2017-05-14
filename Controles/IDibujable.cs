@@ -6,7 +6,7 @@ namespace Moggle.Controles
 	/// <summary>
 	/// Representa un objeto que puede ser dibujado a un rectángulo dado
 	/// </summary>
-	public interface IDibujable
+	public interface IDibujable : IComponent
 	{
 		/// <summary>
 		/// Dibuja el objeto sobre un rectángulo específico

@@ -1,5 +1,5 @@
 ﻿using Moggle.Comm;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
 using System;
@@ -59,7 +59,7 @@ namespace Moggle.Controles
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Moggle.Controles.KeyStringListener"/> object.
+		/// Releases all resource used by the <see cref="KeyStringListener"/> object.
 		/// </summary>
 		public void Dispose ()
 		{
@@ -84,7 +84,7 @@ namespace Moggle.Controles
 		public KeyStringListener (KeyboardListener listen)
 		{
 			if (listen == null)
-				throw new ArgumentNullException ("listen");
+				throw new ArgumentNullException (nameof (listen));
 			outputBuilder = new StringBuilder ();
 			listener = listen;
 

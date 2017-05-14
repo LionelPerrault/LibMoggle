@@ -28,10 +28,24 @@ namespace Moggle.Screens.Dials
 		event EventHandler HayRespuesta;
 	}
 
+	[Serializable]
+	public sealed class IntEventArgs : EventArgs
+	{
+		public readonly int Response;
+		public IntEventArgs (int resp)
+		{
+			Response = resp;
+		}
+
+		public static implicit operator IntEventArgs (int p)
+		{
+			return new IntEventArgs (p);
+		}
+	}
 	/// <summary>
 	/// Un Screen que puede presentar una respuesta
 	/// </summary>
-	public interface IRespScreen : IScreen, IEventoRespuesta<object>
+	public interface IRespScreen : IScreen, IEventoRespuesta<IntEventArgs>
 	{
 	}
 
@@ -61,7 +75,7 @@ namespace Moggle.Screens.Dials
 		/// <param name="useThread">El hilo de screens a usar</param>
 		public void Executar (ScreenThread useThread)
 		{
-			var collectedData = new object[InvocationList.Count];
+			var collectedData = new object [InvocationList.Count];
 
 			// suscrpciones
 			for (int i = InvocationList.Count - 1; i >= 0; i--)
@@ -69,9 +83,7 @@ namespace Moggle.Screens.Dials
 				// Preparar screen i
 				var scr = InvocationList [i];
 				scr.Initialize ();
-				scr.AddContent ();
-				scr.Content.Load ();
-				scr.InitializeContent ();
+				scr.LoadAllContent ();
 
 				useThread.Stack (
 					scr,
@@ -81,9 +93,10 @@ namespace Moggle.Screens.Dials
 						ActualizaBase = false
 					});
 
-				scr.HayRespuesta += delegate(object sender, object e)
+				scr.HayRespuesta +=
+						delegate (object sender, IntEventArgs e)
 				{
-					collectedData [_currentScr--] = e;
+					collectedData [_currentScr--] = e.Response;
 					useThread.TerminateLast ();
 				};
 
@@ -106,7 +119,7 @@ namespace Moggle.Screens.Dials
 		public event EventHandler<object []> HayRespuesta;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Screens.Dials.ScreenDialSerial"/> class.
+		/// Initializes a new instance of the <see cref="ScreenDialSerial"/> class.
 		/// </summary>
 		public ScreenDialSerial ()
 		{

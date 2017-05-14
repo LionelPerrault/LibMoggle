@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
@@ -23,17 +24,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		public void AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			Manager.AddContent (TextureName);
-		}
-
-		/// <summary>
-		/// Carga el contenido gráfico.
-		/// </summary>
-		void IComponent.InitializeContent ()
-		{
-			Texture = Manager.GetContent<Texture2D> (TextureName);
+			Texture = Texture ?? manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
@@ -48,9 +41,10 @@ namespace Moggle.Controles
 		/// </summary>
 		public event EventHandler AlActivar;
 
-		void IActivable.Activar ()
+		bool IActivable.Activar ()
 		{
 			AlActivar?.Invoke (this, EventArgs.Empty);
+			return true;
 		}
 
 		/// <summary>
@@ -58,11 +52,6 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <value>The texture.</value>
 		public Texture2D Texture { get; private set; }
-
-		/// <summary>
-		/// Devuelve el manejador de contenidos
-		/// </summary>
-		public BibliotecaContenido Manager { get; }
 
 		/// <summary>
 		/// Gets or sets the name of the texture.
@@ -76,13 +65,28 @@ namespace Moggle.Controles
 		/// <value>The color.</value>
 		public Color Color { get; set; }
 
+		ContentManager Manager { get; }
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Controles.FlyingSprite"/> class.
+		/// Initializes a new instance of the <see cref="FlyingSprite"/> class.
 		/// </summary>
 		/// <param name="manager">Manejador de contenido donde se suscribe esta clase</param>
-		public FlyingSprite (BibliotecaContenido manager)
+		public FlyingSprite (ContentManager manager)
 		{
+			if (manager == null)
+				throw new ArgumentNullException (nameof (manager));
 			Manager = manager;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FlyingSprite"/> class.
+		/// </summary>
+		/// <param name="texture">Textura</param>
+		public FlyingSprite (Texture2D texture)
+		{
+			if (texture == null)
+				throw new ArgumentNullException (nameof (texture));
+			Texture = texture;
 		}
 	}
 }

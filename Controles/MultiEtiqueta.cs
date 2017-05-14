@@ -4,9 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Screens;
-using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Shapes;
 
 namespace Moggle.Controles
 {
@@ -64,13 +62,13 @@ namespace Moggle.Controles
 		/// <param name = "icon">Textura del icono</param>
 		/// <param name = "colorIcon">el color de sobreposición</param>
 		public IconTextEntry Add (BitmapFont font,
-		                          string str,
-		                          Color colorTexto,
-		                          Texture2D icon,
-		                          Color colorIcon)
+										  string str,
+										  Color colorTexto,
+										  Texture2D icon,
+										  Color colorIcon)
 		{
 			var ret = new IconTextEntry (font, icon, str, colorTexto, colorIcon);
-			ret.TamañoIcono = new Size (icon.Width, icon.Height);
+			ret.TamañoIcono = new CE.Size (icon.Width, icon.Height);
 			Add (ret);
 			return ret;
 		}
@@ -83,9 +81,9 @@ namespace Moggle.Controles
 		/// <param name="colorTexto">Color</param>
 		/// <param name = "icon">Textura del icono</param>
 		public IconTextEntry Add (BitmapFont font,
-		                          string str,
-		                          Color colorTexto,
-		                          Texture2D icon)
+										  string str,
+										  Color colorTexto,
+										  Texture2D icon)
 		{
 			return Add (font, str, colorTexto, icon, Color.White);
 		}
@@ -97,8 +95,8 @@ namespace Moggle.Controles
 		/// <param name="str">Textos</param>
 		/// <param name="color">Color</param>
 		public void Add (BitmapFont font,
-		                 IEnumerable<string> str,
-		                 Color color)
+							  IEnumerable<string> str,
+							  Color color)
 		{
 			foreach (var item in str)
 				Add (font, item, color);
@@ -113,10 +111,10 @@ namespace Moggle.Controles
 		/// <param name = "colorIcon">Si no es nulo, es el color del icono</param>
 		/// <param name = "icon">Textura del icono</param>
 		public void Add (BitmapFont font,
-		                 IEnumerable<string> str,
-		                 Color colorTexto,
-		                 Texture2D icon,
-		                 Color colorIcon)
+							  IEnumerable<string> str,
+							  Color colorTexto,
+							  Texture2D icon,
+							  Color colorIcon)
 		{
 			foreach (var item in str)
 				Add (font, item, colorTexto, icon, colorIcon);
@@ -130,9 +128,9 @@ namespace Moggle.Controles
 		/// <param name="colorTexto">Color del texto</param>
 		/// <param name = "icon">Textura del icono</param>
 		public void Add (BitmapFont font,
-		                 IEnumerable<string> str,
-		                 Color colorTexto,
-		                 Texture2D icon)
+							  IEnumerable<string> str,
+							  Color colorTexto,
+							  Texture2D icon)
 		{
 			Add (font, str, colorTexto, icon, Color.White);
 		}
@@ -161,7 +159,7 @@ namespace Moggle.Controles
 			set
 			{
 				if (value == null)
-					throw new ArgumentNullException ("value");
+					throw new ArgumentNullException (nameof (value));
 				Entradas [index] = value;
 			}
 		}
@@ -205,7 +203,7 @@ namespace Moggle.Controles
 			set
 			{
 				if (value <= 0)
-					throw new ArgumentException ("value must be positive.", "value");
+					throw new ArgumentException ("value must be positive.", nameof (value));
 				numEntradasMostrar = value;
 			}
 		}
@@ -219,11 +217,11 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve las entradas que son visibles actualmente.
 		/// </summary>
-		public IEntry[] Actual
+		public IEntry [] Actual
 		{
 			get
 			{
-				var ret = new IEntry[NumEntradasMostrar];
+				var ret = new IEntry [NumEntradasMostrar];
 				for (int i = 0; i < NumEntradasMostrar; i++)
 				{
 					ret [i] = Entradas [(índiceActualString + i) % Entradas.Count];
@@ -242,16 +240,16 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
 			var ht = Actual.Aggregate (
-				         0,
-				         (agg, acc) => agg + acc.Tamaño.Height + EspacioEntreLineas);
+							0,
+							(agg, acc) => agg + acc.Tamaño.Height + EspacioEntreLineas);
 			var wd = Actual.Aggregate (
-				         0,
-				         (agg, acc) => Math.Max (agg, acc.Tamaño.Width));
+							0,
+							(agg, acc) => Math.Max (agg, acc.Tamaño.Width));
 
-			return new RectangleF (Pos.ToVector2 (), new SizeF (wd, ht));
+			return new Rectangle (Pos, new Point (wd, ht));
 		}
 
 		/// <summary>
@@ -287,24 +285,6 @@ namespace Moggle.Controles
 
 		#endregion
 
-		#region Memoria
-
-		/// <summary>
-		/// Cargar contenido
-		/// </summary>
-		protected override void AddContent ()
-		{
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-		}
-
-		#endregion
-
 		/// <summary>
 		/// Una entrada de MultiEtiqueta.
 		/// </summary>
@@ -321,7 +301,7 @@ namespace Moggle.Controles
 			/// Devuelve el tamaño de la entrada
 			/// </summary>
 			/// <value>The tamaño.</value>
-			Size Tamaño { get; }
+			CE.Size Tamaño { get; }
 		}
 
 		/// <summary>
@@ -356,7 +336,7 @@ namespace Moggle.Controles
 				{
 					bat.Draw (
 						TexturaIcon,
-						new Rectangle (pos, TamañoIcono),
+						new Rectangle (pos, new Point (TamañoIcono.Width, TamañoIcono.Height)),
 						ColorIcon);
 					bat.DrawString (
 						Font,
@@ -385,27 +365,31 @@ namespace Moggle.Controles
 			/// Devuelve o establece el tamaño del icono
 			/// </summary>
 			/// <value>The tamaño icono.</value>
-			public Size TamañoIcono { get; set; }
+			public CE.Size TamañoIcono { get; set; }
 
 			/// <summary>
 			/// Tamaño del texto
 			/// </summary>
-			public Size TamañoTexto
+			public CE.Size TamañoTexto
 			{
-				get { return Font.GetSize (Texto); }
+				get
+				{
+					var size = Font.MeasureString (Texto);
+					return new CE.Size ((int)size.Width, (int)size.Height);
+				}
 			}
 
 			/// <summary>
 			/// Devuelve el tamaño de la entrada
 			/// </summary>
 			/// <value>The tamaño.</value>
-			public Size Tamaño
+			public CE.Size Tamaño
 			{
 				get
 				{
 					return TexturaIcon == null ?
 						TamañoTexto :
-						new Size (
+						new CE.Size (
 						TamañoTexto.Width + TamañoIcono.Width,
 						Math.Max (
 							TamañoIcono.Height,
@@ -444,10 +428,10 @@ namespace Moggle.Controles
 			/// <param name="colorTexto">Color del texto.</param>
 			/// <param name="colorIcon">Color del icon.</param>
 			public IconTextEntry (BitmapFont font,
-			                      Texture2D texturaIcon,
-			                      string str,
-			                      Color colorTexto,
-			                      Color colorIcon)
+										 Texture2D texturaIcon,
+										 string str,
+										 Color colorTexto,
+										 Color colorIcon)
 			{
 				Font = font;
 				TexturaIcon = texturaIcon;

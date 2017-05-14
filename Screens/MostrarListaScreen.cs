@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Controles.Listas;
-using MonoGame.Extended.InputListeners;
-using MonoGame.Extended.Shapes;
-using System;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Screens
 {
@@ -37,29 +36,29 @@ namespace Moggle.Screens
 		{
 			switch (data.Item1.Key)
 			{
-				case Keys.Escape:
-					Salida = new TipoSalida (
-						TipoSalida.EnumTipoSalida.Cancelación,
-						SelecciónActual);
-					Response?.Invoke (this, Salida);
-					data.Item2.TerminateLast ();
-					return true;
-				case Keys.Space:
-					var curObj = ObjetoEnCursor;
-					if (SelecciónActual.Contains (curObj))
-						SelecciónActual.Remove (curObj);
-					else
-						SelecciónActual.Add (curObj);
-					return true;
-				case Keys.Enter:
-					Salida = new TipoSalida (
-						TipoSalida.EnumTipoSalida.Aceptación,
-						SelecciónActual);
-					Response?.Invoke (this, Salida);
-					data.Item2.TerminateLast ();
-					return true;
-				default:
-					return base.RecibirSeñal (data);
+			case Keys.Escape:
+				Salida = new TipoSalida (
+					TipoSalida.EnumTipoSalida.Cancelación,
+					SelecciónActual);
+				Response?.Invoke (this, Salida);
+				data.Item2.TerminateLast ();
+				return true;
+			case Keys.Space:
+				var curObj = ObjetoEnCursor;
+				if (SelecciónActual.Contains (curObj))
+					SelecciónActual.Remove (curObj);
+				else
+					SelecciónActual.Add (curObj);
+				return true;
+			case Keys.Enter:
+				Salida = new TipoSalida (
+					TipoSalida.EnumTipoSalida.Aceptación,
+					SelecciónActual);
+				Response?.Invoke (this, Salida);
+				data.Item2.TerminateLast ();
+				return true;
+			default:
+				return base.RecibirSeñal (data);
 			}
 		}
 
@@ -107,7 +106,7 @@ namespace Moggle.Screens
 			: base (game)
 		{
 			ListaComponente = new Lista<TObj> (this);
-			ListaComponente.Bounds = new RectangleF (
+			ListaComponente.Bounds = new Rectangle (
 				0,
 				0,
 				GetDisplayMode.Width,

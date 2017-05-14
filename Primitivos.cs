@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
 
 namespace Moggle
 {
@@ -24,14 +23,14 @@ namespace Moggle
 		/// <param name="color">Color.</param>
 		/// <param name="text">Textura</param>
 		public static void DrawLine (SpriteBatch sb,
-		                             Vector2 start,
-		                             Vector2 end,
-		                             Color color,
-		                             Texture2D text)
+											  Vector2 start,
+											  Vector2 end,
+											  Color color,
+											  Texture2D text)
 		{
-			Vector2 edge = end - start;
+			var edge = end - start;
 			// calculate angle to rotate line
-			float angle = (float)Math.Atan2 (edge.Y, edge.X);
+			var angle = (float)Math.Atan2 (edge.Y, edge.X);
 
 			sb.Draw (text,
 				start,
@@ -52,9 +51,9 @@ namespace Moggle
 		/// Dibuja un rectángulo en un SpriteBatch
 		/// </summary>
 		public static void DrawRectangle (SpriteBatch bat,
-		                                  Rectangle rect,
-		                                  Color color,
-		                                  Texture2D textura)
+													 Rectangle rect,
+													 Color color,
+													 Texture2D textura)
 		{
 			var tl = new Vector2 (rect.Left, rect.Top);
 			var tr = new Vector2 (rect.Right, rect.Top);
@@ -67,22 +66,9 @@ namespace Moggle
 			DrawLine (bat, bl, tl, color, textura);
 		}
 
-		/// <summary>
-		/// Dibuja un rectángulo en un SpriteBatch
-		/// </summary>
-		public static void DrawRectangle (SpriteBatch bat,
-		                                  RectangleF rect,
-		                                  Color color,
-		                                  Texture2D textura)
-		{
-			DrawRectangle (bat, (Rectangle)rect, color, textura);
-			
-		}
-
-
 		#region Private Members
 
-		static readonly Dictionary<String, List<Vector2>> circleCache = new Dictionary<string, List<Vector2>> ();
+		static readonly Dictionary<string, List<Vector2>> circleCache = new Dictionary<string, List<Vector2>> ();
 		//private static readonly Dictionary<String, List<Vector2>> arcCache = new Dictionary<string, List<Vector2>>();
 		static Texture2D pixel;
 
@@ -99,7 +85,7 @@ namespace Moggle
 				1,
 				false,
 				SurfaceFormat.Color);
-			pixel.SetData (new[]{ Color.White });
+			pixel.SetData (new [] { Color.White });
 		}
 
 
@@ -112,10 +98,10 @@ namespace Moggle
 		/// <param name="color">The color to use</param>
 		/// <param name="thickness">The thickness of the lines</param>
 		static void DrawPoints (SpriteBatch spriteBatch,
-		                        Vector2 position,
-		                        IList<Vector2>points,
-		                        Color color,
-		                        float thickness)
+										Vector2 position,
+										IList<Vector2> points,
+										Color color,
+										float thickness)
 		{
 			if (points.Count < 2)
 				return;
@@ -141,7 +127,7 @@ namespace Moggle
 		static List<Vector2> CreateCircle (double radius, int sides)
 		{
 			// Look for a cached version of this circle
-			String circleKey = radius + "x" + sides;
+			string circleKey = radius + "x" + sides;
 			if (circleCache.ContainsKey (circleKey))
 			{
 				return circleCache [circleKey];
@@ -180,9 +166,9 @@ namespace Moggle
 		/// <param name="radians">The radians to draw, clockwise from the starting angle</param>
 		/// <returns>A list of vectors that, if connected, will create an arc</returns>
 		static List<Vector2> CreateArc (float radius,
-		                                int sides,
-		                                float startingAngle,
-		                                float radians)
+												  int sides,
+												  float startingAngle,
+												  float radians)
 		{
 			var points = new List<Vector2> ();
 			points.AddRange (CreateCircle (radius, sides));
@@ -206,7 +192,7 @@ namespace Moggle
 			points.Add (points [0]);
 
 			// Now remove the points at the end of the circle to create the arc
-			int sidesInArc = (int)((radians / anglePerSide) + 0.5);
+			var sidesInArc = (int)((radians / anglePerSide) + 0.5);
 			points.RemoveRange (sidesInArc + 1, points.Count - sidesInArc - 1);
 
 			return points;
@@ -224,8 +210,8 @@ namespace Moggle
 		/// <param name="rect">The rectangle to draw</param>
 		/// <param name="color">The color to draw the rectangle in</param>
 		public static void FillRectangle (this SpriteBatch spriteBatch,
-		                                  Rectangle rect,
-		                                  Color color)
+													 Rectangle rect,
+													 Color color)
 		{
 			if (pixel == null)
 			{
@@ -245,9 +231,9 @@ namespace Moggle
 		/// <param name="color">The color to draw the rectangle in</param>
 		/// <param name="angle">The angle in radians to draw the rectangle at</param>
 		public static void FillRectangle (this SpriteBatch spriteBatch,
-		                                  Rectangle rect,
-		                                  Color color,
-		                                  float angle)
+													 Rectangle rect,
+													 Color color,
+													 float angle)
 		{
 			if (pixel == null)
 			{
@@ -274,9 +260,9 @@ namespace Moggle
 		/// <param name="size">The size of the rectangle</param>
 		/// <param name="color">The color to draw the rectangle in</param>
 		public static void FillRectangle (this SpriteBatch spriteBatch,
-		                                  Vector2 location,
-		                                  Vector2 size,
-		                                  Color color)
+													 Vector2 location,
+													 Vector2 size,
+													 Color color)
 		{
 			FillRectangle (spriteBatch, location, size, color, 0.0f);
 		}
@@ -291,10 +277,10 @@ namespace Moggle
 		/// <param name="angle">The angle in radians to draw the rectangle at</param>
 		/// <param name="color">The color to draw the rectangle in</param>
 		public static void FillRectangle (this SpriteBatch spriteBatch,
-		                                  Vector2 location,
-		                                  Vector2 size,
-		                                  Color color,
-		                                  float angle)
+													 Vector2 location,
+													 Vector2 size,
+													 Color color,
+													 float angle)
 		{
 			if (pixel == null)
 			{
@@ -324,11 +310,11 @@ namespace Moggle
 		/// <param name="h">Height</param>
 		/// <param name="color">The color to draw the rectangle in</param>
 		public static void FillRectangle (this SpriteBatch spriteBatch,
-		                                  float x,
-		                                  float y,
-		                                  float w,
-		                                  float h,
-		                                  Color color)
+													 float x,
+													 float y,
+													 float w,
+													 float h,
+													 Color color)
 		{
 			FillRectangle (
 				spriteBatch,
@@ -350,12 +336,12 @@ namespace Moggle
 		/// <param name="color">The color to draw the rectangle in</param>
 		/// <param name="angle">The angle of the rectangle in radians</param>
 		public static void FillRectangle (this SpriteBatch spriteBatch,
-		                                  float x,
-		                                  float y,
-		                                  float w,
-		                                  float h,
-		                                  Color color,
-		                                  float angle)
+													 float x,
+													 float y,
+													 float w,
+													 float h,
+													 Color color,
+													 float angle)
 		{
 			FillRectangle (
 				spriteBatch,
@@ -377,8 +363,8 @@ namespace Moggle
 		/// <param name="rect">The rectangle to draw</param>
 		/// <param name="color">The color to draw the rectangle in</param>
 		public static void DrawRectangle (this SpriteBatch spriteBatch,
-		                                  Rectangle rect,
-		                                  Color color)
+													 Rectangle rect,
+													 Color color)
 		{
 			DrawRectangle (spriteBatch, rect, color, 1.0f);
 		}
@@ -392,9 +378,9 @@ namespace Moggle
 		/// <param name="color">The color to draw the rectangle in</param>
 		/// <param name="thickness">The thickness of the lines</param>
 		public static void DrawRectangle (this SpriteBatch spriteBatch,
-		                                  Rectangle rect,
-		                                  Color color,
-		                                  float thickness)
+													 Rectangle rect,
+													 Color color,
+													 float thickness)
 		{
 
 			// TODO: Handle rotations
@@ -443,9 +429,9 @@ namespace Moggle
 		/// <param name="size">The size of the rectangle</param>
 		/// <param name="color">The color to draw the rectangle in</param>
 		public static void DrawRectangle (this SpriteBatch spriteBatch,
-		                                  Vector2 location,
-		                                  Vector2 size,
-		                                  Color color)
+													 Vector2 location,
+													 Vector2 size,
+													 Color color)
 		{
 			DrawRectangle (
 				spriteBatch,
@@ -468,10 +454,10 @@ namespace Moggle
 		/// <param name="color">The color to draw the rectangle in</param>
 		/// <param name="thickness">The thickness of the line</param>
 		public static void DrawRectangle (this SpriteBatch spriteBatch,
-		                                  Vector2 location,
-		                                  Vector2 size,
-		                                  Color color,
-		                                  float thickness)
+													 Vector2 location,
+													 Vector2 size,
+													 Color color,
+													 float thickness)
 		{
 			DrawRectangle (
 				spriteBatch,
@@ -499,11 +485,11 @@ namespace Moggle
 		/// <param name="y2">The Y coord of the second point</param>
 		/// <param name="color">The color to use</param>
 		public static void DrawLine (this SpriteBatch spriteBatch,
-		                             float x1,
-		                             float y1,
-		                             float x2,
-		                             float y2,
-		                             Color color)
+											  float x1,
+											  float y1,
+											  float x2,
+											  float y2,
+											  Color color)
 		{
 			DrawLine (
 				spriteBatch,
@@ -525,12 +511,12 @@ namespace Moggle
 		/// <param name="color">The color to use</param>
 		/// <param name="thickness">The thickness of the line</param>
 		public static void DrawLine (this SpriteBatch spriteBatch,
-		                             float x1,
-		                             float y1,
-		                             float x2,
-		                             float y2,
-		                             Color color,
-		                             float thickness)
+											  float x1,
+											  float y1,
+											  float x2,
+											  float y2,
+											  Color color,
+											  float thickness)
 		{
 			DrawLine (
 				spriteBatch,
@@ -549,9 +535,9 @@ namespace Moggle
 		/// <param name="point2">The second point</param>
 		/// <param name="color">The color to use</param>
 		public static void DrawLine (this SpriteBatch spriteBatch,
-		                             Vector2 point1,
-		                             Vector2 point2,
-		                             Color color)
+											  Vector2 point1,
+											  Vector2 point2,
+											  Color color)
 		{
 			DrawLine (spriteBatch, point1, point2, color, 1.0f);
 		}
@@ -566,16 +552,16 @@ namespace Moggle
 		/// <param name="color">The color to use</param>
 		/// <param name="thickness">The thickness of the line</param>
 		public static void DrawLine (this SpriteBatch spriteBatch,
-		                             Vector2 point1,
-		                             Vector2 point2,
-		                             Color color,
-		                             float thickness)
+											  Vector2 point1,
+											  Vector2 point2,
+											  Color color,
+											  float thickness)
 		{
 			// calculate the distance between the two vectors
-			float distance = Vector2.Distance (point1, point2);
+			var distance = Vector2.Distance (point1, point2);
 
 			// calculate the angle between the two vectors
-			float angle = (float)Math.Atan2 (point2.Y - point1.Y, point2.X - point1.X);
+			var angle = (float)Math.Atan2 (point2.Y - point1.Y, point2.X - point1.X);
 
 			DrawLine (spriteBatch, point1, distance, angle, color, thickness);
 		}
@@ -590,10 +576,10 @@ namespace Moggle
 		/// <param name="angle">The angle of this line from the starting point in radians</param>
 		/// <param name="color">The color to use</param>
 		public static void DrawLine (this SpriteBatch spriteBatch,
-		                             Vector2 point,
-		                             float length,
-		                             float angle,
-		                             Color color)
+											  Vector2 point,
+											  float length,
+											  float angle,
+											  Color color)
 		{
 			DrawLine (spriteBatch, point, length, angle, color, 1.0f);
 		}
@@ -609,11 +595,11 @@ namespace Moggle
 		/// <param name="color">The color to use</param>
 		/// <param name="thickness">The thickness of the line</param>
 		public static void DrawLine (this SpriteBatch spriteBatch,
-		                             Vector2 point,
-		                             float length,
-		                             float angle,
-		                             Color color,
-		                             float thickness)
+											  Vector2 point,
+											  float length,
+											  float angle,
+											  Color color,
+											  float thickness)
 		{
 			if (pixel == null)
 			{
@@ -645,9 +631,9 @@ namespace Moggle
 		/// <param name="y">The y coordinate.</param>
 		/// <param name="color">Color.</param>
 		public static void PutPixel (this SpriteBatch spriteBatch,
-		                             float x,
-		                             float y,
-		                             Color color)
+											  float x,
+											  float y,
+											  Color color)
 		{
 			PutPixel (spriteBatch, new Vector2 (x, y), color);
 		}
@@ -659,8 +645,8 @@ namespace Moggle
 		/// <param name="position">Position.</param>
 		/// <param name="color">Color.</param>
 		public static void PutPixel (this SpriteBatch spriteBatch,
-		                             Vector2 position,
-		                             Color color)
+											  Vector2 position,
+											  Color color)
 		{
 			if (pixel == null)
 				CreateThePixel (spriteBatch);
@@ -681,10 +667,10 @@ namespace Moggle
 		/// <param name="sides">The number of sides to generate</param>
 		/// <param name="color">The color of the circle</param>
 		public static void DrawCircle (this SpriteBatch spriteBatch,
-		                               Vector2 center,
-		                               float radius,
-		                               int sides,
-		                               Color color)
+												 Vector2 center,
+												 float radius,
+												 int sides,
+												 Color color)
 		{
 			DrawPoints (spriteBatch, center, CreateCircle (radius, sides), color, 1.0f);
 		}
@@ -700,11 +686,11 @@ namespace Moggle
 		/// <param name="color">The color of the circle</param>
 		/// <param name="thickness">The thickness of the lines used</param>
 		public static void DrawCircle (this SpriteBatch spriteBatch,
-		                               Vector2 center,
-		                               float radius,
-		                               int sides,
-		                               Color color,
-		                               float thickness)
+												 Vector2 center,
+												 float radius,
+												 int sides,
+												 Color color,
+												 float thickness)
 		{
 			DrawPoints (
 				spriteBatch,
@@ -725,11 +711,11 @@ namespace Moggle
 		/// <param name="sides">The number of sides to generate</param>
 		/// <param name="color">The color of the circle</param>
 		public static void DrawCircle (this SpriteBatch spriteBatch,
-		                               float x,
-		                               float y,
-		                               float radius,
-		                               int sides,
-		                               Color color)
+												 float x,
+												 float y,
+												 float radius,
+												 int sides,
+												 Color color)
 		{
 			DrawPoints (
 				spriteBatch,
@@ -751,12 +737,12 @@ namespace Moggle
 		/// <param name="color">The color of the circle</param>
 		/// <param name="thickness">The thickness of the lines used</param>
 		public static void DrawCircle (this SpriteBatch spriteBatch,
-		                               float x,
-		                               float y,
-		                               float radius,
-		                               int sides,
-		                               Color color,
-		                               float thickness)
+												 float x,
+												 float y,
+												 float radius,
+												 int sides,
+												 Color color,
+												 float thickness)
 		{
 			DrawPoints (
 				spriteBatch,
@@ -781,12 +767,12 @@ namespace Moggle
 		/// <param name="radians">The number of radians to draw, clockwise from the starting angle</param>
 		/// <param name="color">The color of the arc</param>
 		public static void DrawArc (this SpriteBatch spriteBatch,
-		                            Vector2 center,
-		                            float radius,
-		                            int sides,
-		                            float startingAngle,
-		                            float radians,
-		                            Color color)
+											 Vector2 center,
+											 float radius,
+											 int sides,
+											 float startingAngle,
+											 float radians,
+											 Color color)
 		{
 			DrawArc (
 				spriteBatch,
@@ -812,15 +798,15 @@ namespace Moggle
 		/// <param name="color">The color of the arc</param>
 		/// <param name="thickness">The thickness of the arc</param>
 		public static void DrawArc (this SpriteBatch spriteBatch,
-		                            Vector2 center,
-		                            float radius,
-		                            int sides,
-		                            float startingAngle,
-		                            float radians,
-		                            Color color,
-		                            float thickness)
+											 Vector2 center,
+											 float radius,
+											 int sides,
+											 float startingAngle,
+											 float radians,
+											 Color color,
+											 float thickness)
 		{
-			List<Vector2> arc = CreateArc (radius, sides, startingAngle, radians);
+			var arc = CreateArc (radius, sides, startingAngle, radians);
 			//List<Vector2> arc = CreateArc2(radius, sides, startingAngle, degrees);
 			DrawPoints (spriteBatch, center, arc, color, thickness);
 		}

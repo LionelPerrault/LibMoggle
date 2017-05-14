@@ -1,5 +1,16 @@
 Lo nuevo
 ========
+0.12
+----
+  + `BibliotecaContenido` queda eliminado. Se usa la versión actual de `ContentManager`.
+  + `EtiquetaMultiLínea` construye una nueva textura de fondo cada vez que su texto o sus campos son cambiados.
+  + Agregar evento de selección cambiada a `ContenedorSelección`.
+  + Ya no tira exception cuando `EtiquetaMultiLínea` ya no tira `Exception` cuando `Texto` es `null`, en lugar se trata como `String.Empty`.
+  + Agregar el control `VanishingLabel`, que es un texto que se autodestruye después de un tiempo dado.
+  + `SBC` y todos sus implementaciones evitan múltiles invocaciones a su inicializador. Además marca como protegido este método `Initialize`.
+0.11.1
+----
+  + Correcciones a `MultiEtiqueta`.
 0.11
 ----
   + Se agregan opciones constantes en `ScreenStackOptions`.

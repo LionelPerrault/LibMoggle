@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\NuGet.Build.Packaging.0.1.248\build\NuGet.Build.Packaging.props" Condition="Exists('packages\NuGet.Build.Packaging.0.1.248\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,7 +13,14 @@
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>0.11.1</ReleaseVersion>
+    <ReleaseVersion>0.12</ReleaseVersion>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>Moggle</PackageId>
+    <PackageVersion>0.12.1</PackageVersion>
+    <Authors>Edgar Carballo</Authors>
+    <Owners>Edgar Carballo</Owners>
+    <PackageTags>monogame</PackageTags>
+    <Title>Controles Moggle</Title>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,19 +43,20 @@ Un juego de controles para MonoGame</Description>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="MonoGame.Framework">
-      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NVorbis">
-      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>packages\MonoGame.Extended.0.6.0.0\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\MonoGame.Extended.0.6.377\lib\MonoGame.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>packages\MonoGame.Framework.DesktopGL.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended.Input">
+      <HintPath>packages\MonoGame.Extended.Input.0.6.377\lib\MonoGame.Extended.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="CE">
+      <HintPath>packages\CE.core.0.1\lib\CE.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +96,6 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controles\ContenedorSelección.cs" />
     <Compile Include="Controles\Contenedor.cs" />
     <Compile Include="Controles\SelectionManager.cs" />
-    <Compile Include="BibliotecaContenido.cs" />
     <Compile Include="Textures\SimpleTextures.cs" />
     <Compile Include="Controles\ContenedorImage.cs" />
     <Compile Include="Comm\IReceptor.cs" />
@@ -99,12 +107,10 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Text\StringExt.cs" />
     <Compile Include="Controles\EtiquetaMultiLínea.cs" />
     <Compile Include="Screens\Dials\ScreenDialSerial.cs" />
+    <Compile Include="Controles\VanishingLabel.cs" />
+    <Compile Include="Controles\TipoOrdenEnum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="OpenTK.dll.config" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Screens\" />
     <Folder Include="Controles\" />
@@ -120,10 +126,13 @@ Un juego de controles para MonoGame</Description>
       <Properties>
         <Policies>
           <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName" />
-          <TextStylePolicy TabsToSpaces="False" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
-          <CSharpFormattingPolicy IndentSwitchBody="True" AutoPropertyFormatting="ForceOneLine" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" ArrayInitializerBraceStyle="NextLine" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" AfterDelegateDeclarationParameterComma="True" BeforeSizeOfParentheses="True" BeforeTypeOfParentheses="True" SpacesBeforeArrayDeclarationBrackets="True" MethodCallArgumentWrapping="WrapIfTooLong" MethodDeclarationParameterWrapping="WrapIfTooLong" IndexerDeclarationParameterWrapping="WrapIfTooLong" IndexerArgumentWrapping="WrapIfTooLong" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
         </Policies>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="MonoGame.Framework.dll.config" />
+  </ItemGroup>
+  <Import Project="packages\NuGet.Build.Packaging.0.1.248\build\NuGet.Build.Packaging.targets" Condition="Exists('packages\NuGet.Build.Packaging.0.1.248\build\NuGet.Build.Packaging.targets')" />
 </Project>

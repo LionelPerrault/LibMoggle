@@ -166,7 +166,7 @@ namespace Moggle.Shape
 		#region ctors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// Initializes a new instance of the <see cref="Rectangle"/> struct.
 		/// </summary>
 		/// <param name="pos">Posición</param>
 		/// <param name="size">Tamaño</param>
@@ -179,7 +179,7 @@ namespace Moggle.Shape
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// Initializes a new instance of the <see cref="Rectangle"/> struct.
 		/// </summary>
 		/// <param name="pos">Posición</param>
 		/// <param name="size">tamaño</param>
@@ -192,7 +192,7 @@ namespace Moggle.Shape
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Shape.Rectangle"/> struct.
+		/// Initializes a new instance of the <see cref="Rectangle"/> struct.
 		/// </summary>
 		/// <param name="left">Left.</param>
 		/// <param name="top">Top.</param>

@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
-using MonoGame.Extended.Shapes;
 
 namespace Test
 {
@@ -22,13 +21,10 @@ namespace Test
 			{
 				Textura = "outline",
 				Color = Color.Green,
-				Bounds = new RectangleF (145, 90, 50, 50),
+				Bounds = new Rectangle (145, 90, 50, 50),
 			};
 
-			bt.AlClick += delegate
-			{
-				Juego.Exit ();
-			};
+			bt.AlClick += (sender, e) => Juego.Exit ();
 
 			Components.Add (bt);
 		}

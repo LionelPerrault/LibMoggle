@@ -1,23 +1,19 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
 
 namespace Moggle.Controles
 {
 	/// <summary>
-	/// Representa un objeto de juego que necesita cargar contenido de una <see cref="BibliotecaContenido"/>
+	/// Represents an objetcs that can be initialized and load external content
 	/// </summary>
 	public interface IComponent : IGameComponent
 	{
 		/// <summary>
-		/// Carga el contenido gráfico.
+		/// Loads the content using a given manager
 		/// </summary>
-		void AddContent ();
-
-		/// <summary>
-		/// Aquí se debe de asignar a variables de clase el contenido de manager
-		/// </summary>
-		void InitializeContent ();
+		void LoadContent (ContentManager manager);
 	}
 
 	/// <summary>
@@ -35,7 +31,6 @@ namespace Moggle.Controles
 			if (container == null)
 				throw new Exception ();
 			var scr = container as IScreen;
-			// TODO: nullcheck
 			return scr ?? (container as IControl).GetScreen ();
 		}
 
@@ -49,7 +44,6 @@ namespace Moggle.Controles
 			if (container == null)
 				throw new Exception ();
 			var gm = container as Game;
-			// TODO: nullcheck
 			return gm ?? (container as IControl).GetGame ();
 		}
 	}

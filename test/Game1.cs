@@ -10,6 +10,7 @@ namespace Test
 	{
 		protected override void Initialize ()
 		{
+			System.Console.WriteLine ("ini");
 			ScreenManager.AddNewThread ().Stack (new Scr (this));
 			Graphics.IsFullScreen = false;
 			//CurrentScreen.Initialize ();
@@ -17,6 +18,11 @@ namespace Test
 			ms.OffSet = new Point (-10, -10);
 			ms.ArchivoTextura = @"cont/void";
 			base.Initialize ();
+		}
+
+		public Game1 ()
+		{
+			System.Console.WriteLine ("ctor");
 		}
 	}
 }

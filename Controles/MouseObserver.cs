@@ -57,7 +57,7 @@ namespace Moggle.Controles
 		{
 			// Recordar que nunca, los objetos observados, son nulos
 			foreach (var x in observedObjects)
-				if (object.Equals (x.ObservedObject, obj))
+				if (Equals (x.ObservedObject, obj))
 					return x;
 			throw new InvalidOperationException (
 				string.Format (
@@ -122,12 +122,14 @@ namespace Moggle.Controles
 
 		event EventHandler<EventArgs> IUpdateable.EnabledChanged
 		{
-			add{}remove{}
+			add { }
+			remove { }
 		}
 
 		event EventHandler<EventArgs> IUpdateable.UpdateOrderChanged
 		{
-			add{}remove{}
+			add { }
+			remove { }
 		}
 
 		/// <summary>
@@ -140,7 +142,7 @@ namespace Moggle.Controles
 		public event EventHandler<ObservationState> RatónSeFue;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Controles.MouseObserver"/> class.
+		/// Initializes a new instance of the <see cref="MouseObserver"/> class.
 		/// </summary>
 		public MouseObserver ()
 		{
@@ -181,7 +183,7 @@ namespace Moggle.Controles
 			internal ObservationState (ISpaceable observedObject)
 			{
 				if (observedObject == null)
-					throw new ArgumentNullException ("observedObject");
+					throw new ArgumentNullException (nameof (observedObject));
 				ObservedObject = observedObject;
 			}
 		}
